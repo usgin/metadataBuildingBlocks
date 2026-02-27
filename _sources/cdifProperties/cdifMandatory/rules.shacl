@@ -5,6 +5,7 @@
 @prefix schema:      <http://schema.org/>.
 @prefix dcterms: <http://purl.org/dc/terms/>.
 @prefix cdifd: <https://cdif.org/validation/0.1/shacl#> .
+@prefix soso: <http://science-on-schema.org/1.2.3/validation/shacl#> .
 @base <https://www.ogc.org/rules/template/> .
 
 cdifd:CDIFDatasetMandatoryShape a sh:NodeShape ;
@@ -146,5 +147,39 @@ cdifd:metadataSubjectProperty
     sh:path  schema:about  ;
     sh:nodeKind sh:IRI ;
     sh:minCount 1 ;
-    sh:message "link to the target of the metadata metadata node using the about property" 
+    sh:message "link to the target of the metadata metadata node using the about property"
     .
+
+# ---------------------------------------------------------------------------
+# SOSO namespace-check shapes (from Science on Schema.org v1.3.0)
+# Catch common schema.org namespace errors in Dataset @type declarations.
+# These shapes trigger only when an incorrect namespace variant is used;
+# correctly-namespaced documents produce no violations.
+# ---------------------------------------------------------------------------
+
+soso:DatasetNS1Shape
+    a sh:NodeShape ;
+    sh:targetClass <http://schema.orgDataset/> ;
+    sh:message "Expecting SO namespace of <http://schema.org/> not <http://schema.org>" ;
+    sh:not [
+        sh:path rdf:type ;
+        sh:minCount 1 ;
+    ] .
+
+soso:DatasetNS2Shape
+    a sh:NodeShape ;
+    sh:targetClass <https://schema.org/Dataset> ;
+    sh:message "Expecting SO namespace of <http://schema.org/> not <https://schema.org/>" ;
+    sh:not [
+        sh:path rdf:type ;
+        sh:minCount 1 ;
+    ] .
+
+soso:DatasetNS3Shape
+    a sh:NodeShape ;
+    sh:targetClass <https://schema.orgDataset/> ;
+    sh:message "Expecting SO namespace of <http://schema.org/> not <https://schema.org>" ;
+    sh:not [
+        sh:path rdf:type ;
+        sh:minCount 1 ;
+    ] .
