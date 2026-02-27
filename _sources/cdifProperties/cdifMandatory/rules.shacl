@@ -8,7 +8,7 @@
 @base <https://www.ogc.org/rules/template/> .
 
 cdifd:CDIFDatasetMandatoryShape a sh:NodeShape ;
-# only apply to elements that are child of root dataset 
+# only apply to elements that are child of root dataset
 	sh:target [
 	  a sh:SPARQLTarget ;
     sh:select """
@@ -26,8 +26,10 @@ cdifd:CDIFDatasetMandatoryShape a sh:NodeShape ;
             }
           """ ;
 	] ;
-		
-    sh:property	
+	sh:nodeKind sh:IRI ;
+	sh:message "A Dataset must have an @id that is a URI (IRI)" ;
+
+    sh:property
 		cdifd:resourceIdentifierProperty,
 		cdifd:nameProperty,
 		cdifd:rightsProperty,
