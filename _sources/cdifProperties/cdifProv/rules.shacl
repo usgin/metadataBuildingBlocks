@@ -47,14 +47,9 @@ cdifd:cdifProvActivityShape
 		sh:message "A cdifProv Activity must specify at least one resource that was used (prov:used)" ;
 	] ;
 
-	sh:property [
-		sh:path schema:name ;
-		sh:minCount 1 ;
-		sh:datatype xsd:string ;
-		sh:minLength 5 ;
-		sh:severity sh:Violation ;
-		sh:message "A cdifProv Activity must have a schema:name of at least 5 characters" ;
-	] ;
+	# schema:name check removed — provActivity/rules.shacl is the
+	# authoritative source (cdifd:provActivityShape) to avoid
+	# duplicate violations on dual-typed Action/Activity nodes.
 
 	# -- RECOMMENDED (Warning) --
 

@@ -10,8 +10,10 @@
 cdifd:CDIFActionShape
     a sh:NodeShape ;
     sh:targetClass schema:Action ;
-    sh:property cdifd:actionNameProperty ;
-	sh:property 	
+    # actionNameProperty removed — provActivity/rules.shacl is the
+    # authoritative source for schema:name on activities, to avoid
+    # duplicate violations on dual-typed Action/Activity nodes.
+	sh:property
 		[sh:path schema:target;
 			sh:class schema:EntryPoint;
 				sh:property 	
@@ -58,12 +60,7 @@ cdifd:CDIFActionShape
 
 
 
-cdifd:actionNameProperty
-# names must be a literal, .
-    a sh:PropertyShape ;
-    sh:path schema:name;
-	sh:minCount 1 ;
-    sh:datatype xsd:string ;
-	sh:minLength 5 ;
-    sh:message "a name to label the action must be provided, and have a length of at least 5 characters." 
-    .
+
+# cdifd:actionNameProperty removed — the schema:name requirement for
+# activities is now solely in provActivity/rules.shacl to avoid
+# triplicate violations on dual-typed Action/Activity nodes.
