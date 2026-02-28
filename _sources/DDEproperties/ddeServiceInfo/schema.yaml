@@ -1,0 +1,71 @@
+---
+$schema: https://json-schema.org/draft/2020-12/schema
+title: DDE Service Information properties
+description: Conditional extension for service resources with DDE service type constraints.
+type: object
+properties:
+  'schema:distribution':
+    type: array
+    description: Must contain at least one WebAPI with a serviceType from the DDE
+      ServiceTypeCode codelist.
+    contains:
+      type: object
+      properties:
+        '@type':
+          type: array
+          items:
+            type: string
+          contains:
+            const: schema:WebAPI
+          minItems: 1
+        'schema:serviceType':
+          type: object
+          properties:
+            '@type':
+              const: schema:DefinedTerm
+            'schema:inDefinedTermSet':
+              const: 'dde:codelist/ServiceTypeCode'
+            'schema:termCode':
+              type: string
+              enum:
+              - 'OGC:WMS'
+              - 'OGC:WFS'
+              - 'OGC:WCS'
+              - 'OGC:WMTS'
+              - 'OGC:WPS'
+              - 'OGC:CSW'
+              - 'OGC:SOS'
+              - 'OGC:SensorThings'
+              - 'OGC:API-Features'
+              - 'OGC:API-Records'
+              - 'OGC:API-Maps'
+              - 'OGC:API-Tiles'
+              - 'OGC:API-Coverages'
+              - 'OGC:API-Processes'
+              - 'OGC:API-EDR'
+              - 'ESRI:MapServer'
+              - 'ESRI:FeatureServer'
+              - 'ESRI:ImageServer'
+              - SPARQL
+              - OpenDAP
+              - THREDDS
+          required:
+          - '@type'
+          - 'schema:inDefinedTermSet'
+          - 'schema:termCode'
+      required:
+      - '@type'
+      - 'schema:serviceType'
+    minContains: 1
+  'schema:additionalProperty':
+    type: array
+    description: Optional properties for service resources.
+    items:
+      $ref: '#/$defs/AdditionalProperty'
+required:
+- 'schema:distribution'
+$defs:
+  AdditionalProperty:
+    $ref: ../../schemaorgProperties/additionalProperty/schema.yaml
+  DefinedTerm:
+    $ref: ../../schemaorgProperties/definedTerm/schema.yaml

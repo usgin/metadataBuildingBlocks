@@ -1,0 +1,78 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "DDE Resource Type constraint",
+    "description": "Constrains schema:additionalType to require at least one DefinedTerm from the DDE ResourceTypeCode codelist (42 geoscience-specific resource types).",
+    "type": "object",
+    "properties": {
+        "schema:additionalType": {
+            "type": "array",
+            "description": "Must include at least one DefinedTerm from the DDE ResourceTypeCode codelist.",
+            "minItems": 1,
+            "items": {
+                "anyOf": [
+                    {"type": "string"},
+                    {"$ref": "#/$defs/DefinedTerm"}
+                ]
+            },
+            "contains": {
+                "type": "object",
+                "properties": {
+                    "@type": {"const": "schema:DefinedTerm"},
+                    "schema:inDefinedTermSet": {"const": "dde:codelist/ResourceTypeCode"},
+                    "schema:termCode": {
+                        "type": "string",
+                        "enum": [
+                            "attribute",
+                            "attributeType",
+                            "collectionHardware",
+                            "collectionSession",
+                            "dataset",
+                            "dimensionGroup",
+                            "document",
+                            "feature",
+                            "featureType",
+                            "fieldSession",
+                            "geographicDataset",
+                            "geographicImage",
+                            "geologicMap",
+                            "image",
+                            "initiative",
+                            "knowledgeGraph",
+                            "map",
+                            "model",
+                            "nonGeographicDataset",
+                            "physicalSample",
+                            "platformSeries",
+                            "product",
+                            "propertyType",
+                            "repository",
+                            "sample",
+                            "sensor",
+                            "sensorSeries",
+                            "series",
+                            "service",
+                            "software",
+                            "tile",
+                            "transferAggregate",
+                            "vocabulary",
+                            "3dModel",
+                            "crossSection",
+                            "drillhole",
+                            "geochemicalDataset",
+                            "geochronologicalDataset",
+                            "geophysicalDataset",
+                            "mineralogicalDataset",
+                            "paleontologicalDataset",
+                            "stratigraphicSection"
+                        ]
+                    }
+                },
+                "required": ["@type", "schema:inDefinedTermSet", "schema:termCode"]
+            },
+            "minContains": 1
+        }
+    },
+    "$defs": {
+        "DefinedTerm": {"$ref": "../../schemaorgProperties/definedTerm/definedTermSchema.json"}
+    }
+}
