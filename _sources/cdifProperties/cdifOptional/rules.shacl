@@ -51,6 +51,21 @@ cdifd:CDIFDatasetOptionalShape
     sh:message "CDIF optional properties: datasets should have a description, creator, and keywords." ;
     .
 
+cdifd:keywordsNoCommaTest
+# Keywords can be comma-free strings, DefinedTerms, or IRIs.
+# Warn if a string keyword contains a comma (should be separate array items).
+	a sh:PropertyShape ;
+	sh:path schema:keywords ;
+	sh:or (
+		[sh:datatype xsd:string ; sh:pattern "^[^,]*$" ]
+		[sh:class schema:DefinedTerm ]
+		[sh:nodeKind sh:IRI ]
+	) ;
+	sh:severity sh:Warning ;
+	sh:message "Keywords must be comma-free strings, DefinedTerms, or IRIs; if there are multiple keywords, put them in an array" ;
+	sh:description "https://cross-domain-interoperability-framework.github.io/cdifbook/metadata/schemaorgimplementation.html" ;
+	.
+
 cdifd:relatedResourceProperty
 	a sh:PropertyShape ;
 	sh:path schema:relatedLink;
