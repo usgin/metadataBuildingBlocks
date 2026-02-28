@@ -9,7 +9,21 @@
 
 cdifd:CDIFActionShape
     a sh:NodeShape ;
-    sh:targetClass schema:Action ;
+    sh:target [
+        a sh:SPARQLTarget ;
+        sh:select """
+            PREFIX schema: <http://schema.org/>
+            SELECT ?this WHERE {
+                ?this a ?type .
+                FILTER (?type IN (
+                    schema:Action, schema:AssessAction, schema:ConsumeAction,
+                    schema:ControlAction, schema:CreateAction, schema:FindAction,
+                    schema:InteractAction, schema:PlayAction, schema:SearchAction,
+                    schema:TransferAction, schema:UpdateAction
+                ))
+            }
+        """ ;
+    ] ;
     # actionNameProperty removed — provActivity/rules.shacl is the
     # authoritative source for schema:name on activities, to avoid
     # duplicate violations on dual-typed Action/Activity nodes.

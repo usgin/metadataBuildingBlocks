@@ -12,9 +12,20 @@ description: 'this element defines an action (operation) that can be invoked via
 properties:
   '@type':
     type: string
-    description: TBD, recognize other actions, e.g. SearchAction, UpdateAction..., others?
+    description: The type of action. Must be schema:Action or one of its subtypes.
     default: schema:Action
-    const: schema:Action
+    enum:
+      - schema:Action
+      - schema:AssessAction
+      - schema:ConsumeAction
+      - schema:ControlAction
+      - schema:CreateAction
+      - schema:FindAction
+      - schema:InteractAction
+      - schema:PlayAction
+      - schema:SearchAction
+      - schema:TransferAction
+      - schema:UpdateAction
   'schema:name':
     type: string
     description: text label for the action

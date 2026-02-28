@@ -28,9 +28,21 @@ cdifd:webAPINode
 			sh:minCount 1;
 			sh:severity sh:Info
 		];
-	sh:property 
+	sh:property
         [sh:path schema:potentialAction;
-			sh:class schema:Action;
+			sh:or (
+				[sh:class schema:Action]
+				[sh:class schema:AssessAction]
+				[sh:class schema:ConsumeAction]
+				[sh:class schema:ControlAction]
+				[sh:class schema:CreateAction]
+				[sh:class schema:FindAction]
+				[sh:class schema:InteractAction]
+				[sh:class schema:PlayAction]
+				[sh:class schema:SearchAction]
+				[sh:class schema:TransferAction]
+				[sh:class schema:UpdateAction]
+			) ;
 			sh:minCount 1;
 			sh:message "at least one action must be provided for a webAPI distribution"
 			]
