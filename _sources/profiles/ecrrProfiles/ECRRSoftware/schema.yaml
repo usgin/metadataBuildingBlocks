@@ -7,10 +7,14 @@ description: >-
   Composes ecrrBase (mandatory identity and classification), ecrrCommon
   (optional shared properties), ecrrAssessment (maturity, lifetime, usage),
   and ecrrSoftware (application categories, languages, repositories, etc.).
-  Resources should be typed ["schema:CreativeWork", "schema:SoftwareApplication"]
-  with mainEntity pointing to ECRRO_0000206 (Software).
+  Resources must have schema:additionalType containing "EC Software".
 allOf:
   - $ref: ../../../ecrrProperties/ecrrBase/schema.yaml
   - $ref: ../../../ecrrProperties/ecrrCommon/schema.yaml
   - $ref: ../../../ecrrProperties/ecrrAssessment/schema.yaml
   - $ref: ../../../ecrrProperties/ecrrSoftware/schema.yaml
+  - properties:
+      "schema:additionalType":
+        contains:
+          enum:
+            - "EC Software"

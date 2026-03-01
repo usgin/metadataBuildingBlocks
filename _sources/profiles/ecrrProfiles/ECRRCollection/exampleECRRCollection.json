@@ -7,15 +7,15 @@
       "dct": "http://purl.org/dc/terms/"
     }
   ],
-  "@id": "http://n2t.net/ark:/23942/g2example-dataset",
-  "@type": ["schema:CreativeWork", "schema:Dataset"],
-  "schema:name": "Global Surface Temperature Anomalies",
-  "schema:additionalType": ["EC Dataset"],
-  "schema:description": "Monthly global surface temperature anomaly data relative to the 1951-1980 base period, derived from meteorological station and ocean observations.",
+  "@id": "http://n2t.net/ark:/23942/g2example-collection",
+  "@type": ["schema:CreativeWork", "schema:Product"],
+  "schema:name": "Geochemical Reference Standards Bundle",
+  "schema:additionalType": ["EC Bundled Object"],
+  "schema:description": "A curated collection of geochemical reference standard datasets, software tools, and documentation for analytical laboratory calibration.",
   "schema:mainEntity": {
     "@type": "schema:CreativeWork",
-    "schema:url": "http://cor.esipfed.org/ont/earthcube/ECRRO_0000214",
-    "schema:name": "Dataset"
+    "schema:url": "http://cor.esipfed.org/ont/earthcube/SFO_0000075",
+    "schema:name": "Bundled Object"
   },
   "schema:license": [
     {
@@ -27,48 +27,29 @@
   "schema:creator": [
     {
       "@type": "schema:Organization",
-      "schema:name": "Example Climate Institute"
+      "schema:name": "USGS Geochemistry Lab"
     }
   ],
   "schema:about": [
     {
       "@type": "schema:DefinedTerm",
-      "schema:name": "Climatology",
-      "schema:identifier": "http://cor.esipfed.org/ont/earthcube/ADO_0000035"
+      "schema:name": "Geochemistry",
+      "schema:identifier": "http://cor.esipfed.org/ont/earthcube/ADO_0000055"
     }
   ],
-  "schema:distribution": [
+  "schema:hasPart": [
     {
-      "@type": ["schema:DataDownload"],
-      "schema:contentUrl": "https://example.org/data/temperature-anomalies.csv",
-      "schema:encodingFormat": ["text/csv"],
-      "schema:name": "Temperature anomaly CSV download"
-    }
-  ],
-  "schema:spatialCoverage": [
+      "@type": ["schema:Dataset"],
+      "schema:name": "BHVO-2 Reference Values",
+      "schema:url": "https://example.org/standards/bhvo2",
+      "schema:encodingFormat": "text/csv"
+    },
     {
-      "@type": "schema:Place",
-      "schema:name": ["Global"],
-      "schema:geo": {
-        "@type": "schema:GeoShape",
-        "schema:box": "-90 -180 90 180"
-      }
+      "@type": ["schema:SoftwareApplication"],
+      "schema:name": "Standard Comparison Tool",
+      "schema:url": "https://example.org/tools/standard-compare"
     }
   ],
-  "schema:temporalCoverage": ["1880-01-01/2023-12-31"],
-  "schema:variableMeasured": [
-    {
-      "@type": ["schema:PropertyValue"],
-      "schema:name": "Surface Temperature Anomaly",
-      "schema:description": "Deviation of monthly surface temperature from 1951-1980 average",
-      "schema:unitText": "degrees Celsius"
-    }
-  ],
-  "schema:includedInDataCatalog": {
-    "@type": "schema:DataCatalog",
-    "schema:name": "EarthCube Data Catalog",
-    "schema:url": "https://www.earthcube.org/datasets"
-  },
   "ecrro:ECRRO_0000138": {
     "@type": "schema:PropertyValue",
     "schema:propertyID": "ecrro:ECRRO_0000138",
@@ -95,8 +76,8 @@
     "schema:name": "Usage",
     "schema:value": {
       "@type": "schema:DefinedTerm",
-      "schema:name": "Wide usage (>50 adopters)",
-      "schema:identifier": "http://cor.esipfed.org/ont/earthcube/UBA_0000001"
+      "schema:name": "Some usage (10-50 adopters)",
+      "schema:identifier": "http://cor.esipfed.org/ont/earthcube/UBA_0000002"
     }
   },
   "ecrro:ECRRO_0001301": {
@@ -110,7 +91,7 @@
         "@type": "schema:Person",
         "schema:name": "Example Registrant"
       },
-      "schema:datePublished": "2024-01-15"
+      "schema:datePublished": "2024-03-20"
     }
   }
 }
