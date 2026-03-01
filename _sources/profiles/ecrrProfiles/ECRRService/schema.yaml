@@ -1,0 +1,14 @@
+---
+$schema: https://json-schema.org/draft/2020-12/schema
+type: object
+title: ECRR Service Instance Profile
+description: >-
+  Complete ECRR metadata profile for service instance resources.
+  Composes ecrrBase, ecrrCommon, ecrrAssessment, and ecrrService.
+  Resources should be typed ["schema:CreativeWork", "schema:WebAPI"]
+  with mainEntity pointing to ECRRO_0000202 (Service Instance).
+allOf:
+  - $ref: ../../../ecrrProperties/ecrrBase/schema.yaml
+  - $ref: ../../../ecrrProperties/ecrrCommon/schema.yaml
+  - $ref: ../../../ecrrProperties/ecrrAssessment/schema.yaml
+  - $ref: ../../../ecrrProperties/ecrrService/schema.yaml
