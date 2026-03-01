@@ -1,50 +1,39 @@
 ---
 $schema: https://json-schema.org/draft/2020-12/schema
 title: DDE Imagery properties
-description: Conditional extension for imagery resources with DDE-specific propertyIDs.
+description: Conditional extension for imagery resources with DDE-specific properties.
+  Implements MD_Imagery entity (DDE spec Table 3) with 9 elements for sensor,
+  platform, equipment, collector, temporal bounds, signal generator, wavelength,
+  and processed level.
 type: object
 properties:
   'schema:additionalProperty':
     type: array
     description: Additional properties for imagery resources using DDE propertyIDs.
-    minItems: 2
     items:
       $ref: '#/$defs/AdditionalProperty'
-    allOf:
-    - contains:
-        type: object
-        properties:
-          'schema:propertyID':
-            type: array
-            contains:
-              const: 'dde:sensorType'
-          'schema:name':
-            const: Sensor Type
-          'schema:value':
-            type: string
-        required:
-        - 'schema:propertyID'
-        - 'schema:name'
-        - 'schema:value'
-      minContains: 1
-    - contains:
-        type: object
-        properties:
-          'schema:propertyID':
-            type: array
-            contains:
-              const: 'dde:platform'
-          'schema:name':
-            const: Platform
-          'schema:value':
-            type: string
-        required:
-        - 'schema:propertyID'
-        - 'schema:name'
-        - 'schema:value'
-      minContains: 1
-required:
-- 'schema:additionalProperty'
+    contains:
+      type: object
+      properties:
+        'schema:propertyID':
+          type: array
+          contains:
+            enum:
+            - 'dde:sensorType'
+            - 'dde:platform'
+            - 'dde:equipment'
+            - 'dde:collector'
+            - 'dde:signalGenerator'
+            - 'dde:wavelength'
+            - 'dde:processedLevel'
+      required:
+      - 'schema:propertyID'
+  'schema:startTime':
+    type: string
+    description: Start time of the imagery acquisition. ISO 8601 date-time format.
+  'schema:endTime':
+    type: string
+    description: End time of the imagery acquisition. ISO 8601 date-time format.
 $defs:
   AdditionalProperty:
     $ref: ../../schemaorgProperties/additionalProperty/schema.yaml

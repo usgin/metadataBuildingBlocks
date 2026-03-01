@@ -15,10 +15,12 @@ properties:
     description: a schema.org Class that specifies the expected information content for the metadata record.
       For CDIF, 'schema:Dataset' is required, but other possible values (e.g. CreativeWork, SoftwareApplication,
       Product, WebAPI) are sometimes included to enable the schema.org properties used to describe the
-      resource without schema.org validation errors.
+      resource without schema.org validation errors. The array must include at least one value from the
+      known set, but can also include other strings for extensibility.
     type: array
     items:
       type: string
+    contains:
       enum:
       - schema:CreativeWork
       - schema:SoftwareApplication
@@ -31,7 +33,9 @@ properties:
       - schema:ImageObject
       - schema:DataCatalog
       - schema:DefinedTermSet
-      default: schema:Dataset
+      - schema:Event
+      - schema:MediaObject
+    default: schema:Dataset
     minItems: 1
   'schema:name':
     type: string

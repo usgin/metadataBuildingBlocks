@@ -2,7 +2,7 @@
 $schema: https://json-schema.org/draft/2020-12/schema
 title: DDE Resource Type constraint
 description: Constrains schema:additionalType to require at least one DefinedTerm
-  from the DDE ResourceTypeCode codelist (42 geoscience-specific resource types).
+  from the DDE ResourceTypeCode codelist (32 resource types from DDE spec Table 18).
 type: object
 properties:
   'schema:additionalType':
@@ -23,48 +23,38 @@ properties:
         'schema:termCode':
           type: string
           enum:
-          - attribute
-          - attributeType
-          - collectionHardware
-          - collectionSession
+          - aggregate
+          - application
+          - webApplication
+          - collection
           - dataset
-          - dimensionGroup
-          - document
-          - feature
-          - featureType
-          - fieldSession
+          - dataCatalog
           - geographicDataset
-          - geographicImage
-          - geologicMap
-          - image
-          - initiative
-          - knowledgeGraph
-          - map
-          - model
           - nonGeographicDataset
-          - physicalSample
-          - platformSeries
-          - product
-          - propertyType
+          - document
+          - article
+          - thesis
+          - book
+          - poster
+          - webPage
+          - image
+          - map
+          - photograph
+          - explanatoryFigure
+          - initiative
+          - fieldSession
+          - learningResource
+          - guide
+          - model
+          - movie
           - repository
-          - sample
-          - sensor
-          - sensorSeries
+          - semanticResource
+          - definedTermSet
           - series
           - service
+          - webAPI
           - software
-          - tile
-          - transferAggregate
-          - vocabulary
-          - 3dModel
-          - crossSection
-          - drillhole
-          - geochemicalDataset
-          - geochronologicalDataset
-          - geophysicalDataset
-          - mineralogicalDataset
-          - paleontologicalDataset
-          - stratigraphicSection
+          - sound
       required:
       - '@type'
       - 'schema:inDefinedTermSet'

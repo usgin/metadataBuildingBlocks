@@ -68,11 +68,12 @@ metadataBuildingBlocks/
 │   │   └── xasSubject/              # XAS subject classification
 │   ├── DDEproperties/               # DDE (Deep-time Digital Earth) types
 │   │   ├── ddeSubject/              # DDE profile conformance (CatalogRecord extension)
-│   │   ├── ddeResourceType/         # DDE resource type (42 geoscience types)
+│   │   ├── ddeResourceType/         # DDE resource type (32 types from DDE spec Table 18)
 │   │   ├── ddeRequired/             # DDE mandatory property group
 │   │   ├── ddeOptional/             # DDE optional properties
-│   │   ├── ddeImagery/              # DDE imagery (sensor, platform)
-│   │   └── ddeServiceInfo/          # DDE service info (OGC/ESRI service types)
+│   │   ├── ddeImagery/              # DDE imagery (9 MD_Imagery properties, all optional)
+│   │   ├── ddeServiceInfo/          # DDE service info (SV_ServiceIdentification, 5 elements)
+│   │   └── ddeGeographicDataset/    # DDE geographic dataset (MD_SpatialRepresentation)
 │   ├── ecrrProperties/              # ECRR (EarthCube Resource Registry) property types
 │   │   ├── ecrrBase/                # ECRR identity: mainEntity, @type contains CreativeWork, description, license
 │   │   ├── ecrrCommon/              # ECRR common properties (creator, keywords, distribution, etc.)
@@ -89,7 +90,17 @@ metadataBuildingBlocks/
 │       │   ├── CDIFDiscovery/       # CDIF Discovery profile
 │       │   └── CDIFcomplete/        # CDIF Complete profile (discovery + data description)
 │       ├── DDEProfiles/
-│       │   └── DDEDiscovery/        # DDE Geoscience Discovery profile
+│       │   ├── DDEDiscovery/        # DDE Geoscience Discovery profile (base)
+│       │   ├── DDEDataset/          # DDE Dataset (dataset, dataCatalog, geographicDataset, nonGeographicDataset)
+│       │   ├── DDECollection/       # DDE Collection (aggregate, collection, series, learningResource, guide)
+│       │   ├── DDEDocument/         # DDE Document (document, article, thesis, book, poster, webPage)
+│       │   ├── DDEImage/            # DDE Image (image, map, photograph, explanatoryFigure)
+│       │   ├── DDEService/          # DDE Service (repository, service, webAPI)
+│       │   ├── DDESoftware/         # DDE Software (software)
+│       │   ├── DDEEvent/            # DDE Event (initiative, fieldSession)
+│       │   ├── DDEFunctionalResource/ # DDE Functional Resource (application, webApplication, model)
+│       │   ├── DDESemanticResource/ # DDE Semantic Resource (semanticResource, definedTermSet)
+│       │   └── DDEAudioVisualProduct/ # DDE AudioVisual Product (movie, sound)
 │       ├── adaProfiles/
 │       │   ├── adaProduct/          # ADA product metadata profile (v3, CDIF 2026)
 │       │   ├── adaEMPA/             # Electron Microprobe Analysis technique profile
@@ -332,7 +343,7 @@ The ADA building blocks define the JSON-LD schema structure. The CZ Net Data Sub
 
 ## DDE Building Blocks
 
-The DDE (Deep-time Digital Earth) metadata schema extends CDIF Discovery with geoscience-specific properties: resource type classification (42 DDE resource types), topic and acquisition type keywords from DDE controlled vocabularies, browse graphics, and conditional extensions for imagery and service resources. The 6 building blocks in `DDEproperties/` plus the `DDEDiscovery` profile in `profiles/DDEProfiles/` compose on top of the existing CDIF mandatory/optional building blocks.
+The DDE (Deep-time Digital Earth) metadata schema extends CDIF Discovery with geoscience-specific properties: resource type classification (32 DDE resource types from spec Table 18), topic and acquisition type keywords from DDE controlled vocabularies, browse graphics, and conditional extensions for imagery, services, and geographic datasets. The 7 building blocks in `DDEproperties/` plus 11 profiles in `profiles/DDEProfiles/` (1 base + 10 resource-type-specific) compose on top of the existing CDIF mandatory/optional building blocks.
 
 ### Namespace
 
@@ -340,22 +351,23 @@ The DDE (Deep-time Digital Earth) metadata schema extends CDIF Discovery with ge
 |---|---|---|
 | `dde` | `https://www.ddeworld.org/resource/` | All DDE building blocks |
 
-Vocabulary URIs: `dde:codelist/ResourceTypeCode`, `dde:codelist/TopicCategoryCode`, `dde:codelist/AcquisitionTypeCode`, `dde:codelist/ServiceTypeCode`
+Vocabulary URIs: `dde:codelist/ResourceTypeCode` (32 codes), `dde:codelist/TopicCategoryCode`, `dde:codelist/AcquisitionTypeCode`, `dde:codelist/ServiceTypeCode` (21 codes)
 
 Profile conformance URI: `cdif:profile_ddeCDIF`
 
 ### Composition Hierarchy
 
 ```
-profiles/DDEProfiles/DDEDiscovery/     ← Top-level DDE profile
+profiles/DDEProfiles/DDEDiscovery/     ← Base DDE profile
 ├── allOf[0]: cdifMandatory             ← CDIF mandatory (name, identifier, dates, etc.)
+│   └── @type: contains pattern         ← Must include ≥1 known type (13 values incl. Event, MediaObject)
 ├── allOf[1]: cdifOptional              ← CDIF optional (keywords, distribution, spatial, etc.)
 ├── allOf[2]: ddeRequired               ← DDE mandatory extensions
 │   ├── schema:subjectOf → ddeSubject   ← CatalogRecord with dcterms:conformsTo containing cdif:profile_ddeCDIF
-│   ├── schema:additionalType → ddeResourceType  ← ≥1 DefinedTerm from dde:codelist/ResourceTypeCode (42 codes)
+│   ├── schema:additionalType → ddeResourceType  ← ≥1 DefinedTerm from dde:codelist/ResourceTypeCode (32 codes)
 │   ├── schema:keywords                 ← allOf contains:
 │   │   ├── ≥1 DefinedTerm from dde:codelist/TopicCategoryCode
-│   │   └── ≥1 DefinedTerm from dde:codelist/AcquisitionTypeCode (21 codes)
+│   │   └── ≥1 DefinedTerm from dde:codelist/AcquisitionTypeCode
 │   └── schema:image                    ← ≥1 schema:ImageObject with contentUrl
 └── allOf[3]: ddeOptional               ← DDE optional extensions
     ├── schema:alternateName            ← string or array of strings
@@ -364,19 +376,53 @@ profiles/DDEProfiles/DDEDiscovery/     ← Top-level DDE profile
     └── schema:additionalType           ← additional unconstrained type classifications
 ```
 
-Conditional extensions (NOT in base DDEDiscovery profile — compose into sub-profiles when needed):
+### Resource Type Profiles (10)
+
+Each profile extends DDEDiscovery and constrains `schema:additionalType` to a subset of the 32-code ResourceTypeCode codelist. Some also compose conditional building blocks or add inline properties:
 
 ```
-DDEproperties/ddeImagery/               ← For imagery resources
-└── schema:additionalProperty           ← allOf contains:
-    ├── dde:sensorType (required)       ← PropertyValue with propertyID "dde:sensorType"
-    └── dde:platform (required)         ← PropertyValue with propertyID "dde:platform"
+DDEDataset/               ← dataset, dataCatalog, geographicDataset, nonGeographicDataset
+DDECollection/            ← aggregate, collection, series, learningResource, guide
+│   └── schema:hasPart (required)       ← Collection members (name required)
+DDEDocument/              ← document, article, thesis, book, poster, webPage
+DDEImage/                 ← image, map, photograph, explanatoryFigure
+│   └── allOf: ddeImagery               ← 9 optional MD_Imagery properties
+DDEService/               ← repository, service, webAPI
+│   └── allOf: ddeServiceInfo           ← serviceType (M), operations, access, datasets, docs
+DDESoftware/              ← software
+DDEEvent/                 ← initiative, fieldSession
+│   └── schema:temporalCoverage (required)
+DDEFunctionalResource/    ← application, webApplication, model
+│   └── schema:relatedLink contains implementationSoftware
+DDESemanticResource/      ← semanticResource, definedTermSet
+DDEAudioVisualProduct/    ← movie, sound
+    └── schema:duration (optional, ISO 8601)
+```
 
-DDEproperties/ddeServiceInfo/           ← For service resources
-├── schema:distribution                 ← contains WebAPI with schema:serviceType
-│   └── schema:serviceType              ← DefinedTerm from dde:codelist/ServiceTypeCode
-│       (OGC:WMS, OGC:WFS, OGC:API-Features, ESRI:MapServer, SPARQL, etc.)
+### Conditional Building Blocks
+
+```
+DDEproperties/ddeImagery/               ← MD_Imagery (DDE spec Table 3), all optional
+├── schema:additionalProperty           ← contains DDE propertyIDs:
+│   dde:sensorType, dde:platform, dde:equipment, dde:collector,
+│   dde:signalGenerator, dde:wavelength, dde:processedLevel
+├── schema:startTime                    ← ISO 8601 acquisition start
+└── schema:endTime                      ← ISO 8601 acquisition end
+
+DDEproperties/ddeServiceInfo/           ← SV_ServiceIdentification (DDE spec Table 2)
+├── schema:distribution                 ← contains WebAPI with:
+│   ├── schema:serviceType (required)   ← DefinedTerm from dde:codelist/ServiceTypeCode (21 codes)
+│   ├── schema:potentialAction          ← containsOperations (optional)
+│   ├── schema:termsOfService           ← accessProperties (optional)
+│   └── schema:documentation            ← endpointDescription (optional)
+├── schema:dataset                      ← operatedDataset (optional)
 └── schema:additionalProperty           ← optional service-specific properties
+
+DDEproperties/ddeGeographicDataset/     ← MD_SpatialRepresentation (DDE spec Table 5)
+├── schema:spatialCoverage (required)   ← Mandatory spatial extent
+└── schema:additionalProperty           ← contains DDE propertyIDs:
+    dde:spatialRepresentationType, dde:spatialResolution,
+    dde:referenceSystemType, dde:referenceSystemIdentifier
 ```
 
 ### Building Block Details
@@ -384,15 +430,31 @@ DDEproperties/ddeServiceInfo/           ← For service resources
 | Building Block | Description | Required By |
 |---|---|---|
 | `ddeSubject` | CatalogRecord extension requiring `dcterms:conformsTo` to contain `cdif:profile_ddeCDIF`. Follows xasSubject pattern — extends cdifCatalogRecord with minContains constraint. | ddeRequired |
-| `ddeResourceType` | Constrains `schema:additionalType` to require ≥1 DefinedTerm with `schema:inDefinedTermSet: "dde:codelist/ResourceTypeCode"` and `schema:termCode` from enum of 42 geoscience types (dataset, geologicMap, geochemicalDataset, paleontologicalDataset, stratigraphicSection, etc.). | ddeRequired |
+| `ddeResourceType` | Constrains `schema:additionalType` to require ≥1 DefinedTerm with `schema:inDefinedTermSet: "dde:codelist/ResourceTypeCode"` and `schema:termCode` from enum of 32 resource types (DDE spec Table 18). | ddeRequired |
 | `ddeRequired` | DDE mandatory property group. Uses allOf with $ref to cdifMandatory, adds ddeSubject, ddeResourceType, DDE vocabulary-constrained keywords (TopicCategoryCode + AcquisitionTypeCode), and browse graphics (schema:image). | DDEDiscovery |
 | `ddeOptional` | DDE optional properties: alternateName, measurementTechnique, additional unconstrained keywords and additionalType. | DDEDiscovery |
-| `ddeImagery` | Conditional extension for imagery resources. Requires schema:additionalProperty with dde:sensorType and dde:platform PropertyValues. | Sub-profiles |
-| `ddeServiceInfo` | Conditional extension for service resources. Requires schema:distribution to contain a WebAPI with serviceType from dde:codelist/ServiceTypeCode (21 codes including OGC and ESRI services). | Sub-profiles |
+| `ddeImagery` | Conditional extension for imagery resources (MD_Imagery, DDE spec Table 3). All 9 properties optional: sensor, platform, equipment, collector, startTime, endTime, signalGenerator, wavelength, processedLevel. | DDEImage |
+| `ddeServiceInfo` | Conditional extension for service resources (SV_ServiceIdentification, DDE spec Table 2). serviceType mandatory (21 codes), plus containsOperations, accessProperties, operatedDataset, endpointDescription. | DDEService |
+| `ddeGeographicDataset` | Conditional extension for geographic dataset resources (MD_SpatialRepresentation, DDE spec Table 5). Mandatory spatialCoverage, plus optional spatialRepresentationType, spatialResolution, referenceSystemType, referenceSystemIdentifier. | DDEDataset (sub-profile) |
 
-### DDE Resource Type Codes (42)
+### DDE Profile Summary
 
-attribute, attributeType, collectionHardware, collectionSession, dataset, dimensionGroup, document, feature, featureType, fieldSession, geographicDataset, geographicImage, geologicMap, image, initiative, knowledgeGraph, map, model, nonGeographicDataset, physicalSample, platformSeries, product, propertyType, repository, sample, sensor, sensorSeries, series, service, software, tile, transferAggregate, vocabulary, 3dModel, crossSection, drillhole, geochemicalDataset, geochronologicalDataset, geophysicalDataset, mineralogicalDataset, paleontologicalDataset, stratigraphicSection
+| Profile | Resource Type Codes | Type-Specific BB | Extra Constraints |
+|---|---|---|---|
+| DDEDataset | dataset, dataCatalog, geographicDataset, nonGeographicDataset | ddeGeographicDataset (sub-profile) | — |
+| DDECollection | aggregate, collection, series, learningResource, guide | — | `schema:hasPart` required |
+| DDEDocument | document, article, thesis, book, poster, webPage | — | — |
+| DDEImage | image, map, photograph, explanatoryFigure | ddeImagery | — |
+| DDEService | repository, service, webAPI | ddeServiceInfo | — |
+| DDESoftware | software | — | — |
+| DDEEvent | initiative, fieldSession | — | `schema:temporalCoverage` required |
+| DDEFunctionalResource | application, webApplication, model | — | `schema:relatedLink` with implementationSoftware |
+| DDESemanticResource | semanticResource, definedTermSet | — | — |
+| DDEAudioVisualProduct | movie, sound | — | `schema:duration` (optional) |
+
+### DDE Resource Type Codes (32)
+
+aggregate, application, webApplication, collection, dataset, dataCatalog, geographicDataset, nonGeographicDataset, document, article, thesis, book, poster, webPage, image, map, photograph, explanatoryFigure, initiative, fieldSession, learningResource, guide, model, movie, repository, semanticResource, definedTermSet, series, service, webAPI, software, sound
 
 ### DDE Service Type Codes (21)
 

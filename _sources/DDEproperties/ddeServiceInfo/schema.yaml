@@ -2,6 +2,8 @@
 $schema: https://json-schema.org/draft/2020-12/schema
 title: DDE Service Information properties
 description: Conditional extension for service resources with DDE service type constraints.
+  Implements SV_ServiceIdentification entity (DDE spec Table 2) with serviceType,
+  containsOperations, accessProperties, operatedDataset, and endpointDescription.
 type: object
 properties:
   'schema:distribution':
@@ -53,10 +55,66 @@ properties:
           - '@type'
           - 'schema:inDefinedTermSet'
           - 'schema:termCode'
+        'schema:potentialAction':
+          type: array
+          description: Operations available on the service (containsOperations).
+          items:
+            type: object
+            properties:
+              '@type':
+                type: string
+              'schema:name':
+                type: string
+              'schema:description':
+                type: string
+            required:
+            - 'schema:name'
+        'schema:termsOfService':
+          description: Access properties and constraints for the service.
+          anyOf:
+          - type: string
+          - type: object
+            properties:
+              '@type':
+                const: schema:CreativeWork
+              'schema:name':
+                type: string
+              'schema:url':
+                type: string
+                format: uri
+        'schema:documentation':
+          description: Endpoint description document URL or reference.
+          anyOf:
+          - type: string
+            format: uri
+          - type: object
+            properties:
+              '@type':
+                const: schema:CreativeWork
+              'schema:name':
+                type: string
+              'schema:url':
+                type: string
+                format: uri
       required:
       - '@type'
       - 'schema:serviceType'
     minContains: 1
+  'schema:dataset':
+    type: array
+    description: Datasets operated on by the service (operatedDataset).
+    items:
+      anyOf:
+      - type: string
+        format: uri
+      - type: object
+        properties:
+          '@id':
+            type: string
+          '@type':
+            type: string
+          'schema:name':
+            type: string
   'schema:additionalProperty':
     type: array
     description: Optional properties for service resources.

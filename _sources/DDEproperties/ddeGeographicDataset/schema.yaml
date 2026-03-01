@@ -1,0 +1,38 @@
+---
+$schema: https://json-schema.org/draft/2020-12/schema
+title: DDE Geographic Dataset properties
+description: Conditional extension for geographic dataset resources. Implements
+  MD_SpatialRepresentation entity (DDE spec Table 5) with spatialCoverage (mandatory),
+  spatialRepresentationType, spatialResolution, referenceSystemType, and
+  referenceSystemIdentifier.
+type: object
+properties:
+  'schema:spatialCoverage':
+    description: Spatial extent of the geographic dataset. Mandatory for geographicDataset
+      resource type.
+    $ref: '#/$defs/SpatialExtent'
+  'schema:additionalProperty':
+    type: array
+    description: Spatial representation properties using DDE propertyIDs.
+    items:
+      $ref: '#/$defs/AdditionalProperty'
+    contains:
+      type: object
+      properties:
+        'schema:propertyID':
+          type: array
+          contains:
+            enum:
+            - 'dde:spatialRepresentationType'
+            - 'dde:spatialResolution'
+            - 'dde:referenceSystemType'
+            - 'dde:referenceSystemIdentifier'
+      required:
+      - 'schema:propertyID'
+required:
+- 'schema:spatialCoverage'
+$defs:
+  SpatialExtent:
+    $ref: ../../schemaorgProperties/spatialExtent/schema.yaml
+  AdditionalProperty:
+    $ref: ../../schemaorgProperties/additionalProperty/schema.yaml
