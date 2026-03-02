@@ -1,0 +1,470 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DDE Geographic Dataset properties",
+  "description": "Conditional extension for geographic dataset resources. Implements MD_SpatialRepresentation entity (DDE spec Table 5) with spatialCoverage (mandatory), spatialRepresentationType, spatialResolution, referenceSystemType, and referenceSystemIdentifier.",
+  "type": "object",
+  "properties": {
+    "schema:spatialCoverage": {
+      "description": "Spatial extent of the geographic dataset. Mandatory for geographicDataset resource type.",
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string",
+          "const": "schema:Place",
+          "default": "schema:Place"
+        },
+        "schema:name": {
+          "description": "multiple place names or DefinedTerms that have a place name and URI for the location",
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "description": "schema.org Defined Term schema",
+                "type": "object",
+                "properties": {
+                  "@type": {
+                    "const": "schema:DefinedTerm"
+                  },
+                  "schema:name": {
+                    "type": "string",
+                    "description": "text label for the term that is useful to human user"
+                  },
+                  "schema:identifier": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "description": "Properties for a schema.org identifier",
+                        "type": "object",
+                        "properties": {
+                          "@type": {
+                            "type": "string",
+                            "const": "schema:PropertyValue"
+                          },
+                          "schema:propertyID": {
+                            "type": "string",
+                            "description": "In this context for the schema:PropertyValue, this field is an identifier for the identifier schema, e.g. DOI, ARK.  Get values from https://registry.identifiers.org/registry/ for interoperability"
+                          },
+                          "schema:value": {
+                            "type": "string",
+                            "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
+                          },
+                          "schema:url": {
+                            "type": "string",
+                            "format": "uri",
+                            "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
+                          }
+                        },
+                        "allOf": [
+                          {
+                            "required": [
+                              "@type"
+                            ]
+                          },
+                          {
+                            "anyOf": [
+                              {
+                                "required": [
+                                  "schema:value"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "schema:url"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "schema:inDefinedTermSet": {
+                    "type": "string",
+                    "description": "Identifier for the controlled vocabulary responsible for this keyword."
+                  },
+                  "schema:termCode": {
+                    "type": "string",
+                    "description": "A representative code for this keyword in the controlled vocabulary (Optional).  Analogous to skos:Notation"
+                  }
+                },
+                "allOf": [
+                  {
+                    "required": [
+                      "@type"
+                    ]
+                  },
+                  {
+                    "anyOf": [
+                      {
+                        "required": [
+                          "schema:name"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "schema:identifier"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "schema:termCode"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "schema:geo": {
+          "description": "Either a bounding box or a point location.",
+          "anyOf": [
+            {
+              "type": "object",
+              "description": "A point location.",
+              "properties": {
+                "@type": {
+                  "type": "string",
+                  "const": "schema:GeoCoordinates",
+                  "default": "schema:GeoCoordinates"
+                },
+                "schema:latitude": {
+                  "type": "number"
+                },
+                "schema:longitude": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "@type",
+                "schema:latitude",
+                "schema:longitude"
+              ]
+            },
+            {
+              "type": "object",
+              "description": "A schema:GeoShape bounding box.",
+              "properties": {
+                "@type": {
+                  "type": "string",
+                  "const": "schema:GeoShape",
+                  "default": "schema:GeoShape"
+                },
+                "schema:box": {
+                  "type": "string",
+                  "description": "A GeoShape box defines an area on the surface of the earth defined by point locations of the southwest corner and northeast corner of the rectangle in latitude-longitude coordinates."
+                }
+              },
+              "required": [
+                "@type",
+                "schema:box"
+              ]
+            },
+            {
+              "type": "object",
+              "description": "A schema:GeoShape curvilinear trace.",
+              "properties": {
+                "@type": {
+                  "type": "string",
+                  "const": "schema:GeoShape",
+                  "default": "schema:GeoShape"
+                },
+                "schema:line": {
+                  "type": "string",
+                  "description": "A GeoShape line defines a curvilinear geometry as a string of latitude-longitude coordinate pairs."
+                }
+              },
+              "required": [
+                "@type",
+                "schema:line"
+              ]
+            }
+          ]
+        },
+        "geosparql:hasGeometry": {
+          "type": "object",
+          "description": "Optional geographic extent using WKT geometry.",
+          "properties": {
+            "@type": {
+              "type": "string",
+              "description": "MUST be sf: (<http://www.opengis.net/ont/sf#>) SimpleFeature geometry type."
+            },
+            "geosparql:asWKT": {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "type": "string",
+                  "const": "geosparql:wktLiteral"
+                },
+                "@value": {
+                  "type": "string",
+                  "description": "a WKT geometry description string, e.g. 'POINT(-76 -18)'"
+                }
+              }
+            },
+            "geosparql:crs": {
+              "type": "object",
+              "properties": {
+                "@id": {
+                  "type": "string",
+                  "description": "identifier string for coordinate reference system, e.g., 'CRS84'"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "schema:additionalProperty": {
+      "type": "array",
+      "description": "Spatial representation properties using DDE propertyIDs.",
+      "items": {
+        "anyOf": [
+          {
+            "type": "object",
+            "description": "Method used to represent geographic information in the resource. Value from SpatialRepresentationTypeCode (XSD).",
+            "properties": {
+              "@type": {"const": "schema:PropertyValue"},
+              "schema:propertyID": {
+                "type": "array",
+                "contains": {"const": "dde:spatialRepresentationType"},
+                "minItems": 1
+              },
+              "schema:name": {"type": "string"},
+              "schema:value": {
+                "type": "string",
+                "enum": ["vector", "grid", "textTable", "tin", "stereoModel", "video"]
+              }
+            },
+            "required": ["schema:propertyID", "schema:name", "schema:value"]
+          },
+          {
+            "type": "object",
+            "description": "Spatial resolution of the dataset (free text, e.g. \"1:1000000\", \"30m\").",
+            "properties": {
+              "@type": {"const": "schema:PropertyValue"},
+              "schema:propertyID": {
+                "type": "array",
+                "contains": {"const": "dde:spatialResolution"},
+                "minItems": 1
+              },
+              "schema:name": {"type": "string"},
+              "schema:value": {"type": "string"}
+            },
+            "required": ["schema:propertyID", "schema:name", "schema:value"]
+          },
+          {
+            "type": "object",
+            "description": "Type of coordinate reference system. Value from ReferenceSystemTypeCode (XSD, 28 values).",
+            "properties": {
+              "@type": {"const": "schema:PropertyValue"},
+              "schema:propertyID": {
+                "type": "array",
+                "contains": {"const": "dde:referenceSystemType"},
+                "minItems": 1
+              },
+              "schema:name": {"type": "string"},
+              "schema:value": {
+                "type": "string",
+                "enum": [
+                  "compoundEngineeringParametric",
+                  "compoundEngineeringParametricTemporal",
+                  "compoundEngineeringTemporal",
+                  "compoundEngineeringVertical",
+                  "compoundEngineeringVerticalTemporal",
+                  "compoundGeographic2DParametric",
+                  "compoundGeographic2DParametricTemporal",
+                  "compoundGeographic2DTemporal",
+                  "compoundGeographic2DVertical",
+                  "compoundGeographicVerticalTemporal",
+                  "compoundGeographic3DTemporal",
+                  "compoundProjected2DParametric",
+                  "compoundProjected2DParametricTemporal",
+                  "compoundProjectedTemporal",
+                  "compoundProjectedVertical",
+                  "compoundProjectedVerticalTemporal",
+                  "engineering",
+                  "engineeringDesign",
+                  "engineeringImage",
+                  "geodeticGeocentric",
+                  "geodeticGeographic2D",
+                  "geodeticGeographic3D",
+                  "geographicIdentifier",
+                  "linear",
+                  "parametric",
+                  "projected",
+                  "temporal",
+                  "vertical"
+                ]
+              }
+            },
+            "required": ["schema:propertyID", "schema:name", "schema:value"]
+          },
+          {
+            "type": "object",
+            "description": "Identifier for the coordinate reference system. Value is the identifier code string (e.g. \"EPSG:4326\"), with optional schema:url for the resolvable form.",
+            "properties": {
+              "@type": {"const": "schema:PropertyValue"},
+              "schema:propertyID": {
+                "type": "array",
+                "contains": {"const": "dde:referenceSystemIdentifier"},
+                "minItems": 1
+              },
+              "schema:name": {"type": "string"},
+              "schema:value": {
+                "type": "string",
+                "description": "The reference system identifier code (e.g. \"EPSG:4326\")."
+              },
+              "schema:url": {
+                "type": "string",
+                "format": "uri",
+                "description": "Resolvable URL for the reference system identifier (e.g. \"https://epsg.io/4326\")."
+              }
+            },
+            "allOf": [
+              {"required": ["schema:propertyID", "schema:name"]},
+              {"anyOf": [
+                {"required": ["schema:value"]},
+                {"required": ["schema:url"]}
+              ]}
+            ]
+          },
+          {
+            "type": "object",
+            "title": "additionalProperty PropertyValue",
+            "description": "PropertyValue values required to define a soft-typed property with a value. ",
+            "properties": {
+              "@type": {
+                "type": "string",
+                "const": "schema:PropertyValue"
+              },
+              "schema:propertyID": {
+                "type": "array",
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "@id": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    {
+                      "description": "schema.org Defined Term schema",
+                      "type": "object",
+                      "properties": {
+                        "@type": {
+                          "const": "schema:DefinedTerm"
+                        },
+                        "schema:name": {
+                          "type": "string",
+                          "description": "text label for the term that is useful to human user"
+                        },
+                        "schema:identifier": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "description": "Properties for a schema.org identifier",
+                              "type": "object",
+                              "properties": {
+                                "@type": {
+                                  "type": "string",
+                                  "const": "schema:PropertyValue"
+                                },
+                                "schema:propertyID": {
+                                  "type": "string",
+                                  "description": "In this context for the schema:PropertyValue, this field is an identifier for the identifier schema, e.g. DOI, ARK.  Get values from https://registry.identifiers.org/registry/ for interoperability"
+                                },
+                                "schema:value": {
+                                  "type": "string",
+                                  "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
+                                },
+                                "schema:url": {
+                                  "type": "string",
+                                  "format": "uri",
+                                  "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
+                                }
+                              },
+                              "required": [
+                                "@type"
+                              ],
+                              "anyOf": [
+                                {
+                                  "required": [
+                                    "schema:value"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "schema:url"
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        "schema:inDefinedTermSet": {
+                          "type": "string",
+                          "description": "Identifier for the controlled vocabulary responsible for this keyword."
+                        },
+                        "schema:termCode": {
+                          "type": "string",
+                          "description": "A representative code for this keyword in the controlled vocabulary (Optional).  Analogous to skos:Notation"
+                        }
+                      },
+                      "required": [
+                        "@type"
+                      ],
+                      "anyOf": [
+                        {
+                          "required": [
+                            "schema:name"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "schema:identifier"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "schema:termCode"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "minItems": 1,
+                "description": "identifier or name for the property concept quantified by the values in this variable slot. Multiple values can specify the property at different levels of granularity."
+              },
+              "schema:name": {
+                "type": "string"
+              },
+              "schema:value": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "schema:name",
+              "schema:value"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "required": ["schema:spatialCoverage"]
+}
