@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
   "title": "ECRR Service Instance Profile",
-  "description": "Complete ECRR metadata profile for service instance resources. Composes ecrrBase, ecrrCommon, ecrrAssessment, and ecrrService. Resources should be typed [\"schema:CreativeWork\", \"schema:WebAPI\"] with mainEntity pointing to ECRRO_0000202 (Service Instance).",
+  "description": "Complete ECRR metadata profile for service instance resources. Composes ecrrBase, ecrrCommon, ecrrAssessment, and ecrrService. Resources must have schema:additionalType containing \"EC Service Instance\".",
   "allOf": [
     {
       "title": "ECRR Base metadata",
@@ -6202,6 +6202,7 @@
                   "schema:CreateAction",
                   "schema:FindAction",
                   "schema:InteractAction",
+                  "schema:MoveAction",
                   "schema:PlayAction",
                   "schema:SearchAction",
                   "schema:TransferAction",
@@ -6750,6 +6751,17 @@
             "required": [
               "schema:name",
               "schema:target"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "properties": {
+        "schema:additionalType": {
+          "contains": {
+            "enum": [
+              "EC Service Instance"
             ]
           }
         }

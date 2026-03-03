@@ -12,6 +12,14 @@ allOf:
 - $ref: ../CDIFDiscovery/schema.yaml
 - type: object
   properties:
+    'prov:wasGeneratedBy':
+      description: Extended provenance activities with instruments, agents, temporal
+        bounds, methodology, and action chaining (cdifProv pattern).
+      type: array
+      items:
+        $ref: ../../../cdifProperties/cdifProv/schema.yaml
+- type: object
+  properties:
     schema:distribution:
       type: array
       items:

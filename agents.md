@@ -60,7 +60,7 @@ metadataBuildingBlocks/
 │   │   ├── xasSample/               # XAS sample (extends schema:Product)
 │   │   ├── xasInstrument/           # XAS instrument (beamline, synchrotron)
 │   │   ├── xasFacility/             # XAS facility (synchrotron source)
-│   │   ├── xasGeneratedBy/          # XAS analysis event (extends prov:Activity)
+│   │   ├── xasGeneratedBy/          # XAS analysis event (extends cdifProv)
 │   │   ├── xasHDF5DataStructure/    # HDF5 data structure for XAS
 │   │   ├── xasXdiTabularTextDataset/ # XDI tabular text dataset
 │   │   ├── xasRequired/             # XAS mandatory property group
@@ -88,7 +88,7 @@ metadataBuildingBlocks/
 │   └── profiles/                    # Top-level profiles that compose BBs
 │       ├── cdifProfiles/
 │       │   ├── CDIFDiscovery/       # CDIF Discovery profile
-│       │   └── CDIFcomplete/        # CDIF Complete profile (discovery + data description)
+│       │   └── CDIFcomplete/        # CDIF Complete profile (discovery + cdifProv + data description)
 │       ├── DDEProfiles/
 │       │   ├── DDEDiscovery/        # DDE Geoscience Discovery profile (base)
 │       │   ├── DDEDataset/          # DDE Dataset (dataset, dataCatalog, geographicDataset, nonGeographicDataset)
@@ -403,11 +403,14 @@ DDEAudioVisualProduct/    ← movie, sound
 
 ```
 DDEproperties/ddeImagery/               ← MD_Imagery (DDE spec Table 3), all optional
-├── schema:additionalProperty           ← contains DDE propertyIDs:
-│   dde:sensorType, dde:platform, dde:equipment, dde:collector,
-│   dde:signalGenerator, dde:wavelength, dde:processedLevel
-├── schema:startTime                    ← ISO 8601 acquisition start
-└── schema:endTime                      ← ISO 8601 acquisition end
+├── prov:wasGeneratedBy                 ← Imagery acquisition activity (extends cdifProv)
+│   ├── prov:used                       ← Instrument wrappers (schema:instrument sub-key):
+│   │   dde:sensorType, dde:platform, dde:equipment, dde:signalGenerator
+│   ├── schema:participant              ← DataCollector agent (schema:Role with roleName)
+│   ├── schema:startTime                ← ISO 8601 acquisition start (from cdifProv)
+│   └── schema:endTime                  ← ISO 8601 acquisition end (from cdifProv)
+└── schema:additionalProperty           ← Dataset-level properties:
+    dde:wavelength, dde:processedLevel
 
 DDEproperties/ddeServiceInfo/           ← SV_ServiceIdentification (DDE spec Table 2)
 ├── schema:distribution                 ← contains WebAPI with:
@@ -433,7 +436,7 @@ DDEproperties/ddeGeographicDataset/     ← MD_SpatialRepresentation (DDE spec T
 | `ddeResourceType` | Constrains `schema:additionalType` to require ≥1 DefinedTerm with `schema:inDefinedTermSet: "dde:codelist/ResourceTypeCode"` and `schema:termCode` from enum of 32 resource types (DDE spec Table 18). | ddeRequired |
 | `ddeRequired` | DDE mandatory property group. Uses allOf with $ref to cdifMandatory, adds ddeSubject, ddeResourceType, DDE vocabulary-constrained keywords (TopicCategoryCode + AcquisitionTypeCode), and browse graphics (schema:image). | DDEDiscovery |
 | `ddeOptional` | DDE optional properties: alternateName, measurementTechnique, additional unconstrained keywords and additionalType. | DDEDiscovery |
-| `ddeImagery` | Conditional extension for imagery resources (MD_Imagery, DDE spec Table 3). All 9 properties optional: sensor, platform, equipment, collector, startTime, endTime, signalGenerator, wavelength, processedLevel. | DDEImage |
+| `ddeImagery` | Conditional extension for imagery resources (MD_Imagery, DDE spec Table 3). Uses cdifProv provenance pattern: sensor, platform, equipment, signalGenerator mapped as instruments under `prov:wasGeneratedBy` activity; collector as `schema:participant` agent; startTime/endTime as activity temporal bounds. Wavelength and processedLevel remain as dataset-level `schema:additionalProperty`. All properties optional. | DDEImage |
 | `ddeServiceInfo` | Conditional extension for service resources (SV_ServiceIdentification, DDE spec Table 2). serviceType mandatory (21 codes), plus containsOperations, accessProperties, operatedDataset, endpointDescription. | DDEService |
 | `ddeGeographicDataset` | Conditional extension for geographic dataset resources (MD_SpatialRepresentation, DDE spec Table 5). Mandatory spatialCoverage, plus optional spatialRepresentationType, spatialResolution, referenceSystemType, referenceSystemIdentifier. | DDEDataset (sub-profile) |
 

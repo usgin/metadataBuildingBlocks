@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "DDE Resource Type constraint",
-  "description": "Constrains schema:additionalType to require at least one DefinedTerm from the DDE ResourceTypeCode codelist (42 geoscience-specific resource types).",
+  "description": "Constrains schema:additionalType to require at least one DefinedTerm from the DDE ResourceTypeCode codelist (32 resource types from DDE spec Table 18).",
   "type": "object",
   "properties": {
     "schema:additionalType": {
@@ -51,18 +51,24 @@
                         "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
                       }
                     },
-                    "required": [
-                      "@type"
-                    ],
-                    "anyOf": [
+                    "allOf": [
                       {
                         "required": [
-                          "schema:value"
+                          "@type"
                         ]
                       },
                       {
-                        "required": [
-                          "schema:url"
+                        "anyOf": [
+                          {
+                            "required": [
+                              "schema:value"
+                            ]
+                          },
+                          {
+                            "required": [
+                              "schema:url"
+                            ]
+                          }
                         ]
                       }
                     ]
@@ -78,23 +84,29 @@
                 "description": "A representative code for this keyword in the controlled vocabulary (Optional).  Analogous to skos:Notation"
               }
             },
-            "required": [
-              "@type"
-            ],
-            "anyOf": [
+            "allOf": [
               {
                 "required": [
-                  "schema:name"
+                  "@type"
                 ]
               },
               {
-                "required": [
-                  "schema:identifier"
-                ]
-              },
-              {
-                "required": [
-                  "schema:termCode"
+                "anyOf": [
+                  {
+                    "required": [
+                      "schema:name"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "schema:identifier"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "schema:termCode"
+                    ]
+                  }
                 ]
               }
             ]
@@ -113,48 +125,38 @@
           "schema:termCode": {
             "type": "string",
             "enum": [
-              "attribute",
-              "attributeType",
-              "collectionHardware",
-              "collectionSession",
+              "aggregate",
+              "application",
+              "webApplication",
+              "collection",
               "dataset",
-              "dimensionGroup",
-              "document",
-              "feature",
-              "featureType",
-              "fieldSession",
+              "dataCatalog",
               "geographicDataset",
-              "geographicImage",
-              "geologicMap",
-              "image",
-              "initiative",
-              "knowledgeGraph",
-              "map",
-              "model",
               "nonGeographicDataset",
-              "physicalSample",
-              "platformSeries",
-              "product",
-              "propertyType",
+              "document",
+              "article",
+              "thesis",
+              "book",
+              "poster",
+              "webPage",
+              "image",
+              "map",
+              "photograph",
+              "explanatoryFigure",
+              "initiative",
+              "fieldSession",
+              "learningResource",
+              "guide",
+              "model",
+              "movie",
               "repository",
-              "sample",
-              "sensor",
-              "sensorSeries",
+              "semanticResource",
+              "definedTermSet",
               "series",
               "service",
+              "webAPI",
               "software",
-              "tile",
-              "transferAggregate",
-              "vocabulary",
-              "3dModel",
-              "crossSection",
-              "drillhole",
-              "geochemicalDataset",
-              "geochronologicalDataset",
-              "geophysicalDataset",
-              "mineralogicalDataset",
-              "paleontologicalDataset",
-              "stratigraphicSection"
+              "sound"
             ]
           }
         },

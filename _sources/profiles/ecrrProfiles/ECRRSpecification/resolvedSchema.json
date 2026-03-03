@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
   "title": "ECRR Specification Profile",
-  "description": "Complete ECRR metadata profile for specification resources. Composes ecrrBase, ecrrCommon, ecrrAssessment, and ecrrSpecification. Resources should have mainEntity pointing to ECRRO_0000204 (Specification) with optional subtype from the SPKT vocabulary.",
+  "description": "Complete ECRR metadata profile for specification resources. Composes ecrrBase, ecrrCommon, ecrrAssessment, and ecrrSpecification. Resources must have schema:additionalType containing \"EC Specification\".",
   "allOf": [
     {
       "title": "ECRR Base metadata",
@@ -5876,6 +5876,17 @@
             "schema:propertyID",
             "schema:value"
           ]
+        }
+      }
+    },
+    {
+      "properties": {
+        "schema:additionalType": {
+          "contains": {
+            "enum": [
+              "EC Specification"
+            ]
+          }
         }
       }
     }

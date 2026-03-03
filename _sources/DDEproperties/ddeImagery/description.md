@@ -1,22 +1,24 @@
 ## DDE Imagery Properties
 
-Conditional extension for imagery resources. Implements the MD_Imagery entity from DDE spec Table 3 / XSD. This building block is composed into the DDEImage profile when describing remote sensing or other imagery datasets.
+Conditional extension for imagery resources. Maps DDE imagery acquisition metadata into the CDIF provenance pattern (cdifProv). This building block is composed into the DDEImage profile when describing remote sensing or other imagery datasets.
 
-All properties are optional. Value types are constrained per the XSD type definitions.
+All properties are optional.
 
-### Properties via `schema:additionalProperty`
+### Imagery acquisition via `prov:wasGeneratedBy`
 
-Each item is a typed `schema:PropertyValue` with a DDE `propertyID`:
+Each imagery acquisition event is represented as a provenance activity following the cdifProv pattern. The activity captures:
 
-- **`dde:sensorType`**: Type of sensor (e.g., "Multispectral", "SAR", "LiDAR"). Value: string.
-- **`dde:platform`**: Platform carrying the sensor (e.g., "Landsat-8", "Sentinel-2A"). Value: string.
-- **`dde:equipment`**: Equipment used for acquisition. Value: string.
-- **`dde:collector`**: Person or organization that collected the imagery. Value: string. (Not in XSD MD_Imagery; included from spec table.)
-- **`dde:signalGenerator`**: Type of signal used (e.g., "Passive solar", "Active radar"). Value: string.
-- **`dde:wavelength`**: Wavelength range (e.g., "0.45-0.52 micrometers"). Value: string.
-- **`dde:processedLevel`**: Processing level. Value from `ProcessingLevelCode` enum: Level0, Level1, Level2, Level3, Level4.
+- **Instruments** (`prov:used` with `schema:instrument`): Each instrument is typed via `schema:additionalType` with a DDE category:
+  - `dde:sensorType` — Type of sensor (e.g., "Multispectral", "SAR", "LiDAR")
+  - `dde:platform` — Platform carrying the sensor (e.g., "Landsat-8", "Sentinel-2A")
+  - `dde:equipment` — Equipment used for acquisition (e.g., "Operational Land Imager")
+  - `dde:signalGenerator` — Type of signal used (e.g., "Passive solar", "Active radar")
+- **Participants** (`schema:participant`): The data collector as an agentInRole with `schema:roleName: "DataCollector"`
+- **Temporal bounds**: `schema:startTime` and `schema:endTime` on the activity (ISO 8601)
 
-### Direct properties
+### Dataset-level properties via `schema:additionalProperty`
 
-- **`schema:startTime`**: Start time of acquisition (ISO 8601). Not in XSD; from spec table.
-- **`schema:endTime`**: End time of acquisition (ISO 8601). Not in XSD; from spec table.
+Properties that describe the image product itself (not the acquisition activity):
+
+- **`dde:wavelength`** — Wavelength range (e.g., "0.43-2.29 micrometers"). Value: string.
+- **`dde:processedLevel`** — Processing level. Value from `ProcessingLevelCode` enum: Level0, Level1, Level2, Level3, Level4.

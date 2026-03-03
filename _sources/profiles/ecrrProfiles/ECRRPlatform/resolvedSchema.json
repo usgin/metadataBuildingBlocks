@@ -5,7 +5,6 @@
   "description": "Complete ECRR metadata profile for platform resources. Composes ecrrBase, ecrrCommon, and ecrrAssessment. Resources must have schema:additionalType containing \"EC Platform\".",
   "allOf": [
     {
-      "$schema": "https://json-schema.org/draft/2020-12/schema",
       "title": "ECRR Base metadata",
       "description": "Mandatory properties for all EarthCube Resource Registry (ECRR) resource types. Every ECRR resource must have identity (@id), type classification (@type), name, description, resource type classification (mainEntity), and licensing.",
       "type": "object",
@@ -47,7 +46,6 @@
           "description": "ECRR resource type classification. Array of labeled links (CreativeWork objects) with name and url pointing to ECRRO resource type URIs. The first entry identifies the base resource type (e.g. Software, Service Instance, Specification). Additional entries may specify subtypes from SPKT_ or srt_ vocabularies.",
           "anyOf": [
             {
-              "$schema": "https://json-schema.org/draft/2020-12/schema",
               "description": "schema for a labeled link, a profile of schema.org/CreativeWork",
               "type": "object",
               "properties": {
@@ -75,7 +73,6 @@
             {
               "type": "array",
               "items": {
-                "$schema": "https://json-schema.org/draft/2020-12/schema",
                 "description": "schema for a labeled link, a profile of schema.org/CreativeWork",
                 "type": "object",
                 "properties": {
@@ -123,7 +120,6 @@
                 }
               },
               {
-                "$schema": "https://json-schema.org/draft/2020-12/schema",
                 "description": "schema for a labeled link, a profile of schema.org/CreativeWork",
                 "type": "object",
                 "properties": {
@@ -162,7 +158,6 @@
       ]
     },
     {
-      "$schema": "https://json-schema.org/draft/2020-12/schema",
       "title": "ECRR Common optional metadata",
       "description": "Commonly used optional properties shared across multiple ECRR resource types. Includes identifiers, agents (creator, contributor, publisher, editor), keywords, science domains (about), audience, related resources, funding, and citations.",
       "type": "object",
@@ -171,7 +166,6 @@
           "description": "External identifier for the resource (e.g. DOI, ARK). Use PropertyValue pattern to specify identifier scheme and resolver URL.",
           "anyOf": [
             {
-              "$schema": "https://json-schema.org/draft/2020-12/schema",
               "description": "Properties for a schema.org identifier",
               "type": "object",
               "properties": {
@@ -188,8 +182,8 @@
                   "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
                 },
                 "schema:url": {
-                  "format": "uri",
                   "type": "string",
+                  "format": "uri",
                   "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
                 }
               },
@@ -272,7 +266,6 @@
                 }
               },
               {
-                "$schema": "https://json-schema.org/draft/2020-12/schema",
                 "description": "schema for cdif profile of schema.org/Person",
                 "type": "object",
                 "properties": {
@@ -287,12 +280,66 @@
                     "type": "string",
                     "description": "string label for person that is meaningful for human users"
                   },
+                  "schema:description": {
+                    "type": "string"
+                  },
+                  "schema:identifier": {
+                    "description": "identifier for person, recommend ORCID",
+                    "anyOf": [
+                      {
+                        "description": "Properties for a schema.org identifier",
+                        "type": "object",
+                        "properties": {
+                          "@type": {
+                            "type": "string",
+                            "const": "schema:PropertyValue"
+                          },
+                          "schema:propertyID": {
+                            "type": "string",
+                            "description": "In this context for the schema:PropertyValue, this field is an identifier for the identifier schema, e.g. DOI, ARK.  Get values from https://registry.identifiers.org/registry/ for interoperability"
+                          },
+                          "schema:value": {
+                            "type": "string",
+                            "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
+                          },
+                          "schema:url": {
+                            "type": "string",
+                            "format": "uri",
+                            "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
+                          }
+                        },
+                        "allOf": [
+                          {
+                            "required": [
+                              "@type"
+                            ]
+                          },
+                          {
+                            "anyOf": [
+                              {
+                                "required": [
+                                  "schema:value"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "schema:url"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ]
+                  },
                   "schema:alternateName": {
                     "type": "string",
                     "description": "other labels by which the person might be known"
                   },
                   "schema:affiliation": {
-                    "$schema": "https://json-schema.org/draft/2020-12/schema",
                     "type": "object",
                     "properties": {
                       "@id": {
@@ -322,7 +369,6 @@
                               ]
                             },
                             {
-                              "$schema": "https://json-schema.org/draft/2020-12/schema",
                               "description": "schema.org Defined Term schema",
                               "type": "object",
                               "properties": {
@@ -339,7 +385,6 @@
                                       "type": "string"
                                     },
                                     {
-                                      "$schema": "https://json-schema.org/draft/2020-12/schema",
                                       "description": "Properties for a schema.org identifier",
                                       "type": "object",
                                       "properties": {
@@ -356,8 +401,8 @@
                                           "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
                                         },
                                         "schema:url": {
-                                          "format": "uri",
                                           "type": "string",
+                                          "format": "uri",
                                           "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
                                         }
                                       },
@@ -442,7 +487,6 @@
                         "description": "identifier for organization",
                         "anyOf": [
                           {
-                            "$schema": "https://json-schema.org/draft/2020-12/schema",
                             "description": "Properties for a schema.org identifier",
                             "type": "object",
                             "properties": {
@@ -459,8 +503,8 @@
                                 "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
                               },
                               "schema:url": {
-                                "format": "uri",
                                 "type": "string",
+                                "format": "uri",
                                 "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
                               }
                             },
@@ -519,10 +563,10 @@
                           }
                         ]
                       }
-                    ]
+                    ],
+                    "description": "if affiliation is present, value must be a schema:Organization."
                   },
                   "schema:contactPoint": {
-                    "description": "restrict to email only. Schema.org allows telephone and postal contacts as well",
                     "type": "object",
                     "properties": {
                       "@type": {
@@ -533,63 +577,8 @@
                       "schema:email": {
                         "type": "string"
                       }
-                    }
-                  },
-                  "schema:description": {
-                    "type": "string"
-                  },
-                  "schema:identifier": {
-                    "description": "identifier for person, recommend ORCID",
-                    "anyOf": [
-                      {
-                        "$schema": "https://json-schema.org/draft/2020-12/schema",
-                        "description": "Properties for a schema.org identifier",
-                        "type": "object",
-                        "properties": {
-                          "@type": {
-                            "type": "string",
-                            "const": "schema:PropertyValue"
-                          },
-                          "schema:propertyID": {
-                            "type": "string",
-                            "description": "In this context for the schema:PropertyValue, this field is an identifier for the identifier schema, e.g. DOI, ARK.  Get values from https://registry.identifiers.org/registry/ for interoperability"
-                          },
-                          "schema:value": {
-                            "type": "string",
-                            "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
-                          },
-                          "schema:url": {
-                            "format": "uri",
-                            "type": "string",
-                            "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
-                          }
-                        },
-                        "allOf": [
-                          {
-                            "required": [
-                              "@type"
-                            ]
-                          },
-                          {
-                            "anyOf": [
-                              {
-                                "required": [
-                                  "schema:value"
-                                ]
-                              },
-                              {
-                                "required": [
-                                  "schema:url"
-                                ]
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "string"
-                      }
-                    ]
+                    },
+                    "description": "restrict to email only. Schema.org allows telephone and postal contacts as well"
                   },
                   "schema:sameAs": {
                     "type": "array",
@@ -622,7 +611,6 @@
                 ]
               },
               {
-                "$schema": "https://json-schema.org/draft/2020-12/schema",
                 "type": "object",
                 "properties": {
                   "@id": {
@@ -652,7 +640,6 @@
                           ]
                         },
                         {
-                          "$schema": "https://json-schema.org/draft/2020-12/schema",
                           "description": "schema.org Defined Term schema",
                           "type": "object",
                           "properties": {
@@ -669,7 +656,6 @@
                                   "type": "string"
                                 },
                                 {
-                                  "$schema": "https://json-schema.org/draft/2020-12/schema",
                                   "description": "Properties for a schema.org identifier",
                                   "type": "object",
                                   "properties": {
@@ -686,8 +672,8 @@
                                       "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
                                     },
                                     "schema:url": {
-                                      "format": "uri",
                                       "type": "string",
+                                      "format": "uri",
                                       "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
                                     }
                                   },
@@ -772,7 +758,6 @@
                     "description": "identifier for organization",
                     "anyOf": [
                       {
-                        "$schema": "https://json-schema.org/draft/2020-12/schema",
                         "description": "Properties for a schema.org identifier",
                         "type": "object",
                         "properties": {
@@ -789,8 +774,8 @@
                             "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
                           },
                           "schema:url": {
-                            "format": "uri",
                             "type": "string",
+                            "format": "uri",
                             "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
                           }
                         },
@@ -868,7 +853,6 @@
                 }
               },
               {
-                "$schema": "https://json-schema.org/draft/2020-12/schema",
                 "description": "schema for cdif profile of schema.org/Person",
                 "type": "object",
                 "properties": {
@@ -883,12 +867,66 @@
                     "type": "string",
                     "description": "string label for person that is meaningful for human users"
                   },
+                  "schema:description": {
+                    "type": "string"
+                  },
+                  "schema:identifier": {
+                    "description": "identifier for person, recommend ORCID",
+                    "anyOf": [
+                      {
+                        "description": "Properties for a schema.org identifier",
+                        "type": "object",
+                        "properties": {
+                          "@type": {
+                            "type": "string",
+                            "const": "schema:PropertyValue"
+                          },
+                          "schema:propertyID": {
+                            "type": "string",
+                            "description": "In this context for the schema:PropertyValue, this field is an identifier for the identifier schema, e.g. DOI, ARK.  Get values from https://registry.identifiers.org/registry/ for interoperability"
+                          },
+                          "schema:value": {
+                            "type": "string",
+                            "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
+                          },
+                          "schema:url": {
+                            "type": "string",
+                            "format": "uri",
+                            "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
+                          }
+                        },
+                        "allOf": [
+                          {
+                            "required": [
+                              "@type"
+                            ]
+                          },
+                          {
+                            "anyOf": [
+                              {
+                                "required": [
+                                  "schema:value"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "schema:url"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ]
+                  },
                   "schema:alternateName": {
                     "type": "string",
                     "description": "other labels by which the person might be known"
                   },
                   "schema:affiliation": {
-                    "$schema": "https://json-schema.org/draft/2020-12/schema",
                     "type": "object",
                     "properties": {
                       "@id": {
@@ -918,7 +956,6 @@
                               ]
                             },
                             {
-                              "$schema": "https://json-schema.org/draft/2020-12/schema",
                               "description": "schema.org Defined Term schema",
                               "type": "object",
                               "properties": {
@@ -935,7 +972,6 @@
                                       "type": "string"
                                     },
                                     {
-                                      "$schema": "https://json-schema.org/draft/2020-12/schema",
                                       "description": "Properties for a schema.org identifier",
                                       "type": "object",
                                       "properties": {
@@ -952,8 +988,8 @@
                                           "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
                                         },
                                         "schema:url": {
-                                          "format": "uri",
                                           "type": "string",
+                                          "format": "uri",
                                           "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
                                         }
                                       },
@@ -1038,7 +1074,6 @@
                         "description": "identifier for organization",
                         "anyOf": [
                           {
-                            "$schema": "https://json-schema.org/draft/2020-12/schema",
                             "description": "Properties for a schema.org identifier",
                             "type": "object",
                             "properties": {
@@ -1055,8 +1090,8 @@
                                 "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
                               },
                               "schema:url": {
-                                "format": "uri",
                                 "type": "string",
+                                "format": "uri",
                                 "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
                               }
                             },
@@ -1115,10 +1150,10 @@
                           }
                         ]
                       }
-                    ]
+                    ],
+                    "description": "if affiliation is present, value must be a schema:Organization."
                   },
                   "schema:contactPoint": {
-                    "description": "restrict to email only. Schema.org allows telephone and postal contacts as well",
                     "type": "object",
                     "properties": {
                       "@type": {
@@ -1129,63 +1164,8 @@
                       "schema:email": {
                         "type": "string"
                       }
-                    }
-                  },
-                  "schema:description": {
-                    "type": "string"
-                  },
-                  "schema:identifier": {
-                    "description": "identifier for person, recommend ORCID",
-                    "anyOf": [
-                      {
-                        "$schema": "https://json-schema.org/draft/2020-12/schema",
-                        "description": "Properties for a schema.org identifier",
-                        "type": "object",
-                        "properties": {
-                          "@type": {
-                            "type": "string",
-                            "const": "schema:PropertyValue"
-                          },
-                          "schema:propertyID": {
-                            "type": "string",
-                            "description": "In this context for the schema:PropertyValue, this field is an identifier for the identifier schema, e.g. DOI, ARK.  Get values from https://registry.identifiers.org/registry/ for interoperability"
-                          },
-                          "schema:value": {
-                            "type": "string",
-                            "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
-                          },
-                          "schema:url": {
-                            "format": "uri",
-                            "type": "string",
-                            "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
-                          }
-                        },
-                        "allOf": [
-                          {
-                            "required": [
-                              "@type"
-                            ]
-                          },
-                          {
-                            "anyOf": [
-                              {
-                                "required": [
-                                  "schema:value"
-                                ]
-                              },
-                              {
-                                "required": [
-                                  "schema:url"
-                                ]
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "string"
-                      }
-                    ]
+                    },
+                    "description": "restrict to email only. Schema.org allows telephone and postal contacts as well"
                   },
                   "schema:sameAs": {
                     "type": "array",
@@ -1218,7 +1198,6 @@
                 ]
               },
               {
-                "$schema": "https://json-schema.org/draft/2020-12/schema",
                 "type": "object",
                 "properties": {
                   "@id": {
@@ -1248,7 +1227,6 @@
                           ]
                         },
                         {
-                          "$schema": "https://json-schema.org/draft/2020-12/schema",
                           "description": "schema.org Defined Term schema",
                           "type": "object",
                           "properties": {
@@ -1265,7 +1243,6 @@
                                   "type": "string"
                                 },
                                 {
-                                  "$schema": "https://json-schema.org/draft/2020-12/schema",
                                   "description": "Properties for a schema.org identifier",
                                   "type": "object",
                                   "properties": {
@@ -1282,8 +1259,8 @@
                                       "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
                                     },
                                     "schema:url": {
-                                      "format": "uri",
                                       "type": "string",
+                                      "format": "uri",
                                       "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
                                     }
                                   },
@@ -1368,7 +1345,6 @@
                     "description": "identifier for organization",
                     "anyOf": [
                       {
-                        "$schema": "https://json-schema.org/draft/2020-12/schema",
                         "description": "Properties for a schema.org identifier",
                         "type": "object",
                         "properties": {
@@ -1385,8 +1361,8 @@
                             "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
                           },
                           "schema:url": {
-                            "format": "uri",
                             "type": "string",
+                            "format": "uri",
                             "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
                           }
                         },
@@ -1462,7 +1438,6 @@
               }
             },
             {
-              "$schema": "https://json-schema.org/draft/2020-12/schema",
               "description": "schema for cdif profile of schema.org/Person",
               "type": "object",
               "properties": {
@@ -1477,12 +1452,66 @@
                   "type": "string",
                   "description": "string label for person that is meaningful for human users"
                 },
+                "schema:description": {
+                  "type": "string"
+                },
+                "schema:identifier": {
+                  "description": "identifier for person, recommend ORCID",
+                  "anyOf": [
+                    {
+                      "description": "Properties for a schema.org identifier",
+                      "type": "object",
+                      "properties": {
+                        "@type": {
+                          "type": "string",
+                          "const": "schema:PropertyValue"
+                        },
+                        "schema:propertyID": {
+                          "type": "string",
+                          "description": "In this context for the schema:PropertyValue, this field is an identifier for the identifier schema, e.g. DOI, ARK.  Get values from https://registry.identifiers.org/registry/ for interoperability"
+                        },
+                        "schema:value": {
+                          "type": "string",
+                          "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
+                        },
+                        "schema:url": {
+                          "type": "string",
+                          "format": "uri",
+                          "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
+                        }
+                      },
+                      "allOf": [
+                        {
+                          "required": [
+                            "@type"
+                          ]
+                        },
+                        {
+                          "anyOf": [
+                            {
+                              "required": [
+                                "schema:value"
+                              ]
+                            },
+                            {
+                              "required": [
+                                "schema:url"
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
                 "schema:alternateName": {
                   "type": "string",
                   "description": "other labels by which the person might be known"
                 },
                 "schema:affiliation": {
-                  "$schema": "https://json-schema.org/draft/2020-12/schema",
                   "type": "object",
                   "properties": {
                     "@id": {
@@ -1512,7 +1541,6 @@
                             ]
                           },
                           {
-                            "$schema": "https://json-schema.org/draft/2020-12/schema",
                             "description": "schema.org Defined Term schema",
                             "type": "object",
                             "properties": {
@@ -1529,7 +1557,6 @@
                                     "type": "string"
                                   },
                                   {
-                                    "$schema": "https://json-schema.org/draft/2020-12/schema",
                                     "description": "Properties for a schema.org identifier",
                                     "type": "object",
                                     "properties": {
@@ -1546,8 +1573,8 @@
                                         "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
                                       },
                                       "schema:url": {
-                                        "format": "uri",
                                         "type": "string",
+                                        "format": "uri",
                                         "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
                                       }
                                     },
@@ -1632,7 +1659,6 @@
                       "description": "identifier for organization",
                       "anyOf": [
                         {
-                          "$schema": "https://json-schema.org/draft/2020-12/schema",
                           "description": "Properties for a schema.org identifier",
                           "type": "object",
                           "properties": {
@@ -1649,8 +1675,8 @@
                               "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
                             },
                             "schema:url": {
-                              "format": "uri",
                               "type": "string",
+                              "format": "uri",
                               "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
                             }
                           },
@@ -1709,10 +1735,10 @@
                         }
                       ]
                     }
-                  ]
+                  ],
+                  "description": "if affiliation is present, value must be a schema:Organization."
                 },
                 "schema:contactPoint": {
-                  "description": "restrict to email only. Schema.org allows telephone and postal contacts as well",
                   "type": "object",
                   "properties": {
                     "@type": {
@@ -1723,63 +1749,8 @@
                     "schema:email": {
                       "type": "string"
                     }
-                  }
-                },
-                "schema:description": {
-                  "type": "string"
-                },
-                "schema:identifier": {
-                  "description": "identifier for person, recommend ORCID",
-                  "anyOf": [
-                    {
-                      "$schema": "https://json-schema.org/draft/2020-12/schema",
-                      "description": "Properties for a schema.org identifier",
-                      "type": "object",
-                      "properties": {
-                        "@type": {
-                          "type": "string",
-                          "const": "schema:PropertyValue"
-                        },
-                        "schema:propertyID": {
-                          "type": "string",
-                          "description": "In this context for the schema:PropertyValue, this field is an identifier for the identifier schema, e.g. DOI, ARK.  Get values from https://registry.identifiers.org/registry/ for interoperability"
-                        },
-                        "schema:value": {
-                          "type": "string",
-                          "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
-                        },
-                        "schema:url": {
-                          "format": "uri",
-                          "type": "string",
-                          "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
-                        }
-                      },
-                      "allOf": [
-                        {
-                          "required": [
-                            "@type"
-                          ]
-                        },
-                        {
-                          "anyOf": [
-                            {
-                              "required": [
-                                "schema:value"
-                              ]
-                            },
-                            {
-                              "required": [
-                                "schema:url"
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    },
-                    {
-                      "type": "string"
-                    }
-                  ]
+                  },
+                  "description": "restrict to email only. Schema.org allows telephone and postal contacts as well"
                 },
                 "schema:sameAs": {
                   "type": "array",
@@ -1812,7 +1783,6 @@
               ]
             },
             {
-              "$schema": "https://json-schema.org/draft/2020-12/schema",
               "type": "object",
               "properties": {
                 "@id": {
@@ -1842,7 +1812,6 @@
                         ]
                       },
                       {
-                        "$schema": "https://json-schema.org/draft/2020-12/schema",
                         "description": "schema.org Defined Term schema",
                         "type": "object",
                         "properties": {
@@ -1859,7 +1828,6 @@
                                 "type": "string"
                               },
                               {
-                                "$schema": "https://json-schema.org/draft/2020-12/schema",
                                 "description": "Properties for a schema.org identifier",
                                 "type": "object",
                                 "properties": {
@@ -1876,8 +1844,8 @@
                                     "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
                                   },
                                   "schema:url": {
-                                    "format": "uri",
                                     "type": "string",
+                                    "format": "uri",
                                     "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
                                   }
                                 },
@@ -1962,7 +1930,6 @@
                   "description": "identifier for organization",
                   "anyOf": [
                     {
-                      "$schema": "https://json-schema.org/draft/2020-12/schema",
                       "description": "Properties for a schema.org identifier",
                       "type": "object",
                       "properties": {
@@ -1979,8 +1946,8 @@
                           "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
                         },
                         "schema:url": {
-                          "format": "uri",
                           "type": "string",
+                          "format": "uri",
                           "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
                         }
                       },
@@ -2057,7 +2024,6 @@
                 }
               },
               {
-                "$schema": "https://json-schema.org/draft/2020-12/schema",
                 "description": "schema for cdif profile of schema.org/Person",
                 "type": "object",
                 "properties": {
@@ -2072,12 +2038,66 @@
                     "type": "string",
                     "description": "string label for person that is meaningful for human users"
                   },
+                  "schema:description": {
+                    "type": "string"
+                  },
+                  "schema:identifier": {
+                    "description": "identifier for person, recommend ORCID",
+                    "anyOf": [
+                      {
+                        "description": "Properties for a schema.org identifier",
+                        "type": "object",
+                        "properties": {
+                          "@type": {
+                            "type": "string",
+                            "const": "schema:PropertyValue"
+                          },
+                          "schema:propertyID": {
+                            "type": "string",
+                            "description": "In this context for the schema:PropertyValue, this field is an identifier for the identifier schema, e.g. DOI, ARK.  Get values from https://registry.identifiers.org/registry/ for interoperability"
+                          },
+                          "schema:value": {
+                            "type": "string",
+                            "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
+                          },
+                          "schema:url": {
+                            "type": "string",
+                            "format": "uri",
+                            "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
+                          }
+                        },
+                        "allOf": [
+                          {
+                            "required": [
+                              "@type"
+                            ]
+                          },
+                          {
+                            "anyOf": [
+                              {
+                                "required": [
+                                  "schema:value"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "schema:url"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ]
+                  },
                   "schema:alternateName": {
                     "type": "string",
                     "description": "other labels by which the person might be known"
                   },
                   "schema:affiliation": {
-                    "$schema": "https://json-schema.org/draft/2020-12/schema",
                     "type": "object",
                     "properties": {
                       "@id": {
@@ -2107,7 +2127,6 @@
                               ]
                             },
                             {
-                              "$schema": "https://json-schema.org/draft/2020-12/schema",
                               "description": "schema.org Defined Term schema",
                               "type": "object",
                               "properties": {
@@ -2124,7 +2143,6 @@
                                       "type": "string"
                                     },
                                     {
-                                      "$schema": "https://json-schema.org/draft/2020-12/schema",
                                       "description": "Properties for a schema.org identifier",
                                       "type": "object",
                                       "properties": {
@@ -2141,8 +2159,8 @@
                                           "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
                                         },
                                         "schema:url": {
-                                          "format": "uri",
                                           "type": "string",
+                                          "format": "uri",
                                           "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
                                         }
                                       },
@@ -2227,7 +2245,6 @@
                         "description": "identifier for organization",
                         "anyOf": [
                           {
-                            "$schema": "https://json-schema.org/draft/2020-12/schema",
                             "description": "Properties for a schema.org identifier",
                             "type": "object",
                             "properties": {
@@ -2244,8 +2261,8 @@
                                 "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
                               },
                               "schema:url": {
-                                "format": "uri",
                                 "type": "string",
+                                "format": "uri",
                                 "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
                               }
                             },
@@ -2304,10 +2321,10 @@
                           }
                         ]
                       }
-                    ]
+                    ],
+                    "description": "if affiliation is present, value must be a schema:Organization."
                   },
                   "schema:contactPoint": {
-                    "description": "restrict to email only. Schema.org allows telephone and postal contacts as well",
                     "type": "object",
                     "properties": {
                       "@type": {
@@ -2318,63 +2335,8 @@
                       "schema:email": {
                         "type": "string"
                       }
-                    }
-                  },
-                  "schema:description": {
-                    "type": "string"
-                  },
-                  "schema:identifier": {
-                    "description": "identifier for person, recommend ORCID",
-                    "anyOf": [
-                      {
-                        "$schema": "https://json-schema.org/draft/2020-12/schema",
-                        "description": "Properties for a schema.org identifier",
-                        "type": "object",
-                        "properties": {
-                          "@type": {
-                            "type": "string",
-                            "const": "schema:PropertyValue"
-                          },
-                          "schema:propertyID": {
-                            "type": "string",
-                            "description": "In this context for the schema:PropertyValue, this field is an identifier for the identifier schema, e.g. DOI, ARK.  Get values from https://registry.identifiers.org/registry/ for interoperability"
-                          },
-                          "schema:value": {
-                            "type": "string",
-                            "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
-                          },
-                          "schema:url": {
-                            "format": "uri",
-                            "type": "string",
-                            "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
-                          }
-                        },
-                        "allOf": [
-                          {
-                            "required": [
-                              "@type"
-                            ]
-                          },
-                          {
-                            "anyOf": [
-                              {
-                                "required": [
-                                  "schema:value"
-                                ]
-                              },
-                              {
-                                "required": [
-                                  "schema:url"
-                                ]
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "type": "string"
-                      }
-                    ]
+                    },
+                    "description": "restrict to email only. Schema.org allows telephone and postal contacts as well"
                   },
                   "schema:sameAs": {
                     "type": "array",
@@ -2407,7 +2369,6 @@
                 ]
               },
               {
-                "$schema": "https://json-schema.org/draft/2020-12/schema",
                 "type": "object",
                 "properties": {
                   "@id": {
@@ -2437,7 +2398,6 @@
                           ]
                         },
                         {
-                          "$schema": "https://json-schema.org/draft/2020-12/schema",
                           "description": "schema.org Defined Term schema",
                           "type": "object",
                           "properties": {
@@ -2454,7 +2414,6 @@
                                   "type": "string"
                                 },
                                 {
-                                  "$schema": "https://json-schema.org/draft/2020-12/schema",
                                   "description": "Properties for a schema.org identifier",
                                   "type": "object",
                                   "properties": {
@@ -2471,8 +2430,8 @@
                                       "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
                                     },
                                     "schema:url": {
-                                      "format": "uri",
                                       "type": "string",
+                                      "format": "uri",
                                       "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
                                     }
                                   },
@@ -2557,7 +2516,6 @@
                     "description": "identifier for organization",
                     "anyOf": [
                       {
-                        "$schema": "https://json-schema.org/draft/2020-12/schema",
                         "description": "Properties for a schema.org identifier",
                         "type": "object",
                         "properties": {
@@ -2574,8 +2532,8 @@
                             "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
                           },
                           "schema:url": {
-                            "format": "uri",
                             "type": "string",
+                            "format": "uri",
                             "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
                           }
                         },
@@ -2643,7 +2601,6 @@
           "description": "Funding sources and grants that supported the resource.",
           "type": "array",
           "items": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
             "description": "Funding acknowledgement properties, profile of schema.org/MonetaryGrant",
             "type": "object",
             "properties": {
@@ -2653,8 +2610,7 @@
                 "const": "schema:MonetaryGrant"
               },
               "schema:identifier": {
-                "$schema": "https://json-schema.org/draft/2020-12/schema",
-                "description": "Properties for a schema.org identifier",
+                "description": "identifier for a particular grant",
                 "type": "object",
                 "properties": {
                   "@type": {
@@ -2670,8 +2626,8 @@
                     "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
                   },
                   "schema:url": {
-                    "format": "uri",
                     "type": "string",
+                    "format": "uri",
                     "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
                   }
                 },
@@ -2717,7 +2673,6 @@
                     }
                   },
                   {
-                    "$schema": "https://json-schema.org/draft/2020-12/schema",
                     "description": "schema for cdif profile of schema.org/Person",
                     "type": "object",
                     "properties": {
@@ -2732,12 +2687,66 @@
                         "type": "string",
                         "description": "string label for person that is meaningful for human users"
                       },
+                      "schema:description": {
+                        "type": "string"
+                      },
+                      "schema:identifier": {
+                        "description": "identifier for person, recommend ORCID",
+                        "anyOf": [
+                          {
+                            "description": "Properties for a schema.org identifier",
+                            "type": "object",
+                            "properties": {
+                              "@type": {
+                                "type": "string",
+                                "const": "schema:PropertyValue"
+                              },
+                              "schema:propertyID": {
+                                "type": "string",
+                                "description": "In this context for the schema:PropertyValue, this field is an identifier for the identifier schema, e.g. DOI, ARK.  Get values from https://registry.identifiers.org/registry/ for interoperability"
+                              },
+                              "schema:value": {
+                                "type": "string",
+                                "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
+                              },
+                              "schema:url": {
+                                "type": "string",
+                                "format": "uri",
+                                "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
+                              }
+                            },
+                            "allOf": [
+                              {
+                                "required": [
+                                  "@type"
+                                ]
+                              },
+                              {
+                                "anyOf": [
+                                  {
+                                    "required": [
+                                      "schema:value"
+                                    ]
+                                  },
+                                  {
+                                    "required": [
+                                      "schema:url"
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "string"
+                          }
+                        ]
+                      },
                       "schema:alternateName": {
                         "type": "string",
                         "description": "other labels by which the person might be known"
                       },
                       "schema:affiliation": {
-                        "$schema": "https://json-schema.org/draft/2020-12/schema",
                         "type": "object",
                         "properties": {
                           "@id": {
@@ -2767,7 +2776,6 @@
                                   ]
                                 },
                                 {
-                                  "$schema": "https://json-schema.org/draft/2020-12/schema",
                                   "description": "schema.org Defined Term schema",
                                   "type": "object",
                                   "properties": {
@@ -2784,7 +2792,6 @@
                                           "type": "string"
                                         },
                                         {
-                                          "$schema": "https://json-schema.org/draft/2020-12/schema",
                                           "description": "Properties for a schema.org identifier",
                                           "type": "object",
                                           "properties": {
@@ -2801,8 +2808,8 @@
                                               "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
                                             },
                                             "schema:url": {
-                                              "format": "uri",
                                               "type": "string",
+                                              "format": "uri",
                                               "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
                                             }
                                           },
@@ -2887,7 +2894,6 @@
                             "description": "identifier for organization",
                             "anyOf": [
                               {
-                                "$schema": "https://json-schema.org/draft/2020-12/schema",
                                 "description": "Properties for a schema.org identifier",
                                 "type": "object",
                                 "properties": {
@@ -2904,8 +2910,8 @@
                                     "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
                                   },
                                   "schema:url": {
-                                    "format": "uri",
                                     "type": "string",
+                                    "format": "uri",
                                     "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
                                   }
                                 },
@@ -2964,10 +2970,10 @@
                               }
                             ]
                           }
-                        ]
+                        ],
+                        "description": "if affiliation is present, value must be a schema:Organization."
                       },
                       "schema:contactPoint": {
-                        "description": "restrict to email only. Schema.org allows telephone and postal contacts as well",
                         "type": "object",
                         "properties": {
                           "@type": {
@@ -2978,63 +2984,8 @@
                           "schema:email": {
                             "type": "string"
                           }
-                        }
-                      },
-                      "schema:description": {
-                        "type": "string"
-                      },
-                      "schema:identifier": {
-                        "description": "identifier for person, recommend ORCID",
-                        "anyOf": [
-                          {
-                            "$schema": "https://json-schema.org/draft/2020-12/schema",
-                            "description": "Properties for a schema.org identifier",
-                            "type": "object",
-                            "properties": {
-                              "@type": {
-                                "type": "string",
-                                "const": "schema:PropertyValue"
-                              },
-                              "schema:propertyID": {
-                                "type": "string",
-                                "description": "In this context for the schema:PropertyValue, this field is an identifier for the identifier schema, e.g. DOI, ARK.  Get values from https://registry.identifiers.org/registry/ for interoperability"
-                              },
-                              "schema:value": {
-                                "type": "string",
-                                "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
-                              },
-                              "schema:url": {
-                                "format": "uri",
-                                "type": "string",
-                                "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
-                              }
-                            },
-                            "allOf": [
-                              {
-                                "required": [
-                                  "@type"
-                                ]
-                              },
-                              {
-                                "anyOf": [
-                                  {
-                                    "required": [
-                                      "schema:value"
-                                    ]
-                                  },
-                                  {
-                                    "required": [
-                                      "schema:url"
-                                    ]
-                                  }
-                                ]
-                              }
-                            ]
-                          },
-                          {
-                            "type": "string"
-                          }
-                        ]
+                        },
+                        "description": "restrict to email only. Schema.org allows telephone and postal contacts as well"
                       },
                       "schema:sameAs": {
                         "type": "array",
@@ -3067,7 +3018,6 @@
                     ]
                   },
                   {
-                    "$schema": "https://json-schema.org/draft/2020-12/schema",
                     "type": "object",
                     "properties": {
                       "@id": {
@@ -3097,7 +3047,6 @@
                               ]
                             },
                             {
-                              "$schema": "https://json-schema.org/draft/2020-12/schema",
                               "description": "schema.org Defined Term schema",
                               "type": "object",
                               "properties": {
@@ -3114,7 +3063,6 @@
                                       "type": "string"
                                     },
                                     {
-                                      "$schema": "https://json-schema.org/draft/2020-12/schema",
                                       "description": "Properties for a schema.org identifier",
                                       "type": "object",
                                       "properties": {
@@ -3131,8 +3079,8 @@
                                           "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
                                         },
                                         "schema:url": {
-                                          "format": "uri",
                                           "type": "string",
+                                          "format": "uri",
                                           "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
                                         }
                                       },
@@ -3217,7 +3165,6 @@
                         "description": "identifier for organization",
                         "anyOf": [
                           {
-                            "$schema": "https://json-schema.org/draft/2020-12/schema",
                             "description": "Properties for a schema.org identifier",
                             "type": "object",
                             "properties": {
@@ -3234,8 +3181,8 @@
                                 "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
                               },
                               "schema:url": {
-                                "format": "uri",
                                 "type": "string",
+                                "format": "uri",
                                 "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
                               }
                             },
@@ -3341,7 +3288,6 @@
           "description": "Science domains that the resource addresses. Array of DefinedTerm objects referencing the ECRR ADO (Academic Discipline Ontology) vocabulary.",
           "type": "array",
           "items": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
             "description": "schema.org Defined Term schema",
             "type": "object",
             "properties": {
@@ -3358,7 +3304,6 @@
                     "type": "string"
                   },
                   {
-                    "$schema": "https://json-schema.org/draft/2020-12/schema",
                     "description": "Properties for a schema.org identifier",
                     "type": "object",
                     "properties": {
@@ -3375,8 +3320,8 @@
                         "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
                       },
                       "schema:url": {
-                        "format": "uri",
                         "type": "string",
+                        "format": "uri",
                         "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
                       }
                     },
@@ -3471,7 +3416,6 @@
           "description": "Links to formal metadata records or web pages about this resource. Array of labeled links (CreativeWork objects with name and url).",
           "anyOf": [
             {
-              "$schema": "https://json-schema.org/draft/2020-12/schema",
               "description": "schema for a labeled link, a profile of schema.org/CreativeWork",
               "type": "object",
               "properties": {
@@ -3499,7 +3443,6 @@
             {
               "type": "array",
               "items": {
-                "$schema": "https://json-schema.org/draft/2020-12/schema",
                 "description": "schema for a labeled link, a profile of schema.org/CreativeWork",
                 "type": "object",
                 "properties": {
@@ -3531,7 +3474,6 @@
           "description": "Related resources such as documentation, publications, or tools. Array of labeled links.",
           "type": "array",
           "items": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
             "description": "schema for a labeled link, a profile of schema.org/CreativeWork",
             "type": "object",
             "properties": {
@@ -3561,7 +3503,6 @@
           "description": "Resources (e.g. semantic resources, specifications) that this resource is based on or derived from. Array of labeled links.",
           "type": "array",
           "items": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
             "description": "schema for a labeled link, a profile of schema.org/CreativeWork",
             "type": "object",
             "properties": {
@@ -3625,7 +3566,6 @@
           "description": "Specifications or standards that the resource conforms to. Array of labeled links.",
           "type": "array",
           "items": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
             "description": "schema for a labeled link, a profile of schema.org/CreativeWork",
             "type": "object",
             "properties": {
@@ -3654,7 +3594,6 @@
       }
     },
     {
-      "$schema": "https://json-schema.org/draft/2020-12/schema",
       "title": "ECRR Resource Assessment Properties",
       "description": "ECRR-specific properties for assessing resource maturity, expected lifetime, usage level, stewardship, primary publication, and registration metadata. These use the PropertyValue pattern with ECRRO property identifiers as top-level keys. The value field contains a DefinedTerm from a controlled vocabulary, an agent reference, or a string.",
       "type": "object",
@@ -3677,7 +3616,6 @@
               "default": "has maturity state"
             },
             "schema:value": {
-              "$schema": "https://json-schema.org/draft/2020-12/schema",
               "description": "schema.org Defined Term schema",
               "type": "object",
               "properties": {
@@ -3694,7 +3632,6 @@
                       "type": "string"
                     },
                     {
-                      "$schema": "https://json-schema.org/draft/2020-12/schema",
                       "description": "Properties for a schema.org identifier",
                       "type": "object",
                       "properties": {
@@ -3711,8 +3648,8 @@
                           "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
                         },
                         "schema:url": {
-                          "format": "uri",
                           "type": "string",
+                          "format": "uri",
                           "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
                         }
                       },
@@ -3801,7 +3738,6 @@
               "default": "expected lifetime"
             },
             "schema:value": {
-              "$schema": "https://json-schema.org/draft/2020-12/schema",
               "description": "schema.org Defined Term schema",
               "type": "object",
               "properties": {
@@ -3818,7 +3754,6 @@
                       "type": "string"
                     },
                     {
-                      "$schema": "https://json-schema.org/draft/2020-12/schema",
                       "description": "Properties for a schema.org identifier",
                       "type": "object",
                       "properties": {
@@ -3835,8 +3770,8 @@
                           "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
                         },
                         "schema:url": {
-                          "format": "uri",
                           "type": "string",
+                          "format": "uri",
                           "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
                         }
                       },
@@ -3925,7 +3860,6 @@
               "default": "Usage"
             },
             "schema:value": {
-              "$schema": "https://json-schema.org/draft/2020-12/schema",
               "description": "schema.org Defined Term schema",
               "type": "object",
               "properties": {
@@ -3942,7 +3876,6 @@
                       "type": "string"
                     },
                     {
-                      "$schema": "https://json-schema.org/draft/2020-12/schema",
                       "description": "Properties for a schema.org identifier",
                       "type": "object",
                       "properties": {
@@ -3959,8 +3892,8 @@
                           "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
                         },
                         "schema:url": {
-                          "format": "uri",
                           "type": "string",
+                          "format": "uri",
                           "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
                         }
                       },
@@ -4051,7 +3984,6 @@
             "schema:value": {
               "anyOf": [
                 {
-                  "$schema": "https://json-schema.org/draft/2020-12/schema",
                   "description": "schema for cdif profile of schema.org/Person",
                   "type": "object",
                   "properties": {
@@ -4066,12 +3998,66 @@
                       "type": "string",
                       "description": "string label for person that is meaningful for human users"
                     },
+                    "schema:description": {
+                      "type": "string"
+                    },
+                    "schema:identifier": {
+                      "description": "identifier for person, recommend ORCID",
+                      "anyOf": [
+                        {
+                          "description": "Properties for a schema.org identifier",
+                          "type": "object",
+                          "properties": {
+                            "@type": {
+                              "type": "string",
+                              "const": "schema:PropertyValue"
+                            },
+                            "schema:propertyID": {
+                              "type": "string",
+                              "description": "In this context for the schema:PropertyValue, this field is an identifier for the identifier schema, e.g. DOI, ARK.  Get values from https://registry.identifiers.org/registry/ for interoperability"
+                            },
+                            "schema:value": {
+                              "type": "string",
+                              "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
+                            },
+                            "schema:url": {
+                              "type": "string",
+                              "format": "uri",
+                              "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
+                            }
+                          },
+                          "allOf": [
+                            {
+                              "required": [
+                                "@type"
+                              ]
+                            },
+                            {
+                              "anyOf": [
+                                {
+                                  "required": [
+                                    "schema:value"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "schema:url"
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    },
                     "schema:alternateName": {
                       "type": "string",
                       "description": "other labels by which the person might be known"
                     },
                     "schema:affiliation": {
-                      "$schema": "https://json-schema.org/draft/2020-12/schema",
                       "type": "object",
                       "properties": {
                         "@id": {
@@ -4101,7 +4087,6 @@
                                 ]
                               },
                               {
-                                "$schema": "https://json-schema.org/draft/2020-12/schema",
                                 "description": "schema.org Defined Term schema",
                                 "type": "object",
                                 "properties": {
@@ -4118,7 +4103,6 @@
                                         "type": "string"
                                       },
                                       {
-                                        "$schema": "https://json-schema.org/draft/2020-12/schema",
                                         "description": "Properties for a schema.org identifier",
                                         "type": "object",
                                         "properties": {
@@ -4135,8 +4119,8 @@
                                             "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
                                           },
                                           "schema:url": {
-                                            "format": "uri",
                                             "type": "string",
+                                            "format": "uri",
                                             "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
                                           }
                                         },
@@ -4221,7 +4205,6 @@
                           "description": "identifier for organization",
                           "anyOf": [
                             {
-                              "$schema": "https://json-schema.org/draft/2020-12/schema",
                               "description": "Properties for a schema.org identifier",
                               "type": "object",
                               "properties": {
@@ -4238,8 +4221,8 @@
                                   "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
                                 },
                                 "schema:url": {
-                                  "format": "uri",
                                   "type": "string",
+                                  "format": "uri",
                                   "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
                                 }
                               },
@@ -4298,10 +4281,10 @@
                             }
                           ]
                         }
-                      ]
+                      ],
+                      "description": "if affiliation is present, value must be a schema:Organization."
                     },
                     "schema:contactPoint": {
-                      "description": "restrict to email only. Schema.org allows telephone and postal contacts as well",
                       "type": "object",
                       "properties": {
                         "@type": {
@@ -4312,63 +4295,8 @@
                         "schema:email": {
                           "type": "string"
                         }
-                      }
-                    },
-                    "schema:description": {
-                      "type": "string"
-                    },
-                    "schema:identifier": {
-                      "description": "identifier for person, recommend ORCID",
-                      "anyOf": [
-                        {
-                          "$schema": "https://json-schema.org/draft/2020-12/schema",
-                          "description": "Properties for a schema.org identifier",
-                          "type": "object",
-                          "properties": {
-                            "@type": {
-                              "type": "string",
-                              "const": "schema:PropertyValue"
-                            },
-                            "schema:propertyID": {
-                              "type": "string",
-                              "description": "In this context for the schema:PropertyValue, this field is an identifier for the identifier schema, e.g. DOI, ARK.  Get values from https://registry.identifiers.org/registry/ for interoperability"
-                            },
-                            "schema:value": {
-                              "type": "string",
-                              "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
-                            },
-                            "schema:url": {
-                              "format": "uri",
-                              "type": "string",
-                              "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
-                            }
-                          },
-                          "allOf": [
-                            {
-                              "required": [
-                                "@type"
-                              ]
-                            },
-                            {
-                              "anyOf": [
-                                {
-                                  "required": [
-                                    "schema:value"
-                                  ]
-                                },
-                                {
-                                  "required": [
-                                    "schema:url"
-                                  ]
-                                }
-                              ]
-                            }
-                          ]
-                        },
-                        {
-                          "type": "string"
-                        }
-                      ]
+                      },
+                      "description": "restrict to email only. Schema.org allows telephone and postal contacts as well"
                     },
                     "schema:sameAs": {
                       "type": "array",
@@ -4401,7 +4329,6 @@
                   ]
                 },
                 {
-                  "$schema": "https://json-schema.org/draft/2020-12/schema",
                   "type": "object",
                   "properties": {
                     "@id": {
@@ -4431,7 +4358,6 @@
                             ]
                           },
                           {
-                            "$schema": "https://json-schema.org/draft/2020-12/schema",
                             "description": "schema.org Defined Term schema",
                             "type": "object",
                             "properties": {
@@ -4448,7 +4374,6 @@
                                     "type": "string"
                                   },
                                   {
-                                    "$schema": "https://json-schema.org/draft/2020-12/schema",
                                     "description": "Properties for a schema.org identifier",
                                     "type": "object",
                                     "properties": {
@@ -4465,8 +4390,8 @@
                                         "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
                                       },
                                       "schema:url": {
-                                        "format": "uri",
                                         "type": "string",
+                                        "format": "uri",
                                         "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
                                       }
                                     },
@@ -4551,7 +4476,6 @@
                       "description": "identifier for organization",
                       "anyOf": [
                         {
-                          "$schema": "https://json-schema.org/draft/2020-12/schema",
                           "description": "Properties for a schema.org identifier",
                           "type": "object",
                           "properties": {
@@ -4568,8 +4492,8 @@
                               "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
                             },
                             "schema:url": {
-                              "format": "uri",
                               "type": "string",
+                              "format": "uri",
                               "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
                             }
                           },
@@ -4635,7 +4559,6 @@
                   "items": {
                     "anyOf": [
                       {
-                        "$schema": "https://json-schema.org/draft/2020-12/schema",
                         "description": "schema for cdif profile of schema.org/Person",
                         "type": "object",
                         "properties": {
@@ -4650,12 +4573,66 @@
                             "type": "string",
                             "description": "string label for person that is meaningful for human users"
                           },
+                          "schema:description": {
+                            "type": "string"
+                          },
+                          "schema:identifier": {
+                            "description": "identifier for person, recommend ORCID",
+                            "anyOf": [
+                              {
+                                "description": "Properties for a schema.org identifier",
+                                "type": "object",
+                                "properties": {
+                                  "@type": {
+                                    "type": "string",
+                                    "const": "schema:PropertyValue"
+                                  },
+                                  "schema:propertyID": {
+                                    "type": "string",
+                                    "description": "In this context for the schema:PropertyValue, this field is an identifier for the identifier schema, e.g. DOI, ARK.  Get values from https://registry.identifiers.org/registry/ for interoperability"
+                                  },
+                                  "schema:value": {
+                                    "type": "string",
+                                    "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
+                                  },
+                                  "schema:url": {
+                                    "type": "string",
+                                    "format": "uri",
+                                    "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
+                                  }
+                                },
+                                "allOf": [
+                                  {
+                                    "required": [
+                                      "@type"
+                                    ]
+                                  },
+                                  {
+                                    "anyOf": [
+                                      {
+                                        "required": [
+                                          "schema:value"
+                                        ]
+                                      },
+                                      {
+                                        "required": [
+                                          "schema:url"
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          },
                           "schema:alternateName": {
                             "type": "string",
                             "description": "other labels by which the person might be known"
                           },
                           "schema:affiliation": {
-                            "$schema": "https://json-schema.org/draft/2020-12/schema",
                             "type": "object",
                             "properties": {
                               "@id": {
@@ -4685,7 +4662,6 @@
                                       ]
                                     },
                                     {
-                                      "$schema": "https://json-schema.org/draft/2020-12/schema",
                                       "description": "schema.org Defined Term schema",
                                       "type": "object",
                                       "properties": {
@@ -4702,7 +4678,6 @@
                                               "type": "string"
                                             },
                                             {
-                                              "$schema": "https://json-schema.org/draft/2020-12/schema",
                                               "description": "Properties for a schema.org identifier",
                                               "type": "object",
                                               "properties": {
@@ -4719,8 +4694,8 @@
                                                   "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
                                                 },
                                                 "schema:url": {
-                                                  "format": "uri",
                                                   "type": "string",
+                                                  "format": "uri",
                                                   "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
                                                 }
                                               },
@@ -4805,7 +4780,6 @@
                                 "description": "identifier for organization",
                                 "anyOf": [
                                   {
-                                    "$schema": "https://json-schema.org/draft/2020-12/schema",
                                     "description": "Properties for a schema.org identifier",
                                     "type": "object",
                                     "properties": {
@@ -4822,8 +4796,8 @@
                                         "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
                                       },
                                       "schema:url": {
-                                        "format": "uri",
                                         "type": "string",
+                                        "format": "uri",
                                         "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
                                       }
                                     },
@@ -4882,10 +4856,10 @@
                                   }
                                 ]
                               }
-                            ]
+                            ],
+                            "description": "if affiliation is present, value must be a schema:Organization."
                           },
                           "schema:contactPoint": {
-                            "description": "restrict to email only. Schema.org allows telephone and postal contacts as well",
                             "type": "object",
                             "properties": {
                               "@type": {
@@ -4896,63 +4870,8 @@
                               "schema:email": {
                                 "type": "string"
                               }
-                            }
-                          },
-                          "schema:description": {
-                            "type": "string"
-                          },
-                          "schema:identifier": {
-                            "description": "identifier for person, recommend ORCID",
-                            "anyOf": [
-                              {
-                                "$schema": "https://json-schema.org/draft/2020-12/schema",
-                                "description": "Properties for a schema.org identifier",
-                                "type": "object",
-                                "properties": {
-                                  "@type": {
-                                    "type": "string",
-                                    "const": "schema:PropertyValue"
-                                  },
-                                  "schema:propertyID": {
-                                    "type": "string",
-                                    "description": "In this context for the schema:PropertyValue, this field is an identifier for the identifier schema, e.g. DOI, ARK.  Get values from https://registry.identifiers.org/registry/ for interoperability"
-                                  },
-                                  "schema:value": {
-                                    "type": "string",
-                                    "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
-                                  },
-                                  "schema:url": {
-                                    "format": "uri",
-                                    "type": "string",
-                                    "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
-                                  }
-                                },
-                                "allOf": [
-                                  {
-                                    "required": [
-                                      "@type"
-                                    ]
-                                  },
-                                  {
-                                    "anyOf": [
-                                      {
-                                        "required": [
-                                          "schema:value"
-                                        ]
-                                      },
-                                      {
-                                        "required": [
-                                          "schema:url"
-                                        ]
-                                      }
-                                    ]
-                                  }
-                                ]
-                              },
-                              {
-                                "type": "string"
-                              }
-                            ]
+                            },
+                            "description": "restrict to email only. Schema.org allows telephone and postal contacts as well"
                           },
                           "schema:sameAs": {
                             "type": "array",
@@ -4985,7 +4904,6 @@
                         ]
                       },
                       {
-                        "$schema": "https://json-schema.org/draft/2020-12/schema",
                         "type": "object",
                         "properties": {
                           "@id": {
@@ -5015,7 +4933,6 @@
                                   ]
                                 },
                                 {
-                                  "$schema": "https://json-schema.org/draft/2020-12/schema",
                                   "description": "schema.org Defined Term schema",
                                   "type": "object",
                                   "properties": {
@@ -5032,7 +4949,6 @@
                                           "type": "string"
                                         },
                                         {
-                                          "$schema": "https://json-schema.org/draft/2020-12/schema",
                                           "description": "Properties for a schema.org identifier",
                                           "type": "object",
                                           "properties": {
@@ -5049,8 +4965,8 @@
                                               "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
                                             },
                                             "schema:url": {
-                                              "format": "uri",
                                               "type": "string",
+                                              "format": "uri",
                                               "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
                                             }
                                           },
@@ -5135,7 +5051,6 @@
                             "description": "identifier for organization",
                             "anyOf": [
                               {
-                                "$schema": "https://json-schema.org/draft/2020-12/schema",
                                 "description": "Properties for a schema.org identifier",
                                 "type": "object",
                                 "properties": {
@@ -5152,8 +5067,8 @@
                                     "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
                                   },
                                   "schema:url": {
-                                    "format": "uri",
                                     "type": "string",
+                                    "format": "uri",
                                     "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
                                   }
                                 },
@@ -5285,7 +5200,6 @@
                 "schema:contributor": {
                   "anyOf": [
                     {
-                      "$schema": "https://json-schema.org/draft/2020-12/schema",
                       "description": "schema for cdif profile of schema.org/Person",
                       "type": "object",
                       "properties": {
@@ -5300,12 +5214,66 @@
                           "type": "string",
                           "description": "string label for person that is meaningful for human users"
                         },
+                        "schema:description": {
+                          "type": "string"
+                        },
+                        "schema:identifier": {
+                          "description": "identifier for person, recommend ORCID",
+                          "anyOf": [
+                            {
+                              "description": "Properties for a schema.org identifier",
+                              "type": "object",
+                              "properties": {
+                                "@type": {
+                                  "type": "string",
+                                  "const": "schema:PropertyValue"
+                                },
+                                "schema:propertyID": {
+                                  "type": "string",
+                                  "description": "In this context for the schema:PropertyValue, this field is an identifier for the identifier schema, e.g. DOI, ARK.  Get values from https://registry.identifiers.org/registry/ for interoperability"
+                                },
+                                "schema:value": {
+                                  "type": "string",
+                                  "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
+                                },
+                                "schema:url": {
+                                  "type": "string",
+                                  "format": "uri",
+                                  "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
+                                }
+                              },
+                              "allOf": [
+                                {
+                                  "required": [
+                                    "@type"
+                                  ]
+                                },
+                                {
+                                  "anyOf": [
+                                    {
+                                      "required": [
+                                        "schema:value"
+                                      ]
+                                    },
+                                    {
+                                      "required": [
+                                        "schema:url"
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "string"
+                            }
+                          ]
+                        },
                         "schema:alternateName": {
                           "type": "string",
                           "description": "other labels by which the person might be known"
                         },
                         "schema:affiliation": {
-                          "$schema": "https://json-schema.org/draft/2020-12/schema",
                           "type": "object",
                           "properties": {
                             "@id": {
@@ -5335,7 +5303,6 @@
                                     ]
                                   },
                                   {
-                                    "$schema": "https://json-schema.org/draft/2020-12/schema",
                                     "description": "schema.org Defined Term schema",
                                     "type": "object",
                                     "properties": {
@@ -5352,7 +5319,6 @@
                                             "type": "string"
                                           },
                                           {
-                                            "$schema": "https://json-schema.org/draft/2020-12/schema",
                                             "description": "Properties for a schema.org identifier",
                                             "type": "object",
                                             "properties": {
@@ -5369,8 +5335,8 @@
                                                 "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
                                               },
                                               "schema:url": {
-                                                "format": "uri",
                                                 "type": "string",
+                                                "format": "uri",
                                                 "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
                                               }
                                             },
@@ -5455,7 +5421,6 @@
                               "description": "identifier for organization",
                               "anyOf": [
                                 {
-                                  "$schema": "https://json-schema.org/draft/2020-12/schema",
                                   "description": "Properties for a schema.org identifier",
                                   "type": "object",
                                   "properties": {
@@ -5472,8 +5437,8 @@
                                       "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
                                     },
                                     "schema:url": {
-                                      "format": "uri",
                                       "type": "string",
+                                      "format": "uri",
                                       "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
                                     }
                                   },
@@ -5532,10 +5497,10 @@
                                 }
                               ]
                             }
-                          ]
+                          ],
+                          "description": "if affiliation is present, value must be a schema:Organization."
                         },
                         "schema:contactPoint": {
-                          "description": "restrict to email only. Schema.org allows telephone and postal contacts as well",
                           "type": "object",
                           "properties": {
                             "@type": {
@@ -5546,63 +5511,8 @@
                             "schema:email": {
                               "type": "string"
                             }
-                          }
-                        },
-                        "schema:description": {
-                          "type": "string"
-                        },
-                        "schema:identifier": {
-                          "description": "identifier for person, recommend ORCID",
-                          "anyOf": [
-                            {
-                              "$schema": "https://json-schema.org/draft/2020-12/schema",
-                              "description": "Properties for a schema.org identifier",
-                              "type": "object",
-                              "properties": {
-                                "@type": {
-                                  "type": "string",
-                                  "const": "schema:PropertyValue"
-                                },
-                                "schema:propertyID": {
-                                  "type": "string",
-                                  "description": "In this context for the schema:PropertyValue, this field is an identifier for the identifier schema, e.g. DOI, ARK.  Get values from https://registry.identifiers.org/registry/ for interoperability"
-                                },
-                                "schema:value": {
-                                  "type": "string",
-                                  "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
-                                },
-                                "schema:url": {
-                                  "format": "uri",
-                                  "type": "string",
-                                  "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
-                                }
-                              },
-                              "allOf": [
-                                {
-                                  "required": [
-                                    "@type"
-                                  ]
-                                },
-                                {
-                                  "anyOf": [
-                                    {
-                                      "required": [
-                                        "schema:value"
-                                      ]
-                                    },
-                                    {
-                                      "required": [
-                                        "schema:url"
-                                      ]
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "type": "string"
-                            }
-                          ]
+                          },
+                          "description": "restrict to email only. Schema.org allows telephone and postal contacts as well"
                         },
                         "schema:sameAs": {
                           "type": "array",
@@ -5635,7 +5545,6 @@
                       ]
                     },
                     {
-                      "$schema": "https://json-schema.org/draft/2020-12/schema",
                       "type": "object",
                       "properties": {
                         "@id": {
@@ -5665,7 +5574,6 @@
                                 ]
                               },
                               {
-                                "$schema": "https://json-schema.org/draft/2020-12/schema",
                                 "description": "schema.org Defined Term schema",
                                 "type": "object",
                                 "properties": {
@@ -5682,7 +5590,6 @@
                                         "type": "string"
                                       },
                                       {
-                                        "$schema": "https://json-schema.org/draft/2020-12/schema",
                                         "description": "Properties for a schema.org identifier",
                                         "type": "object",
                                         "properties": {
@@ -5699,8 +5606,8 @@
                                             "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
                                           },
                                           "schema:url": {
-                                            "format": "uri",
                                             "type": "string",
+                                            "format": "uri",
                                             "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
                                           }
                                         },
@@ -5785,7 +5692,6 @@
                           "description": "identifier for organization",
                           "anyOf": [
                             {
-                              "$schema": "https://json-schema.org/draft/2020-12/schema",
                               "description": "Properties for a schema.org identifier",
                               "type": "object",
                               "properties": {
@@ -5802,8 +5708,8 @@
                                   "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
                                 },
                                 "schema:url": {
-                                  "format": "uri",
                                   "type": "string",
+                                  "format": "uri",
                                   "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
                                 }
                               },

@@ -39,13 +39,33 @@
           "type": "object",
           "description": "A string value calculated from the content of the resource representation, used to test if content has been modified. The checksum is a property of a particular distribution/DataDownload.",
           "properties": {
+            "@type": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "const": "spdx:Checksum"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "contains": {
+                    "const": "spdx:Checksum"
+                  }
+                }
+              ]
+            },
             "spdx:algorithm": {
               "type": "string"
             },
             "spdx:checksumValue": {
               "type": "string"
             }
-          }
+          },
+          "required": [
+            "@type"
+          ]
         },
         "schema:provider": {
           "type": "array",
@@ -668,6 +688,15 @@
               "type": "string",
               "default": "byte"
             }
+          }
+        },
+        "resultTarget": {
+          "title": "String Array Type",
+          "description": "Simple reusable array of strings",
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "type": "string"
           }
         },
         "schema:relatedLink": {

@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
   "title": "ECRR Software Profile",
-  "description": "Complete ECRR metadata profile for software and application resources. Composes ecrrBase (mandatory identity and classification), ecrrCommon (optional shared properties), ecrrAssessment (maturity, lifetime, usage), and ecrrSoftware (application categories, languages, repositories, etc.). Resources should be typed [\"schema:CreativeWork\", \"schema:SoftwareApplication\"] with mainEntity pointing to ECRRO_0000206 (Software).",
+  "description": "Complete ECRR metadata profile for software and application resources. Composes ecrrBase (mandatory identity and classification), ecrrCommon (optional shared properties), ecrrAssessment (maturity, lifetime, usage), and ecrrSoftware (application categories, languages, repositories, etc.). Resources must have schema:additionalType containing \"EC Software\".",
   "allOf": [
     {
       "title": "ECRR Base metadata",
@@ -6075,6 +6075,7 @@
                   "schema:CreateAction",
                   "schema:FindAction",
                   "schema:InteractAction",
+                  "schema:MoveAction",
                   "schema:PlayAction",
                   "schema:SearchAction",
                   "schema:TransferAction",
@@ -6705,6 +6706,17 @@
             "@type",
             "schema:propertyID"
           ]
+        }
+      }
+    },
+    {
+      "properties": {
+        "schema:additionalType": {
+          "contains": {
+            "enum": [
+              "EC Software"
+            ]
+          }
         }
       }
     }

@@ -82,25 +82,55 @@
             "schema:encodingFormat": ["image/tiff"]
         }
     ],
+    "prov:wasGeneratedBy": [
+        {
+            "@type": ["schema:Action", "prov:Activity"],
+            "schema:name": "Landsat-8 OLI imagery acquisition",
+            "schema:startTime": "2023-06-15T03:45:00Z",
+            "schema:endTime": "2023-06-15T03:45:12Z",
+            "prov:used": [
+                {
+                    "schema:instrument": {
+                        "@type": ["schema:Thing"],
+                        "schema:name": "Multispectral",
+                        "schema:additionalType": "dde:sensorType"
+                    }
+                },
+                {
+                    "schema:instrument": {
+                        "@type": ["schema:Thing"],
+                        "schema:name": "Landsat-8",
+                        "schema:additionalType": "dde:platform"
+                    }
+                },
+                {
+                    "schema:instrument": {
+                        "@type": ["schema:Thing"],
+                        "schema:name": "Operational Land Imager (OLI)",
+                        "schema:additionalType": "dde:equipment"
+                    }
+                },
+                {
+                    "schema:instrument": {
+                        "@type": ["schema:Thing"],
+                        "schema:name": "Passive solar",
+                        "schema:additionalType": "dde:signalGenerator"
+                    }
+                }
+            ],
+            "schema:participant": [
+                {
+                    "@type": "schema:Role",
+                    "schema:roleName": "DataCollector",
+                    "schema:contributor": {
+                        "@type": "schema:Organization",
+                        "schema:name": "USGS / NASA"
+                    }
+                }
+            ]
+        }
+    ],
     "schema:additionalProperty": [
-        {
-            "@type": "schema:PropertyValue",
-            "schema:propertyID": ["dde:sensorType"],
-            "schema:name": "Sensor Type",
-            "schema:value": "Multispectral"
-        },
-        {
-            "@type": "schema:PropertyValue",
-            "schema:propertyID": ["dde:platform"],
-            "schema:name": "Platform",
-            "schema:value": "Landsat-8"
-        },
-        {
-            "@type": "schema:PropertyValue",
-            "schema:propertyID": ["dde:equipment"],
-            "schema:name": "Equipment",
-            "schema:value": "Operational Land Imager (OLI)"
-        },
         {
             "@type": "schema:PropertyValue",
             "schema:propertyID": ["dde:wavelength"],
@@ -109,17 +139,9 @@
         },
         {
             "@type": "schema:PropertyValue",
-            "schema:propertyID": ["dde:signalGenerator"],
-            "schema:name": "Signal Generator",
-            "schema:value": "Passive solar"
-        },
-        {
-            "@type": "schema:PropertyValue",
             "schema:propertyID": ["dde:processedLevel"],
             "schema:name": "Processing Level",
             "schema:value": "Level2"
         }
-    ],
-    "schema:startTime": "2023-06-15T03:45:00Z",
-    "schema:endTime": "2023-06-15T03:45:12Z"
+    ]
 }

@@ -142,20 +142,26 @@ PROV-O provenance building blocks.
 | `provActivity` | PROV-O native provenance activity -- extends `generatedBy` with W3C PROV-O properties (`prov:wasAssociatedWith`, `prov:startedAtTime`, `prov:endedAtTime`, `prov:atLocation`, `prov:wasInformedBy`, `prov:generated`). Uses schema.org fallbacks only where PROV-O has no equivalent (name, description, methodology, status). Instruments nested in `prov:used` via `schema:instrument` sub-key. |
 | `derivedFrom` | Provenance derivation -- `prov:wasDerivedFrom` linking. |
 
-### cdifProperties (provenance)
+### Provenance Layering
+
+The repository implements a three-tier provenance architecture:
+
+| Tier | Building Block | Introduced At | Description |
+|------|---------------|---------------|-------------|
+| 1 (simple) | `generatedBy` (provProperties) | `cdifOptional` | Minimal `prov:Activity` — `prov:used` accepts only string names or `@id` references |
+| 2 (extended) | `cdifProv` (cdifProperties) | `CDIFcomplete` | Extends `generatedBy` with schema.org Action properties (`schema:agent`, `schema:actionProcess`, `schema:object`, `schema:result`, temporal bounds, location). Requires `@type: ["schema:Action", "prov:Activity"]`. Instruments nested in `prov:used` via `schema:instrument` sub-key. |
+| 3 (domain) | `ddeImagery`, `xasGeneratedBy`, etc. | Domain-specific profiles | Extend `cdifProv` with domain-specific instrument types, agents, and additional properties |
+
+Domain-specific building blocks (`ddeImagery`, `xasOptional`, `xasRequired`) import `cdifProv` directly, so they can be used in profiles that don't include `CDIFcomplete`.
+
+### xasProperties
 
 | Building Block | Description |
 |----------------|-------------|
-| `cdifProv` | Extended provenance activity for CDIF -- extends `generatedBy` with schema.org Action properties (`schema:agent`, `schema:actionProcess`, `schema:object`, `schema:result`, temporal bounds, location). Requires multi-typed `@type: ["schema:Action", "prov:Activity"]`. Instruments nested in `prov:used` via `schema:instrument` sub-key. |
-
-### xasProperties (instrument changes)
-
-| Building Block | Change |
-|----------------|--------|
-| `xasInstrument` | Added `schema:hasPart` for hierarchical instrument sub-components (refs generic instrument building block). |
-| `xasGeneratedBy` | `prov:used` restructured to accept instrument wrappers (`schema:instrument` sub-key), strings, or `@id` refs. `schema:mainEntity` renamed to `schema:object` (per Ocean Info Hub recommendation). |
-| `xasRequired` | NXsource/NXmonochromator constraints moved into `prov:used > contains > schema:instrument > schema:hasPart`. `schema:mainEntity` renamed to `schema:object`. |
-| `xasOptional` | Same restructuring as `xasRequired`. |
+| `xasInstrument` | XAS instrument with `schema:hasPart` for hierarchical sub-components (refs generic instrument building block). |
+| `xasGeneratedBy` | XAS analysis event — extends `cdifProv` with `xas:AnalysisEvent` typing, XAS facility location, sample object, XAS-specific instrument types, and XAS additional properties (edge_energy, calibration method, etc.). |
+| `xasRequired` | XAS mandatory properties — `prov:wasGeneratedBy` items use `allOf` with `cdifProv` + NXsource/NXmonochromator instrument constraints via `schema:instrument` sub-key. |
+| `xasOptional` | Same provenance structure as `xasRequired` — `cdifProv` activity with XAS instrument constraints. |
 
 ## License
 
