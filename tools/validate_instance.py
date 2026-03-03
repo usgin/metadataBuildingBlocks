@@ -178,6 +178,14 @@ def extract_profile_from_conformsto(data: dict) -> Optional[str]:
 def extract_profile_from_termcode(data: dict) -> str:
     """Extract profile from schema:measurementTechnique.schema:termCode."""
     mt = data.get("schema:measurementTechnique", {})
+    if isinstance(mt, list):
+        for item in mt:
+            if isinstance(item, dict):
+                tc = item.get("schema:termCode", "")
+                profile = TERMCODE_TO_PROFILE.get(tc)
+                if profile:
+                    return profile
+        return DEFAULT_PROFILE
     term_code = mt.get("schema:termCode", "")
     return TERMCODE_TO_PROFILE.get(term_code, DEFAULT_PROFILE)
 
@@ -269,8 +277,22 @@ def process_file(
     result["profile"] = profile
     result["source"] = source
 
-    # Load schema
-    schema = registry.get(profile)
+    # BB-level schema fallback: if no profile was detected, check for a
+    # resolvedSchema.json in the same directory as the instance file.
+    schema = None
+    if source == "default":
+        local_schema = filepath.parent / "resolvedSchema.json"
+        if local_schema.exists():
+            profile = filepath.parent.name
+            source = "local"
+            result["profile"] = profile
+            result["source"] = source
+            with open(local_schema, "r", encoding="utf-8") as f:
+                schema = json.load(f)
+
+    # Load schema from registry if not already loaded locally
+    if schema is None:
+        schema = registry.get(profile)
     if schema is None:
         result["errors"] = [f"Schema not found: {registry.schema_path(profile)}"]
         if verbose:
@@ -292,7 +314,10 @@ def process_file(
     if verbose:
         print(f"\nValidating: {filepath.name}")
         print(f"  Profile: {profile} (from {source})")
-        print(f"  Schema:  _sources/profiles/{profile}/resolvedSchema.json")
+        if source == "local":
+            print(f"  Schema:  {filepath.parent / 'resolvedSchema.json'}")
+        else:
+            print(f"  Schema:  _sources/profiles/{profile}/resolvedSchema.json")
         if errors:
             print(f"  Result:  FAIL ({len(errors)} error{'s' if len(errors) != 1 else ''})")
             print()
@@ -383,7 +408,11 @@ def main():
         dirpath = Path(args.dir)
         if not dirpath.is_dir():
             sys.exit(f"Not a directory: {dirpath}")
-        files.extend(sorted(dirpath.glob("*.json")))
+        SKIP_NAMES = {"bblock.json", "resolvedSchema.json"}
+        files.extend(
+            f for f in sorted(dirpath.glob("*.json"))
+            if f.name not in SKIP_NAMES and not f.name.endswith("Schema.json")
+        )
 
     if not files:
         sys.exit("No JSON files found.")

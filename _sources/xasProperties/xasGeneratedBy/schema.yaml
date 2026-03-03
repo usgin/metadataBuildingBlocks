@@ -2,7 +2,7 @@
 $schema: https://json-schema.org/draft/2020-12/schema
 title: XAS Analysis Event activity
 description: XAS-specific provenance activity building block. Extends cdifProv with
-  XAS analysis event typing (schema:Event, xas:AnalysisEvent), XAS facility location,
+  XAS analysis event typing (xas:AnalysisEvent), XAS facility location,
   sample object, XAS-specific instrument type, and XAS additional properties
   (edge_energy, calibration method, instrument configuration, installedOptions).
 allOf:
@@ -13,11 +13,8 @@ allOf:
       type: array
       items:
         type: string
-      allOf:
-      - contains:
-          const: schema:Event
-      - contains:
-          const: xas:AnalysisEvent
+      contains:
+        const: xas:AnalysisEvent
     'schema:startDate':
       type: string
       description: Date/time the XAS analysis started
