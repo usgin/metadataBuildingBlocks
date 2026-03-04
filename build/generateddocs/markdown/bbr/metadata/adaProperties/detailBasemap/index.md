@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.adaProperties.detailBasemap` *v0.1*
 
-Basemap images with RGB channels and pixel scaling
+Basemap images with RGB channels and pixel scaling. Defines properties: @type, schema:description, pixelUnits, pixelScaleX, pixelScaleY, channel1, channel2, channel3.
 
 [*Status*](http://www.opengis.net/def/status): Under development
 

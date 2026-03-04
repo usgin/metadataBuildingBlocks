@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.cdifProperties.cdifPhysicalMapping` *v0.1*
 
-metadata to document the physical serialization of variables in a data structure
+metadata to document the physical serialization of variables in a data structure. Defines properties: cdi:index, cdi:format, cdi:physicalDataType, cdi:length, cdi:nullSequence, cdi:defaultValue, cdi:scale, cdi:decimalPositions, cdi:minimumLength, cdi:maximumLength, cdi:isRequired, cdi:formats_InstanceVariable.
 
 [*Status*](http://www.opengis.net/def/status): Under development
 

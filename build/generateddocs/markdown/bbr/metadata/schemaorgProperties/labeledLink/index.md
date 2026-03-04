@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.schemaorgProperties.labeledLink` *v0.1*
 
-Schema defining propertis for a labeled link, implemented using a profile of schema.org/CreativeWork.
+Schema defining propertis for a labeled link, implemented using a profile of schema.org/CreativeWork. Defines properties: @type, schema:name, schema:description, schema:url.
 
 [*Status*](http://www.opengis.net/def/status): Under development
 
@@ -26,9 +26,9 @@ Example labeled link instance.
     },
     "@id": "ex:LabeledLinkExample_zZc",
     "@type": "schema:CreativeWork",
-    "schema:name": "Some relsted resource",
+    "schema:name": "Some related resource",
     "schema:description": "URL to get the related resource",
-    "schema:url": "https://example.org/relatedresoruce/2342747"
+    "schema:url": "https://example.org/relatedresource/2342747"
 }
 ```
 
@@ -48,9 +48,9 @@ Example labeled link instance.
   ],
   "@id": "ex:LabeledLinkExample_zZc",
   "@type": "schema:CreativeWork",
-  "schema:name": "Some relsted resource",
+  "schema:name": "Some related resource",
   "schema:description": "URL to get the related resource",
-  "schema:url": "https://example.org/relatedresoruce/2342747"
+  "schema:url": "https://example.org/relatedresource/2342747"
 }
 ```
 
@@ -61,8 +61,8 @@ Example labeled link instance.
 
 ex:LabeledLinkExample_zZc a schema1:CreativeWork ;
     schema1:description "URL to get the related resource" ;
-    schema1:name "Some relsted resource" ;
-    schema1:url "https://example.org/relatedresoruce/2342747" .
+    schema1:name "Some related resource" ;
+    schema1:url "https://example.org/relatedresource/2342747" .
 
 
 ```

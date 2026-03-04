@@ -43,6 +43,16 @@ properties:
       validation in that detail is a future project
     items:
       $ref: '#/$defs/AdditionalProperty'
+  schema:hasPart:
+    type: array
+    description: Sub-components of the instrument system
+    items:
+      anyOf:
+      - $ref: '#/$defs/Instrument'
+      - type: object
+        properties:
+          '@id':
+            type: string
 required:
 - '@type'
 - schema:additionalType
@@ -52,5 +62,7 @@ $defs:
     $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/identifier/schema.yaml
   AdditionalProperty:
     $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/additionalProperty/schema.yaml
+  Instrument:
+    $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/instrument/schema.yaml
 x-jsonld-prefixes:
   schema: http://schema.org/

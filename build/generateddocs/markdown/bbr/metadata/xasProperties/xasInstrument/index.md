@@ -3,15 +3,32 @@
 
 `cdif.bbr.metadata.xasProperties.xasInstrument` *v0.1*
 
-Schema defining properties for documenting instrumentation used in XAS analysis.
+Schema defining properties for documenting instrumentation used in XAS analysis. Extends the generic instrument building block with required wd:Q3099911 (scientific instrument) additionalType. Supports hierarchical instrument systems via schema:hasPart referencing the generic instrument for sub-components. Defines properties: @type, schema:additionalType, schema:name, schema:identifier, schema:description, schema:additionalProperty, schema:hasPart. Uses building blocks: identifier (schemaorgProperties), additionalProperty (schemaorgProperties), instrument (schemaorgProperties).
 
 [*Status*](http://www.opengis.net/def/status): Under development
 
 ## Description
 
-## Person properties
+## XAS Instrument properties
 
-Defines a set of properties for use describing a person for the schema.org implementation of the [Cross Domain Interoperability Framework](https://cross-domain-interoperability-framework.github.io/cdifbook/metadata/schemaorgimplementation.html#implementation-of-metadata-content-items) (CDIF) discovery profile.
+XAS-specific instrument definition requiring schema:Product + schema:Thing typing and Wikidata scientific instrument additionalType (wd:Q3099911). Supports hierarchical sub-components via schema:hasPart for beamline elements (source, monochromator, detector).
+
+### Defined properties
+
+- **@type** — must include both schema:Product and schema:Thing
+- **schema:additionalType** — must include wd:Q3099911 (scientific instrument)
+- **schema:name** — name of the instrument
+- **schema:identifier** — identifier for the instrument (string or Identifier object)
+- **schema:description** — description of the instrument
+- **schema:additionalProperty** — domain-specific properties (varies by instrument type)
+- **schema:hasPart** — sub-components of the instrument system
+
+### Dependencies
+
+- [identifier](../../schemaorgProperties/identifier/) — structured identifier pattern
+- [additionalProperty](../../schemaorgProperties/additionalProperty/) — PropertyValue for extension properties
+- [instrument](../../schemaorgProperties/instrument/) — base generic instrument schema
+
 ## Examples
 
 ### Example instrument description.
@@ -405,6 +422,10 @@ xas:487y54 a schema1:Product,
     schema1:hasPart [ a schema1:Product,
                 schema1:Thing ;
             schema1:additionalProperty [ a schema1:PropertyValue ;
+                    schema1:name "chemical formula" ;
+                    schema1:propertyID "nxs:Field/NXcrystal/chemical_formula" ;
+                    schema1:value "Si" ],
+                [ a schema1:PropertyValue ;
                     schema1:name "reflection plane (hkl)" ;
                     schema1:propertyID "nxs:Field/NXcrystal/reflection" ;
                     schema1:value "1,1,1" ],
@@ -416,11 +437,7 @@ xas:487y54 a schema1:Product,
                 [ a schema1:PropertyValue ;
                     schema1:name "crystal type" ;
                     schema1:propertyID "nxs:Field/NXcrystal/type" ;
-                    schema1:value "channel-cut" ],
-                [ a schema1:PropertyValue ;
-                    schema1:name "chemical formula" ;
-                    schema1:propertyID "nxs:Field/NXcrystal/chemical_formula" ;
-                    schema1:value "Si" ] ;
+                    schema1:value "channel-cut" ] ;
             schema1:additionalType "nxs:BaseClass/NXmonochromator",
                 "wd:Q3099911" ;
             schema1:name "Si 111" ],
@@ -441,38 +458,38 @@ xas:487y54 a schema1:Product,
         [ a schema1:Product,
                 schema1:Thing ;
             schema1:additionalProperty [ a schema1:PropertyValue ;
-                    schema1:name "monitor preset" ;
-                    schema1:propertyID "nxs:Field/NXmonitor/preset" ;
-                    schema1:value "N.A." ],
-                [ a schema1:PropertyValue ;
-                    schema1:alternateName "incident flux measurement method" ;
-                    schema1:name "detector mode i0" ;
-                    schema1:propertyID "xas:detector.i0" ;
-                    schema1:value "10cm  N2" ],
-                [ a schema1:PropertyValue ;
                     schema1:name "monitor mode" ;
                     schema1:propertyID "nxs:Field/NXmonitor/mode" ;
                     schema1:value "monitor" ],
                 [ a schema1:PropertyValue ;
+                    schema1:name "monitor preset" ;
+                    schema1:propertyID "nxs:Field/NXmonitor/preset" ;
+                    schema1:value "N.A." ],
+                [ a schema1:PropertyValue ;
                     schema1:alternateName "transmitted flux measurement method" ;
                     schema1:name "detector mode it" ;
                     schema1:propertyID "xas:detector.it" ;
+                    schema1:value "10cm  N2" ],
+                [ a schema1:PropertyValue ;
+                    schema1:alternateName "incident flux measurement method" ;
+                    schema1:name "detector mode i0" ;
+                    schema1:propertyID "xas:detector.i0" ;
                     schema1:value "10cm  N2" ] ;
             schema1:additionalType "nxs:BaseClass/NXmonitor" ],
         [ a schema1:Product,
                 schema1:Thing ;
             schema1:additionalProperty [ a schema1:PropertyValue ;
-                    schema1:name "focusing" ;
-                    schema1:propertyID "xas:focusing" ;
-                    schema1:value "???" ],
+                    schema1:name "harmonic_rejection" ;
+                    schema1:propertyID "xas:harmonic_rejection" ;
+                    schema1:value "Rh-coated mirror, detuned" ],
                 [ a schema1:PropertyValue ;
                     schema1:name "collimation technique" ;
                     schema1:propertyID "xas:collimation" ;
                     schema1:value "none" ],
                 [ a schema1:PropertyValue ;
-                    schema1:name "harmonic_rejection" ;
-                    schema1:propertyID "xas:harmonic_rejection" ;
-                    schema1:value "Rh-coated mirror, detuned" ] ;
+                    schema1:name "focusing" ;
+                    schema1:propertyID "xas:focusing" ;
+                    schema1:value "???" ] ;
             schema1:additionalType "wd:Q3099911",
                 "xas:Beamline" ;
             schema1:identifier "should have a registry with URIs" ;
@@ -530,6 +547,16 @@ properties:
       validation in that detail is a future project
     items:
       $ref: '#/$defs/AdditionalProperty'
+  schema:hasPart:
+    type: array
+    description: Sub-components of the instrument system
+    items:
+      anyOf:
+      - $ref: '#/$defs/Instrument'
+      - type: object
+        properties:
+          '@id':
+            type: string
 required:
 - '@type'
 - schema:additionalType
@@ -539,6 +566,8 @@ $defs:
     $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/identifier/schema.yaml
   AdditionalProperty:
     $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/additionalProperty/schema.yaml
+  Instrument:
+    $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/instrument/schema.yaml
 x-jsonld-prefixes:
   schema: http://schema.org/
 

@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.adaProperties.details` *v0.1*
 
-Instrument-specific detail types for ADA analytical techniques
+Instrument-specific detail types for ADA analytical techniques. Defines types: detailBasemap, detailARGT, detailDSC, detailEMPA, detailEAIRMS, detailICPOES, detailL2MS, detailLAF, detailNanoIR, detailNanoSIMS, detailPSFD, detailVNMIR, detailQRIS, detailSLS, detailXCT, detailXRD. Uses building blocks: detailBasemap (adaProperties), detailARGT (adaProperties), detailDSC (adaProperties), detailEMPA (adaProperties), detailEAIRMS (adaProperties), detailICPOES (adaProperties), detailL2MS (adaProperties), detailLAF (adaProperties), detailNanoIR (adaProperties), detailNanoSIMS (adaProperties), detailPSFD (adaProperties), detailVNMIR (adaProperties), detailQRIS (adaProperties), detailSLS (adaProperties), detailXCT (adaProperties), detailXRD (adaProperties).
 
 [*Status*](http://www.opengis.net/def/status): Under development
 

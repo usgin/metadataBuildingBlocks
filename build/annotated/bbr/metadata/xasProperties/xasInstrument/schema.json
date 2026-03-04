@@ -65,6 +65,25 @@
       "items": {
         "$ref": "#/$defs/AdditionalProperty"
       }
+    },
+    "schema:hasPart": {
+      "type": "array",
+      "description": "Sub-components of the instrument system",
+      "items": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/Instrument"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "@id": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
     }
   },
   "required": [
@@ -78,6 +97,9 @@
     },
     "AdditionalProperty": {
       "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/additionalProperty/schema.json"
+    },
+    "Instrument": {
+      "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/instrument/schema.json"
     }
   },
   "x-jsonld-prefixes": {

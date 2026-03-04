@@ -4,13 +4,13 @@
   "itemIdentifier": "cdif.bbr.metadata.schemaorgProperties.definedTerm",
   "$schema": "metaschema.yaml",
   "name": "Defined Term",
-  "abstract": "Schema defining propertis of a term from a named or identified vocabulary, with a label, and URI.Based on Schema.org/definedTerm",
+  "abstract": "Schema defining propertis of a term from a named or identified vocabulary, with a label, and URI.Based on Schema.org/definedTerm. Defines properties: @type, schema:name, schema:identifier, schema:inDefinedTermSet, schema:termCode. Uses building blocks: identifier (schemaorgProperties).",
   "status": "under-development",
   "dateTimeAddition": "2025-10-21T00:00:00Z",
   "itemClass": "schema",
   "register": "cdif-building-block-register",
   "version": "0.1",
-  "dateOfLastChange": "2026-02-25",
+  "dateOfLastChange": "2026-03-04",
   "link": "https://github.com/opengeospatial/bblock-template",
   "sources": [
     {
@@ -73,7 +73,7 @@
       ]
     }
   ],
-  "annotatedSchema": "$schema: https://json-schema.org/draft/2020-12/schema\ndescription: schema.org Defined Term schema\ntype: object\nproperties:\n  '@type':\n    const: schema:DefinedTerm\n  schema:name:\n    type: string\n    description: text label for the term that is useful to human user\n  schema:identifier:\n    anyOf:\n    - type: string\n    - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/identifier/schema.yaml\n  schema:inDefinedTermSet:\n    type: string\n    description: Identifier for the controlled vocabulary responsible for this keyword.\n  schema:termCode:\n    type: string\n    description: A representative code for this keyword in the controlled vocabulary\n      (Optional).  Analogous to skos:Notation\nallOf:\n- required:\n  - '@type'\n- anyOf:\n  - required:\n    - schema:name\n  - required:\n    - schema:identifier\nx-jsonld-prefixes:\n  schema: http://schema.org/\n",
+  "annotatedSchema": "$schema: https://json-schema.org/draft/2020-12/schema\ndescription: schema.org Defined Term schema\ntype: object\nproperties:\n  '@type':\n    const: schema:DefinedTerm\n  schema:name:\n    type: string\n    description: text label for the term that is useful to human user\n  schema:identifier:\n    anyOf:\n    - type: string\n    - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/identifier/schema.yaml\n  schema:inDefinedTermSet:\n    type: string\n    description: Identifier for the controlled vocabulary responsible for this keyword.\n  schema:termCode:\n    type: string\n    description: A representative code for this keyword in the controlled vocabulary\n      (Optional).  Analogous to skos:Notation\nallOf:\n- required:\n  - '@type'\n- anyOf:\n  - required:\n    - schema:name\n  - required:\n    - schema:identifier\n  - required:\n    - schema:termCode\nx-jsonld-prefixes:\n  schema: http://schema.org/\n",
   "gitRepository": "https://github.com/usgin/metadataBuildingBlocks",
   "gitPath": "_sources/schemaorgProperties/definedTerm"
 }

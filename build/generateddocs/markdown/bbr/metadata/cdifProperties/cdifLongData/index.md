@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.cdifProperties.cdifLongData` *v0.1*
 
-metadata to document long (narrow) data structure where each row is a single observation with a descriptor column identifying the variable and a reference column holding the value.
+metadata to document long (narrow) data structure where each row is a single observation with a descriptor column identifying the variable and a reference column holding the value. Defines properties: @type, cdi:hasPhysicalMapping, cdi:arrayBase, csvw:delimiter, csvw:header, csvw:headerRowCount, csvw:commentPrefix, csvw:skipBlankRows, csvw:skipInitialSpace, csvw:skipRows, csvw:lineTerminators, csvw:quoteChar, cdi:isDelimited, cdi:isFixedWidth, cdi:escapeCharacter. Uses building blocks: cdifPhysicalMapping (cdifProperties).
 
 [*Status*](http://www.opengis.net/def/status): Under development
 

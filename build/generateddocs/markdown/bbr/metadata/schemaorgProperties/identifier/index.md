@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.schemaorgProperties.identifier` *v0.1*
 
-schema.org properties for an identifier implemented as schema.org/PropertyValue.
+schema.org properties for an identifier implemented as schema.org/PropertyValue. Defines properties: @type, schema:propertyID, schema:value, schema:url.
 
 [*Status*](http://www.opengis.net/def/status): Under development
 
@@ -26,8 +26,8 @@ Example identifier instance.
     },
     "@type": "schema:PropertyValue",
     "schema:propertyID": "example identifier",
-    "schema:value": "wwyPcWQqoT",
-    "schema:url": "https://identifier.org/uri:test:wwyPcWQqoT"
+    "schema:value": "10.5281/zenodo.1234567",
+    "schema:url": "https://doi.org/10.5281/zenodo.1234567"
 }
 ```
 
@@ -47,8 +47,8 @@ Example identifier instance.
   ],
   "@type": "schema:PropertyValue",
   "schema:propertyID": "example identifier",
-  "schema:value": "wwyPcWQqoT",
-  "schema:url": "https://identifier.org/uri:test:wwyPcWQqoT"
+  "schema:value": "10.5281/zenodo.1234567",
+  "schema:url": "https://doi.org/10.5281/zenodo.1234567"
 }
 ```
 
@@ -58,8 +58,8 @@ Example identifier instance.
 
 [] a schema1:PropertyValue ;
     schema1:propertyID "example identifier" ;
-    schema1:url "https://identifier.org/uri:test:wwyPcWQqoT" ;
-    schema1:value "wwyPcWQqoT" .
+    schema1:url "https://doi.org/10.5281/zenodo.1234567" ;
+    schema1:value "10.5281/zenodo.1234567" .
 
 
 ```

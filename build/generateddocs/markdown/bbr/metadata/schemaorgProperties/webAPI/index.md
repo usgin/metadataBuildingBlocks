@@ -3,15 +3,30 @@
 
 `cdif.bbr.metadata.schemaorgProperties.webAPI` *v0.1*
 
-Schema defining properties for documenting a WebAPI used as a resource distribution option.
+Schema defining properties for documenting a WebAPI used as a resource distribution option. Defines properties: @type, schema:serviceType, schema:termsOfService, schema:documentation, schema:potentialAction. Uses building blocks: labeledLink (schemaorgProperties), definedTerm (schemaorgProperties), action (schemaorgProperties).
 
 [*Status*](http://www.opengis.net/def/status): Under development
 
 ## Description
 
-## Person properties
+## WebAPI properties
 
-Defines a set of properties for use describing a person for the schema.org implementation of the [Cross Domain Interoperability Framework](https://cross-domain-interoperability-framework.github.io/cdifbook/metadata/schemaorgimplementation.html#implementation-of-metadata-content-items) (CDIF) discovery profile.
+Documents a web service API endpoint using the schema.org WebAPI pattern. Specifies service type, terms of service, machine-readable documentation, and potential actions.
+
+### Defined properties
+
+- **@type** — must include schema:WebAPI
+- **schema:serviceType** — kind of service (string, DefinedTerm, or resolvable identifier)
+- **schema:termsOfService** — description of access privileges required (string or LabeledLink)
+- **schema:documentation** — machine-actionable description of the service (e.g. OpenAPI, OGC Capabilities documents)
+- **schema:potentialAction** — actions that can be invoked via the API
+
+### Dependencies
+
+- [labeledLink](../labeledLink/) — link with label and description
+- [definedTerm](../definedTerm/) — controlled vocabulary term for service type
+- [action](../action/) — action definitions for potentialAction
+
 ## Examples
 
 ### Example WebAPI distribution.
@@ -26,17 +41,17 @@ Example distribution webAPI, based on schema.org Action
     },
     "@id": "ex:exampleWebAPI_354btrh",
     "@type": ["schema:WebAPI"],
-    "schema:serviceType": "pvbn",
+    "schema:serviceType": "OGC:WFS",
     "schema:termsOfService": {
         "@type": "schema:CreativeWork",
-        "schema:name": "tUMFszqdkAZmXTx",
-        "schema:description": "gxtJAxCAkaYFOJfsrtWn",
+        "schema:name": "Terms of Service for Example Data Portal",
+        "schema:description": "Public access with attribution required",
         "schema:url": "http://example.com/resource/termsDoc35yh"
     },
     "schema:documentation": {
         "@type": "schema:CreativeWork",
-        "schema:name": "OgsRNbhr",
-        "schema:description": "XxEWiBXJhROXXws",
+        "schema:name": "OpenAPI specification",
+        "schema:description": "Machine-readable API description in OpenAPI 3.0 format",
         "schema:url": "http://example.com/resource/documentation35hn3"
     },
     "schema:potentialAction": [
@@ -152,17 +167,17 @@ Example distribution webAPI, based on schema.org Action
   "@type": [
     "schema:WebAPI"
   ],
-  "schema:serviceType": "pvbn",
+  "schema:serviceType": "OGC:WFS",
   "schema:termsOfService": {
     "@type": "schema:CreativeWork",
-    "schema:name": "tUMFszqdkAZmXTx",
-    "schema:description": "gxtJAxCAkaYFOJfsrtWn",
+    "schema:name": "Terms of Service for Example Data Portal",
+    "schema:description": "Public access with attribution required",
     "schema:url": "http://example.com/resource/termsDoc35yh"
   },
   "schema:documentation": {
     "@type": "schema:CreativeWork",
-    "schema:name": "OgsRNbhr",
-    "schema:description": "XxEWiBXJhROXXws",
+    "schema:name": "OpenAPI specification",
+    "schema:description": "Machine-readable API description in OpenAPI 3.0 format",
     "schema:url": "http://example.com/resource/documentation35hn3"
   },
   "schema:potentialAction": [
@@ -290,14 +305,14 @@ Example distribution webAPI, based on schema.org Action
 
 ex:exampleWebAPI_354btrh a schema1:WebAPI ;
     schema1:documentation [ a schema1:CreativeWork ;
-            schema1:description "XxEWiBXJhROXXws" ;
-            schema1:name "OgsRNbhr" ;
+            schema1:description "Machine-readable API description in OpenAPI 3.0 format" ;
+            schema1:name "OpenAPI specification" ;
             schema1:url "http://example.com/resource/documentation35hn3" ] ;
     schema1:potentialAction ex:exampleAction_37467 ;
-    schema1:serviceType "pvbn" ;
+    schema1:serviceType "OGC:WFS" ;
     schema1:termsOfService [ a schema1:CreativeWork ;
-            schema1:description "gxtJAxCAkaYFOJfsrtWn" ;
-            schema1:name "tUMFszqdkAZmXTx" ;
+            schema1:description "Public access with attribution required" ;
+            schema1:name "Terms of Service for Example Data Portal" ;
             schema1:url "http://example.com/resource/termsDoc35yh" ] .
 
 ex:exampleAction_37467 a schema1:Action ;
@@ -321,16 +336,16 @@ ex:exampleAction_37467 a schema1:Action ;
             schema1:description "plain text list of instruments available" ;
             schema1:encodingFormat "text/plain" ] ;
     schema1:target [ a schema1:EntryPoint ;
-            schema1:contentType "text/plain" ;
-            schema1:description "endpoint URL to invoke the action; content type spcifies the supported content type(s) for an EntryPoint response" ;
-            schema1:httpMethod "GET" ;
-            schema1:urlTemplate "http://portal.chordsrt.com/api/v1/data/instruments" ],
-        [ a schema1:EntryPoint ;
             schema1:contentType "application/json",
                 "text/csv" ;
             schema1:description "endpoint URL to invoke the action; content type spcifies the supported content type(s) for an EntryPoint response" ;
             schema1:httpMethod "GET" ;
-            schema1:urlTemplate "http://portal.chordsrt.com/api/v1/data.{encoding}?instruments={instruments}&start={start}&end={end}" ] .
+            schema1:urlTemplate "http://portal.chordsrt.com/api/v1/data.{encoding}?instruments={instruments}&start={start}&end={end}" ],
+        [ a schema1:EntryPoint ;
+            schema1:contentType "text/plain" ;
+            schema1:description "endpoint URL to invoke the action; content type spcifies the supported content type(s) for an EntryPoint response" ;
+            schema1:httpMethod "GET" ;
+            schema1:urlTemplate "http://portal.chordsrt.com/api/v1/data/instruments" ] .
 
 ex:input_encoding a schema1:PropertyValueSpecification ;
     schema1:description "format of requested result" ;

@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.cdifProperties.cdifMandatory` *v0.1*
 
-Definition of Metadata elements that are mandatory for CDIF discovery profile
+Definition of Metadata elements that are mandatory for CDIF discovery profile. Defines properties: @id, @type, schema:name, schema:identifier, schema:dateModified, schema:conditionsOfAccess, schema:license, schema:url, schema:distribution, schema:subjectOf. Uses building blocks: labeledLink (schemaorgProperties), identifier (schemaorgProperties), definedTerm (schemaorgProperties), dataDownload (schemaorgProperties), webAPI (schemaorgProperties), cdifCatalogRecord (cdifProperties).
 
 [*Status*](http://www.opengis.net/def/status): Under development
 
@@ -23,21 +23,35 @@ Example CDIF discovery instance with mandatory properties only.
         "schema": "http://schema.org/",
         "ex": "https://example.org/",
         "xsd": "http://www.w3.org/2001/XMLSchema#",
-        "dcterms": "http://purl.org/dc/terms/"
+        "dcterms": "http://purl.org/dc/terms/",
+        "dcat": "http://www.w3.org/ns/dcat#"
     },
     "@id": "ex:baseDiscovery23578",
-    "@type": ["schema:Dataset"],
+    "@type": [
+        "schema:Dataset"
+    ],
     "schema:name": "Bathymetry Bay of Biscay",
     "schema:identifier": "https://doi.org/23566/aslry",
     "schema:url": "https://example.org/landingPage254266",
     "schema:dateModified": "2022-12-12",
-    "schema:license": ["https://creativecommons.org/publicdomain/zero/1.0/"],
+    "schema:license": [
+        "https://creativecommons.org/publicdomain/zero/1.0/"
+    ],
     "schema:subjectOf": {
-        "@type": "schema:Dataset",
+        "@type": [
+            "schema:Dataset"
+        ],
+        "schema:additionalType": [
+            "dcat:CatalogRecord"
+        ],
         "@id": "ex:URIforMetadata3575",
-        "schema:about": {"@id": "ex:baseDiscovery23578"},
+        "schema:about": {
+            "@id": "ex:baseDiscovery23578"
+        },
         "dcterms:conformsTo": [
-            {"@id": "ex:cdif_SDO_profile_uri"}
+            {
+                "@id": "https://w3id.org/cdif/bbr/metadata/cdifProperties/cdifMandatory"
+            }
         ],
         "schema:maintainer": {
             "@id": "https://orcid.org/3333-4442-9456-9347",
@@ -50,7 +64,7 @@ Example CDIF discovery instance with mandatory properties only.
                 "schema:email": "goodgea@bwc.org"
             },
             "schema:identifier": {
-                "@id": "ex:maintainerIdentifier", 
+                "@id": "ex:maintainerIdentifier",
                 "@type": "schema:PropertyValue",
                 "schema:propertyID": "https://registry.identifiers.org/registry/orcid",
                 "schema:url": "https://orcid.org/3333-4442-9456-9347"
@@ -65,6 +79,7 @@ Example CDIF discovery instance with mandatory properties only.
         }
     }
 }
+
 ```
 
 #### jsonld
@@ -79,7 +94,8 @@ Example CDIF discovery instance with mandatory properties only.
       "schema": "http://schema.org/",
       "ex": "https://example.org/",
       "xsd": "http://www.w3.org/2001/XMLSchema#",
-      "dcterms": "http://purl.org/dc/terms/"
+      "dcterms": "http://purl.org/dc/terms/",
+      "dcat": "http://www.w3.org/ns/dcat#"
     }
   ],
   "@id": "ex:baseDiscovery23578",
@@ -94,14 +110,19 @@ Example CDIF discovery instance with mandatory properties only.
     "https://creativecommons.org/publicdomain/zero/1.0/"
   ],
   "schema:subjectOf": {
-    "@type": "schema:Dataset",
+    "@type": [
+      "schema:Dataset"
+    ],
+    "schema:additionalType": [
+      "dcat:CatalogRecord"
+    ],
     "@id": "ex:URIforMetadata3575",
     "schema:about": {
       "@id": "ex:baseDiscovery23578"
     },
     "dcterms:conformsTo": [
       {
-        "@id": "ex:cdif_SDO_profile_uri"
+        "@id": "https://w3id.org/cdif/bbr/metadata/cdifProperties/cdifMandatory"
       }
     ],
     "schema:maintainer": {
@@ -139,8 +160,9 @@ Example CDIF discovery instance with mandatory properties only.
 @prefix schema1: <http://schema.org/> .
 
 ex:URIforMetadata3575 a schema1:Dataset ;
-    dcterms:conformsTo ex:cdif_SDO_profile_uri ;
+    dcterms:conformsTo <https://w3id.org/cdif/bbr/metadata/cdifProperties/cdifMandatory> ;
     schema1:about ex:baseDiscovery23578 ;
+    schema1:additionalType "dcat:CatalogRecord" ;
     schema1:includedInDataCatalog <https://ror.org/04sfkyrt24> ;
     schema1:maintainer <https://orcid.org/3333-4442-9456-9347> ;
     schema1:sdDatePublished "2025-10-24" .
@@ -184,19 +206,22 @@ description: Building block specifies properties for minimal CDIF schama.org dis
 properties:
   '@id':
     type: string
-    description: The URI for the resource should be the @id value for the root of
-      the JSON instance document tree. Note that this identifier can be interpreted
+    description: 'The URI for the resource should be the @id value for the root of
+      the JSON instance document tree. Must be an IRI (e.g. https://doi.org/..., urn:...,
+      or a relative URI like #localid). Note that this identifier can be interpreted
       to identify the resource that is the subject of this metadata record, or the
-      JSON-LD object that is the digital object containing the metadata information.
+      JSON-LD object that is the digital object containing the metadata information.'
   '@type':
     description: a schema.org Class that specifies the expected information content
       for the metadata record. For CDIF, 'schema:Dataset' is required, but other possible
       values (e.g. CreativeWork, SoftwareApplication, Product, WebAPI) are sometimes
       included to enable the schema.org properties used to describe the resource without
-      schema.org validation errors.
+      schema.org validation errors. The array must include at least one value from
+      the known set, but can also include other strings for extensibility.
     type: array
     items:
       type: string
+    contains:
       enum:
       - schema:CreativeWork
       - schema:SoftwareApplication
@@ -209,7 +234,8 @@ properties:
       - schema:ImageObject
       - schema:DataCatalog
       - schema:DefinedTermSet
-      default: schema:Dataset
+      - schema:MediaObject
+    default: schema:Dataset
     minItems: 1
   schema:name:
     type: string
@@ -282,7 +308,7 @@ properties:
       - $ref: '#/$defs/DataDownload'
       - $ref: '#/$defs/WebAPI'
   schema:subjectOf:
-    $ref: '#/$defs/MetaMetadata'
+    $ref: '#/$defs/CdifCatalogRecord'
 allOf:
 - required:
   - '@id'
@@ -313,8 +339,8 @@ $defs:
     $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/dataDownload/schema.yaml
   WebAPI:
     $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/webAPI/schema.yaml
-  MetaMetadata:
-    $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/metaMetadata/schema.yaml
+  CdifCatalogRecord:
+    $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifCatalogRecord/schema.yaml
 x-jsonld-prefixes:
   schema: http://schema.org/
 

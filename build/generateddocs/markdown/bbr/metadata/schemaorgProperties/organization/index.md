@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.schemaorgProperties.organization` *v0.1*
 
-Schema defining propertis of an organization in CDIF context. Implementation is a profile of schema.org/Organization.
+Schema defining propertis of an organization in CDIF context. Implementation is a profile of schema.org/Organization. Defines properties: @id, @type, schema:additionalType, schema:name, schema:alternateName, schema:description, schema:identifier, schema:sameAs. Uses building blocks: definedTerm (schemaorgProperties), identifier (schemaorgProperties).
 
 [*Status*](http://www.opengis.net/def/status): Under development
 
@@ -39,7 +39,7 @@ Example organization instance.
         "schema:value": "03m2x1q45",
         "schema:url": "https://ror.org/03m2x1q45"
     },
-    "schema:sameAs": ["Wildcats"]
+    "schema:sameAs": ["https://en.wikipedia.org/wiki/University_of_Arizona"]
 }
 ```
 
@@ -73,7 +73,7 @@ Example organization instance.
     "schema:url": "https://ror.org/03m2x1q45"
   },
   "schema:sameAs": [
-    "Wildcats"
+    "https://en.wikipedia.org/wiki/University_of_Arizona"
   ]
 }
 ```
@@ -93,7 +93,7 @@ ex:exampleOrg_fW a schema1:Organization ;
             schema1:url "https://ror.org/03m2x1q45" ;
             schema1:value "03m2x1q45" ] ;
     schema1:name "University of Arizona" ;
-    schema1:sameAs "Wildcats" .
+    schema1:sameAs "https://en.wikipedia.org/wiki/University_of_Arizona" .
 
 
 ```

@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.adaProperties.detailICPOES` *v0.1*
 
-Inductively Coupled Plasma Optical Emission Spectrometry detail properties
+Inductively Coupled Plasma Optical Emission Spectrometry detail properties. Defines properties: @type, mass, dissolutionFactor.
 
 [*Status*](http://www.opengis.net/def/status): Under development
 

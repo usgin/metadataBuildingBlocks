@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.adaProperties.stringArray` *v0.1*
 
-Simple reusable array of strings used throughout ADA metadata
+Simple reusable array of strings used throughout ADA metadata. Defines type: array of strings.
 
 [*Status*](http://www.opengis.net/def/status): Under development
 

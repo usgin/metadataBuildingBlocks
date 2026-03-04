@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.adaProperties.detailDSC` *v0.1*
 
-Differential Scanning Calorimetry heat tabular data
+Differential Scanning Calorimetry heat tabular data. Defines properties: @type, analysisType.
 
 [*Status*](http://www.opengis.net/def/status): Under development
 

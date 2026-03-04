@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.adaProperties.imageMap` *v0.1*
 
-Spatially registered image map with pixel coordinates and component types
+Spatially registered image map with pixel coordinates and component types. Defines properties: @type, acquisitionTime, componentType, channel1, channel2, channel3, illuminationType, imageType, numPixelsX, numPixelsY, spatialRegistration. Uses building blocks: detailEMPA (adaProperties), spatialRegistration (adaProperties).
 
 [*Status*](http://www.opengis.net/def/status): Under development
 

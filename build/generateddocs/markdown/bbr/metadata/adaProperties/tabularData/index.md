@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.adaProperties.tabularData` *v0.1*
 
-CDI PhysicalDataSet for tabular/structured data files
+CDI PhysicalDataSet for tabular/structured data files. Defines properties: @type, componentType, xCoordCol, yCoordCol, zCoordCol, coordUnits, spatialRegistration. Uses building blocks: detailDSC (adaProperties), detailEAIRMS (adaProperties), detailEMPA (adaProperties), detailLAF (adaProperties), detailNanoSIMS (adaProperties), detailNanoIR (adaProperties), detailPSFD (adaProperties), detailVNMIR (adaProperties), detailXRD (adaProperties), spatialRegistration (adaProperties), cdifTabularData (cdifProperties).
 
 [*Status*](http://www.opengis.net/def/status): Under development
 

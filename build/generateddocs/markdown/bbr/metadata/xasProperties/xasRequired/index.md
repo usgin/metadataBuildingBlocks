@@ -3,15 +3,25 @@
 
 `cdif.bbr.metadata.xasProperties.xasRequired` *v0.1*
 
-XAS profile files that extend requirements of CDIF discovery. Field content: x-ray source,definition, Data/mode, element/symbol, edge,Instrument/source/type, Instrument/source/name, Instrument/source/probe, Instrument/monochromator/type, Instrument/monochromator/d_spacing, Instrument/monochromator/reflection, Sample/name
+Required XAS metadata extending CDIF mandatory with cdifProv-based provenance. Requires dual @type (Dataset + Product), XAS instrument components (NXsource, NXmonochromator), XDI-conformant distribution, measurement technique DefinedTerms, and element/edge keywords. Defines properties: @type, schema:subjectOf, prov:wasGeneratedBy, schema:distribution, schema:measurementTechnique, schema:keywords. Uses building blocks: cdifMandatory (cdifProperties), cdifProv (cdifProperties), definedTerm (schemaorgProperties), additionalProperty (schemaorgProperties), dataDownload (schemaorgProperties), xasSample (xasProperties), xasSubject (xasProperties).
 
 [*Status*](http://www.opengis.net/def/status): Under development
 
 ## Description
 
-##  XAS profile extension properties
+## Required Fields for XAS data
 
-XAS profile files that extend requirements of CDIF discovery. Field content: x-ray source,definition, Data/mode, element/symbol, edge,Instrument/source/type, Instrument/source/name, Instrument/source/probe, Instrument/monochromator/type, Instrument/monochromator/d_spacing, Instrument/monochromator/reflection, Sample/name
+Extends CDIF mandatory metadata with required XAS-specific properties. Same structure as xasOptional but adds `@type` constraints (schema:Dataset + schema:Product) and stricter cardinality requirements on instrument components, measurement techniques, and keywords.
+
+### Key requirements
+
+- **@type** — must include both `schema:Dataset` and `schema:Product`
+- **schema:subjectOf** — XAS subject descriptors (element, edge)
+- **prov:wasGeneratedBy** — cdifProv activity requiring XAS instruments with NXsource (type, probe) and NXmonochromator (type, d_spacing, reflection) components, plus sample object
+- **schema:distribution** — requires at least one DataDownload typed as `cdi:PhysicalDataset` conforming to the XDI specification
+- **schema:measurementTechnique** — requires DefinedTerms for XAS (PaNET) and measurement mode (NXxas)
+- **schema:keywords** — requires DefinedTerms from both the XDI dictionary (absorption edge) and SWEET ontology (target element)
+
 ## Examples
 
 ### Example XAS metadata conforms to required items for extension.
@@ -19,191 +29,256 @@ bring together all required properties.
 #### json
 ```json
 {
-    "@context": {
-        "schema": "http://schema.org/",
-        "dcterms": "http://purl.org/dc/terms/",
-        "geosparql": "http://www.opengis.net/ont/geosparql#",
-        "spdx": "http://spdx.org/rdf/terms#",
-        "ex": "https://example.org/",
-        "xsd": "http://www.w3.org/2001/XMLSchema#",
-        "xas": "https://xas.org/dictionary/",
-        "nxs": "http://purl.org/nexusformat/definitions/",
-        "cdi": "http://ddialliance.org/Specification/DDI-CDI/1.0/RDF/",
-        "prov": "http://www.w3.org/ns/prov#"
-    },
-    "@id": "NVohEbchV",
-    "@type": ["schema:Dataset", "schema:Product"],
-    "schema:name": "tniDmCXDxVRXfzMZpjE",
-    "schema:identifier": {
-        "@type": "schema:PropertyValue",
-        "schema:propertyID": "BcWkKNjOEqQKZNG",
-        "schema:value": "MgxVV",
-        "schema:url": "http://example.com/resource?foo=bar#fragment"
-    },
-    "schema:dateModified": "2025-06-15",
-    "schema:conditionsOfAccess": ["eiSzBJBNrAKINEAkjBAz"],
-    "schema:license": ["lWbw", "ZoTXfsfevzu", "ogAgtO", "wVK"],
-    "schema:url": "http://example.com/resource?foo=bar#fragment",
-    "schema:distribution": [
+  "@context": {
+    "schema": "http://schema.org/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "geosparql": "http://www.opengis.net/ont/geosparql#",
+    "spdx": "http://spdx.org/rdf/terms#",
+    "ex": "https://example.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "xas": "https://xas.org/dictionary/",
+    "nxs": "http://purl.org/nexusformat/definitions/",
+    "cdi": "http://ddialliance.org/Specification/DDI-CDI/1.0/RDF/",
+    "prov": "http://www.w3.org/ns/prov#"
+  },
+  "@id": "ex:xas-dataset-001",
+  "@type": [
+    "schema:Dataset",
+    "schema:Product"
+  ],
+  "schema:name": "Se K-edge XANES of Na2SeO4 reference compound",
+  "schema:identifier": {
+    "@type": "schema:PropertyValue",
+    "schema:propertyID": "https://doi.org",
+    "schema:value": "10.12345/xas.2024.001",
+    "schema:url": "http://example.com/resource?foo=bar#fragment"
+  },
+  "schema:dateModified": "2025-06-15",
+  "schema:conditionsOfAccess": [
+    "Public access, no restrictions"
+  ],
+  "schema:license": [
+    "https://creativecommons.org/licenses/by/4.0/"
+  ],
+  "schema:url": "http://example.com/resource?foo=bar#fragment",
+  "schema:distribution": [
+    {
+      "@id": "lMtIx",
+      "@type": [
+        "schema:DataDownload",
+        "cdi:PhysicalDataset"
+      ],
+      "schema:name": "XDI data file",
+      "schema:contentUrl": "http://example.com/resource/35uj46j",
+      "schema:encodingFormat": [
+        "application/x-xdi"
+      ],
+      "dcterms:conformsTo": "https://github.com/XraySpectroscopy/XAS-Data-Interchange/blob/master/specification/spec.md",
+      "spdx:checksum": {
+        "@type": "spdx:Checksum",
+        "spdx:algorithm": "SHA-256",
+        "spdx:checksumValue": "a1b2c3d4e5f6..."
+      },
+      "schema:provider": [
         {
-            "@id": "lMtIx",
-            "@type": ["schema:DataDownload", "cdi:PhysicalDataset"],
-            "schema:name": "XharpxX",
-            "schema:contentUrl": "http://example.com/resource/35uj46j",
-            "schema:encodingFormat": ["QmTID"],
-            "dcterms:conformsTo": "https://github.com/XraySpectroscopy/XAS-Data-Interchange/blob/master/specification/spec.md",
-            "spdx:checksum": {
-                "spdx:algorithm": "nLnPEstvn",
-                "spdx:checksumValue": "F"
-            },
-            "schema:provider": [
-                {"@id": "plTqxpHjBTESztfaDyI"}
-            ]
-        },
-        {
-            "@id": "RNdlTIf",
-            "@type": ["schema:DataDownload"],
-            "schema:name": "LbbtxfqozvkLlsOZFsXC",
-            "schema:contentUrl": "http://example.com/resource/34h5ykl",
-            "schema:encodingFormat": ["VMhnXhYenfn", "aVcNGczw"],
-            "spdx:checksum": {
-                "spdx:algorithm": "CvUDClEiiWFCzNWNoM",
-                "spdx:checksumValue": "pObdEeJAdzYLwA"
-            },
-            "schema:provider": [
-                {"@id": "EwHwOWWPjkVxr"}
-            ]
+          "@id": "plTqxpHjBTESztfaDyI"
         }
+      ]
+    },
+    {
+      "@id": "RNdlTIf",
+      "@type": [
+        "schema:DataDownload"
+      ],
+      "schema:name": "Processed spectrum CSV",
+      "schema:contentUrl": "http://example.com/resource/34h5ykl",
+      "schema:encodingFormat": [
+        "text/csv",
+        "application/zip"
+      ],
+      "spdx:checksum": {
+        "@type": "spdx:Checksum",
+        "spdx:algorithm": "MD5",
+        "spdx:checksumValue": "d41d8cd98f00b204e9800998ecf8427e"
+      },
+      "schema:provider": [
+        {
+          "@id": "EwHwOWWPjkVxr"
+        }
+      ]
+    }
+  ],
+  "schema:subjectOf": {
+    "@type": [
+      "schema:Dataset"
     ],
-    "schema:subjectOf": {
-        "@type": "schema:Dataset",
-        "@id": "RUUvGtoRqzVlQELZ",
-        "schema:about": {"@id": "NVohEbchV"},
-        "dcterms:conformsTo": [
-            {"@id": "https://www.opengis.net/def/profile/cdif/discovery"},
-            {"@id": "cdif:profile_xasCDIF"}
-        ],
-        "schema:maintainer": {
-            "@id": "nKwywfsuBh",
-            "@type": "schema:Person",
-            "schema:name": "Cataloger, Example Data",
-            "schema:contactPoint": {
-                "@type": "schema:ContactPoint",
-                "schema:email": "cataloger@example.org"
-            }
-        },
-        "schema:sdDatePublished": "2025-08-15T06:45:40Z",
-        "schema:includedInDataCatalog": {
-            "@id": "nbUunSyw",
-            "@type": "schema:DataCatalog",
-            "schema:name": "hFcgszRnAnrDNlkluJ",
-            "schema:url": "http://example.com/resource?foo=bar#fragment"
-        }
+    "schema:additionalType": [
+      "dcat:CatalogRecord"
+    ],
+    "@id": "RUUvGtoRqzVlQELZ",
+    "schema:about": {
+      "@id": "ex:xas-dataset-001"
     },
-    "prov:wasGeneratedBy": [{
-        "prov:used": [
-            {
-                "@type": ["schema:Thing", "schema:Product"],
+    "dcterms:conformsTo": [
+      {
+        "@id": "https://w3id.org/cdif/bbr/metadata/xasProperties/xasRequired"
+      },
+      {
+        "@id": "https://w3id.org/cdif/bbr/metadata/profiles/cdifProfiles/CDIFxas"
+      }
+    ],
+    "schema:maintainer": {
+      "@id": "nKwywfsuBh",
+      "@type": "schema:Person",
+      "schema:name": "Cataloger, Example Data",
+      "schema:contactPoint": {
+        "@type": "schema:ContactPoint",
+        "schema:email": "cataloger@example.org"
+      }
+    },
+    "schema:sdDatePublished": "2025-08-15T06:45:40Z",
+    "schema:includedInDataCatalog": {
+      "@id": "nbUunSyw",
+      "@type": "schema:DataCatalog",
+      "schema:name": "XAS Data Library",
+      "schema:url": "http://example.com/resource?foo=bar#fragment"
+    }
+  },
+  "prov:wasGeneratedBy": [
+    {
+      "prov:used": [
+        {
+          "schema:instrument": {
+            "schema:hasPart": [
+              {
+                "@type": [
+                  "schema:Thing",
+                  "schema:Product"
+                ],
                 "schema:additionalType": "nxs:BaseClass/NXsource",
-                "schema:name": "kVLmQxSource",
+                "schema:name": "APS bending magnet source",
                 "schema:additionalProperty": [
-                    {
-                        "@type": "schema:PropertyValue",
-                        "schema:propertyID": ["nxs:Field/NXsource/type"],
-                        "schema:name": "x-ray source",
-                        "schema:value": "Synchrotron X-ray Source"
-                    },
-                    {
-                        "@type": "schema:PropertyValue",
-                        "schema:propertyID": ["nxs:Field/NXsource/probe"],
-                        "schema:name": "Probe",
-                        "schema:value": "x-ray"
-                    }
+                  {
+                    "@type": "schema:PropertyValue",
+                    "schema:propertyID": [
+                      "nxs:Field/NXsource/type"
+                    ],
+                    "schema:name": "x-ray source",
+                    "schema:value": "Synchrotron X-ray Source"
+                  },
+                  {
+                    "@type": "schema:PropertyValue",
+                    "schema:propertyID": [
+                      "nxs:Field/NXsource/probe"
+                    ],
+                    "schema:name": "Probe",
+                    "schema:value": "x-ray"
+                  }
                 ]
-            },
-            {
-                "@type": ["schema:Thing", "schema:Product"],
+              },
+              {
+                "@type": [
+                  "schema:Thing",
+                  "schema:Product"
+                ],
                 "schema:additionalType": "nxs:BaseClass/NXmonochromator",
                 "schema:name": "Si 111",
                 "schema:additionalProperty": [
-                    {
-                        "@type": "schema:PropertyValue",
-                        "schema:propertyID": ["nxs:Field/NXcrystal/d_spacing"],
-                        "schema:name": "d-spacing",
-                        "schema:value": "3.13550",
-                        "schema:unitText": "Angstrom"
-                    },
-                    {
-                        "@type": "schema:PropertyValue",
-                        "schema:propertyID": ["nxs:Field/NXcrystal/type"],
-                        "schema:name": "crystal type",
-                        "schema:value": "mRqWz"
-                    },
-                    {
-                        "@type": "schema:PropertyValue",
-                        "schema:propertyID": ["nxs:Field/NXcrystal/reflection"],
-                        "schema:name": "reflection plane (hkl)",
-                        "schema:value": "1,1,1"
-                    }
+                  {
+                    "@type": "schema:PropertyValue",
+                    "schema:propertyID": [
+                      "nxs:Field/NXcrystal/d_spacing"
+                    ],
+                    "schema:name": "d-spacing",
+                    "schema:value": "3.13550",
+                    "schema:unitText": "Angstrom"
+                  },
+                  {
+                    "@type": "schema:PropertyValue",
+                    "schema:propertyID": [
+                      "nxs:Field/NXcrystal/type"
+                    ],
+                    "schema:name": "crystal type",
+                    "schema:value": "Si(111)"
+                  },
+                  {
+                    "@type": "schema:PropertyValue",
+                    "schema:propertyID": [
+                      "nxs:Field/NXcrystal/reflection"
+                    ],
+                    "schema:name": "reflection plane (hkl)",
+                    "schema:value": "1,1,1"
+                  }
                 ]
-            }
-        ],
-        "schema:mainEntity": {
-            "@type": ["schema:Product", "schema:Thing"],
-            "schema:additionalType": [
-                "MaterialSample",
-                "https://w3id.org/isample/vocabulary/materialsampleobjecttype/materialsample"
-            ],
-            "schema:name": "tJSgGfhzZ",
-            "schema:identifier": "gGDA",
-            "schema:description": "ahjWwyayQYhnB",
-            "schema:additionalProperty": [
-                {
-                    "@type": "schema:PropertyValue",
-                    "schema:propertyID": ["https://example.org/vocab/sample-prep"],
-                    "schema:name": "sample preparation method",
-                    "schema:value": "uUUTOmBQ"
-                },
-                {
-                    "@type": "schema:PropertyValue",
-                    "schema:propertyID": ["EiAnJhZyLsQAxKd"],
-                    "schema:name": "qqcHFymGZzaJLKGN",
-                    "schema:value": "rljVqQklQEuNZF"
-                }
+              }
             ]
+          }
         }
-    }],
-    "schema:measurementTechnique": [
-        {
-            "@type": "schema:DefinedTerm",
-            "schema:name": "X-Ray Absorption Spectroscopy",
-            "schema:termCode": "XAS",
-            "schema:identifier": "http://purl.org/pan-science/PaNET/PaNET01196",
-            "schema:inDefinedTermSet": "http://purl.org/pan-science/PaNET/PaNET.owl"
-        },
-        {
-            "@type": "schema:DefinedTerm",
-            "schema:name": "Transmission",
-            "schema:identifier": "bRqVxNm",
-            "schema:inDefinedTermSet": "nxs:Field/NXxas/ENTRY/DATA/mode"
-        }
-    ],
-    "schema:keywords": [
-        {
-            "@type": "schema:DefinedTerm",
-            "schema:name": "K-edge",
-            "schema:identifier": "hYtRv",
-            "schema:termCode": "K",
-            "schema:inDefinedTermSet": "https://github.com/XraySpectroscopy/XAS-Data-Interchange/blob/master/specification/dictionary.md"
-        },
-        {
-            "@type": "schema:DefinedTerm",
-            "schema:name": "Selenium",
-            "schema:identifier": "http://sweetontology.net/matrElement/Selenium",
-            "schema:termCode": "Se",
-            "schema:inDefinedTermSet": "http://sweetontology.net/matrElement"
-        }
-    ]
+      ],
+      "schema:object": {
+        "@type": [
+          "schema:Product",
+          "schema:Thing"
+        ],
+        "schema:additionalType": [
+          "MaterialSample",
+          "https://w3id.org/isample/vocabulary/materialsampleobjecttype/materialsample"
+        ],
+        "schema:name": "Na2SeO4",
+        "schema:identifier": "igsn:10.6620/se-selenate-001",
+        "schema:description": "Sodium selenate reference compound, powder",
+        "schema:additionalProperty": [
+          {
+            "@type": "schema:PropertyValue",
+            "schema:propertyID": [
+              "https://example.org/vocab/sample-prep"
+            ],
+            "schema:name": "sample preparation method",
+            "schema:value": "powder on tape, 6 layers"
+          },
+          {
+            "@type": "schema:PropertyValue",
+            "schema:propertyID": [
+              "xas:stoichiometry"
+            ],
+            "schema:name": "Stoichiometry",
+            "schema:value": "Na2SeO4"
+          }
+        ]
+      }
+    }
+  ],
+  "schema:measurementTechnique": [
+    {
+      "@type": "schema:DefinedTerm",
+      "schema:name": "X-Ray Absorption Spectroscopy",
+      "schema:termCode": "XAS",
+      "schema:identifier": "http://purl.org/pan-science/PaNET/PaNET01196",
+      "schema:inDefinedTermSet": "http://purl.org/pan-science/PaNET/PaNET.owl"
+    },
+    {
+      "@type": "schema:DefinedTerm",
+      "schema:name": "Transmission",
+      "schema:identifier": "http://purl.org/pan-science/PaNET/PaNET01188",
+      "schema:inDefinedTermSet": "nxs:Field/NXxas/ENTRY/DATA/mode"
+    }
+  ],
+  "schema:keywords": [
+    {
+      "@type": "schema:DefinedTerm",
+      "schema:name": "K-edge",
+      "schema:identifier": "https://github.com/XraySpectroscopy/XAS-Data-Interchange/blob/master/specification/dictionary.md#K",
+      "schema:termCode": "K",
+      "schema:inDefinedTermSet": "https://github.com/XraySpectroscopy/XAS-Data-Interchange/blob/master/specification/dictionary.md"
+    },
+    {
+      "@type": "schema:DefinedTerm",
+      "schema:name": "Selenium",
+      "schema:identifier": "http://sweetontology.net/matrElement/Selenium",
+      "schema:termCode": "Se",
+      "schema:inDefinedTermSet": "http://sweetontology.net/matrElement"
+    }
+  ]
 }
 
 ```
@@ -229,27 +304,24 @@ bring together all required properties.
       "prov": "http://www.w3.org/ns/prov#"
     }
   ],
-  "@id": "NVohEbchV",
+  "@id": "ex:xas-dataset-001",
   "@type": [
     "schema:Dataset",
     "schema:Product"
   ],
-  "schema:name": "tniDmCXDxVRXfzMZpjE",
+  "schema:name": "Se K-edge XANES of Na2SeO4 reference compound",
   "schema:identifier": {
     "@type": "schema:PropertyValue",
-    "schema:propertyID": "BcWkKNjOEqQKZNG",
-    "schema:value": "MgxVV",
+    "schema:propertyID": "https://doi.org",
+    "schema:value": "10.12345/xas.2024.001",
     "schema:url": "http://example.com/resource?foo=bar#fragment"
   },
   "schema:dateModified": "2025-06-15",
   "schema:conditionsOfAccess": [
-    "eiSzBJBNrAKINEAkjBAz"
+    "Public access, no restrictions"
   ],
   "schema:license": [
-    "lWbw",
-    "ZoTXfsfevzu",
-    "ogAgtO",
-    "wVK"
+    "https://creativecommons.org/licenses/by/4.0/"
   ],
   "schema:url": "http://example.com/resource?foo=bar#fragment",
   "schema:distribution": [
@@ -259,15 +331,16 @@ bring together all required properties.
         "schema:DataDownload",
         "cdi:PhysicalDataset"
       ],
-      "schema:name": "XharpxX",
+      "schema:name": "XDI data file",
       "schema:contentUrl": "http://example.com/resource/35uj46j",
       "schema:encodingFormat": [
-        "QmTID"
+        "application/x-xdi"
       ],
       "dcterms:conformsTo": "https://github.com/XraySpectroscopy/XAS-Data-Interchange/blob/master/specification/spec.md",
       "spdx:checksum": {
-        "spdx:algorithm": "nLnPEstvn",
-        "spdx:checksumValue": "F"
+        "@type": "spdx:Checksum",
+        "spdx:algorithm": "SHA-256",
+        "spdx:checksumValue": "a1b2c3d4e5f6..."
       },
       "schema:provider": [
         {
@@ -280,15 +353,16 @@ bring together all required properties.
       "@type": [
         "schema:DataDownload"
       ],
-      "schema:name": "LbbtxfqozvkLlsOZFsXC",
+      "schema:name": "Processed spectrum CSV",
       "schema:contentUrl": "http://example.com/resource/34h5ykl",
       "schema:encodingFormat": [
-        "VMhnXhYenfn",
-        "aVcNGczw"
+        "text/csv",
+        "application/zip"
       ],
       "spdx:checksum": {
-        "spdx:algorithm": "CvUDClEiiWFCzNWNoM",
-        "spdx:checksumValue": "pObdEeJAdzYLwA"
+        "@type": "spdx:Checksum",
+        "spdx:algorithm": "MD5",
+        "spdx:checksumValue": "d41d8cd98f00b204e9800998ecf8427e"
       },
       "schema:provider": [
         {
@@ -298,17 +372,22 @@ bring together all required properties.
     }
   ],
   "schema:subjectOf": {
-    "@type": "schema:Dataset",
+    "@type": [
+      "schema:Dataset"
+    ],
+    "schema:additionalType": [
+      "dcat:CatalogRecord"
+    ],
     "@id": "RUUvGtoRqzVlQELZ",
     "schema:about": {
-      "@id": "NVohEbchV"
+      "@id": "ex:xas-dataset-001"
     },
     "dcterms:conformsTo": [
       {
-        "@id": "https://www.opengis.net/def/profile/cdif/discovery"
+        "@id": "https://w3id.org/cdif/bbr/metadata/xasProperties/xasRequired"
       },
       {
-        "@id": "cdif:profile_xasCDIF"
+        "@id": "https://w3id.org/cdif/bbr/metadata/profiles/cdifProfiles/CDIFxas"
       }
     ],
     "schema:maintainer": {
@@ -324,7 +403,7 @@ bring together all required properties.
     "schema:includedInDataCatalog": {
       "@id": "nbUunSyw",
       "@type": "schema:DataCatalog",
-      "schema:name": "hFcgszRnAnrDNlkluJ",
+      "schema:name": "XAS Data Library",
       "schema:url": "http://example.com/resource?foo=bar#fragment"
     }
   },
@@ -332,68 +411,74 @@ bring together all required properties.
     {
       "prov:used": [
         {
-          "@type": [
-            "schema:Thing",
-            "schema:Product"
-          ],
-          "schema:additionalType": "nxs:BaseClass/NXsource",
-          "schema:name": "kVLmQxSource",
-          "schema:additionalProperty": [
-            {
-              "@type": "schema:PropertyValue",
-              "schema:propertyID": [
-                "nxs:Field/NXsource/type"
-              ],
-              "schema:name": "x-ray source",
-              "schema:value": "Synchrotron X-ray Source"
-            },
-            {
-              "@type": "schema:PropertyValue",
-              "schema:propertyID": [
-                "nxs:Field/NXsource/probe"
-              ],
-              "schema:name": "Probe",
-              "schema:value": "x-ray"
-            }
-          ]
-        },
-        {
-          "@type": [
-            "schema:Thing",
-            "schema:Product"
-          ],
-          "schema:additionalType": "nxs:BaseClass/NXmonochromator",
-          "schema:name": "Si 111",
-          "schema:additionalProperty": [
-            {
-              "@type": "schema:PropertyValue",
-              "schema:propertyID": [
-                "nxs:Field/NXcrystal/d_spacing"
-              ],
-              "schema:name": "d-spacing",
-              "schema:value": "3.13550",
-              "schema:unitText": "Angstrom"
-            },
-            {
-              "@type": "schema:PropertyValue",
-              "schema:propertyID": [
-                "nxs:Field/NXcrystal/type"
-              ],
-              "schema:name": "crystal type",
-              "schema:value": "mRqWz"
-            },
-            {
-              "@type": "schema:PropertyValue",
-              "schema:propertyID": [
-                "nxs:Field/NXcrystal/reflection"
-              ],
-              "schema:name": "reflection plane (hkl)",
-              "schema:value": "1,1,1"
-            }
-          ]
+          "schema:instrument": {
+            "schema:hasPart": [
+              {
+                "@type": [
+                  "schema:Thing",
+                  "schema:Product"
+                ],
+                "schema:additionalType": "nxs:BaseClass/NXsource",
+                "schema:name": "APS bending magnet source",
+                "schema:additionalProperty": [
+                  {
+                    "@type": "schema:PropertyValue",
+                    "schema:propertyID": [
+                      "nxs:Field/NXsource/type"
+                    ],
+                    "schema:name": "x-ray source",
+                    "schema:value": "Synchrotron X-ray Source"
+                  },
+                  {
+                    "@type": "schema:PropertyValue",
+                    "schema:propertyID": [
+                      "nxs:Field/NXsource/probe"
+                    ],
+                    "schema:name": "Probe",
+                    "schema:value": "x-ray"
+                  }
+                ]
+              },
+              {
+                "@type": [
+                  "schema:Thing",
+                  "schema:Product"
+                ],
+                "schema:additionalType": "nxs:BaseClass/NXmonochromator",
+                "schema:name": "Si 111",
+                "schema:additionalProperty": [
+                  {
+                    "@type": "schema:PropertyValue",
+                    "schema:propertyID": [
+                      "nxs:Field/NXcrystal/d_spacing"
+                    ],
+                    "schema:name": "d-spacing",
+                    "schema:value": "3.13550",
+                    "schema:unitText": "Angstrom"
+                  },
+                  {
+                    "@type": "schema:PropertyValue",
+                    "schema:propertyID": [
+                      "nxs:Field/NXcrystal/type"
+                    ],
+                    "schema:name": "crystal type",
+                    "schema:value": "Si(111)"
+                  },
+                  {
+                    "@type": "schema:PropertyValue",
+                    "schema:propertyID": [
+                      "nxs:Field/NXcrystal/reflection"
+                    ],
+                    "schema:name": "reflection plane (hkl)",
+                    "schema:value": "1,1,1"
+                  }
+                ]
+              }
+            ]
+          }
         }
       ],
-      "schema:mainEntity": {
+      "schema:object": {
         "@type": [
           "schema:Product",
           "schema:Thing"
@@ -402,9 +487,9 @@ bring together all required properties.
           "MaterialSample",
           "https://w3id.org/isample/vocabulary/materialsampleobjecttype/materialsample"
         ],
-        "schema:name": "tJSgGfhzZ",
-        "schema:identifier": "gGDA",
-        "schema:description": "ahjWwyayQYhnB",
+        "schema:name": "Na2SeO4",
+        "schema:identifier": "igsn:10.6620/se-selenate-001",
+        "schema:description": "Sodium selenate reference compound, powder",
         "schema:additionalProperty": [
           {
             "@type": "schema:PropertyValue",
@@ -412,15 +497,15 @@ bring together all required properties.
               "https://example.org/vocab/sample-prep"
             ],
             "schema:name": "sample preparation method",
-            "schema:value": "uUUTOmBQ"
+            "schema:value": "powder on tape, 6 layers"
           },
           {
             "@type": "schema:PropertyValue",
             "schema:propertyID": [
-              "EiAnJhZyLsQAxKd"
+              "xas:stoichiometry"
             ],
-            "schema:name": "qqcHFymGZzaJLKGN",
-            "schema:value": "rljVqQklQEuNZF"
+            "schema:name": "Stoichiometry",
+            "schema:value": "Na2SeO4"
           }
         ]
       }
@@ -437,7 +522,7 @@ bring together all required properties.
     {
       "@type": "schema:DefinedTerm",
       "schema:name": "Transmission",
-      "schema:identifier": "bRqVxNm",
+      "schema:identifier": "http://purl.org/pan-science/PaNET/PaNET01188",
       "schema:inDefinedTermSet": "nxs:Field/NXxas/ENTRY/DATA/mode"
     }
   ],
@@ -445,7 +530,7 @@ bring together all required properties.
     {
       "@type": "schema:DefinedTerm",
       "schema:name": "K-edge",
-      "schema:identifier": "hYtRv",
+      "schema:identifier": "https://github.com/XraySpectroscopy/XAS-Data-Interchange/blob/master/specification/dictionary.md#K",
       "schema:termCode": "K",
       "schema:inDefinedTermSet": "https://github.com/XraySpectroscopy/XAS-Data-Interchange/blob/master/specification/dictionary.md"
     },
@@ -464,104 +549,26 @@ bring together all required properties.
 ```ttl
 @prefix cdi: <http://ddialliance.org/Specification/DDI-CDI/1.0/RDF/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ex: <https://example.org/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix schema1: <http://schema.org/> .
 @prefix spdx: <http://spdx.org/rdf/terms#> .
 
-<file:///github/workspace/NVohEbchV> a schema1:Dataset,
-        schema1:Product ;
-    schema1:conditionsOfAccess "eiSzBJBNrAKINEAkjBAz" ;
-    schema1:dateModified "2025-06-15" ;
-    schema1:distribution <file:///github/workspace/RNdlTIf>,
-        <file:///github/workspace/lMtIx> ;
-    schema1:identifier [ a schema1:PropertyValue ;
-            schema1:propertyID "BcWkKNjOEqQKZNG" ;
-            schema1:url "http://example.com/resource?foo=bar#fragment" ;
-            schema1:value "MgxVV" ] ;
-    schema1:keywords [ a schema1:DefinedTerm ;
-            schema1:identifier "http://sweetontology.net/matrElement/Selenium" ;
-            schema1:inDefinedTermSet "http://sweetontology.net/matrElement" ;
-            schema1:name "Selenium" ;
-            schema1:termCode "Se" ],
-        [ a schema1:DefinedTerm ;
-            schema1:identifier "hYtRv" ;
-            schema1:inDefinedTermSet "https://github.com/XraySpectroscopy/XAS-Data-Interchange/blob/master/specification/dictionary.md" ;
-            schema1:name "K-edge" ;
-            schema1:termCode "K" ] ;
-    schema1:license "ZoTXfsfevzu",
-        "lWbw",
-        "ogAgtO",
-        "wVK" ;
-    schema1:measurementTechnique [ a schema1:DefinedTerm ;
-            schema1:identifier "bRqVxNm" ;
-            schema1:inDefinedTermSet "nxs:Field/NXxas/ENTRY/DATA/mode" ;
-            schema1:name "Transmission" ],
-        [ a schema1:DefinedTerm ;
-            schema1:identifier "http://purl.org/pan-science/PaNET/PaNET01196" ;
-            schema1:inDefinedTermSet "http://purl.org/pan-science/PaNET/PaNET.owl" ;
-            schema1:name "X-Ray Absorption Spectroscopy" ;
-            schema1:termCode "XAS" ] ;
-    schema1:name "tniDmCXDxVRXfzMZpjE" ;
-    schema1:subjectOf <file:///github/workspace/RUUvGtoRqzVlQELZ> ;
-    schema1:url "http://example.com/resource?foo=bar#fragment" ;
-    prov:wasGeneratedBy [ schema1:mainEntity [ a schema1:Product,
-                        schema1:Thing ;
-                    schema1:additionalProperty [ a schema1:PropertyValue ;
-                            schema1:name "sample preparation method" ;
-                            schema1:propertyID "https://example.org/vocab/sample-prep" ;
-                            schema1:value "uUUTOmBQ" ],
-                        [ a schema1:PropertyValue ;
-                            schema1:name "qqcHFymGZzaJLKGN" ;
-                            schema1:propertyID "EiAnJhZyLsQAxKd" ;
-                            schema1:value "rljVqQklQEuNZF" ] ;
-                    schema1:additionalType "MaterialSample",
-                        "https://w3id.org/isample/vocabulary/materialsampleobjecttype/materialsample" ;
-                    schema1:description "ahjWwyayQYhnB" ;
-                    schema1:identifier "gGDA" ;
-                    schema1:name "tJSgGfhzZ" ] ;
-            prov:used [ a schema1:Product,
-                        schema1:Thing ;
-                    schema1:additionalProperty [ a schema1:PropertyValue ;
-                            schema1:name "x-ray source" ;
-                            schema1:propertyID "nxs:Field/NXsource/type" ;
-                            schema1:value "Synchrotron X-ray Source" ],
-                        [ a schema1:PropertyValue ;
-                            schema1:name "Probe" ;
-                            schema1:propertyID "nxs:Field/NXsource/probe" ;
-                            schema1:value "x-ray" ] ;
-                    schema1:additionalType "nxs:BaseClass/NXsource" ;
-                    schema1:name "kVLmQxSource" ],
-                [ a schema1:Product,
-                        schema1:Thing ;
-                    schema1:additionalProperty [ a schema1:PropertyValue ;
-                            schema1:name "crystal type" ;
-                            schema1:propertyID "nxs:Field/NXcrystal/type" ;
-                            schema1:value "mRqWz" ],
-                        [ a schema1:PropertyValue ;
-                            schema1:name "reflection plane (hkl)" ;
-                            schema1:propertyID "nxs:Field/NXcrystal/reflection" ;
-                            schema1:value "1,1,1" ],
-                        [ a schema1:PropertyValue ;
-                            schema1:name "d-spacing" ;
-                            schema1:propertyID "nxs:Field/NXcrystal/d_spacing" ;
-                            schema1:unitText "Angstrom" ;
-                            schema1:value "3.13550" ] ;
-                    schema1:additionalType "nxs:BaseClass/NXmonochromator" ;
-                    schema1:name "Si 111" ] ] .
-
 <file:///github/workspace/RNdlTIf> a schema1:DataDownload ;
     schema1:contentUrl "http://example.com/resource/34h5ykl" ;
-    schema1:encodingFormat "VMhnXhYenfn",
-        "aVcNGczw" ;
-    schema1:name "LbbtxfqozvkLlsOZFsXC" ;
+    schema1:encodingFormat "application/zip",
+        "text/csv" ;
+    schema1:name "Processed spectrum CSV" ;
     schema1:provider <file:///github/workspace/EwHwOWWPjkVxr> ;
-    spdx:checksum [ spdx:algorithm "CvUDClEiiWFCzNWNoM" ;
-            spdx:checksumValue "pObdEeJAdzYLwA" ] .
+    spdx:checksum [ a spdx:Checksum ;
+            spdx:algorithm "MD5" ;
+            spdx:checksumValue "d41d8cd98f00b204e9800998ecf8427e" ] .
 
 <file:///github/workspace/RUUvGtoRqzVlQELZ> a schema1:Dataset ;
-    dcterms:conformsTo <cdif:profile_xasCDIF>,
-        <https://www.opengis.net/def/profile/cdif/discovery> ;
-    schema1:about <file:///github/workspace/NVohEbchV> ;
+    dcterms:conformsTo <https://w3id.org/cdif/bbr/metadata/profiles/cdifProfiles/CDIFxas>,
+        <https://w3id.org/cdif/bbr/metadata/xasProperties/xasRequired> ;
+    schema1:about ex:xas-dataset-001 ;
+    schema1:additionalType "dcat:CatalogRecord" ;
     schema1:includedInDataCatalog <file:///github/workspace/nbUunSyw> ;
     schema1:maintainer <file:///github/workspace/nKwywfsuBh> ;
     schema1:sdDatePublished "2025-08-15T06:45:40Z" .
@@ -570,11 +577,12 @@ bring together all required properties.
         schema1:DataDownload ;
     dcterms:conformsTo "https://github.com/XraySpectroscopy/XAS-Data-Interchange/blob/master/specification/spec.md" ;
     schema1:contentUrl "http://example.com/resource/35uj46j" ;
-    schema1:encodingFormat "QmTID" ;
-    schema1:name "XharpxX" ;
+    schema1:encodingFormat "application/x-xdi" ;
+    schema1:name "XDI data file" ;
     schema1:provider <file:///github/workspace/plTqxpHjBTESztfaDyI> ;
-    spdx:checksum [ spdx:algorithm "nLnPEstvn" ;
-            spdx:checksumValue "F" ] .
+    spdx:checksum [ a spdx:Checksum ;
+            spdx:algorithm "SHA-256" ;
+            spdx:checksumValue "a1b2c3d4e5f6..." ] .
 
 <file:///github/workspace/nKwywfsuBh> a schema1:Person ;
     schema1:contactPoint [ a schema1:ContactPoint ;
@@ -582,8 +590,86 @@ bring together all required properties.
     schema1:name "Cataloger, Example Data" .
 
 <file:///github/workspace/nbUunSyw> a schema1:DataCatalog ;
-    schema1:name "hFcgszRnAnrDNlkluJ" ;
+    schema1:name "XAS Data Library" ;
     schema1:url "http://example.com/resource?foo=bar#fragment" .
+
+ex:xas-dataset-001 a schema1:Dataset,
+        schema1:Product ;
+    schema1:conditionsOfAccess "Public access, no restrictions" ;
+    schema1:dateModified "2025-06-15" ;
+    schema1:distribution <file:///github/workspace/RNdlTIf>,
+        <file:///github/workspace/lMtIx> ;
+    schema1:identifier [ a schema1:PropertyValue ;
+            schema1:propertyID "https://doi.org" ;
+            schema1:url "http://example.com/resource?foo=bar#fragment" ;
+            schema1:value "10.12345/xas.2024.001" ] ;
+    schema1:keywords [ a schema1:DefinedTerm ;
+            schema1:identifier "http://sweetontology.net/matrElement/Selenium" ;
+            schema1:inDefinedTermSet "http://sweetontology.net/matrElement" ;
+            schema1:name "Selenium" ;
+            schema1:termCode "Se" ],
+        [ a schema1:DefinedTerm ;
+            schema1:identifier "https://github.com/XraySpectroscopy/XAS-Data-Interchange/blob/master/specification/dictionary.md#K" ;
+            schema1:inDefinedTermSet "https://github.com/XraySpectroscopy/XAS-Data-Interchange/blob/master/specification/dictionary.md" ;
+            schema1:name "K-edge" ;
+            schema1:termCode "K" ] ;
+    schema1:license "https://creativecommons.org/licenses/by/4.0/" ;
+    schema1:measurementTechnique [ a schema1:DefinedTerm ;
+            schema1:identifier "http://purl.org/pan-science/PaNET/PaNET01188" ;
+            schema1:inDefinedTermSet "nxs:Field/NXxas/ENTRY/DATA/mode" ;
+            schema1:name "Transmission" ],
+        [ a schema1:DefinedTerm ;
+            schema1:identifier "http://purl.org/pan-science/PaNET/PaNET01196" ;
+            schema1:inDefinedTermSet "http://purl.org/pan-science/PaNET/PaNET.owl" ;
+            schema1:name "X-Ray Absorption Spectroscopy" ;
+            schema1:termCode "XAS" ] ;
+    schema1:name "Se K-edge XANES of Na2SeO4 reference compound" ;
+    schema1:subjectOf <file:///github/workspace/RUUvGtoRqzVlQELZ> ;
+    schema1:url "http://example.com/resource?foo=bar#fragment" ;
+    prov:wasGeneratedBy [ schema1:object [ a schema1:Product,
+                        schema1:Thing ;
+                    schema1:additionalProperty [ a schema1:PropertyValue ;
+                            schema1:name "Stoichiometry" ;
+                            schema1:propertyID "xas:stoichiometry" ;
+                            schema1:value "Na2SeO4" ],
+                        [ a schema1:PropertyValue ;
+                            schema1:name "sample preparation method" ;
+                            schema1:propertyID "https://example.org/vocab/sample-prep" ;
+                            schema1:value "powder on tape, 6 layers" ] ;
+                    schema1:additionalType "MaterialSample",
+                        "https://w3id.org/isample/vocabulary/materialsampleobjecttype/materialsample" ;
+                    schema1:description "Sodium selenate reference compound, powder" ;
+                    schema1:identifier "igsn:10.6620/se-selenate-001" ;
+                    schema1:name "Na2SeO4" ] ;
+            prov:used [ schema1:instrument [ schema1:hasPart [ a schema1:Product,
+                                        schema1:Thing ;
+                                    schema1:additionalProperty [ a schema1:PropertyValue ;
+                                            schema1:name "x-ray source" ;
+                                            schema1:propertyID "nxs:Field/NXsource/type" ;
+                                            schema1:value "Synchrotron X-ray Source" ],
+                                        [ a schema1:PropertyValue ;
+                                            schema1:name "Probe" ;
+                                            schema1:propertyID "nxs:Field/NXsource/probe" ;
+                                            schema1:value "x-ray" ] ;
+                                    schema1:additionalType "nxs:BaseClass/NXsource" ;
+                                    schema1:name "APS bending magnet source" ],
+                                [ a schema1:Product,
+                                        schema1:Thing ;
+                                    schema1:additionalProperty [ a schema1:PropertyValue ;
+                                            schema1:name "crystal type" ;
+                                            schema1:propertyID "nxs:Field/NXcrystal/type" ;
+                                            schema1:value "Si(111)" ],
+                                        [ a schema1:PropertyValue ;
+                                            schema1:name "reflection plane (hkl)" ;
+                                            schema1:propertyID "nxs:Field/NXcrystal/reflection" ;
+                                            schema1:value "1,1,1" ],
+                                        [ a schema1:PropertyValue ;
+                                            schema1:name "d-spacing" ;
+                                            schema1:propertyID "nxs:Field/NXcrystal/d_spacing" ;
+                                            schema1:unitText "Angstrom" ;
+                                            schema1:value "3.13550" ] ;
+                                    schema1:additionalType "nxs:BaseClass/NXmonochromator" ;
+                                    schema1:name "Si 111" ] ] ] ] .
 
 
 ```
@@ -608,150 +694,152 @@ allOf:
     prov:wasGeneratedBy:
       type: array
       items:
-        type: object
-        properties:
-          prov:used:
-            type: array
-            description: 'array of instrument or instrument system components. The
-              x-ray source type and probe,  and monochromator properties type, d-spacing
-              and reflection plane are required '
-            items:
-              type: object
-              properties:
-                '@type':
-                  type: array
-                  items:
-                    type: string
-                schema:additionalType:
-                  type: string
-                schema:additionalProperty:
-                  type: array
-                  items:
-                    $ref: '#/$defs/AdditionalProperty'
-            minItems: 2
-            allOf:
-            - contains:
+        allOf:
+        - $ref: '#/$defs/CdifProv'
+        - type: object
+          properties:
+            prov:used:
+              type: array
+              description: Array of used entities. Must contain an instrument wrapper
+                with schema:hasPart sub-components. The x-ray source type and probe,
+                and monochromator properties type, d-spacing and reflection plane
+                are required.
+              contains:
                 type: object
-                properties:
-                  '@type':
-                    type: array
-                    items:
-                      type: string
-                    minItems: 2
-                    allOf:
-                    - contains:
-                        const: schema:Thing
-                    - contains:
-                        const: schema:Product
-                  schema:additionalType:
-                    const: nxs:BaseClass/NXsource
-                  schema:additionalProperty:
-                    type: array
-                    minItems: 2
-                    items:
-                      $ref: '#/$defs/AdditionalProperty'
-                    allOf:
-                    - contains:
-                        type: object
-                        properties:
-                          schema:propertyID:
-                            type: array
-                            contains:
-                              const: nxs:Field/NXsource/type
-                          schema:value:
-                            type: string
-                        required:
-                        - schema:propertyID
-                        - schema:value
-                    - contains:
-                        type: object
-                        properties:
-                          schema:propertyID:
-                            type: array
-                            contains:
-                              const: nxs:Field/NXsource/probe
-                          schema:name:
-                            const: Probe
-                          schema:value:
-                            type: string
-                        required:
-                        - schema:name
-                        - schema:propertyID
-                        - schema:value
                 required:
-                - '@type'
-                - schema:additionalType
-                - schema:additionalProperty
-            - contains:
-                type: object
+                - schema:instrument
                 properties:
-                  '@type':
-                    type: array
-                    items:
-                      type: string
-                    minItems: 2
-                    allOf:
-                    - contains:
-                        const: schema:Thing
-                    - contains:
-                        const: schema:Product
-                  schema:additionalType:
-                    const: nxs:BaseClass/NXmonochromator
-                  schema:name:
-                    type: string
-                  schema:additionalProperty:
-                    description: Require additional properties for monochromator,
-                      requires d-space, crystal type, reflection plane.
-                    type: array
-                    minItems: 3
-                    items:
-                      $ref: '#/$defs/AdditionalProperty'
-                    contains:
-                      type: object
-                      properties:
-                        schema:propertyID:
-                          type: array
-                          contains:
-                            const: nxs:Field/NXcrystal/type
-                        schema:value:
-                          type: string
-                      required:
-                      - schema:value
-                      - schema:propertyID
-                    allOf:
-                    - contains:
-                        type: object
-                        properties:
-                          schema:propertyID:
-                            type: array
-                            contains:
-                              const: nxs:Field/NXcrystal/d_spacing
-                          schema:value:
-                            type: string
-                          schema:unitText:
-                            type: string
-                        required:
-                        - schema:propertyID
-                        - schema:value
-                        - schema:unitText
-                    - contains:
-                        type: object
-                        properties:
-                          schema:propertyID:
-                            type: array
-                            contains:
-                              const: nxs:Field/NXcrystal/reflection
-                          schema:value:
-                            type: string
-                        required:
-                        - schema:value
-                        - schema:propertyID
-                required:
-                - '@type'
-                - schema:additionalType
-                - schema:additionalProperty
-          schema:mainEntity:
-            $ref: '#/$defs/XasSample'
+                  schema:instrument:
+                    type: object
+                    properties:
+                      schema:hasPart:
+                        type: array
+                        minItems: 2
+                        allOf:
+                        - contains:
+                            type: object
+                            properties:
+                              '@type':
+                                type: array
+                                items:
+                                  type: string
+                                minItems: 2
+                                allOf:
+                                - contains:
+                                    const: schema:Thing
+                                - contains:
+                                    const: schema:Product
+                              schema:additionalType:
+                                const: nxs:BaseClass/NXsource
+                              schema:additionalProperty:
+                                type: array
+                                minItems: 2
+                                items:
+                                  $ref: '#/$defs/AdditionalProperty'
+                                allOf:
+                                - contains:
+                                    type: object
+                                    properties:
+                                      schema:propertyID:
+                                        type: array
+                                        contains:
+                                          const: nxs:Field/NXsource/type
+                                      schema:value:
+                                        type: string
+                                    required:
+                                    - schema:propertyID
+                                    - schema:value
+                                - contains:
+                                    type: object
+                                    properties:
+                                      schema:propertyID:
+                                        type: array
+                                        contains:
+                                          const: nxs:Field/NXsource/probe
+                                      schema:name:
+                                        const: Probe
+                                      schema:value:
+                                        type: string
+                                    required:
+                                    - schema:name
+                                    - schema:propertyID
+                                    - schema:value
+                            required:
+                            - '@type'
+                            - schema:additionalType
+                            - schema:additionalProperty
+                        - contains:
+                            type: object
+                            properties:
+                              '@type':
+                                type: array
+                                items:
+                                  type: string
+                                minItems: 2
+                                allOf:
+                                - contains:
+                                    const: schema:Thing
+                                - contains:
+                                    const: schema:Product
+                              schema:additionalType:
+                                const: nxs:BaseClass/NXmonochromator
+                              schema:name:
+                                type: string
+                              schema:additionalProperty:
+                                description: Require additional properties for monochromator,
+                                  requires d-space, crystal type, reflection plane.
+                                type: array
+                                minItems: 3
+                                items:
+                                  $ref: '#/$defs/AdditionalProperty'
+                                contains:
+                                  type: object
+                                  properties:
+                                    schema:propertyID:
+                                      type: array
+                                      contains:
+                                        const: nxs:Field/NXcrystal/type
+                                    schema:value:
+                                      type: string
+                                  required:
+                                  - schema:value
+                                  - schema:propertyID
+                                allOf:
+                                - contains:
+                                    type: object
+                                    properties:
+                                      schema:propertyID:
+                                        type: array
+                                        contains:
+                                          const: nxs:Field/NXcrystal/d_spacing
+                                      schema:value:
+                                        type: string
+                                      schema:unitText:
+                                        type: string
+                                    required:
+                                    - schema:propertyID
+                                    - schema:value
+                                    - schema:unitText
+                                - contains:
+                                    type: object
+                                    properties:
+                                      schema:propertyID:
+                                        type: array
+                                        contains:
+                                          const: nxs:Field/NXcrystal/reflection
+                                      schema:value:
+                                        type: string
+                                    required:
+                                    - schema:value
+                                    - schema:propertyID
+                            required:
+                            - '@type'
+                            - schema:additionalType
+                            - schema:additionalProperty
+                    required:
+                    - schema:hasPart
+            schema:object:
+              $ref: '#/$defs/XasSample'
     schema:distribution:
       type: array
       items:
@@ -849,6 +937,8 @@ allOf:
 $defs:
   CdifMandatory:
     $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifMandatory/schema.yaml
+  CdifProv:
+    $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifProv/schema.yaml
   DefinedTerm:
     $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/definedTerm/schema.yaml
   AdditionalProperty:
@@ -876,6 +966,7 @@ Links to the schema:
 {
   "@context": {
     "schema": "http://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#",
     "nxs": "http://purl.org/nexusformat/definitions/",
     "@version": 1.1
   }

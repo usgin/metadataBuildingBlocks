@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.schemaorgProperties.agentInRole` *v0.1*
 
-Schema to documennt a person or organization in a role relative to some resoruce, uses schema.org/Role construct.
+Schema to documennt a person or organization in a role relative to some resoruce, uses schema.org/Role construct. Defines properties: @type, schema:roleName, schema:contributor. Uses building blocks: definedTerm (schemaorgProperties), person (schemaorgProperties), organization (schemaorgProperties).
 
 [*Status*](http://www.opengis.net/def/status): Under development
 
@@ -129,8 +129,8 @@ Example person in role instance.
         "schema:identifier": {
             "@type": "schema:PropertyValue",
             "schema:propertyID": "https://orcid.org",
-            "schema:value": "iY",
-            "schema:url": "https://orcid.org/iY"
+            "schema:value": "0000-0001-2345-6789",
+            "schema:url": "https://orcid.org/0000-0001-2345-6789"
         },
         "schema:contactPoint": {
             "@type": "schema:ContactPoint",
@@ -172,8 +172,8 @@ Example person in role instance.
     "schema:identifier": {
       "@type": "schema:PropertyValue",
       "schema:propertyID": "https://orcid.org",
-      "schema:value": "iY",
-      "schema:url": "https://orcid.org/iY"
+      "schema:value": "0000-0001-2345-6789",
+      "schema:url": "https://orcid.org/0000-0001-2345-6789"
     },
     "schema:contactPoint": {
       "@type": "schema:ContactPoint",
@@ -201,8 +201,8 @@ ex:PersonExample_zZc a schema1:Person ;
     schema1:description "Metadata specialist, based in Portland, Maine" ;
     schema1:identifier [ a schema1:PropertyValue ;
             schema1:propertyID "https://orcid.org" ;
-            schema1:url "https://orcid.org/iY" ;
-            schema1:value "iY" ] ;
+            schema1:url "https://orcid.org/0000-0001-2345-6789" ;
+            schema1:value "0000-0001-2345-6789" ] ;
     schema1:name "Joe B. Test" ;
     schema1:sameAs "https://ark.org/46737",
         "uri:test:43737" .

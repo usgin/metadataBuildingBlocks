@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.adaProperties.detailNanoSIMS` *v0.1*
 
-Nano Secondary Ion Mass Spectrometry with isotope tracking
+Nano Secondary Ion Mass Spectrometry with isotope tracking. Defines properties: @type, phaseAnalyzed, isotopeAnalyzed. Uses building blocks: stringArray (adaProperties).
 
 [*Status*](http://www.opengis.net/def/status): Under development
 

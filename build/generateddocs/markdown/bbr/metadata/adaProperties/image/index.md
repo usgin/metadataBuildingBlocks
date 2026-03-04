@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.adaProperties.image` *v0.1*
 
-ADA image with componentType classification for analytical images
+ADA image with componentType classification for analytical images. Defines properties: @type, acquisitionTime, componentType, channel1, channel2, channel3, pixelSize, illuminationType, imageType.
 
 [*Status*](http://www.opengis.net/def/status): Under development
 

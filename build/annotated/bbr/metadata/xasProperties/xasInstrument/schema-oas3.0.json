@@ -111,6 +111,178 @@
       "x-schema-source": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/additionalProperty/schema.json",
       "x-schema-version": "https://json-schema.org/draft/2020-12/schema"
     },
+    "cdif.bbr.metadata.schemaorgProperties.instrument": {
+      "title": "Generic Instrument",
+      "description": "A generic instrument or instrument system. Uses schema:Thing as base type with optional schema:Product typing. Supports hierarchical instrument systems via schema:hasPart for sub-components.",
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "contains": {
+            "enum": [
+              "schema:Thing"
+            ]
+          },
+          "description": "Must include schema:Thing. May also include schema:Product or domain-specific types."
+        },
+        "@id": {
+          "type": "string"
+        },
+        "schema:name": {
+          "type": "string",
+          "description": "Human-readable name for this instrument"
+        },
+        "schema:identifier": {
+          "description": "Formal identifier for this instrument",
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasInstrument/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.instrument/$defs/Identifier"
+            }
+          ]
+        },
+        "schema:description": {
+          "type": "string",
+          "description": "Text description of this instrument"
+        },
+        "schema:alternateName": {
+          "type": "string",
+          "description": "Alternate name, e.g. specific make/model"
+        },
+        "schema:additionalType": {
+          "description": "Domain-specific type URIs for this instrument",
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ]
+        },
+        "schema:additionalProperty": {
+          "type": "array",
+          "description": "Domain-specific properties (detection limits, calibration info, etc.)",
+          "items": {
+            "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasInstrument/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.instrument/$defs/AdditionalProperty"
+          }
+        },
+        "schema:hasPart": {
+          "type": "array",
+          "description": "Sub-components of this instrument system. Use @id references or inline instrument objects.",
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasInstrument/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.instrument/$defs/InstrumentRef"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "@id": {
+                    "type": "string",
+                    "description": "reference to a sub-component defined elsewhere"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      },
+      "required": [
+        "schema:name"
+      ],
+      "allOf": [
+        {
+          "required": [
+            "@type"
+          ]
+        }
+      ],
+      "$defs": {
+        "Identifier": {
+          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasInstrument/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.identifier_1"
+        },
+        "AdditionalProperty": {
+          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasInstrument/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.additionalProperty_1"
+        },
+        "InstrumentRef": {
+          "type": "object",
+          "description": "Inline sub-component instrument (non-recursive single level)",
+          "properties": {
+            "@type": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "minItems": 1,
+              "contains": {
+                "enum": [
+                  "schema:Thing"
+                ]
+              }
+            },
+            "@id": {
+              "type": "string"
+            },
+            "schema:name": {
+              "type": "string"
+            },
+            "schema:identifier": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasInstrument/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.instrument/$defs/Identifier"
+                }
+              ]
+            },
+            "schema:description": {
+              "type": "string"
+            },
+            "schema:alternateName": {
+              "type": "string"
+            },
+            "schema:additionalType": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              ]
+            },
+            "schema:additionalProperty": {
+              "type": "array",
+              "items": {
+                "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasInstrument/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.instrument/$defs/AdditionalProperty"
+              }
+            }
+          },
+          "required": [
+            "schema:name"
+          ]
+        }
+      },
+      "x-jsonld-prefixes": {
+        "schema": "http://schema.org/"
+      },
+      "x-schema-source": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/instrument/schema.json",
+      "x-schema-version": "https://json-schema.org/draft/2020-12/schema"
+    },
     "cdif.bbr.metadata.schemaorgProperties.definedTerm": {
       "description": "schema.org Defined Term schema",
       "type": "object",
@@ -159,6 +331,11 @@
             {
               "required": [
                 "schema:identifier"
+              ]
+            },
+            {
+              "required": [
+                "schema:termCode"
               ]
             }
           ]
@@ -219,6 +396,66 @@
         "schema": "http://schema.org/"
       },
       "x-schema-source": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/identifier/schema.yaml",
+      "x-schema-version": "https://json-schema.org/draft/2020-12/schema"
+    },
+    "cdif.bbr.metadata.schemaorgProperties.additionalProperty_1": {
+      "type": "object",
+      "title": "additionalProperty PropertyValue",
+      "description": "PropertyValue values required to define a soft-typed property with a value. ",
+      "properties": {
+        "@type": {
+          "type": "string",
+          "enum": [
+            "schema:PropertyValue"
+          ]
+        },
+        "schema:propertyID": {
+          "type": "array",
+          "items": {
+            "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasInstrument/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.additionalProperty_1/$defs/propertyID_item"
+          },
+          "minItems": 1,
+          "description": "identifier or name for the property concept quantified by the values in this variable slot. Multiple values can specify the property at different levels of granularity."
+        },
+        "schema:name": {
+          "type": "string"
+        },
+        "schema:value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema:name",
+        "schema:value"
+      ],
+      "$defs": {
+        "DefinedTerm": {
+          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasInstrument/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.definedTerm"
+        },
+        "propertyID_item": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@id": {
+                  "type": "string"
+                }
+              }
+            },
+            {
+              "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasInstrument/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.additionalProperty_1/$defs/DefinedTerm"
+            }
+          ]
+        }
+      },
+      "x-jsonld-prefixes": {
+        "schema": "http://schema.org/",
+        "nxs": "http://purl.org/nexusformat/definitions/"
+      },
+      "x-schema-source": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/additionalProperty/schema.yaml",
       "x-schema-version": "https://json-schema.org/draft/2020-12/schema"
     }
   },
@@ -293,6 +530,25 @@
       "items": {
         "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasInstrument/schema-oas3.0.json#/$defs/AdditionalProperty"
       }
+    },
+    "schema:hasPart": {
+      "type": "array",
+      "description": "Sub-components of the instrument system",
+      "items": {
+        "anyOf": [
+          {
+            "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasInstrument/schema-oas3.0.json#/$defs/Instrument"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "@id": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
     }
   },
   "required": [
@@ -306,6 +562,9 @@
     },
     "AdditionalProperty": {
       "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasInstrument/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.additionalProperty"
+    },
+    "Instrument": {
+      "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasInstrument/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.instrument"
     }
   },
   "x-jsonld-prefixes": {

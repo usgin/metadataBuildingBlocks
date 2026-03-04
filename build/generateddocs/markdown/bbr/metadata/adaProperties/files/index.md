@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.adaProperties.files` *v0.1*
 
-DataDownload with checksum, size, encoding format, and file detail
+DataDownload with checksum, size, encoding format, and file detail. Defines properties: schema:additionalType, schema:description, schema:size, resultTarget, schema:relatedLink. Uses building blocks: dataDownload (schemaorgProperties), stringArray (adaProperties), image (adaProperties), imageMap (adaProperties), tabularData (adaProperties), collection (adaProperties), dataCube (adaProperties), document (adaProperties), supDocImage (adaProperties), otherFile (adaProperties).
 
 [*Status*](http://www.opengis.net/def/status): Under development
 
@@ -44,6 +44,8 @@ allOf:
         schema:unitText:
           type: string
           default: byte
+    resultTarget:
+      $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/adaProperties/stringArray/schema.yaml
     schema:relatedLink:
       type: array
       description: 'Links between files in the product. Use schema:name for path to

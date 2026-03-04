@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.adaProperties.detailEAIRMS` *v0.1*
 
-Elemental Analysis Isotope Ratio Mass Spectrometry collection
+Elemental Analysis Isotope Ratio Mass Spectrometry collection. Defines properties: @type, massConsumed, elementType.
 
 [*Status*](http://www.opengis.net/def/status): Under development
 

@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.cdifProperties.cdifOptional` *v0.1*
 
-Definition of optional metadata elements for CDIF discovery profile
+Definition of optional metadata elements for CDIF discovery profile. Defines properties: schema:description, schema:additionalType, schema:sameAs, schema:version, schema:inLanguage, schema:datePublished, schema:relatedLink, schema:publishingPrinciples, schema:keywords, schema:creator, schema:contributor, schema:publisher, schema:provider, schema:funding, schema:variableMeasured, schema:spatialCoverage, schema:temporalCoverage, prov:wasGeneratedBy, prov:wasDerivedFrom, dqv:hasQualityMeasurement, schema:distribution. At this level prov:wasGeneratedBy uses the simple generatedBy pattern (string or @id references only); the extended cdifProv pattern (instruments, agents, temporal bounds) is introduced at the CDIFcomplete profile level or by domain-specific building blocks. Uses building blocks: labeledLink (schemaorgProperties), identifier (schemaorgProperties), definedTerm (schemaorgProperties), person (schemaorgProperties), organization (schemaorgProperties), agentInRole (schemaorgProperties), funder (schemaorgProperties), variableMeasured (schemaorgProperties), spatialExtent (schemaorgProperties), temporalExtent (schemaorgProperties), generatedBy (provProperties), derivedFrom (provProperties), qualityMeasure (qualityProperties), dataDownload (schemaorgProperties), webAPI (schemaorgProperties).
 
 [*Status*](http://www.opengis.net/def/status): Under development
 
@@ -11,7 +11,11 @@ Definition of optional metadata elements for CDIF discovery profile
 
 ## Base Metadata properties
 
-Defines simple properties included in CDIF discvoery metadata for the schema.org implementation of the [Cross Domain Interoperability Framework](https://cross-domain-interoperability-framework.github.io/cdifbook/metadata/schemaorgimplementation.html#implementation-of-metadata-content-items) (CDIF) discovery profile.
+Defines simple properties included in CDIF discovery metadata for the schema.org implementation of the [Cross Domain Interoperability Framework](https://cross-domain-interoperability-framework.github.io/cdifbook/metadata/schemaorgimplementation.html#implementation-of-metadata-content-items) (CDIF) discovery profile.
+
+### Provenance
+
+At this level, `prov:wasGeneratedBy` uses the simple `generatedBy` pattern from provProperties — activity items accept only string names or `@id` references to instruments/software. The extended `cdifProv` pattern (with structured instruments, agents, temporal bounds, methodology, and action chaining) is introduced at the CDIFcomplete profile level or by domain-specific building blocks (e.g., ddeImagery, xasRequired).
 ## Examples
 
 ### Example CDIF record
@@ -55,6 +59,20 @@ Example CDIF record with mandatory and optional properties.
                 "schema:name": "Image of seafloor geology map, bay of Biscay",
                 "schema:url": "https://example.org/geology/baybiscay"
             }
+        },
+        {
+            "@type": "schema:LinkRole",
+            "schema:linkRelationship": {
+                "@type": "schema:DefinedTerm",
+                "schema:name": "related dataset",
+                "schema:inDefinedTermSet": "https://www.iana.org/assignments/link-relations/",
+                "schema:termCode": "related"
+            },
+            "target": {
+                "@type": "schema:EntryPoint",
+                "schema:name": "Bay of Biscay current velocity dataset",
+                "schema:url": "https://example.org/currents/baybiscay"
+            }
         }
     ],
     "schema:publishingPrinciples": ["https://example.org/principles/3478"],
@@ -71,6 +89,27 @@ Example CDIF record with mandatory and optional properties.
             }
         ]
     },
+    "schema:contributor": [
+        {
+            "@type": "schema:Role",
+            "schema:roleName": "editor",
+            "schema:contributor": {
+                "@id": "ex:PersonExample_zZc",
+                "@type": "schema:Person",
+                "schema:name": "Joe B. Test",
+                "schema:identifier": {
+                    "@type": "schema:PropertyValue",
+                    "schema:propertyID": "https://orcid.org",
+                    "schema:value": "0000-0002-9876-5432",
+                    "schema:url": "https://orcid.org/0000-0002-9876-5432"
+                },
+                "schema:contactPoint": {
+                    "@type": "schema:ContactPoint",
+                    "schema:email": "joe@example.org"
+                }
+            }
+        }
+    ],
     "schema:keywords": [
         "bathymetry",
         "ocean floor"
@@ -129,6 +168,20 @@ Example CDIF record with mandatory and optional properties.
         "schema:name": "Image of seafloor geology map, bay of Biscay",
         "schema:url": "https://example.org/geology/baybiscay"
       }
+    },
+    {
+      "@type": "schema:LinkRole",
+      "schema:linkRelationship": {
+        "@type": "schema:DefinedTerm",
+        "schema:name": "related dataset",
+        "schema:inDefinedTermSet": "https://www.iana.org/assignments/link-relations/",
+        "schema:termCode": "related"
+      },
+      "target": {
+        "@type": "schema:EntryPoint",
+        "schema:name": "Bay of Biscay current velocity dataset",
+        "schema:url": "https://example.org/currents/baybiscay"
+      }
     }
   ],
   "schema:publishingPrinciples": [
@@ -147,6 +200,27 @@ Example CDIF record with mandatory and optional properties.
       }
     ]
   },
+  "schema:contributor": [
+    {
+      "@type": "schema:Role",
+      "schema:roleName": "editor",
+      "schema:contributor": {
+        "@id": "ex:PersonExample_zZc",
+        "@type": "schema:Person",
+        "schema:name": "Joe B. Test",
+        "schema:identifier": {
+          "@type": "schema:PropertyValue",
+          "schema:propertyID": "https://orcid.org",
+          "schema:value": "0000-0002-9876-5432",
+          "schema:url": "https://orcid.org/0000-0002-9876-5432"
+        },
+        "schema:contactPoint": {
+          "@type": "schema:ContactPoint",
+          "schema:email": "joe@example.org"
+        }
+      }
+    }
+  ],
   "schema:keywords": [
     "bathymetry",
     "ocean floor"
@@ -163,6 +237,9 @@ Example CDIF record with mandatory and optional properties.
 ex:cdifOptional_23578 a schema1:Dataset ;
     schema1:additionalType "" ;
     schema1:conditionsOfAccess ex:LabeledLinkExample_qZc ;
+    schema1:contributor [ a schema1:Role ;
+            schema1:contributor ex:PersonExample_zZc ;
+            schema1:roleName "editor" ] ;
     schema1:creator ( [ a schema1:Person ;
                 schema1:contactPoint [ a schema1:ContactPoint ;
                         schema1:email "author@example.org" ] ;
@@ -179,6 +256,11 @@ ex:cdifOptional_23578 a schema1:Dataset ;
     schema1:name "Bathymetry Bay of Biscay" ;
     schema1:publishingPrinciples "https://example.org/principles/3478" ;
     schema1:relatedLink [ a schema1:LinkRole ;
+            schema1:linkRelationship [ a schema1:DefinedTerm ;
+                    schema1:inDefinedTermSet "https://www.iana.org/assignments/link-relations/" ;
+                    schema1:name "related dataset" ;
+                    schema1:termCode "related" ] ],
+        [ a schema1:LinkRole ;
             schema1:linkRelationship "related data" ] ;
     schema1:url "https://example.org/landingPage254266" ;
     schema1:version "1.0" .
@@ -187,6 +269,15 @@ ex:LabeledLinkExample_qZc a schema1:CreativeWork ;
     schema1:description "URL to get the document" ;
     schema1:name "conditions of access statement" ;
     schema1:url "https://example.org/conditions/2342747" .
+
+ex:PersonExample_zZc a schema1:Person ;
+    schema1:contactPoint [ a schema1:ContactPoint ;
+            schema1:email "joe@example.org" ] ;
+    schema1:identifier [ a schema1:PropertyValue ;
+            schema1:propertyID "https://orcid.org" ;
+            schema1:url "https://orcid.org/0000-0002-9876-5432" ;
+            schema1:value "0000-0002-9876-5432" ] ;
+    schema1:name "Joe B. Test" .
 
 
 ```
@@ -438,7 +529,7 @@ $defs:
   TemporalExtent:
     $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/temporalExtent/schema.yaml
   GeneratedBy:
-    $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifProv/schema.yaml
+    $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/provProperties/generatedBy/schema.yaml
   DerivedFrom:
     $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/provProperties/derivedFrom/schema.yaml
   QualityMeasure:
@@ -466,7 +557,6 @@ Links to the schema:
     "schema": "http://schema.org/",
     "time": "http://www.w3.org/2006/time#",
     "prov": "http://www.w3.org/ns/prov#",
-    "nxs": "http://purl.org/nexusformat/definitions/",
     "@version": 1.1
   }
 }

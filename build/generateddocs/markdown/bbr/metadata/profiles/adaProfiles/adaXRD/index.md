@@ -34,350 +34,19 @@ Mock data for validation and testing.
 #### json
 ```json
 {
-    "@context": {
-        "schema": "http://schema.org/",
-        "ada": "https://ada.astromat.org/metadata/",
-        "cdi": "http://ddialliance.org/Specification/DDI-CDI/1.0/RDF/",
-        "csvw": "http://www.w3.org/ns/csvw#",
-        "prov": "http://www.w3.org/ns/prov#",
-        "spdx": "http://spdx.org/rdf/terms#",
-        "nxs": "http://purl.org/nexusformat/definitions/",
-        "dcterms": "http://purl.org/dc/terms/",
-        "geosparql": "http://www.opengis.net/ont/geosparql#",
-        "ex": "https://example.org/"
-    },
-    "@id": "ex:adaXRD-example-001",
-    "@type": [
-        "schema:Dataset",
-        "schema:Product"
-    ],
-    "schema:name": "XRD Analysis of Meteorite ALH 84001 Fragment",
-    "schema:description": "Example X-ray Diffraction (XRD) product metadata demonstrating all properties defined by the adaXRD profile. Contains mock data for testing and validation.",
-    "schema:additionalType": [
-        "X-ray Diffraction (XRD) Tabular",
-        "ada:DataDeliveryPackage"
-    ],
-    "schema:identifier": {
-        "@type": "schema:PropertyValue",
-        "schema:propertyID": "https://registry.identifiers.org/registry/doi",
-        "schema:value": "10.99999/adaxrd-example-001",
-        "schema:url": "https://doi.org/10.99999/adaxrd-example-001"
-    },
-    "schema:url": "https://astromat.org/products/adaxrd-example-001",
-    "schema:dateModified": "2026-01-15",
-    "schema:version": "1.0",
-    "schema:conditionsOfAccess": [
-        "Unrestricted access for research purposes"
-    ],
-    "schema:license": [
-        "https://creativecommons.org/licenses/by/4.0/"
-    ],
-    "schema:creativeWorkStatus": "Published",
-    "schema:keywords": [
-        {
-            "@type": "schema:DefinedTerm",
-            "schema:name": "XRD",
-            "schema:termCode": "XRD",
-            "schema:inDefinedTermSet": "https://ada.astromat.org/vocabulary/techniques",
-            "schema:identifier": "https://ada.astromat.org/vocabulary/techniques/XRD"
-        },
-        "meteorite",
-        "astromaterials"
-    ],
-    "schema:creator": {
-        "@list": [
-            {
-                "@type": "schema:Person",
-                "schema:name": "Analytica, Maria",
-                "schema:identifier": "https://orcid.org/0000-0001-2345-6789",
-                "schema:affiliation": {
-                    "@type": "schema:Organization",
-                    "schema:name": "Lunar and Planetary Institute"
-                },
-                "schema:contactPoint": {
-                    "@type": "schema:ContactPoint",
-                    "schema:email": "analytica@example.org"
-                }
-            },
-            {
-                "@type": "schema:Person",
-                "schema:name": "Researcher, John Q.",
-                "schema:identifier": "https://orcid.org/0000-0002-9876-5432",
-                "schema:affiliation": {
-                    "@type": "schema:Organization",
-                    "schema:name": "NASA Johnson Space Center"
-                },
-                "schema:contactPoint": {
-                    "@type": "schema:ContactPoint",
-                    "schema:email": "researcher@example.org"
-                }
-            }
-        ]
-    },
-    "schema:contributor": [
-        {
-            "@type": "schema:Role",
-            "schema:roleName": "principalInvestigator",
-            "schema:contributor": {
-                "@type": "schema:Person",
-                "schema:name": "Leadscientist, Patricia",
-                "schema:identifier": "https://orcid.org/0000-0003-1111-2222",
-                "schema:contactPoint": {
-                    "@type": "schema:ContactPoint",
-                    "schema:email": "leadscientist@example.org"
-                }
-            }
-        }
-    ],
-    "schema:funding": [
-        {
-            "@type": "schema:MonetaryGrant",
-            "schema:identifier": {
-                "@type": "schema:PropertyValue",
-                "schema:propertyID": "award number",
-                "schema:value": "NNX17AE48G"
-            },
-            "schema:name": "Astromaterials Curation and Analysis",
-            "schema:funder": {
-                "@type": "schema:Organization",
-                "schema:additionalType": [
-                    "schema:FundingAgency"
-                ],
-                "schema:name": "NASA - National Aeronautics and Space Administration"
-            }
-        }
-    ],
-    "schema:measurementTechnique": {
-        "@type": "schema:DefinedTerm",
-        "schema:name": "X-ray Diffraction (XRD)",
-        "schema:identifier": "https://ada.astromat.org/vocabulary/techniques/XRD"
-    },
-    "prov:wasGeneratedBy": [
-        {
-            "@type": [
-                "prov:Activity",
-                "schema:Event"
-            ],
-            "schema:identifier": "session-xrd-20260110-001",
-            "schema:startDate": "2026-01-10T09:30:00",
-            "prov:used": [
-                {
-                    "@type": [
-                        "schema:Thing",
-                        "prov:Entity",
-                        "nxs:BaseClass/NXinstrument"
-                    ],
-                    "schema:additionalType": [
-                        "ada:XRDInstrument"
-                    ],
-                    "schema:name": "Example XRD Instrument",
-                    "schema:identifier": "ex:instrument-xrd-001"
-                }
-            ],
-            "schema:location": {
-                "@type": [
-                    "schema:Place",
-                    "nxs:BaseClass/NXsource"
-                ],
-                "schema:name": "Analytical Sciences Laboratory",
-                "schema:identifier": "https://ror.org/00hx57361"
-            },
-            "schema:mainEntity": [
-                {
-                    "@type": [
-                        "schema:Thing",
-                        "https://w3id.org/isample/vocabulary/materialsampleobjecttype/materialsample"
-                    ],
-                    "schema:additionalType": [
-                        "MaterialSample"
-                    ],
-                    "schema:name": "ALH 84001,123",
-                    "schema:identifier": [
-                        "igsn:10.60471/GSEEXAMPLE001"
-                    ],
-                    "schema:description": "Thin section of Allan Hills 84001 martian meteorite"
-                }
-            ]
-        }
-    ],
-    "schema:variableMeasured": [
-        {
-            "@id": "ex:adaXRD-var-001",
-            "@type": [
-                "schema:PropertyValue",
-                "cdi:InstanceVariable"
-            ],
-            "schema:name": "measurement_value",
-            "schema:alternateName": [
-                "XRD primary measurement"
-            ],
-            "schema:description": "Primary measured quantity from X-ray Diffraction (XRD) analysis. This is example mock data for testing.",
-            "schema:propertyID": [
-                "https://ada.astromat.org/vocabulary/variables/xrd_primary"
-            ],
-            "schema:unitText": "counts",
-            "cdi:intendedDataType": "https://www.w3.org/TR/xmlschema-2/#decimal",
-            "cdi:role": "MeasureComponent",
-            "cdi:simpleUnitOfMeasure": "counts"
-        },
-        {
-            "@id": "ex:adaXRD-var-002",
-            "@type": [
-                "schema:PropertyValue",
-                "cdi:InstanceVariable"
-            ],
-            "schema:name": "position_x",
-            "schema:alternateName": [
-                "X coordinate"
-            ],
-            "schema:description": "Horizontal position coordinate on sample surface.",
-            "schema:propertyID": [
-                "https://ada.astromat.org/vocabulary/variables/position_x"
-            ],
-            "schema:unitText": "micrometer",
-            "cdi:intendedDataType": "https://www.w3.org/TR/xmlschema-2/#decimal",
-            "cdi:role": "DimensionComponent",
-            "cdi:simpleUnitOfMeasure": "um"
-        }
-    ],
-    "schema:distribution": [
-        {
-            "@type": [
-                "schema:DataDownload"
-            ],
-            "schema:name": "adaXRD-ALH84001-archive.zip",
-            "schema:description": "Archive containing XRD data files and supplementary materials",
-            "schema:contentUrl": "https://astromat.org/downloads/adaxrd-example-001.zip",
-            "schema:encodingFormat": [
-                "application/zip"
-            ],
-            "schema:additionalType": [
-                "RO-CRATE"
-            ],
-            "spdx:checksum": {
-                "spdx:algorithm": "SHA256",
-                "spdx:checksumValue": "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2"
-            },
-            "schema:size": {
-                "@type": "schema:QuantitativeValue",
-                "schema:value": 15728640,
-                "schema:unitText": "byte"
-            },
-            "schema:provider": [
-                {
-                    "@type": "schema:Organization",
-                    "schema:name": "Astromat Data Archive"
-                }
-            ],
-            "schema:hasPart": [
-                {
-                    "@id": "ex:adaXRD-file-001",
-                    "@type": [
-                        "ada:image",
-                        "schema:ImageObject"
-                    ],
-                    "schema:name": "ALH84001_XRD_001.tif",
-                    "schema:description": "XRD data file for ALH 84001 thin section",
-                    "schema:additionalType": [
-                        "ada:XRDTabular"
-                    ],
-                    "schema:encodingFormat": [
-                        "image/tiff"
-                    ],
-                    "schema:size": {
-                        "@type": "schema:QuantitativeValue",
-                        "schema:value": 10485760,
-                        "schema:unitText": "byte"
-                    },
-                    "spdx:checksum": {
-                        "spdx:algorithm": "MD5",
-                        "spdx:checksumValue": "d41d8cd98f00b204e9800998ecf8427e"
-                    },
-                    "componentType": {
-                        "@type": "ada:XRDTabular"
-                    }
-                },
-                {
-                    "@id": "ex:adaXRD-file-002",
-                    "@type": [
-                        "ada:document",
-                        "schema:DigitalDocument"
-                    ],
-                    "schema:name": "ALH84001_XRD_methods.pdf",
-                    "schema:description": "Method description document for this analysis",
-                    "schema:additionalType": [
-                        "ada:methodDescription"
-                    ],
-                    "schema:encodingFormat": [
-                        "application/pdf"
-                    ],
-                    "schema:size": {
-                        "@type": "schema:QuantitativeValue",
-                        "schema:value": 524288,
-                        "schema:unitText": "byte"
-                    },
-                    "componentType": {
-                        "@type": "ada:methodDescription"
-                    }
-                }
-            ]
-        }
-    ],
-    "schema:subjectOf": {
-        "@type": "schema:Dataset",
-        "@id": "ex:adaXRD-metadata-001",
-        "schema:about": {
-            "@id": "ex:adaXRD-example-001"
-        },
-        "schema:dateModified": "2026-01-15",
-        "dcterms:conformsTo": [
-            {
-                "@id": "https://w3id.org/cdif/profiles/discovery"
-            },
-            {
-                "@id": "https://ada.astromat.org/profiles/adaXRD"
-            }
-        ],
-        "schema:maintainer": {
-            "@type": "schema:Organization",
-            "schema:name": "Astromat Data Archive"
-        },
-        "schema:sdDatePublished": "2026-01-15T12:00:00Z",
-        "schema:includedInDataCatalog": {
-            "@type": "schema:DataCatalog",
-            "schema:name": "Astromat Data Archive",
-            "schema:url": "https://astromat.org"
-        }
-    }
-}
-
-```
-
-#### jsonld
-```jsonld
-{
-  "@context": [
-    {
-      "schema": "http://schema.org/",
-      "ada": "https://ada.astromat.org/metadata/",
-      "cdi": "http://ddialliance.org/Specification/DDI-CDI/1.0/RDF/",
-      "prov": "http://www.w3.org/ns/prov#",
-      "dcterms": "http://purl.org/dc/terms/"
-    },
-    "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaXRD/context.jsonld",
-    {
-      "schema": "http://schema.org/",
-      "ada": "https://ada.astromat.org/metadata/",
-      "cdi": "http://ddialliance.org/Specification/DDI-CDI/1.0/RDF/",
-      "csvw": "http://www.w3.org/ns/csvw#",
-      "prov": "http://www.w3.org/ns/prov#",
-      "spdx": "http://spdx.org/rdf/terms#",
-      "nxs": "http://purl.org/nexusformat/definitions/",
-      "dcterms": "http://purl.org/dc/terms/",
-      "geosparql": "http://www.opengis.net/ont/geosparql#",
-      "ex": "https://example.org/"
-    }
-  ],
+  "@context": {
+    "schema": "http://schema.org/",
+    "ada": "https://ada.astromat.org/metadata/",
+    "cdi": "http://ddialliance.org/Specification/DDI-CDI/1.0/RDF/",
+    "csvw": "http://www.w3.org/ns/csvw#",
+    "prov": "http://www.w3.org/ns/prov#",
+    "spdx": "http://spdx.org/rdf/terms#",
+    "nxs": "http://purl.org/nexusformat/definitions/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "geosparql": "http://www.opengis.net/ont/geosparql#",
+    "ex": "https://example.org/",
+    "dcat": "http://www.w3.org/ns/dcat#"
+  },
   "@id": "ex:adaXRD-example-001",
   "@type": [
     "schema:Dataset",
@@ -408,7 +77,7 @@ Mock data for validation and testing.
   "schema:keywords": [
     {
       "@type": "schema:DefinedTerm",
-      "schema:name": "XRD",
+      "schema:name": "X-ray Diffraction",
       "schema:termCode": "XRD",
       "schema:inDefinedTermSet": "https://ada.astromat.org/vocabulary/techniques",
       "schema:identifier": "https://ada.astromat.org/vocabulary/techniques/XRD"
@@ -488,7 +157,7 @@ Mock data for validation and testing.
     {
       "@type": [
         "prov:Activity",
-        "schema:Event"
+        "schema:Action"
       ],
       "schema:identifier": "session-xrd-20260110-001",
       "schema:startDate": "2026-01-10T09:30:00",
@@ -587,6 +256,7 @@ Mock data for validation and testing.
         "RO-CRATE"
       ],
       "spdx:checksum": {
+        "@type": "spdx:Checksum",
         "spdx:algorithm": "SHA256",
         "spdx:checksumValue": "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2"
       },
@@ -622,6 +292,7 @@ Mock data for validation and testing.
             "schema:unitText": "byte"
           },
           "spdx:checksum": {
+            "@type": "spdx:Checksum",
             "spdx:algorithm": "MD5",
             "spdx:checksumValue": "d41d8cd98f00b204e9800998ecf8427e"
           },
@@ -656,7 +327,12 @@ Mock data for validation and testing.
     }
   ],
   "schema:subjectOf": {
-    "@type": "schema:Dataset",
+    "@type": [
+      "schema:Dataset"
+    ],
+    "schema:additionalType": [
+      "dcat:CatalogRecord"
+    ],
     "@id": "ex:adaXRD-metadata-001",
     "schema:about": {
       "@id": "ex:adaXRD-example-001"
@@ -664,10 +340,344 @@ Mock data for validation and testing.
     "schema:dateModified": "2026-01-15",
     "dcterms:conformsTo": [
       {
-        "@id": "https://w3id.org/cdif/profiles/discovery"
+        "@id": "https://w3id.org/cdif/bbr/metadata/profiles/adaProfiles/adaXRD"
+      }
+    ],
+    "schema:maintainer": {
+      "@type": "schema:Organization",
+      "schema:name": "Astromat Data Archive"
+    },
+    "schema:sdDatePublished": "2026-01-15T12:00:00Z",
+    "schema:includedInDataCatalog": {
+      "@type": "schema:DataCatalog",
+      "schema:name": "Astromat Data Archive",
+      "schema:url": "https://astromat.org"
+    }
+  }
+}
+
+```
+
+#### jsonld
+```jsonld
+{
+  "@context": [
+    {
+      "schema": "http://schema.org/",
+      "ada": "https://ada.astromat.org/metadata/",
+      "cdi": "http://ddialliance.org/Specification/DDI-CDI/1.0/RDF/",
+      "prov": "http://www.w3.org/ns/prov#",
+      "dcterms": "http://purl.org/dc/terms/"
+    },
+    "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaXRD/context.jsonld",
+    {
+      "schema": "http://schema.org/",
+      "ada": "https://ada.astromat.org/metadata/",
+      "cdi": "http://ddialliance.org/Specification/DDI-CDI/1.0/RDF/",
+      "csvw": "http://www.w3.org/ns/csvw#",
+      "prov": "http://www.w3.org/ns/prov#",
+      "spdx": "http://spdx.org/rdf/terms#",
+      "nxs": "http://purl.org/nexusformat/definitions/",
+      "dcterms": "http://purl.org/dc/terms/",
+      "geosparql": "http://www.opengis.net/ont/geosparql#",
+      "ex": "https://example.org/",
+      "dcat": "http://www.w3.org/ns/dcat#"
+    }
+  ],
+  "@id": "ex:adaXRD-example-001",
+  "@type": [
+    "schema:Dataset",
+    "schema:Product"
+  ],
+  "schema:name": "XRD Analysis of Meteorite ALH 84001 Fragment",
+  "schema:description": "Example X-ray Diffraction (XRD) product metadata demonstrating all properties defined by the adaXRD profile. Contains mock data for testing and validation.",
+  "schema:additionalType": [
+    "X-ray Diffraction (XRD) Tabular",
+    "ada:DataDeliveryPackage"
+  ],
+  "schema:identifier": {
+    "@type": "schema:PropertyValue",
+    "schema:propertyID": "https://registry.identifiers.org/registry/doi",
+    "schema:value": "10.99999/adaxrd-example-001",
+    "schema:url": "https://doi.org/10.99999/adaxrd-example-001"
+  },
+  "schema:url": "https://astromat.org/products/adaxrd-example-001",
+  "schema:dateModified": "2026-01-15",
+  "schema:version": "1.0",
+  "schema:conditionsOfAccess": [
+    "Unrestricted access for research purposes"
+  ],
+  "schema:license": [
+    "https://creativecommons.org/licenses/by/4.0/"
+  ],
+  "schema:creativeWorkStatus": "Published",
+  "schema:keywords": [
+    {
+      "@type": "schema:DefinedTerm",
+      "schema:name": "X-ray Diffraction",
+      "schema:termCode": "XRD",
+      "schema:inDefinedTermSet": "https://ada.astromat.org/vocabulary/techniques",
+      "schema:identifier": "https://ada.astromat.org/vocabulary/techniques/XRD"
+    },
+    "meteorite",
+    "astromaterials"
+  ],
+  "schema:creator": {
+    "@list": [
+      {
+        "@type": "schema:Person",
+        "schema:name": "Analytica, Maria",
+        "schema:identifier": "https://orcid.org/0000-0001-2345-6789",
+        "schema:affiliation": {
+          "@type": "schema:Organization",
+          "schema:name": "Lunar and Planetary Institute"
+        },
+        "schema:contactPoint": {
+          "@type": "schema:ContactPoint",
+          "schema:email": "analytica@example.org"
+        }
       },
       {
-        "@id": "https://ada.astromat.org/profiles/adaXRD"
+        "@type": "schema:Person",
+        "schema:name": "Researcher, John Q.",
+        "schema:identifier": "https://orcid.org/0000-0002-9876-5432",
+        "schema:affiliation": {
+          "@type": "schema:Organization",
+          "schema:name": "NASA Johnson Space Center"
+        },
+        "schema:contactPoint": {
+          "@type": "schema:ContactPoint",
+          "schema:email": "researcher@example.org"
+        }
+      }
+    ]
+  },
+  "schema:contributor": [
+    {
+      "@type": "schema:Role",
+      "schema:roleName": "principalInvestigator",
+      "schema:contributor": {
+        "@type": "schema:Person",
+        "schema:name": "Leadscientist, Patricia",
+        "schema:identifier": "https://orcid.org/0000-0003-1111-2222",
+        "schema:contactPoint": {
+          "@type": "schema:ContactPoint",
+          "schema:email": "leadscientist@example.org"
+        }
+      }
+    }
+  ],
+  "schema:funding": [
+    {
+      "@type": "schema:MonetaryGrant",
+      "schema:identifier": {
+        "@type": "schema:PropertyValue",
+        "schema:propertyID": "award number",
+        "schema:value": "NNX17AE48G"
+      },
+      "schema:name": "Astromaterials Curation and Analysis",
+      "schema:funder": {
+        "@type": "schema:Organization",
+        "schema:additionalType": [
+          "schema:FundingAgency"
+        ],
+        "schema:name": "NASA - National Aeronautics and Space Administration"
+      }
+    }
+  ],
+  "schema:measurementTechnique": {
+    "@type": "schema:DefinedTerm",
+    "schema:name": "X-ray Diffraction (XRD)",
+    "schema:identifier": "https://ada.astromat.org/vocabulary/techniques/XRD"
+  },
+  "prov:wasGeneratedBy": [
+    {
+      "@type": [
+        "prov:Activity",
+        "schema:Action"
+      ],
+      "schema:identifier": "session-xrd-20260110-001",
+      "schema:startDate": "2026-01-10T09:30:00",
+      "prov:used": [
+        {
+          "@type": [
+            "schema:Thing",
+            "prov:Entity",
+            "nxs:BaseClass/NXinstrument"
+          ],
+          "schema:additionalType": [
+            "ada:XRDInstrument"
+          ],
+          "schema:name": "Example XRD Instrument",
+          "schema:identifier": "ex:instrument-xrd-001"
+        }
+      ],
+      "schema:location": {
+        "@type": [
+          "schema:Place",
+          "nxs:BaseClass/NXsource"
+        ],
+        "schema:name": "Analytical Sciences Laboratory",
+        "schema:identifier": "https://ror.org/00hx57361"
+      },
+      "schema:mainEntity": [
+        {
+          "@type": [
+            "schema:Thing",
+            "https://w3id.org/isample/vocabulary/materialsampleobjecttype/materialsample"
+          ],
+          "schema:additionalType": [
+            "MaterialSample"
+          ],
+          "schema:name": "ALH 84001,123",
+          "schema:identifier": [
+            "igsn:10.60471/GSEEXAMPLE001"
+          ],
+          "schema:description": "Thin section of Allan Hills 84001 martian meteorite"
+        }
+      ]
+    }
+  ],
+  "schema:variableMeasured": [
+    {
+      "@id": "ex:adaXRD-var-001",
+      "@type": [
+        "schema:PropertyValue",
+        "cdi:InstanceVariable"
+      ],
+      "schema:name": "measurement_value",
+      "schema:alternateName": [
+        "XRD primary measurement"
+      ],
+      "schema:description": "Primary measured quantity from X-ray Diffraction (XRD) analysis. This is example mock data for testing.",
+      "schema:propertyID": [
+        "https://ada.astromat.org/vocabulary/variables/xrd_primary"
+      ],
+      "schema:unitText": "counts",
+      "cdi:intendedDataType": "https://www.w3.org/TR/xmlschema-2/#decimal",
+      "cdi:role": "MeasureComponent",
+      "cdi:simpleUnitOfMeasure": "counts"
+    },
+    {
+      "@id": "ex:adaXRD-var-002",
+      "@type": [
+        "schema:PropertyValue",
+        "cdi:InstanceVariable"
+      ],
+      "schema:name": "position_x",
+      "schema:alternateName": [
+        "X coordinate"
+      ],
+      "schema:description": "Horizontal position coordinate on sample surface.",
+      "schema:propertyID": [
+        "https://ada.astromat.org/vocabulary/variables/position_x"
+      ],
+      "schema:unitText": "micrometer",
+      "cdi:intendedDataType": "https://www.w3.org/TR/xmlschema-2/#decimal",
+      "cdi:role": "DimensionComponent",
+      "cdi:simpleUnitOfMeasure": "um"
+    }
+  ],
+  "schema:distribution": [
+    {
+      "@type": [
+        "schema:DataDownload"
+      ],
+      "schema:name": "adaXRD-ALH84001-archive.zip",
+      "schema:description": "Archive containing XRD data files and supplementary materials",
+      "schema:contentUrl": "https://astromat.org/downloads/adaxrd-example-001.zip",
+      "schema:encodingFormat": [
+        "application/zip"
+      ],
+      "schema:additionalType": [
+        "RO-CRATE"
+      ],
+      "spdx:checksum": {
+        "@type": "spdx:Checksum",
+        "spdx:algorithm": "SHA256",
+        "spdx:checksumValue": "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2"
+      },
+      "schema:size": {
+        "@type": "schema:QuantitativeValue",
+        "schema:value": 15728640,
+        "schema:unitText": "byte"
+      },
+      "schema:provider": [
+        {
+          "@type": "schema:Organization",
+          "schema:name": "Astromat Data Archive"
+        }
+      ],
+      "schema:hasPart": [
+        {
+          "@id": "ex:adaXRD-file-001",
+          "@type": [
+            "ada:image",
+            "schema:ImageObject"
+          ],
+          "schema:name": "ALH84001_XRD_001.tif",
+          "schema:description": "XRD data file for ALH 84001 thin section",
+          "schema:additionalType": [
+            "ada:XRDTabular"
+          ],
+          "schema:encodingFormat": [
+            "image/tiff"
+          ],
+          "schema:size": {
+            "@type": "schema:QuantitativeValue",
+            "schema:value": 10485760,
+            "schema:unitText": "byte"
+          },
+          "spdx:checksum": {
+            "@type": "spdx:Checksum",
+            "spdx:algorithm": "MD5",
+            "spdx:checksumValue": "d41d8cd98f00b204e9800998ecf8427e"
+          },
+          "componentType": {
+            "@type": "ada:XRDTabular"
+          }
+        },
+        {
+          "@id": "ex:adaXRD-file-002",
+          "@type": [
+            "ada:document",
+            "schema:DigitalDocument"
+          ],
+          "schema:name": "ALH84001_XRD_methods.pdf",
+          "schema:description": "Method description document for this analysis",
+          "schema:additionalType": [
+            "ada:methodDescription"
+          ],
+          "schema:encodingFormat": [
+            "application/pdf"
+          ],
+          "schema:size": {
+            "@type": "schema:QuantitativeValue",
+            "schema:value": 524288,
+            "schema:unitText": "byte"
+          },
+          "componentType": {
+            "@type": "ada:methodDescription"
+          }
+        }
+      ]
+    }
+  ],
+  "schema:subjectOf": {
+    "@type": [
+      "schema:Dataset"
+    ],
+    "schema:additionalType": [
+      "dcat:CatalogRecord"
+    ],
+    "@id": "ex:adaXRD-metadata-001",
+    "schema:about": {
+      "@id": "ex:adaXRD-example-001"
+    },
+    "schema:dateModified": "2026-01-15",
+    "dcterms:conformsTo": [
+      {
+        "@id": "https://w3id.org/cdif/bbr/metadata/profiles/adaProfiles/adaXRD"
       }
     ],
     "schema:maintainer": {
@@ -737,7 +747,8 @@ ex:adaXRD-example-001 a schema1:Dataset,
             schema1:size [ a schema1:QuantitativeValue ;
                     schema1:unitText "byte" ;
                     schema1:value 15728640 ] ;
-            spdx:checksum [ spdx:algorithm "SHA256" ;
+            spdx:checksum [ a spdx:Checksum ;
+                    spdx:algorithm "SHA256" ;
                     spdx:checksumValue "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2" ] ] ;
     schema1:funding [ a schema1:MonetaryGrant ;
             schema1:funder [ a schema1:Organization ;
@@ -754,7 +765,7 @@ ex:adaXRD-example-001 a schema1:Dataset,
     schema1:keywords [ a schema1:DefinedTerm ;
             schema1:identifier "https://ada.astromat.org/vocabulary/techniques/XRD" ;
             schema1:inDefinedTermSet "https://ada.astromat.org/vocabulary/techniques" ;
-            schema1:name "XRD" ;
+            schema1:name "X-ray Diffraction" ;
             schema1:termCode "XRD" ],
         "astromaterials",
         "meteorite" ;
@@ -768,7 +779,7 @@ ex:adaXRD-example-001 a schema1:Dataset,
     schema1:variableMeasured ex:adaXRD-var-001,
         ex:adaXRD-var-002 ;
     schema1:version "1.0" ;
-    prov:wasGeneratedBy [ a schema1:Event,
+    prov:wasGeneratedBy [ a schema1:Action,
                 prov:Activity ;
             schema1:identifier "session-xrd-20260110-001" ;
             schema1:location [ a <http://purl.org/nexusformat/definitions/BaseClass/NXsource>,
@@ -798,7 +809,8 @@ ex:adaXRD-file-001 a schema1:ImageObject,
     schema1:size [ a schema1:QuantitativeValue ;
             schema1:unitText "byte" ;
             schema1:value 10485760 ] ;
-    spdx:checksum [ spdx:algorithm "MD5" ;
+    spdx:checksum [ a spdx:Checksum ;
+            spdx:algorithm "MD5" ;
             spdx:checksumValue "d41d8cd98f00b204e9800998ecf8427e" ] .
 
 ex:adaXRD-file-002 a schema1:DigitalDocument,
@@ -812,9 +824,9 @@ ex:adaXRD-file-002 a schema1:DigitalDocument,
             schema1:value 524288 ] .
 
 ex:adaXRD-metadata-001 a schema1:Dataset ;
-    dcterms:conformsTo <https://ada.astromat.org/profiles/adaXRD>,
-        <https://w3id.org/cdif/profiles/discovery> ;
+    dcterms:conformsTo <https://w3id.org/cdif/bbr/metadata/profiles/adaProfiles/adaXRD> ;
     schema1:about ex:adaXRD-example-001 ;
+    schema1:additionalType "dcat:CatalogRecord" ;
     schema1:dateModified "2026-01-15" ;
     schema1:includedInDataCatalog [ a schema1:DataCatalog ;
             schema1:name "Astromat Data Archive" ;

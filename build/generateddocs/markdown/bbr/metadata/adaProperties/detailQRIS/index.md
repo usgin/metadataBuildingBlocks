@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.adaProperties.detailQRIS` *v0.1*
 
-QRIS (Raman) with calibration and illumination parameters
+QRIS (Raman) with calibration and illumination parameters. Defines properties: @type, calibrationFile, pipelineVersion, focalLength, illuminationColor, illuminationLevel, exposureTime, target.
 
 [*Status*](http://www.opengis.net/def/status): Under development
 

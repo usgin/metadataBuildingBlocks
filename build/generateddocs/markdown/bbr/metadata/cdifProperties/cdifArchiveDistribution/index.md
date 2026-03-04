@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.cdifProperties.cdifArchiveDistribution` *v0.1*
 
-Schema for a DataDownload distribution that is an archive containing multiple component files described via schema:hasPart, with optional CDIF data description extensions
+Schema for a DataDownload distribution that is an archive containing multiple component files described via schema:hasPart, with optional CDIF data description extensions. Defines properties: schema:hasPart. Uses building blocks: dataDownload (schemaorgProperties), cdifDataCube (cdifProperties), cdifTabularData (cdifProperties).
 
 [*Status*](http://www.opengis.net/def/status): Under development
 
@@ -12,18 +12,18 @@ Schema for a DataDownload distribution that is an archive containing multiple co
 Defines the structure for a DataDownload distribution that is an archive file (e.g. ZIP, tar.gz) containing multiple component files. The archive itself is typed as `schema:DataDownload` with standard properties (name, contentUrl, encodingFormat, checksum). Component files within the archive are listed in `schema:hasPart` and typed as `schema:MediaObject` (not `schema:DataDownload`, since they are not independently accessible via URL).
 
 Each hasPart item has:
-- `@id` — identifier for cross-references (e.g. from metadata sidecar files via `schema:about`)
-- `@type` — must include `schema:MediaObject`, must not include `schema:DataDownload`
-- `schema:name` — filename within the archive
-- `schema:encodingFormat` — MIME type(s)
-- `schema:size` — file size as `schema:QuantitativeValue`
-- `schema:description` — description of file content
-- `schema:about` — references to related files (for metadata sidecars)
-- `spdx:checksum` — integrity checksum
+- `@id` --identifier for cross-references (e.g. from metadata sidecar files via `schema:about`)
+- `@type` --must include `schema:MediaObject`, must not include `schema:DataDownload`
+- `schema:name` --filename within the archive
+- `schema:encodingFormat` --MIME type(s)
+- `schema:size` --file size as `schema:QuantitativeValue`
+- `schema:description` --description of file content
+- `schema:about` --references to related files (for metadata sidecars)
+- `spdx:checksum` --integrity checksum
 
 Component files may optionally include CDIF data description extensions to describe their internal data structure:
-- `cdifTabularData` — for delimited or fixed-width tabular text files (CSV, TSV), with CSVW properties and physical column mappings
-- `cdifDataCube` — for multi-dimensional structured datasets (NetCDF, HDF5), with locator-based physical mappings
+- `cdifTabularData` --for delimited or fixed-width tabular text files (CSV, TSV), with CSVW properties and physical column mappings
+- `cdifDataCube` --for multi-dimensional structured datasets (NetCDF, HDF5), with locator-based physical mappings
 
 ## Examples
 
@@ -34,126 +34,158 @@ description extensions (TabularTextDataSet, StructuredDataSet).
 #### json
 ```json
 {
-    "@type": ["schema:DataDownload"],
-    "schema:name": "Geochemistry analysis data package",
-    "schema:contentUrl": "https://example.org/data/geochem-package.zip",
-    "schema:encodingFormat": ["application/zip"],
-    "schema:description": "This data product is distributed as a zip archive; contents of the archive are listed as parts. The component files are not individually accessible.",
-    "spdx:checksum": {
+  "@type": [
+    "schema:DataDownload"
+  ],
+  "schema:name": "Geochemistry analysis data package",
+  "schema:contentUrl": "https://example.org/data/geochem-package.zip",
+  "schema:encodingFormat": [
+    "application/zip"
+  ],
+  "schema:description": "This data product is distributed as a zip archive; contents of the archive are listed as parts. The component files are not individually accessible.",
+  "spdx:checksum": {
+    "@type": "spdx:Checksum",
+    "spdx:algorithm": "SHA256",
+    "spdx:checksumValue": "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2"
+  },
+  "schema:hasPart": [
+    {
+      "@type": [
+        "schema:MediaObject"
+      ],
+      "@id": "#e0fee3cccca4292d76dcb5238224e677",
+      "schema:name": "20260101_GEOCHEM_LAB_SAMPLE-001_results.csv",
+      "schema:description": "Geochemistry analysis results in tabular format. sha256:f962af0b2e2f02752aa258a58cede1263f05c7a78e3b9d162da960368f7dc54b",
+      "schema:encodingFormat": [
+        "text/csv"
+      ],
+      "schema:size": {
+        "@type": "schema:QuantitativeValue",
+        "schema:value": 10860,
+        "schema:unitText": "byte"
+      },
+      "spdx:checksum": {
+        "@type": "spdx:Checksum",
         "spdx:algorithm": "SHA256",
-        "spdx:checksumValue": "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2"
+        "spdx:checksumValue": "f962af0b2e2f02752aa258a58cede1263f05c7a78e3b9d162da960368f7dc54b"
+      }
     },
-    "schema:hasPart": [
+    {
+      "@type": [
+        "schema:MediaObject",
+        "cdi:TabularTextDataSet"
+      ],
+      "@id": "#7c6ef03f6b0e88dec54d9897f591deab",
+      "schema:name": "20260101_GEOCHEM_LAB_SAMPLE-001_measurements.csv",
+      "schema:description": "Measurement data with column structure described via CSVW and physical mappings.",
+      "schema:encodingFormat": [
+        "text/csv"
+      ],
+      "schema:size": {
+        "@type": "schema:QuantitativeValue",
+        "schema:value": 6249,
+        "schema:unitText": "byte"
+      },
+      "cdi:isDelimited": true,
+      "csvw:delimiter": ",",
+      "csvw:header": true,
+      "csvw:headerRowCount": 1,
+      "countRows": 144,
+      "countColumns": 3,
+      "cdi:hasPhysicalMapping": [
         {
-            "@type": ["schema:MediaObject"],
-            "@id": "#e0fee3cccca4292d76dcb5238224e677",
-            "schema:name": "20260101_GEOCHEM_LAB_SAMPLE-001_results.csv",
-            "schema:description": "Geochemistry analysis results in tabular format. sha256:f962af0b2e2f02752aa258a58cede1263f05c7a78e3b9d162da960368f7dc54b",
-            "schema:encodingFormat": ["text/csv"],
-            "schema:size": {
-                "@type": "schema:QuantitativeValue",
-                "schema:value": 10860,
-                "schema:unitText": "byte"
-            },
-            "spdx:checksum": {
-                "spdx:algorithm": "SHA256",
-                "spdx:checksumValue": "f962af0b2e2f02752aa258a58cede1263f05c7a78e3b9d162da960368f7dc54b"
-            }
+          "cdi:index": 0,
+          "cdi:format": "string",
+          "cdi:physicalDataType": "string",
+          "cdi:isRequired": true
         },
         {
-            "@type": ["schema:MediaObject", "cdi:TabularTextDataSet"],
-            "@id": "#7c6ef03f6b0e88dec54d9897f591deab",
-            "schema:name": "20260101_GEOCHEM_LAB_SAMPLE-001_measurements.csv",
-            "schema:description": "Measurement data with column structure described via CSVW and physical mappings.",
-            "schema:encodingFormat": ["text/csv"],
-            "schema:size": {
-                "@type": "schema:QuantitativeValue",
-                "schema:value": 6249,
-                "schema:unitText": "byte"
-            },
-            "cdi:isDelimited": true,
-            "csvw:delimiter": ",",
-            "csvw:header": true,
-            "csvw:headerRowCount": 1,
-            "countRows": 144,
-            "countColumns": 3,
-            "cdi:hasPhysicalMapping": [
-                {
-                    "cdi:index": 0,
-                    "cdi:format": "string",
-                    "cdi:physicalDataType": "string",
-                    "cdi:isRequired": true
-                },
-                {
-                    "cdi:index": 1,
-                    "cdi:format": "decimal",
-                    "cdi:physicalDataType": "float64",
-                    "cdi:nullSequence": "NA",
-                    "cdi:isRequired": true
-                },
-                {
-                    "cdi:index": 2,
-                    "cdi:format": "decimal",
-                    "cdi:physicalDataType": "float64",
-                    "cdi:nullSequence": "NA",
-                    "cdi:isRequired": false
-                }
-            ]
+          "cdi:index": 1,
+          "cdi:format": "decimal",
+          "cdi:physicalDataType": "float64",
+          "cdi:nullSequence": "NA",
+          "cdi:isRequired": true
         },
         {
-            "@type": ["schema:MediaObject", "cdi:StructuredDataSet"],
-            "@id": "#a6143a557a62f78ae39fcb80578b74a3",
-            "schema:name": "20260101_GEOCHEM_LAB_SAMPLE-001_spectra.nc",
-            "schema:description": "Spectral data cube with wavelength and intensity dimensions.",
-            "schema:encodingFormat": ["application/x-netcdf"],
-            "schema:size": {
-                "@type": "schema:QuantitativeValue",
-                "schema:value": 13743003,
-                "schema:unitText": "byte"
-            },
-            "cdi:hasPhysicalMapping": [
-                {
-                    "cdi:index": 0,
-                    "cdi:format": "decimal",
-                    "cdi:physicalDataType": "float32",
-                    "cdi:locator": "/spectra/wavelength",
-                    "cdi:isRequired": true
-                },
-                {
-                    "cdi:index": 1,
-                    "cdi:format": "decimal",
-                    "cdi:physicalDataType": "float32",
-                    "cdi:locator": "/spectra/intensity",
-                    "cdi:isRequired": true
-                }
-            ]
-        },
-        {
-            "@type": ["schema:MediaObject"],
-            "@id": "#3eaec0f86900d58d874bd7c18bedb156",
-            "schema:name": "20260101_GEOCHEM_LAB_SAMPLE-001_method.pdf",
-            "schema:description": "Method description document for the analysis.",
-            "schema:encodingFormat": ["application/pdf"],
-            "schema:size": {
-                "@type": "schema:QuantitativeValue",
-                "schema:value": 56062,
-                "schema:unitText": "byte"
-            }
-        },
-        {
-            "@type": ["schema:MediaObject"],
-            "@id": "#d640488b65b53b6bcc1abcb66b3cde7e",
-            "schema:name": "20260101_GEOCHEM_LAB_SAMPLE-001_results.yaml",
-            "schema:description": "Metadata sidecar for the results CSV file.",
-            "schema:encodingFormat": ["application/yaml"],
-            "schema:size": {
-                "@type": "schema:QuantitativeValue",
-                "schema:value": 2281,
-                "schema:unitText": "byte"
-            },
-            "schema:about": [{"@id": "#e0fee3cccca4292d76dcb5238224e677"}]
+          "cdi:index": 2,
+          "cdi:format": "decimal",
+          "cdi:physicalDataType": "float64",
+          "cdi:nullSequence": "NA",
+          "cdi:isRequired": false
         }
-    ]
+      ]
+    },
+    {
+      "@type": [
+        "schema:MediaObject",
+        "cdi:StructuredDataSet"
+      ],
+      "@id": "#a6143a557a62f78ae39fcb80578b74a3",
+      "schema:name": "20260101_GEOCHEM_LAB_SAMPLE-001_spectra.nc",
+      "schema:description": "Spectral data cube with wavelength and intensity dimensions.",
+      "schema:encodingFormat": [
+        "application/x-netcdf"
+      ],
+      "schema:size": {
+        "@type": "schema:QuantitativeValue",
+        "schema:value": 13743003,
+        "schema:unitText": "byte"
+      },
+      "cdi:hasPhysicalMapping": [
+        {
+          "cdi:index": 0,
+          "cdi:format": "decimal",
+          "cdi:physicalDataType": "float32",
+          "cdi:locator": "/spectra/wavelength",
+          "cdi:isRequired": true
+        },
+        {
+          "cdi:index": 1,
+          "cdi:format": "decimal",
+          "cdi:physicalDataType": "float32",
+          "cdi:locator": "/spectra/intensity",
+          "cdi:isRequired": true
+        }
+      ]
+    },
+    {
+      "@type": [
+        "schema:MediaObject"
+      ],
+      "@id": "#3eaec0f86900d58d874bd7c18bedb156",
+      "schema:name": "20260101_GEOCHEM_LAB_SAMPLE-001_method.pdf",
+      "schema:description": "Method description document for the analysis.",
+      "schema:encodingFormat": [
+        "application/pdf"
+      ],
+      "schema:size": {
+        "@type": "schema:QuantitativeValue",
+        "schema:value": 56062,
+        "schema:unitText": "byte"
+      }
+    },
+    {
+      "@type": [
+        "schema:MediaObject"
+      ],
+      "@id": "#d640488b65b53b6bcc1abcb66b3cde7e",
+      "schema:name": "20260101_GEOCHEM_LAB_SAMPLE-001_results.yaml",
+      "schema:description": "Metadata sidecar for the results CSV file.",
+      "schema:encodingFormat": [
+        "application/yaml"
+      ],
+      "schema:size": {
+        "@type": "schema:QuantitativeValue",
+        "schema:value": 2281,
+        "schema:unitText": "byte"
+      },
+      "schema:about": [
+        {
+          "@id": "#e0fee3cccca4292d76dcb5238224e677"
+        }
+      ]
+    }
+  ]
 }
 
 ```
@@ -180,6 +212,7 @@ description extensions (TabularTextDataSet, StructuredDataSet).
   ],
   "schema:description": "This data product is distributed as a zip archive; contents of the archive are listed as parts. The component files are not individually accessible.",
   "spdx:checksum": {
+    "@type": "spdx:Checksum",
     "spdx:algorithm": "SHA256",
     "spdx:checksumValue": "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2"
   },
@@ -200,6 +233,7 @@ description extensions (TabularTextDataSet, StructuredDataSet).
         "schema:unitText": "byte"
       },
       "spdx:checksum": {
+        "@type": "spdx:Checksum",
         "spdx:algorithm": "SHA256",
         "spdx:checksumValue": "f962af0b2e2f02752aa258a58cede1263f05c7a78e3b9d162da960368f7dc54b"
       }
@@ -342,13 +376,13 @@ description extensions (TabularTextDataSet, StructuredDataSet).
 <file:///github/workspace/#7c6ef03f6b0e88dec54d9897f591deab> a cdi:TabularTextDataSet,
         schema1:MediaObject ;
     cdi:hasPhysicalMapping [ cdi:format "decimal" ;
-            cdi:index 2 ;
-            cdi:isRequired false ;
+            cdi:index 1 ;
+            cdi:isRequired true ;
             cdi:nullSequence "NA" ;
             cdi:physicalDataType "float64" ],
         [ cdi:format "decimal" ;
-            cdi:index 1 ;
-            cdi:isRequired true ;
+            cdi:index 2 ;
+            cdi:isRequired false ;
             cdi:nullSequence "NA" ;
             cdi:physicalDataType "float64" ],
         [ cdi:format "string" ;
@@ -401,7 +435,8 @@ description extensions (TabularTextDataSet, StructuredDataSet).
     schema1:size [ a schema1:QuantitativeValue ;
             schema1:unitText "byte" ;
             schema1:value 10860 ] ;
-    spdx:checksum [ spdx:algorithm "SHA256" ;
+    spdx:checksum [ a spdx:Checksum ;
+            spdx:algorithm "SHA256" ;
             spdx:checksumValue "f962af0b2e2f02752aa258a58cede1263f05c7a78e3b9d162da960368f7dc54b" ] .
 
 [] a schema1:DataDownload ;
@@ -414,7 +449,8 @@ description extensions (TabularTextDataSet, StructuredDataSet).
         <file:///github/workspace/#d640488b65b53b6bcc1abcb66b3cde7e>,
         <file:///github/workspace/#e0fee3cccca4292d76dcb5238224e677> ;
     schema1:name "Geochemistry analysis data package" ;
-    spdx:checksum [ spdx:algorithm "SHA256" ;
+    spdx:checksum [ a spdx:Checksum ;
+            spdx:algorithm "SHA256" ;
             spdx:checksumValue "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2" ] .
 
 
@@ -502,10 +538,21 @@ allOf:
               type: object
               description: Checksum for integrity verification of this component file.
               properties:
+                '@type':
+                  anyOf:
+                  - type: string
+                    const: spdx:Checksum
+                  - type: array
+                    items:
+                      type: string
+                    contains:
+                      const: spdx:Checksum
                 spdx:algorithm:
                   type: string
                 spdx:checksumValue:
                   type: string
+              required:
+              - '@type'
           required:
           - '@type'
           - schema:name

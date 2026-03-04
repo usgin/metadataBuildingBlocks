@@ -18,7 +18,8 @@
       "nxs": "http://purl.org/nexusformat/definitions/",
       "dcterms": "http://purl.org/dc/terms/",
       "geosparql": "http://www.opengis.net/ont/geosparql#",
-      "ex": "https://example.org/"
+      "ex": "https://example.org/",
+      "dcat": "http://www.w3.org/ns/dcat#"
     }
   ],
   "@id": "ex:adaLAF-example-001",
@@ -51,7 +52,7 @@
   "schema:keywords": [
     {
       "@type": "schema:DefinedTerm",
-      "schema:name": "LAF",
+      "schema:name": "Laser Assisted Fluorination",
       "schema:termCode": "LAF",
       "schema:inDefinedTermSet": "https://ada.astromat.org/vocabulary/techniques",
       "schema:identifier": "https://ada.astromat.org/vocabulary/techniques/LAF"
@@ -131,7 +132,7 @@
     {
       "@type": [
         "prov:Activity",
-        "schema:Event"
+        "schema:Action"
       ],
       "schema:identifier": "session-laf-20260110-001",
       "schema:startDate": "2026-01-10T09:30:00",
@@ -230,6 +231,7 @@
         "RO-CRATE"
       ],
       "spdx:checksum": {
+        "@type": "spdx:Checksum",
         "spdx:algorithm": "SHA256",
         "spdx:checksumValue": "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2"
       },
@@ -265,6 +267,7 @@
             "schema:unitText": "byte"
           },
           "spdx:checksum": {
+            "@type": "spdx:Checksum",
             "spdx:algorithm": "MD5",
             "spdx:checksumValue": "d41d8cd98f00b204e9800998ecf8427e"
           },
@@ -299,7 +302,12 @@
     }
   ],
   "schema:subjectOf": {
-    "@type": "schema:Dataset",
+    "@type": [
+      "schema:Dataset"
+    ],
+    "schema:additionalType": [
+      "dcat:CatalogRecord"
+    ],
     "@id": "ex:adaLAF-metadata-001",
     "schema:about": {
       "@id": "ex:adaLAF-example-001"
@@ -307,10 +315,7 @@
     "schema:dateModified": "2026-01-15",
     "dcterms:conformsTo": [
       {
-        "@id": "https://w3id.org/cdif/profiles/discovery"
-      },
-      {
-        "@id": "https://ada.astromat.org/profiles/adaLAF"
+        "@id": "https://w3id.org/cdif/bbr/metadata/profiles/adaProfiles/adaLAF"
       }
     ],
     "schema:maintainer": {

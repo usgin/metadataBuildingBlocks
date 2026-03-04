@@ -86,6 +86,8 @@ x-defs:
         - schema:name
       - required:
         - schema:identifier
+      - required:
+        - schema:termCode
     x-jsonld-prefixes:
       schema: http://schema.org/
     x-schema-source: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/definedTerm/schema.yaml
@@ -124,10 +126,23 @@ x-defs:
           used to test if content has been modified. The checksum is a property of
           a particular distribution/DataDownload.
         properties:
+          '@type':
+            anyOf:
+            - type: string
+              enum:
+              - spdx:Checksum
+            - type: array
+              items:
+                type: string
+              contains:
+                enum:
+                - spdx:Checksum
           spdx:algorithm:
             type: string
           spdx:checksumValue:
             type: string
+        required:
+        - '@type'
       schema:provider:
         type: array
         description: Party who maintains this particular distribution option for the
@@ -217,16 +232,30 @@ x-defs:
       schema: http://schema.org/
     x-schema-source: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/webAPI/schema.yaml
     x-schema-version: https://json-schema.org/draft/2020-12/schema
-  cdif.bbr.metadata.schemaorgProperties.metaMetadata:
+  cdif.bbr.metadata.cdifProperties.cdifCatalogRecord:
     type: object
     description: see https://github.com/Cross-Domain-Interoperability-Framework/Discovery/issues/13
       for discussion on how to make assertion about the sample registration and metadata
       distinct from statements about the physical object
     properties:
       '@type':
-        type: string
-        enum:
-        - schema:Dataset
+        type: array
+        items:
+          type: string
+        contains:
+          enum:
+          - schema:Dataset
+        minItems: 1
+      schema:additionalType:
+        type: array
+        description: additional type assertions for the catalog record node. dcat:CatalogRecord
+          is required.
+        items:
+          type: string
+        contains:
+          enum:
+          - dcat:CatalogRecord
+        minItems: 1
       '@id':
         type: string
         description: identifier for the metadata record
@@ -240,7 +269,7 @@ x-defs:
       dcterms:conformsTo:
         type: array
         items:
-          $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifMandatory/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.schemaorgProperties.metaMetadata/$defs/conformsTo_item
+          $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifMandatory/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.cdifProperties.cdifCatalogRecord/$defs/conformsTo_item
         minItems: 1
         description: uri for specifications that this metadata record conforms to.
           Minimimally should specify uri for CDIF discovery profile.  Implement as
@@ -251,8 +280,8 @@ x-defs:
           or position name and affiliation, or just organization name. e-mail address
           is preferred contact information.
         anyOf:
-        - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifMandatory/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.schemaorgProperties.metaMetadata/$defs/Person
-        - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifMandatory/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.schemaorgProperties.metaMetadata/$defs/Organization
+        - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifMandatory/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.cdifProperties.cdifCatalogRecord/$defs/Person
+        - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifMandatory/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.cdifProperties.cdifCatalogRecord/$defs/Organization
       schema:sdDatePublished:
         description: date of most recent update to the metadata content, extends iSamples
           schema
@@ -283,10 +312,11 @@ x-defs:
             description: identifier for the collection or catalog; use identifier_type
               to provide information on identifier scheme and context for identifier
             allOf:
-            - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifMandatory/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.schemaorgProperties.metaMetadata/$defs/Identifier
+            - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifMandatory/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.cdifProperties.cdifCatalogRecord/$defs/Identifier
     required:
     - schema:about
     - dcterms:conformsTo
+    - schema:additionalType
     - '@type'
     - '@id'
     $defs:
@@ -308,7 +338,8 @@ x-defs:
       ex: https://example.org/
       xsd: http://www.w3.org/2001/XMLSchema#
       dcterms: http://purl.org/dc/terms/
-    x-schema-source: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/metaMetadata/schema.yaml
+      dcat: http://www.w3.org/ns/dcat#
+    x-schema-source: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifCatalogRecord/schema.yaml
     x-schema-version: https://json-schema.org/draft/2020-12/schema
   cdif.bbr.metadata.schemaorgProperties.person:
     description: schema for cdif profile of schema.org/Person
@@ -437,11 +468,21 @@ x-defs:
     properties:
       '@type':
         type: string
-        description: TBD, recognize other actions, e.g. SearchAction, UpdateAction...,
-          others?
+        description: The type of action. Must be schema:Action or one of its subtypes.
         default: schema:Action
         enum:
         - schema:Action
+        - schema:AssessAction
+        - schema:ConsumeAction
+        - schema:ControlAction
+        - schema:CreateAction
+        - schema:FindAction
+        - schema:InteractAction
+        - schema:MoveAction
+        - schema:PlayAction
+        - schema:SearchAction
+        - schema:TransferAction
+        - schema:UpdateAction
       schema:name:
         type: string
         description: text label for the action
@@ -697,19 +738,22 @@ description: Building block specifies properties for minimal CDIF schama.org dis
 properties:
   '@id':
     type: string
-    description: The URI for the resource should be the @id value for the root of
-      the JSON instance document tree. Note that this identifier can be interpreted
+    description: 'The URI for the resource should be the @id value for the root of
+      the JSON instance document tree. Must be an IRI (e.g. https://doi.org/..., urn:...,
+      or a relative URI like #localid). Note that this identifier can be interpreted
       to identify the resource that is the subject of this metadata record, or the
-      JSON-LD object that is the digital object containing the metadata information.
+      JSON-LD object that is the digital object containing the metadata information.'
   '@type':
     description: a schema.org Class that specifies the expected information content
       for the metadata record. For CDIF, 'schema:Dataset' is required, but other possible
       values (e.g. CreativeWork, SoftwareApplication, Product, WebAPI) are sometimes
       included to enable the schema.org properties used to describe the resource without
-      schema.org validation errors.
+      schema.org validation errors. The array must include at least one value from
+      the known set, but can also include other strings for extensibility.
     type: array
     items:
       type: string
+    contains:
       enum:
       - schema:CreativeWork
       - schema:SoftwareApplication
@@ -722,7 +766,8 @@ properties:
       - schema:ImageObject
       - schema:DataCatalog
       - schema:DefinedTermSet
-      default: schema:Dataset
+      - schema:MediaObject
+    default: schema:Dataset
     minItems: 1
   schema:name:
     type: string
@@ -795,7 +840,7 @@ properties:
       - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifMandatory/schema-oas3.0.yaml#/$defs/DataDownload
       - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifMandatory/schema-oas3.0.yaml#/$defs/WebAPI
   schema:subjectOf:
-    $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifMandatory/schema-oas3.0.yaml#/$defs/MetaMetadata
+    $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifMandatory/schema-oas3.0.yaml#/$defs/CdifCatalogRecord
 allOf:
 - required:
   - '@id'
@@ -826,8 +871,8 @@ $defs:
     $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifMandatory/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.schemaorgProperties.dataDownload
   WebAPI:
     $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifMandatory/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.schemaorgProperties.webAPI
-  MetaMetadata:
-    $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifMandatory/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.schemaorgProperties.metaMetadata
+  CdifCatalogRecord:
+    $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifMandatory/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.cdifProperties.cdifCatalogRecord
 x-jsonld-prefixes:
   schema: http://schema.org/
 x-schema-version: https://json-schema.org/draft/2020-12/schema

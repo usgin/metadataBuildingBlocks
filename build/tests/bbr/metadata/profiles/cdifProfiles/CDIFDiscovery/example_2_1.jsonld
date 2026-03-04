@@ -20,10 +20,14 @@
       "csvw": "http://www.w3.org/ns/csvw#",
       "xas": "https://xas.org/dictionary/",
       "nxs": "http://purl.org/nexusformat/definitions/",
-      "prov": "http://www.w3.org/ns/prov#"
+      "prov": "http://www.w3.org/ns/prov#",
+      "dcat": "http://www.w3.org/ns/dcat#",
+      "cdif": "https://cdif.org/profiles/",
+      "ex": "https://example.org/",
+      "igsn": "https://igsn.org/"
     }
   ],
-  "@id": "xas:487y54",
+  "@id": "xas:487y54123",
   "@type": [
     "schema:Dataset",
     "schema:Product"
@@ -59,13 +63,7 @@
       "@type": "schema:Role",
       "schema:roleName": "dataCollector",
       "schema:contributor": {
-        "@type": "schema:Person",
-        "@id": "https://orcid.org/3547ulkj",
-        "schema:name": "Collectus, Poindexter",
-        "schema:contactPoint": {
-          "@type": "schema:ContactPoint",
-          "schema:email": "missing@email.org"
-        }
+        "@id": "https://orcid.org/3547ulkj"
       }
     },
     {
@@ -102,6 +100,7 @@
       "schema:encodingFormat": [
         "text/plain"
       ],
+      "cdi:isFixedWidth": true,
       "dcterms:conformsTo": [
         {
           "@id": "https://github.com/XraySpectroscopy/XAS-Data-Interchange/blob/master/specification/spec.md"
@@ -476,7 +475,7 @@
             "schema:propertyID": [
               "xas:parentSample"
             ],
-            "schama:name": "parent sample identifier",
+            "schema:name": "parent sample identifier",
             "schema:value": "igsn:10.3476/342573"
           },
           {
@@ -572,7 +571,12 @@
   ],
   "schema:subjectOf": {
     "@id": "xas:ja51-pz63",
-    "@type": "schema:Dataset",
+    "@type": [
+      "schema:Dataset"
+    ],
+    "schema:additionalType": [
+      "dcat:CatalogRecord"
+    ],
     "schema:dateModified": "2025-08-26",
     "schema:creator": [
       {

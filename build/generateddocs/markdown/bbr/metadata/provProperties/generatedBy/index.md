@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.provProperties.generatedBy` *v0.1*
 
-Schema defining properties for documenting hardware or software used in the creation of a dataset..
+Schema defining properties for documenting hardware or software used in the creation of a dataset. Defines properties: @type, prov:used.
 
 [*Status*](http://www.opengis.net/def/status): Under development
 

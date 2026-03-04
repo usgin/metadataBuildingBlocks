@@ -3,9 +3,47 @@
 
 `cdif.bbr.metadata.cdifProperties.cdifProv` *v0.1*
 
-Extended provenance activity for CDIF metadata, adding schema.org Action properties (agents, instruments, methodology, temporal bounds, action chaining) to the base prov:Activity.
+Extended provenance activity for CDIF metadata, adding schema.org Action properties (agents, methodology, temporal bounds, action chaining) to the base prov:Activity. Instruments are nested within prov:used items via schema:instrument sub-key, referencing the generic instrument building block. Defines properties: @type, prov:used, schema:name, schema:description, schema:identifier, schema:agent, schema:participant, schema:object, schema:result, schema:actionStatus, schema:startTime, schema:endTime, schema:location, schema:actionProcess, schema:error, schema:additionalProperty. Uses building blocks: generatedBy (provProperties), person (schemaorgProperties), organization (schemaorgProperties), agentInRole (schemaorgProperties), identifier (schemaorgProperties), instrument (schemaorgProperties), definedTerm (schemaorgProperties), labeledLink (schemaorgProperties), spatialExtent (schemaorgProperties), additionalProperty (schemaorgProperties).
 
 [*Status*](http://www.opengis.net/def/status): Under development
+
+## Description
+
+## CDIF Provenance Activity
+
+Extended provenance activity for CDIF metadata, adding schema.org Action properties (agents, methodology, temporal bounds, action chaining) to the base prov:Activity. Instruments are nested within prov:used items via schema:instrument sub-key.
+
+### Defined properties
+
+- **@type** — must include both schema:Action and prov:Activity
+- **prov:used** — items used by the activity; can include instruments via schema:instrument sub-key
+- **schema:name** — human-readable name for the activity
+- **schema:description** — text description of what this activity did
+- **schema:identifier** — formal identifier for this activity
+- **schema:agent** — primary responsible agent for this activity
+- **schema:participant** — other participants in this activity
+- **schema:object** — input entity for this activity (for action chaining)
+- **schema:result** — output entity produced by this activity (for action chaining)
+- **schema:actionStatus** — status of this activity
+- **schema:startTime** — ISO 8601 date-time when the activity started
+- **schema:endTime** — ISO 8601 date-time when the activity ended
+- **schema:location** — where the activity occurred
+- **schema:actionProcess** — methodology or protocol for this activity
+- **schema:error** — error description for failed activities
+- **schema:additionalProperty** — domain-specific extension properties
+
+### Dependencies
+
+- [generatedBy](../../provProperties/generatedBy/) — base provenance activity
+- [person](../../schemaorgProperties/person/) — person agent
+- [organization](../../schemaorgProperties/organization/) — organization agent
+- [agentInRole](../../schemaorgProperties/agentInRole/) — agent with qualified role
+- [identifier](../../schemaorgProperties/identifier/) — structured identifier
+- [instrument](../../schemaorgProperties/instrument/) — generic instrument
+- [definedTerm](../../schemaorgProperties/definedTerm/) — controlled vocabulary term
+- [labeledLink](../../schemaorgProperties/labeledLink/) — link with label and description
+- [spatialExtent](../../schemaorgProperties/spatialExtent/) — spatial location
+- [additionalProperty](../../schemaorgProperties/additionalProperty/) — PropertyValue for extension properties
 
 ## Examples
 
@@ -28,6 +66,23 @@ schema:actionProcess HowTo with ordered steps, and facility location.
     "schema:name": "Soil Chemistry Analysis - Great Basin Transect 2025",
     "schema:description": "Major and trace element analysis of soil samples collected along a 200 km transect across the Great Basin, using ICP-MS and XRF spectrometry with certified reference materials.",
     "prov:used": [
+        {
+            "schema:instrument": {
+                "@type": ["schema:Thing", "schema:DefinedTerm"],
+                "schema:name": "Inductively Coupled Plasma Mass Spectrometry",
+                "schema:termCode": "ICP-MS",
+                "schema:inDefinedTermSet": "https://vocab.nerc.ac.uk/collection/L05/current/",
+                "schema:alternateName": "Thermo Fisher iCAP RQ ICP-MS",
+                "schema:additionalProperty": [
+                    {
+                        "@type": "schema:PropertyValue",
+                        "schema:propertyID": ["detectionLimit"],
+                        "schema:name": "Typical Detection Limit",
+                        "schema:value": "0.01 mg/kg for trace elements"
+                    }
+                ]
+            }
+        },
         "https://vocab.nerc.ac.uk/collection/L05/current/LAB02",
         "Soil core samples collected June 2025, sites GB-001 through GB-045",
         {
@@ -44,25 +99,9 @@ schema:actionProcess HowTo with ordered steps, and facility location.
             "schema:propertyID": "https://registry.identifiers.org/registry/orcid",
             "schema:value": "0000-0002-8765-4321",
             "schema:url": "https://orcid.org/0000-0002-8765-4321"
-        }
+        },
+        "schema:contactPoint": {"@id": "mailto:maria.chen@unr.edu"}
     },
-    "schema:instrument": [
-        {
-            "@type": "schema:DefinedTerm",
-            "schema:name": "Inductively Coupled Plasma Mass Spectrometry",
-            "schema:termCode": "ICP-MS",
-            "schema:inDefinedTermSet": "https://vocab.nerc.ac.uk/collection/L05/current/",
-            "schema:alternateName": "Thermo Fisher iCAP RQ ICP-MS",
-            "schema:additionalProperty": [
-                {
-                    "@type": "schema:PropertyValue",
-                    "schema:propertyID": ["detectionLimit"],
-                    "schema:name": "Typical Detection Limit",
-                    "schema:value": "0.01 mg/kg for trace elements"
-                }
-            ]
-        }
-    ],
     "schema:object": "Dried and sieved soil samples (<2 mm fraction) from Great Basin transect",
     "schema:result": {"@id": "ex:dataset-soil-chem-gb-2025"},
     "schema:actionStatus": "schema:CompletedActionStatus",
@@ -120,6 +159,28 @@ schema:actionProcess HowTo with ordered steps, and facility location.
   "schema:name": "Soil Chemistry Analysis - Great Basin Transect 2025",
   "schema:description": "Major and trace element analysis of soil samples collected along a 200 km transect across the Great Basin, using ICP-MS and XRF spectrometry with certified reference materials.",
   "prov:used": [
+    {
+      "schema:instrument": {
+        "@type": [
+          "schema:Thing",
+          "schema:DefinedTerm"
+        ],
+        "schema:name": "Inductively Coupled Plasma Mass Spectrometry",
+        "schema:termCode": "ICP-MS",
+        "schema:inDefinedTermSet": "https://vocab.nerc.ac.uk/collection/L05/current/",
+        "schema:alternateName": "Thermo Fisher iCAP RQ ICP-MS",
+        "schema:additionalProperty": [
+          {
+            "@type": "schema:PropertyValue",
+            "schema:propertyID": [
+              "detectionLimit"
+            ],
+            "schema:name": "Typical Detection Limit",
+            "schema:value": "0.01 mg/kg for trace elements"
+          }
+        ]
+      }
+    },
     "https://vocab.nerc.ac.uk/collection/L05/current/LAB02",
     "Soil core samples collected June 2025, sites GB-001 through GB-045",
     {
@@ -136,27 +197,11 @@ schema:actionProcess HowTo with ordered steps, and facility location.
       "schema:propertyID": "https://registry.identifiers.org/registry/orcid",
       "schema:value": "0000-0002-8765-4321",
       "schema:url": "https://orcid.org/0000-0002-8765-4321"
+    },
+    "schema:contactPoint": {
+      "@id": "mailto:maria.chen@unr.edu"
     }
   },
-  "schema:instrument": [
-    {
-      "@type": "schema:DefinedTerm",
-      "schema:name": "Inductively Coupled Plasma Mass Spectrometry",
-      "schema:termCode": "ICP-MS",
-      "schema:inDefinedTermSet": "https://vocab.nerc.ac.uk/collection/L05/current/",
-      "schema:alternateName": "Thermo Fisher iCAP RQ ICP-MS",
-      "schema:additionalProperty": [
-        {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": [
-            "detectionLimit"
-          ],
-          "schema:name": "Typical Detection Limit",
-          "schema:value": "0.01 mg/kg for trace elements"
-        }
-      ]
-    }
-  ],
   "schema:object": "Dried and sieved soil samples (<2 mm fraction) from Great Basin transect",
   "schema:result": {
     "@id": "ex:dataset-soil-chem-gb-2025"
@@ -214,6 +259,7 @@ ex:activity-soil-chem-analysis a schema1:Action,
                     schema1:position 1 ] ] ;
     schema1:actionStatus "schema:CompletedActionStatus" ;
     schema1:agent [ a schema1:Person ;
+            schema1:contactPoint <mailto:maria.chen@unr.edu> ;
             schema1:identifier [ a schema1:PropertyValue ;
                     schema1:propertyID "https://registry.identifiers.org/registry/orcid" ;
                     schema1:url "https://orcid.org/0000-0002-8765-4321" ;
@@ -221,15 +267,6 @@ ex:activity-soil-chem-analysis a schema1:Action,
             schema1:name "Dr. Maria Chen" ] ;
     schema1:description "Major and trace element analysis of soil samples collected along a 200 km transect across the Great Basin, using ICP-MS and XRF spectrometry with certified reference materials." ;
     schema1:endTime "2025-09-30T17:00:00Z" ;
-    schema1:instrument [ a schema1:DefinedTerm ;
-            schema1:additionalProperty [ a schema1:PropertyValue ;
-                    schema1:name "Typical Detection Limit" ;
-                    schema1:propertyID "detectionLimit" ;
-                    schema1:value "0.01 mg/kg for trace elements" ] ;
-            schema1:alternateName "Thermo Fisher iCAP RQ ICP-MS" ;
-            schema1:inDefinedTermSet "https://vocab.nerc.ac.uk/collection/L05/current/" ;
-            schema1:name "Inductively Coupled Plasma Mass Spectrometry" ;
-            schema1:termCode "ICP-MS" ] ;
     schema1:location [ a schema1:Place ;
             schema1:address "University of Nevada, Reno, 1664 N. Virginia Street, Reno, NV 89557" ;
             schema1:name "Nevada Bureau of Mines and Geology Analytical Lab" ;
@@ -238,7 +275,17 @@ ex:activity-soil-chem-analysis a schema1:Action,
     schema1:object "Dried and sieved soil samples (<2 mm fraction) from Great Basin transect" ;
     schema1:result ex:dataset-soil-chem-gb-2025 ;
     schema1:startTime "2025-07-15T08:00:00Z" ;
-    prov:used [ a schema1:CreativeWork ;
+    prov:used [ schema1:instrument [ a schema1:DefinedTerm,
+                        schema1:Thing ;
+                    schema1:additionalProperty [ a schema1:PropertyValue ;
+                            schema1:name "Typical Detection Limit" ;
+                            schema1:propertyID "detectionLimit" ;
+                            schema1:value "0.01 mg/kg for trace elements" ] ;
+                    schema1:alternateName "Thermo Fisher iCAP RQ ICP-MS" ;
+                    schema1:inDefinedTermSet "https://vocab.nerc.ac.uk/collection/L05/current/" ;
+                    schema1:name "Inductively Coupled Plasma Mass Spectrometry" ;
+                    schema1:termCode "ICP-MS" ] ],
+        [ a schema1:CreativeWork ;
             schema1:name "EPA Method 6200 - XRF Analysis of Soils" ;
             schema1:url "https://www.epa.gov/hw-sw846/sw-846-test-method-6200-field-portable-x-ray-fluorescence-spectrometry-determination" ],
         "Soil core samples collected June 2025, sites GB-001 through GB-045",
@@ -270,6 +317,25 @@ allOf:
         const: schema:Action
       description: Must include both schema:Action and prov:Activity (prov:Activity
         required by base generatedBy schema)
+    prov:used:
+      type: array
+      items:
+        anyOf:
+        - type: string
+        - type: object
+          properties:
+            '@id':
+              type: string
+              description: a resolvable reference to a representation of the software
+                or instrument used
+        - type: object
+          description: an item used by the activity that includes a schema:instrument
+            sub-key
+          properties:
+            schema:instrument:
+              $ref: '#/$defs/Instrument'
+          required:
+          - schema:instrument
     schema:name:
       type: string
       description: Human-readable name for the activity
@@ -305,19 +371,6 @@ allOf:
             '@id':
               type: string
               description: reference to a participant defined elsewhere
-    schema:instrument:
-      description: Tools, software, sensors, or instruments used in this activity
-      type: array
-      items:
-        anyOf:
-        - $ref: '#/$defs/DefinedTerm'
-        - $ref: '#/$defs/LabeledLink'
-        - type: string
-        - type: object
-          properties:
-            '@id':
-              type: string
-              description: reference to an instrument defined elsewhere
     schema:object:
       description: Input entity for this activity (for action chaining, references
         the result of a prior activity)
@@ -389,6 +442,8 @@ $defs:
     $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/agentInRole/schema.yaml
   Identifier:
     $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/identifier/schema.yaml
+  Instrument:
+    $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/instrument/schema.yaml
   DefinedTerm:
     $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/definedTerm/schema.yaml
   LabeledLink:
@@ -483,6 +538,9 @@ $defs:
     required:
     - '@type'
     - schema:claimReviewed
+x-jsonld-prefixes:
+  schema: http://schema.org/
+  prov: http://www.w3.org/ns/prov#
 
 ```
 

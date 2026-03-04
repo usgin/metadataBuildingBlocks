@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.cdifProperties.cdifDataCube` *v0.1*
 
-metadata to document physical data structure for data cube or hierarchical data.
+metadata to document physical data structure for data cube or hierarchical data. Defines properties: @type, cdi:hasPhysicalMapping. Uses building blocks: cdifPhysicalMapping (cdifProperties).
 
 [*Status*](http://www.opengis.net/def/status): Under development
 

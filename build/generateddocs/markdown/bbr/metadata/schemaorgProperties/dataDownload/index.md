@@ -3,15 +3,31 @@
 
 `cdif.bbr.metadata.schemaorgProperties.dataDownload` *v0.1*
 
-Schema defining properties of a DataDownload. Used as value to describe a distribution
+Schema defining properties of a DataDownload. Used as value to describe a distribution. Defines properties: @id, @type, schema:name, schema:contentUrl, schema:encodingFormat, spdx:checksum, schema:provider. Uses building blocks: person (schemaorgProperties), organization (schemaorgProperties).
 
 [*Status*](http://www.opengis.net/def/status): Under development
 
 ## Description
 
-## Person properties
+## DataDownload properties
 
 Defines a set of properties for use describing a DataDownload as a distribution for a resource. For use in the schema.org implementation of the [Cross Domain Interoperability Framework](https://cross-domain-interoperability-framework.github.io/cdifbook/metadata/schemaorgimplementation.html#implementation-of-metadata-content-items) (CDIF) discovery profile. The download is implicitly a single file that is accessible on the web via URL. CDIF integration profile will extend these to describe the data structure in the file.
+
+### Defined properties
+
+- **@id** — identifier for this download
+- **@type** — must include schema:DataDownload
+- **schema:name** — name of the download
+- **schema:contentUrl** — URL to the downloadable content
+- **schema:encodingFormat** — MIME type with extension indicating serialization scheme
+- **spdx:checksum** — checksum value calculated from content representation (spdx:Checksum with algorithm and checksumValue)
+- **schema:provider** — party who maintains this distribution option
+
+### Dependencies
+
+- [person](../person/) — person agent for provider
+- [organization](../organization/) — organization agent for provider
+
 ## Examples
 
 ### Example data dowload description.
@@ -19,46 +35,54 @@ Defintion of properties to describe file-based distribution of a resource on the
 #### json
 ```json
 {
-    "@context": {
-        "schema": "http://schema.org/",
-        "ex": "https://example.org/",
-        "xsd": "http://www.w3.org/2001/XMLSchema#"
-    },
-    "@type": ["schema:DataDownload"],
-    "schema:name": "Water levels in Beartooth reservoir, 1992-2020",
-    "schema:contentUrl": "https://hounddata.org/354277.csv",
-    "schema:encodingFormat": ["text/csv"],
-    "spdx:checksum": {
-        "spdx:algorithm": "MD5",
-        "spdx:checksumValue": "35247-39u83-7ik"
-    },
-    "schema:provider": [
-        {
-            "@id": "https://orcid.org/3333-4444-5565",
-            "@type": "schema:Person",
-            "schema:name": "Severus Data",
-            "schema:alternateName": "the datameister",
-            "schema:affiliation": {
-                "@id": "https://ror.org/347237",
-                "@type": "schema:Organization",
-                "schema:additionalType": ["Data repository"],
-                "schema:name": "Houndstooth Data Repository",
-                "schema:identifier": "https://ror.org/347237"
-            },
-            "schema:contactPoint": {
-                "@type": "schema:ContactPoint",
-                "schema:email": "joe@email.org"
-            },
-            "schema:description": "Earth Science Data Custodian",
-            "schema:identifier": {
-                "@type": "schema:PropertyValue",
-                "schema:propertyID": "https://registry.identifiers.org/registry/orcid",
-                "schema:value": "3333-4444-5565",
-                "schema:url": "https://orcid.org/3333-4444-5565"
-            }
-        }
-    ]
+  "@context": {
+    "schema": "http://schema.org/",
+    "ex": "https://example.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#"
+  },
+  "@type": [
+    "schema:DataDownload"
+  ],
+  "schema:name": "Water levels in Beartooth reservoir, 1992-2020",
+  "schema:contentUrl": "https://hounddata.org/354277.csv",
+  "schema:encodingFormat": [
+    "text/csv"
+  ],
+  "spdx:checksum": {
+    "@type": "spdx:Checksum",
+    "spdx:algorithm": "MD5",
+    "spdx:checksumValue": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "schema:provider": [
+    {
+      "@id": "https://orcid.org/3333-4444-5565",
+      "@type": "schema:Person",
+      "schema:name": "Severus Data",
+      "schema:alternateName": "the datameister",
+      "schema:affiliation": {
+        "@id": "https://ror.org/347237",
+        "@type": "schema:Organization",
+        "schema:additionalType": [
+          "Data repository"
+        ],
+        "schema:name": "Houndstooth Data Repository",
+        "schema:identifier": "https://ror.org/347237"
+      },
+      "schema:contactPoint": {
+        "@type": "schema:ContactPoint",
+        "schema:email": "joe@email.org"
+      },
+      "schema:description": "Earth Science Data Custodian",
+      "schema:identifier": {
+        "@type": "schema:PropertyValue",
+        "schema:propertyID": "https://registry.identifiers.org/registry/orcid",
+        "schema:value": "3333-4444-5565",
+        "schema:url": "https://orcid.org/3333-4444-5565"
+      }
+    }
+  ]
 }
+
 ```
 
 #### jsonld
@@ -84,8 +108,9 @@ Defintion of properties to describe file-based distribution of a resource on the
     "text/csv"
   ],
   "spdx:checksum": {
+    "@type": "spdx:Checksum",
     "spdx:algorithm": "MD5",
-    "spdx:checksumValue": "35247-39u83-7ik"
+    "spdx:checksumValue": "d41d8cd98f00b204e9800998ecf8427e"
   },
   "schema:provider": [
     {
@@ -145,8 +170,9 @@ Defintion of properties to describe file-based distribution of a resource on the
     schema1:encodingFormat "text/csv" ;
     schema1:name "Water levels in Beartooth reservoir, 1992-2020" ;
     schema1:provider <https://orcid.org/3333-4444-5565> ;
-    ns1:checksum [ ns1:algorithm "MD5" ;
-            ns1:checksumValue "35247-39u83-7ik" ] .
+    ns1:checksum [ a ns1:Checksum ;
+            ns1:algorithm "MD5" ;
+            ns1:checksumValue "d41d8cd98f00b204e9800998ecf8427e" ] .
 
 
 ```
@@ -187,10 +213,21 @@ properties:
       used to test if content has been modified. The checksum is a property of a particular
       distribution/DataDownload.
     properties:
+      '@type':
+        anyOf:
+        - type: string
+          const: spdx:Checksum
+        - type: array
+          items:
+            type: string
+          contains:
+            const: spdx:Checksum
       spdx:algorithm:
         type: string
       spdx:checksumValue:
         type: string
+    required:
+    - '@type'
   schema:provider:
     type: array
     description: Party who maintains this particular distribution option for the dataset.

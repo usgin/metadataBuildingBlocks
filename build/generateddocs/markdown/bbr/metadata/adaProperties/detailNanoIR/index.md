@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.adaProperties.detailNanoIR` *v0.1*
 
-Nano-IR spectroscopy collections with phase analysis
+Nano-IR spectroscopy collections with phase analysis. Defines properties: @type, phaseAnalyzed. Uses building blocks: stringArray (adaProperties).
 
 [*Status*](http://www.opengis.net/def/status): Under development
 

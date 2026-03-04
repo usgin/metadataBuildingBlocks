@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.adaProperties.detailL2MS` *v0.1*
 
-Laser-2 Mass Spectrometry cube data with ionization parameters
+Laser-2 Mass Spectrometry cube data with ionization parameters. Defines properties: @type, sampleName, ionizationTimeDelay, massGate, photoionizationWavelength, plasmaShutter, timeDelayUnits, wavelengthUnits.
 
 [*Status*](http://www.opengis.net/def/status): Under development
 

@@ -88,13 +88,33 @@
                     "type": "object",
                     "description": "Checksum for integrity verification of this component file.",
                     "properties": {
+                      "@type": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "const": "spdx:Checksum"
+                          },
+                          {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "contains": {
+                              "const": "spdx:Checksum"
+                            }
+                          }
+                        ]
+                      },
                       "spdx:algorithm": {
                         "type": "string"
                       },
                       "spdx:checksumValue": {
                         "type": "string"
                       }
-                    }
+                    },
+                    "required": [
+                      "@type"
+                    ]
                   }
                 },
                 "required": [

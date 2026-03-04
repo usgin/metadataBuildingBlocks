@@ -33,10 +33,23 @@ x-defs:
           used to test if content has been modified. The checksum is a property of
           a particular distribution/DataDownload.
         properties:
+          '@type':
+            anyOf:
+            - type: string
+              enum:
+              - spdx:Checksum
+            - type: array
+              items:
+                type: string
+              contains:
+                enum:
+                - spdx:Checksum
           spdx:algorithm:
             type: string
           spdx:checksumValue:
             type: string
+        required:
+        - '@type'
       schema:provider:
         type: array
         description: Party who maintains this particular distribution option for the
@@ -468,6 +481,8 @@ x-defs:
         - schema:name
       - required:
         - schema:identifier
+      - required:
+        - schema:termCode
     x-jsonld-prefixes:
       schema: http://schema.org/
     x-schema-source: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/definedTerm/schema.yaml
@@ -553,10 +568,23 @@ allOf:
               type: object
               description: Checksum for integrity verification of this component file.
               properties:
+                '@type':
+                  anyOf:
+                  - type: string
+                    enum:
+                    - spdx:Checksum
+                  - type: array
+                    items:
+                      type: string
+                    contains:
+                      enum:
+                      - spdx:Checksum
                 spdx:algorithm:
                   type: string
                 spdx:checksumValue:
                   type: string
+              required:
+              - '@type'
           required:
           - '@type'
           - schema:name

@@ -7,13 +7,15 @@
       "properties": {
         "@id": {
           "type": "string",
-          "description": "The URI for the resource should be the @id value for the root of the JSON instance document tree. Note that this identifier can be interpreted to identify the resource that is the subject of this metadata record, or the JSON-LD object that is the digital object containing the metadata information."
+          "description": "The URI for the resource should be the @id value for the root of the JSON instance document tree. Must be an IRI (e.g. https://doi.org/..., urn:..., or a relative URI like #localid). Note that this identifier can be interpreted to identify the resource that is the subject of this metadata record, or the JSON-LD object that is the digital object containing the metadata information."
         },
         "@type": {
-          "description": "a schema.org Class that specifies the expected information content for the metadata record. For CDIF, 'schema:Dataset' is required, but other possible values (e.g. CreativeWork, SoftwareApplication, Product, WebAPI) are sometimes included to enable the schema.org properties used to describe the resource without schema.org validation errors.",
+          "description": "a schema.org Class that specifies the expected information content for the metadata record. For CDIF, 'schema:Dataset' is required, but other possible values (e.g. CreativeWork, SoftwareApplication, Product, WebAPI) are sometimes included to enable the schema.org properties used to describe the resource without schema.org validation errors. The array must include at least one value from the known set, but can also include other strings for extensibility.",
           "type": "array",
           "items": {
-            "type": "string",
+            "type": "string"
+          },
+          "contains": {
             "enum": [
               "schema:CreativeWork",
               "schema:SoftwareApplication",
@@ -25,10 +27,11 @@
               "schema:Collection",
               "schema:ImageObject",
               "schema:DataCatalog",
-              "schema:DefinedTermSet"
-            ],
-            "default": "schema:Dataset"
+              "schema:DefinedTermSet",
+              "schema:MediaObject"
+            ]
           },
+          "default": "schema:Dataset",
           "minItems": 1
         },
         "schema:name": {
@@ -118,7 +121,7 @@
           }
         },
         "schema:subjectOf": {
-          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifMandatory/$defs/MetaMetadata"
+          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifMandatory/$defs/CdifCatalogRecord"
         }
       },
       "allOf": [
@@ -178,8 +181,8 @@
         "WebAPI": {
           "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.webAPI"
         },
-        "MetaMetadata": {
-          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.metaMetadata"
+        "CdifCatalogRecord": {
+          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifCatalogRecord"
         }
       },
       "x-jsonld-prefixes": {
@@ -549,7 +552,7 @@
           "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.temporalExtent"
         },
         "GeneratedBy": {
-          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifProv"
+          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.provProperties.generatedBy"
         },
         "DerivedFrom": {
           "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.provProperties.derivedFrom"
@@ -584,238 +587,265 @@
             "prov:wasGeneratedBy": {
               "type": "array",
               "items": {
-                "type": "object",
-                "properties": {
-                  "prov:used": {
-                    "type": "array",
-                    "description": "array of instrument or instrument system components. The x-ray source type and probe,  and monochromator properties type, d-spacing and reflection plane are required ",
-                    "allOf": [
-                      {
+                "allOf": [
+                  {
+                    "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.xasProperties.xasOptional/$defs/CdifProv"
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "prov:used": {
+                        "type": "array",
+                        "description": "Array of used entities. Must contain an instrument wrapper with schema:hasPart sub-components. The x-ray source type and probe, and monochromator properties type, d-spacing and reflection plane are required.",
                         "contains": {
                           "type": "object",
+                          "required": [
+                            "schema:instrument"
+                          ],
                           "properties": {
-                            "@type": {
-                              "type": "array",
-                              "items": {
-                                "type": "string"
-                              },
-                              "minItems": 2,
-                              "allOf": [
-                                {
-                                  "contains": {
-                                    "enum": [
-                                      "schema:Thing"
-                                    ]
-                                  }
-                                },
-                                {
-                                  "contains": {
-                                    "enum": [
-                                      "schema:Product"
-                                    ]
-                                  }
-                                }
-                              ]
-                            },
-                            "schema:additionalType": {
-                              "enum": [
-                                "nxs:BaseClass/NXsource"
-                              ]
-                            },
-                            "schema:additionalProperty": {
-                              "type": "array",
-                              "minItems": 2,
-                              "items": {
-                                "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.xasProperties.xasOptional/$defs/AdditionalProperty"
-                              },
-                              "allOf": [
-                                {
-                                  "contains": {
-                                    "type": "object",
-                                    "properties": {
-                                      "schema:propertyID": {
-                                        "type": "array",
-                                        "contains": {
-                                          "enum": [
-                                            "nxs:Field/NXsource/type"
-                                          ]
-                                        }
-                                      },
-                                      "schema:value": {
-                                        "type": "string"
-                                      }
-                                    },
-                                    "required": [
-                                      "schema:propertyID",
-                                      "schema:value"
-                                    ]
-                                  }
-                                },
-                                {
-                                  "contains": {
-                                    "type": "object",
-                                    "properties": {
-                                      "schema:propertyID": {
-                                        "type": "array",
-                                        "contains": {
-                                          "enum": [
-                                            "nxs:Field/NXsource/probe"
-                                          ]
-                                        }
-                                      },
-                                      "schema:name": {
-                                        "enum": [
-                                          "Probe"
+                            "schema:instrument": {
+                              "type": "object",
+                              "properties": {
+                                "schema:hasPart": {
+                                  "type": "array",
+                                  "minItems": 2,
+                                  "allOf": [
+                                    {
+                                      "contains": {
+                                        "type": "object",
+                                        "properties": {
+                                          "@type": {
+                                            "type": "array",
+                                            "items": {
+                                              "type": "string"
+                                            },
+                                            "minItems": 2,
+                                            "allOf": [
+                                              {
+                                                "contains": {
+                                                  "enum": [
+                                                    "schema:Thing"
+                                                  ]
+                                                }
+                                              },
+                                              {
+                                                "contains": {
+                                                  "enum": [
+                                                    "schema:Product"
+                                                  ]
+                                                }
+                                              }
+                                            ]
+                                          },
+                                          "schema:additionalType": {
+                                            "enum": [
+                                              "nxs:BaseClass/NXsource"
+                                            ]
+                                          },
+                                          "schema:additionalProperty": {
+                                            "type": "array",
+                                            "minItems": 2,
+                                            "items": {
+                                              "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.xasProperties.xasOptional/$defs/AdditionalProperty"
+                                            },
+                                            "allOf": [
+                                              {
+                                                "contains": {
+                                                  "type": "object",
+                                                  "properties": {
+                                                    "schema:propertyID": {
+                                                      "type": "array",
+                                                      "contains": {
+                                                        "enum": [
+                                                          "nxs:Field/NXsource/type"
+                                                        ]
+                                                      }
+                                                    },
+                                                    "schema:value": {
+                                                      "type": "string"
+                                                    }
+                                                  },
+                                                  "required": [
+                                                    "schema:propertyID",
+                                                    "schema:value"
+                                                  ]
+                                                }
+                                              },
+                                              {
+                                                "contains": {
+                                                  "type": "object",
+                                                  "properties": {
+                                                    "schema:propertyID": {
+                                                      "type": "array",
+                                                      "contains": {
+                                                        "enum": [
+                                                          "nxs:Field/NXsource/probe"
+                                                        ]
+                                                      }
+                                                    },
+                                                    "schema:name": {
+                                                      "enum": [
+                                                        "Probe"
+                                                      ]
+                                                    },
+                                                    "schema:value": {
+                                                      "type": "string"
+                                                    }
+                                                  },
+                                                  "required": [
+                                                    "schema:name",
+                                                    "schema:propertyID",
+                                                    "schema:value"
+                                                  ]
+                                                }
+                                              }
+                                            ]
+                                          }
+                                        },
+                                        "required": [
+                                          "@type",
+                                          "schema:additionalType",
+                                          "schema:additionalProperty"
                                         ]
-                                      },
-                                      "schema:value": {
-                                        "type": "string"
                                       }
                                     },
-                                    "required": [
-                                      "schema:name",
-                                      "schema:propertyID",
-                                      "schema:value"
-                                    ]
-                                  }
+                                    {
+                                      "contains": {
+                                        "type": "object",
+                                        "properties": {
+                                          "@type": {
+                                            "type": "array",
+                                            "items": {
+                                              "type": "string"
+                                            },
+                                            "minItems": 2,
+                                            "allOf": [
+                                              {
+                                                "contains": {
+                                                  "enum": [
+                                                    "schema:Thing"
+                                                  ]
+                                                }
+                                              },
+                                              {
+                                                "contains": {
+                                                  "enum": [
+                                                    "schema:Product"
+                                                  ]
+                                                }
+                                              }
+                                            ]
+                                          },
+                                          "schema:additionalType": {
+                                            "enum": [
+                                              "nxs:BaseClass/NXmonochromator"
+                                            ]
+                                          },
+                                          "schema:name": {
+                                            "type": "string"
+                                          },
+                                          "schema:additionalProperty": {
+                                            "description": "Require additional properties for monochromator, requires d-space, crystal type, reflection plane.",
+                                            "type": "array",
+                                            "minItems": 3,
+                                            "items": {
+                                              "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.xasProperties.xasOptional/$defs/AdditionalProperty"
+                                            },
+                                            "contains": {
+                                              "type": "object",
+                                              "properties": {
+                                                "schema:propertyID": {
+                                                  "type": "array",
+                                                  "contains": {
+                                                    "enum": [
+                                                      "nxs:Field/NXcrystal/type"
+                                                    ]
+                                                  }
+                                                },
+                                                "schema:value": {
+                                                  "type": "string"
+                                                }
+                                              },
+                                              "required": [
+                                                "schema:value",
+                                                "schema:propertyID"
+                                              ]
+                                            },
+                                            "allOf": [
+                                              {
+                                                "contains": {
+                                                  "type": "object",
+                                                  "properties": {
+                                                    "schema:propertyID": {
+                                                      "type": "array",
+                                                      "contains": {
+                                                        "enum": [
+                                                          "nxs:Field/NXcrystal/d_spacing"
+                                                        ]
+                                                      }
+                                                    },
+                                                    "schema:value": {
+                                                      "type": "string"
+                                                    },
+                                                    "schema:unitText": {
+                                                      "type": "string"
+                                                    }
+                                                  },
+                                                  "required": [
+                                                    "schema:propertyID",
+                                                    "schema:value",
+                                                    "schema:unitText"
+                                                  ]
+                                                }
+                                              },
+                                              {
+                                                "contains": {
+                                                  "type": "object",
+                                                  "properties": {
+                                                    "schema:propertyID": {
+                                                      "type": "array",
+                                                      "contains": {
+                                                        "enum": [
+                                                          "nxs:Field/NXcrystal/reflection"
+                                                        ]
+                                                      }
+                                                    },
+                                                    "schema:value": {
+                                                      "type": "string"
+                                                    }
+                                                  },
+                                                  "required": [
+                                                    "schema:value",
+                                                    "schema:propertyID"
+                                                  ]
+                                                }
+                                              }
+                                            ]
+                                          }
+                                        },
+                                        "required": [
+                                          "@type",
+                                          "schema:additionalType",
+                                          "schema:additionalProperty"
+                                        ]
+                                      }
+                                    }
+                                  ]
                                 }
+                              },
+                              "required": [
+                                "schema:hasPart"
                               ]
                             }
-                          },
-                          "required": [
-                            "@type",
-                            "schema:additionalType",
-                            "schema:additionalProperty"
-                          ]
+                          }
                         }
                       },
-                      {
-                        "contains": {
-                          "type": "object",
-                          "properties": {
-                            "@type": {
-                              "type": "array",
-                              "items": {
-                                "type": "string"
-                              },
-                              "minItems": 2,
-                              "allOf": [
-                                {
-                                  "contains": {
-                                    "enum": [
-                                      "schema:Thing"
-                                    ]
-                                  }
-                                },
-                                {
-                                  "contains": {
-                                    "enum": [
-                                      "schema:Product"
-                                    ]
-                                  }
-                                }
-                              ]
-                            },
-                            "schema:additionalType": {
-                              "enum": [
-                                "nxs:BaseClass/NXmonochromator"
-                              ]
-                            },
-                            "schema:name": {
-                              "type": "string"
-                            },
-                            "schema:additionalProperty": {
-                              "description": "Require additional properties for monochromator, requires d-space, crystal type, reflection plane.",
-                              "type": "array",
-                              "minItems": 3,
-                              "items": {
-                                "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.xasProperties.xasOptional/$defs/AdditionalProperty"
-                              },
-                              "contains": {
-                                "type": "object",
-                                "properties": {
-                                  "schema:propertyID": {
-                                    "type": "array",
-                                    "contains": {
-                                      "enum": [
-                                        "nxs:Field/NXcrystal/type"
-                                      ]
-                                    }
-                                  },
-                                  "schema:value": {
-                                    "type": "string"
-                                  }
-                                },
-                                "required": [
-                                  "schema:value",
-                                  "schema:propertyID"
-                                ]
-                              },
-                              "allOf": [
-                                {
-                                  "contains": {
-                                    "type": "object",
-                                    "properties": {
-                                      "schema:propertyID": {
-                                        "type": "array",
-                                        "contains": {
-                                          "enum": [
-                                            "nxs:Field/NXcrystal/d_spacing"
-                                          ]
-                                        }
-                                      },
-                                      "schema:value": {
-                                        "type": "string"
-                                      },
-                                      "schema:unitText": {
-                                        "type": "string"
-                                      }
-                                    },
-                                    "required": [
-                                      "schema:propertyID",
-                                      "schema:value",
-                                      "schema:unitText"
-                                    ]
-                                  }
-                                },
-                                {
-                                  "contains": {
-                                    "type": "object",
-                                    "properties": {
-                                      "schema:propertyID": {
-                                        "type": "array",
-                                        "contains": {
-                                          "enum": [
-                                            "nxs:Field/NXcrystal/reflection"
-                                          ]
-                                        }
-                                      },
-                                      "schema:value": {
-                                        "type": "string"
-                                      }
-                                    },
-                                    "required": [
-                                      "schema:value",
-                                      "schema:propertyID"
-                                    ]
-                                  }
-                                }
-                              ]
-                            }
-                          },
-                          "required": [
-                            "@type",
-                            "schema:additionalType",
-                            "schema:additionalProperty"
-                          ]
-                        }
+                      "schema:object": {
+                        "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.xasProperties.xasOptional/$defs/XasSample"
                       }
-                    ]
-                  },
-                  "schema:mainEntity": {
-                    "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.xasProperties.xasOptional/$defs/XasSample"
+                    }
                   }
-                }
+                ]
               }
             },
             "schema:distribution": {
@@ -993,6 +1023,9 @@
         "CdifMandatory": {
           "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifMandatory_1"
         },
+        "CdifProv": {
+          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifProv"
+        },
         "DefinedTerm": {
           "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.definedTerm"
         },
@@ -1039,259 +1072,265 @@
             "prov:wasGeneratedBy": {
               "type": "array",
               "items": {
-                "type": "object",
-                "properties": {
-                  "prov:used": {
-                    "type": "array",
-                    "description": "array of instrument or instrument system components. The x-ray source type and probe,  and monochromator properties type, d-spacing and reflection plane are required ",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "@type": {
-                          "type": "array",
-                          "items": {
-                            "type": "string"
-                          }
-                        },
-                        "schema:additionalType": {
-                          "type": "string"
-                        },
-                        "schema:additionalProperty": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.xasProperties.xasRequired/$defs/AdditionalProperty"
-                          }
-                        }
-                      }
-                    },
-                    "minItems": 2,
-                    "allOf": [
-                      {
+                "allOf": [
+                  {
+                    "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.xasProperties.xasRequired/$defs/CdifProv"
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "prov:used": {
+                        "type": "array",
+                        "description": "Array of used entities. Must contain an instrument wrapper with schema:hasPart sub-components. The x-ray source type and probe, and monochromator properties type, d-spacing and reflection plane are required.",
                         "contains": {
                           "type": "object",
+                          "required": [
+                            "schema:instrument"
+                          ],
                           "properties": {
-                            "@type": {
-                              "type": "array",
-                              "items": {
-                                "type": "string"
-                              },
-                              "minItems": 2,
-                              "allOf": [
-                                {
-                                  "contains": {
-                                    "enum": [
-                                      "schema:Thing"
-                                    ]
-                                  }
-                                },
-                                {
-                                  "contains": {
-                                    "enum": [
-                                      "schema:Product"
-                                    ]
-                                  }
-                                }
-                              ]
-                            },
-                            "schema:additionalType": {
-                              "enum": [
-                                "nxs:BaseClass/NXsource"
-                              ]
-                            },
-                            "schema:additionalProperty": {
-                              "type": "array",
-                              "minItems": 2,
-                              "items": {
-                                "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.xasProperties.xasRequired/$defs/AdditionalProperty"
-                              },
-                              "allOf": [
-                                {
-                                  "contains": {
-                                    "type": "object",
-                                    "properties": {
-                                      "schema:propertyID": {
-                                        "type": "array",
-                                        "contains": {
-                                          "enum": [
-                                            "nxs:Field/NXsource/type"
-                                          ]
-                                        }
-                                      },
-                                      "schema:value": {
-                                        "type": "string"
-                                      }
-                                    },
-                                    "required": [
-                                      "schema:propertyID",
-                                      "schema:value"
-                                    ]
-                                  }
-                                },
-                                {
-                                  "contains": {
-                                    "type": "object",
-                                    "properties": {
-                                      "schema:propertyID": {
-                                        "type": "array",
-                                        "contains": {
-                                          "enum": [
-                                            "nxs:Field/NXsource/probe"
-                                          ]
-                                        }
-                                      },
-                                      "schema:name": {
-                                        "enum": [
-                                          "Probe"
+                            "schema:instrument": {
+                              "type": "object",
+                              "properties": {
+                                "schema:hasPart": {
+                                  "type": "array",
+                                  "minItems": 2,
+                                  "allOf": [
+                                    {
+                                      "contains": {
+                                        "type": "object",
+                                        "properties": {
+                                          "@type": {
+                                            "type": "array",
+                                            "items": {
+                                              "type": "string"
+                                            },
+                                            "minItems": 2,
+                                            "allOf": [
+                                              {
+                                                "contains": {
+                                                  "enum": [
+                                                    "schema:Thing"
+                                                  ]
+                                                }
+                                              },
+                                              {
+                                                "contains": {
+                                                  "enum": [
+                                                    "schema:Product"
+                                                  ]
+                                                }
+                                              }
+                                            ]
+                                          },
+                                          "schema:additionalType": {
+                                            "enum": [
+                                              "nxs:BaseClass/NXsource"
+                                            ]
+                                          },
+                                          "schema:additionalProperty": {
+                                            "type": "array",
+                                            "minItems": 2,
+                                            "items": {
+                                              "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.xasProperties.xasRequired/$defs/AdditionalProperty"
+                                            },
+                                            "allOf": [
+                                              {
+                                                "contains": {
+                                                  "type": "object",
+                                                  "properties": {
+                                                    "schema:propertyID": {
+                                                      "type": "array",
+                                                      "contains": {
+                                                        "enum": [
+                                                          "nxs:Field/NXsource/type"
+                                                        ]
+                                                      }
+                                                    },
+                                                    "schema:value": {
+                                                      "type": "string"
+                                                    }
+                                                  },
+                                                  "required": [
+                                                    "schema:propertyID",
+                                                    "schema:value"
+                                                  ]
+                                                }
+                                              },
+                                              {
+                                                "contains": {
+                                                  "type": "object",
+                                                  "properties": {
+                                                    "schema:propertyID": {
+                                                      "type": "array",
+                                                      "contains": {
+                                                        "enum": [
+                                                          "nxs:Field/NXsource/probe"
+                                                        ]
+                                                      }
+                                                    },
+                                                    "schema:name": {
+                                                      "enum": [
+                                                        "Probe"
+                                                      ]
+                                                    },
+                                                    "schema:value": {
+                                                      "type": "string"
+                                                    }
+                                                  },
+                                                  "required": [
+                                                    "schema:name",
+                                                    "schema:propertyID",
+                                                    "schema:value"
+                                                  ]
+                                                }
+                                              }
+                                            ]
+                                          }
+                                        },
+                                        "required": [
+                                          "@type",
+                                          "schema:additionalType",
+                                          "schema:additionalProperty"
                                         ]
-                                      },
-                                      "schema:value": {
-                                        "type": "string"
                                       }
                                     },
-                                    "required": [
-                                      "schema:name",
-                                      "schema:propertyID",
-                                      "schema:value"
-                                    ]
-                                  }
+                                    {
+                                      "contains": {
+                                        "type": "object",
+                                        "properties": {
+                                          "@type": {
+                                            "type": "array",
+                                            "items": {
+                                              "type": "string"
+                                            },
+                                            "minItems": 2,
+                                            "allOf": [
+                                              {
+                                                "contains": {
+                                                  "enum": [
+                                                    "schema:Thing"
+                                                  ]
+                                                }
+                                              },
+                                              {
+                                                "contains": {
+                                                  "enum": [
+                                                    "schema:Product"
+                                                  ]
+                                                }
+                                              }
+                                            ]
+                                          },
+                                          "schema:additionalType": {
+                                            "enum": [
+                                              "nxs:BaseClass/NXmonochromator"
+                                            ]
+                                          },
+                                          "schema:name": {
+                                            "type": "string"
+                                          },
+                                          "schema:additionalProperty": {
+                                            "description": "Require additional properties for monochromator, requires d-space, crystal type, reflection plane.",
+                                            "type": "array",
+                                            "minItems": 3,
+                                            "items": {
+                                              "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.xasProperties.xasRequired/$defs/AdditionalProperty"
+                                            },
+                                            "contains": {
+                                              "type": "object",
+                                              "properties": {
+                                                "schema:propertyID": {
+                                                  "type": "array",
+                                                  "contains": {
+                                                    "enum": [
+                                                      "nxs:Field/NXcrystal/type"
+                                                    ]
+                                                  }
+                                                },
+                                                "schema:value": {
+                                                  "type": "string"
+                                                }
+                                              },
+                                              "required": [
+                                                "schema:value",
+                                                "schema:propertyID"
+                                              ]
+                                            },
+                                            "allOf": [
+                                              {
+                                                "contains": {
+                                                  "type": "object",
+                                                  "properties": {
+                                                    "schema:propertyID": {
+                                                      "type": "array",
+                                                      "contains": {
+                                                        "enum": [
+                                                          "nxs:Field/NXcrystal/d_spacing"
+                                                        ]
+                                                      }
+                                                    },
+                                                    "schema:value": {
+                                                      "type": "string"
+                                                    },
+                                                    "schema:unitText": {
+                                                      "type": "string"
+                                                    }
+                                                  },
+                                                  "required": [
+                                                    "schema:propertyID",
+                                                    "schema:value",
+                                                    "schema:unitText"
+                                                  ]
+                                                }
+                                              },
+                                              {
+                                                "contains": {
+                                                  "type": "object",
+                                                  "properties": {
+                                                    "schema:propertyID": {
+                                                      "type": "array",
+                                                      "contains": {
+                                                        "enum": [
+                                                          "nxs:Field/NXcrystal/reflection"
+                                                        ]
+                                                      }
+                                                    },
+                                                    "schema:value": {
+                                                      "type": "string"
+                                                    }
+                                                  },
+                                                  "required": [
+                                                    "schema:value",
+                                                    "schema:propertyID"
+                                                  ]
+                                                }
+                                              }
+                                            ]
+                                          }
+                                        },
+                                        "required": [
+                                          "@type",
+                                          "schema:additionalType",
+                                          "schema:additionalProperty"
+                                        ]
+                                      }
+                                    }
+                                  ]
                                 }
+                              },
+                              "required": [
+                                "schema:hasPart"
                               ]
                             }
-                          },
-                          "required": [
-                            "@type",
-                            "schema:additionalType",
-                            "schema:additionalProperty"
-                          ]
+                          }
                         }
                       },
-                      {
-                        "contains": {
-                          "type": "object",
-                          "properties": {
-                            "@type": {
-                              "type": "array",
-                              "items": {
-                                "type": "string"
-                              },
-                              "minItems": 2,
-                              "allOf": [
-                                {
-                                  "contains": {
-                                    "enum": [
-                                      "schema:Thing"
-                                    ]
-                                  }
-                                },
-                                {
-                                  "contains": {
-                                    "enum": [
-                                      "schema:Product"
-                                    ]
-                                  }
-                                }
-                              ]
-                            },
-                            "schema:additionalType": {
-                              "enum": [
-                                "nxs:BaseClass/NXmonochromator"
-                              ]
-                            },
-                            "schema:name": {
-                              "type": "string"
-                            },
-                            "schema:additionalProperty": {
-                              "description": "Require additional properties for monochromator, requires d-space, crystal type, reflection plane.",
-                              "type": "array",
-                              "minItems": 3,
-                              "items": {
-                                "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.xasProperties.xasRequired/$defs/AdditionalProperty"
-                              },
-                              "contains": {
-                                "type": "object",
-                                "properties": {
-                                  "schema:propertyID": {
-                                    "type": "array",
-                                    "contains": {
-                                      "enum": [
-                                        "nxs:Field/NXcrystal/type"
-                                      ]
-                                    }
-                                  },
-                                  "schema:value": {
-                                    "type": "string"
-                                  }
-                                },
-                                "required": [
-                                  "schema:value",
-                                  "schema:propertyID"
-                                ]
-                              },
-                              "allOf": [
-                                {
-                                  "contains": {
-                                    "type": "object",
-                                    "properties": {
-                                      "schema:propertyID": {
-                                        "type": "array",
-                                        "contains": {
-                                          "enum": [
-                                            "nxs:Field/NXcrystal/d_spacing"
-                                          ]
-                                        }
-                                      },
-                                      "schema:value": {
-                                        "type": "string"
-                                      },
-                                      "schema:unitText": {
-                                        "type": "string"
-                                      }
-                                    },
-                                    "required": [
-                                      "schema:propertyID",
-                                      "schema:value",
-                                      "schema:unitText"
-                                    ]
-                                  }
-                                },
-                                {
-                                  "contains": {
-                                    "type": "object",
-                                    "properties": {
-                                      "schema:propertyID": {
-                                        "type": "array",
-                                        "contains": {
-                                          "enum": [
-                                            "nxs:Field/NXcrystal/reflection"
-                                          ]
-                                        }
-                                      },
-                                      "schema:value": {
-                                        "type": "string"
-                                      }
-                                    },
-                                    "required": [
-                                      "schema:value",
-                                      "schema:propertyID"
-                                    ]
-                                  }
-                                }
-                              ]
-                            }
-                          },
-                          "required": [
-                            "@type",
-                            "schema:additionalType",
-                            "schema:additionalProperty"
-                          ]
-                        }
+                      "schema:object": {
+                        "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.xasProperties.xasRequired/$defs/XasSample"
                       }
-                    ]
-                  },
-                  "schema:mainEntity": {
-                    "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.xasProperties.xasRequired/$defs/XasSample"
+                    }
                   }
-                }
+                ]
               }
             },
             "schema:distribution": {
@@ -1465,6 +1504,9 @@
         "CdifMandatory": {
           "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifMandatory_1"
         },
+        "CdifProv": {
+          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifProv"
+        },
         "DefinedTerm": {
           "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.definedTerm"
         },
@@ -1619,6 +1661,11 @@
               "required": [
                 "schema:identifier"
               ]
+            },
+            {
+              "required": [
+                "schema:termCode"
+              ]
             }
           ]
         }
@@ -1667,13 +1714,37 @@
           "type": "object",
           "description": "A string value calculated from the content of the resource representation, used to test if content has been modified. The checksum is a property of a particular distribution/DataDownload.",
           "properties": {
+            "@type": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "spdx:Checksum"
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "contains": {
+                    "enum": [
+                      "spdx:Checksum"
+                    ]
+                  }
+                }
+              ]
+            },
             "spdx:algorithm": {
               "type": "string"
             },
             "spdx:checksumValue": {
               "type": "string"
             }
-          }
+          },
+          "required": [
+            "@type"
+          ]
         },
         "schema:provider": {
           "type": "array",
@@ -1788,15 +1859,34 @@
       "x-schema-source": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/webAPI/schema.yaml",
       "x-schema-version": "https://json-schema.org/draft/2020-12/schema"
     },
-    "cdif.bbr.metadata.schemaorgProperties.metaMetadata": {
+    "cdif.bbr.metadata.cdifProperties.cdifCatalogRecord": {
       "type": "object",
       "description": "see https://github.com/Cross-Domain-Interoperability-Framework/Discovery/issues/13 for discussion on how to make assertion about the sample registration and metadata distinct from statements about the physical object",
       "properties": {
         "@type": {
-          "type": "string",
-          "enum": [
-            "schema:Dataset"
-          ]
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "contains": {
+            "enum": [
+              "schema:Dataset"
+            ]
+          },
+          "minItems": 1
+        },
+        "schema:additionalType": {
+          "type": "array",
+          "description": "additional type assertions for the catalog record node. dcat:CatalogRecord is required.",
+          "items": {
+            "type": "string"
+          },
+          "contains": {
+            "enum": [
+              "dcat:CatalogRecord"
+            ]
+          },
+          "minItems": 1
         },
         "@id": {
           "type": "string",
@@ -1814,7 +1904,7 @@
         "dcterms:conformsTo": {
           "type": "array",
           "items": {
-            "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.metaMetadata/$defs/conformsTo_item"
+            "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifCatalogRecord/$defs/conformsTo_item"
           },
           "minItems": 1,
           "description": "uri for specifications that this metadata record conforms to. Minimimally should specify uri for CDIF discovery profile.  Implement as $def to facilitate extension for profiles that need to add conformance statements"
@@ -1823,10 +1913,10 @@
           "description": "iSamples Registrant. identification of the agent that registered the sample, with contact information. Should include person name and affiliation, or position name and affiliation, or just organization name. e-mail address is preferred contact information.",
           "anyOf": [
             {
-              "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.metaMetadata/$defs/Person"
+              "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifCatalogRecord/$defs/Person"
             },
             {
-              "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.metaMetadata/$defs/Organization"
+              "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifCatalogRecord/$defs/Organization"
             }
           ]
         },
@@ -1862,7 +1952,7 @@
               "description": "identifier for the collection or catalog; use identifier_type to provide information on identifier scheme and context for identifier",
               "allOf": [
                 {
-                  "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.metaMetadata/$defs/Identifier"
+                  "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifCatalogRecord/$defs/Identifier"
                 }
               ]
             }
@@ -1872,6 +1962,7 @@
       "required": [
         "schema:about",
         "dcterms:conformsTo",
+        "schema:additionalType",
         "@type",
         "@id"
       ],
@@ -1899,9 +1990,10 @@
         "schema": "http://schema.org/",
         "ex": "https://example.org/",
         "xsd": "http://www.w3.org/2001/XMLSchema#",
-        "dcterms": "http://purl.org/dc/terms/"
+        "dcterms": "http://purl.org/dc/terms/",
+        "dcat": "http://www.w3.org/ns/dcat#"
       },
-      "x-schema-source": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/metaMetadata/schema.yaml",
+      "x-schema-source": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifCatalogRecord/schema.yaml",
       "x-schema-version": "https://json-schema.org/draft/2020-12/schema"
     },
     "cdif.bbr.metadata.schemaorgProperties.person": {
@@ -2632,6 +2724,335 @@
       "x-schema-source": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/temporalExtent/schema.yaml",
       "x-schema-version": "https://json-schema.org/draft/2020-12/schema"
     },
+    "cdif.bbr.metadata.provProperties.generatedBy": {
+      "title": "very simple links or names of software or instruments used to generate a resource.",
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "contains": {
+            "enum": [
+              "prov:Activity"
+            ]
+          }
+        },
+        "prov:used": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "@id": {
+                    "type": "string",
+                    "description": "a resolvable reference to a representation of the software or instrument used"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      },
+      "x-jsonld-prefixes": {
+        "schema": "http://schema.org/",
+        "prov": "http://www.w3.org/ns/prov#"
+      },
+      "x-schema-source": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/provProperties/generatedBy/schema.yaml",
+      "x-schema-version": "https://json-schema.org/draft/2020-12/schema"
+    },
+    "cdif.bbr.metadata.provProperties.derivedFrom": {
+      "title": "very simple links or names of data sources used to generate the described resource.",
+      "type": "object",
+      "properties": {
+        "prov:wasDerivedFrom": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "@id": {
+                    "type": "string",
+                    "description": "a resolvable reference to a representation of the software or instrument used"
+                  }
+                }
+              },
+              {
+                "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.provProperties.derivedFrom/$defs/LabeledLink"
+              }
+            ]
+          }
+        }
+      },
+      "$defs": {
+        "LabeledLink": {
+          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.labeledLink"
+        }
+      },
+      "x-jsonld-prefixes": {
+        "schema": "http://schema.org/",
+        "prov": "http://www.w3.org/ns/prov#"
+      },
+      "x-schema-source": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/provProperties/derivedFrom/schema.yaml",
+      "x-schema-version": "https://json-schema.org/draft/2020-12/schema"
+    },
+    "cdif.bbr.metadata.qualityProperties.qualityMeasure": {
+      "title": "definitions for simple quality measure property",
+      "type": "object",
+      "properties": {
+        "@type": {
+          "enum": [
+            "dqv:QualityMeasurement"
+          ]
+        },
+        "dqv:isMeasurementOf": {
+          "description": "specify the quality measure that is reported, by name, with an ID ref, or as a Defined Term",
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@id": {
+                  "type": "string",
+                  "description": "a resolvable reference to a representation of a quality measure"
+                }
+              }
+            },
+            {
+              "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.qualityProperties.qualityMeasure/$defs/DefinedTerm"
+            }
+          ]
+        },
+        "dqv:value": {
+          "description": "the reported result of the quality measure, either as a string or a defined term from a vocabulary",
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.qualityProperties.qualityMeasure/$defs/DefinedTerm"
+            }
+          ]
+        }
+      },
+      "required": [
+        "dqv:isMeasurementOf",
+        "dqv:value"
+      ],
+      "$defs": {
+        "DefinedTerm": {
+          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.definedTerm"
+        }
+      },
+      "x-jsonld-prefixes": {
+        "schema": "http://schema.org/"
+      },
+      "x-schema-source": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/qualityProperties/qualityMeasure/schema.yaml",
+      "x-schema-version": "https://json-schema.org/draft/2020-12/schema"
+    },
+    "cdif.bbr.metadata.cdifProperties.cdifMandatory_1": {
+      "type": "object",
+      "title": "Optional properties for CDIF Discovery metadata schema, with schema: prefixes",
+      "description": "Building block specifies properties for minimal CDIF schama.org discovery record",
+      "properties": {
+        "@id": {
+          "type": "string",
+          "description": "The URI for the resource should be the @id value for the root of the JSON instance document tree. Must be an IRI (e.g. https://doi.org/..., urn:..., or a relative URI like #localid). Note that this identifier can be interpreted to identify the resource that is the subject of this metadata record, or the JSON-LD object that is the digital object containing the metadata information."
+        },
+        "@type": {
+          "description": "a schema.org Class that specifies the expected information content for the metadata record. For CDIF, 'schema:Dataset' is required, but other possible values (e.g. CreativeWork, SoftwareApplication, Product, WebAPI) are sometimes included to enable the schema.org properties used to describe the resource without schema.org validation errors. The array must include at least one value from the known set, but can also include other strings for extensibility.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "contains": {
+            "enum": [
+              "schema:CreativeWork",
+              "schema:SoftwareApplication",
+              "schema:SoftwareSourceCode",
+              "schema:Product",
+              "schema:WebAPI",
+              "schema:Dataset",
+              "schema:DigitalDocument",
+              "schema:Collection",
+              "schema:ImageObject",
+              "schema:DataCatalog",
+              "schema:DefinedTermSet",
+              "schema:MediaObject"
+            ]
+          },
+          "default": "schema:Dataset",
+          "minItems": 1
+        },
+        "schema:name": {
+          "type": "string",
+          "description": "A descriptive name of a dataset (e.g., 'Snow depth in Northern Hemisphere'). The name should uniquely identify the described resource for human use, in the scope of the metadata catalog containing this metadata record."
+        },
+        "schema:identifier": {
+          "description": "The primary identifier for the dataset; other identifiers should be listed in the sameAs field. Schema.org has three ways of encoding identifiers-- a text description, a URL, or by using the schema:PropertyValue field. The Science on Schema.org guidance strongly recommends using the PropertyValue approach. see https://github.com/ESIPFed/science-on-schema.org   .... Dataset.md#identifier.  Ideally, for any given data provided they would provide identifiers either all as strings or all as identifier_type.",
+          "anyOf": [
+            {
+              "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifMandatory_1/$defs/Identifier"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "schema:dateModified": {
+          "type": "string",
+          "description": "ISO8601 formatted date (and optional time if relevant) when Dataset was last updated"
+        },
+        "schema:conditionsOfAccess": {
+          "description": "text statement of conditions for use and access; if an online resource documents the restrictions or a URI is used to identify the conditions, recommend using schema:CreativeWork to provide a label (name) and an identifier (URI or URL). ",
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "@id": {
+                    "type": "string",
+                    "description": "a reference to a resource defining conditions of Access"
+                  }
+                }
+              },
+              {
+                "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifMandatory_1/$defs/LabeledLink"
+              }
+            ]
+          }
+        },
+        "schema:license": {
+          "description": "legal statement of conditions for use and access; recommend using schema:CreativeWork to provide a label (name) for the license, and an identifier. Sources of license identifiers: https://opensource.org/licenses/, https://creativecommons.org/about/cclicenses/, https://spdx.org/licenses/, http://cor.esipfed.org/ont/earthcube/swl. If only a string is provided, it should be an identifier for the license, ideally a resolvable URI",
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "@id": {
+                    "type": "string",
+                    "description": "a reference to a license defintion"
+                  }
+                }
+              },
+              {
+                "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifMandatory_1/$defs/LabeledLink"
+              }
+            ]
+          }
+        },
+        "schema:url": {
+          "type": "string",
+          "format": "uri",
+          "description": "Web Location of a page describing the dataset (landing page), typically providing links or instructions to get the actual resource content; analogous to dcat:accessURL. If a direct link is available to get the data, put in distribution/contentUrl"
+        },
+        "schema:distribution": {
+          "description": "specifies how to download the data in a specific format or access via a web API. This property describes where to get the data and in what format by using the schema:DataDownload type. If user must access data through a landing page, provide link to landing page in the 'url' property for the dataset",
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifMandatory_1/$defs/DataDownload"
+              },
+              {
+                "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifMandatory_1/$defs/WebAPI"
+              }
+            ]
+          }
+        },
+        "schema:subjectOf": {
+          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifMandatory_1/$defs/CdifCatalogRecord"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "@id",
+            "@type",
+            "@context",
+            "schema:name",
+            "schema:identifier",
+            "schema:dateModified",
+            "schema:subjectOf"
+          ]
+        },
+        {
+          "anyOf": [
+            {
+              "required": [
+                "schema:license"
+              ]
+            },
+            {
+              "required": [
+                "schema:conditionsOfAccess"
+              ]
+            }
+          ]
+        },
+        {
+          "anyOf": [
+            {
+              "required": [
+                "schema:url"
+              ]
+            },
+            {
+              "required": [
+                "schema:distribution"
+              ]
+            }
+          ]
+        }
+      ],
+      "$defs": {
+        "LabeledLink": {
+          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.labeledLink"
+        },
+        "Identifier": {
+          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.identifier"
+        },
+        "DefinedTerm": {
+          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.definedTerm"
+        },
+        "DataDownload": {
+          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.dataDownload"
+        },
+        "WebAPI": {
+          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.webAPI"
+        },
+        "CdifCatalogRecord": {
+          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifCatalogRecord"
+        }
+      },
+      "x-jsonld-prefixes": {
+        "schema": "http://schema.org/"
+      },
+      "x-schema-source": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifMandatory/schema.yaml",
+      "x-schema-version": "https://json-schema.org/draft/2020-12/schema"
+    },
     "cdif.bbr.metadata.cdifProperties.cdifProv": {
       "title": "CDIF Provenance Activity",
       "description": "Extended provenance activity building block for CDIF. Extends the minimal prov:Activity (generatedBy) with schema.org Action properties for comprehensive provenance documentation including agents, instruments, methodology, temporal bounds, action chaining, and more.",
@@ -2655,6 +3076,37 @@
                 ]
               },
               "description": "Must include both schema:Action and prov:Activity (prov:Activity required by base generatedBy schema)"
+            },
+            "prov:used": {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "@id": {
+                        "type": "string",
+                        "description": "a resolvable reference to a representation of the software or instrument used"
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "description": "an item used by the activity that includes a schema:instrument sub-key",
+                    "properties": {
+                      "schema:instrument": {
+                        "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifProv/$defs/Instrument"
+                      }
+                    },
+                    "required": [
+                      "schema:instrument"
+                    ]
+                  }
+                ]
+              }
             },
             "schema:name": {
               "type": "string",
@@ -2718,32 +3170,6 @@
                       "@id": {
                         "type": "string",
                         "description": "reference to a participant defined elsewhere"
-                      }
-                    }
-                  }
-                ]
-              }
-            },
-            "schema:instrument": {
-              "description": "Tools, software, sensors, or instruments used in this activity",
-              "type": "array",
-              "items": {
-                "anyOf": [
-                  {
-                    "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifProv/$defs/DefinedTerm"
-                  },
-                  {
-                    "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifProv/$defs/LabeledLink"
-                  },
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "type": "object",
-                    "properties": {
-                      "@id": {
-                        "type": "string",
-                        "description": "reference to an instrument defined elsewhere"
                       }
                     }
                   }
@@ -2868,6 +3294,9 @@
         },
         "Identifier": {
           "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.identifier"
+        },
+        "Instrument": {
+          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.instrument"
         },
         "DefinedTerm": {
           "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.definedTerm"
@@ -3022,290 +3451,11 @@
           ]
         }
       },
-      "x-schema-source": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifProv/schema.yaml",
-      "x-schema-version": "https://json-schema.org/draft/2020-12/schema"
-    },
-    "cdif.bbr.metadata.provProperties.derivedFrom": {
-      "title": "very simple links or names of data sources used to generate the described resource.",
-      "type": "object",
-      "properties": {
-        "prov:wasDerivedFrom": {
-          "type": "array",
-          "items": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "object",
-                "properties": {
-                  "@id": {
-                    "type": "string",
-                    "description": "a resolvable reference to a representation of the software or instrument used"
-                  }
-                }
-              },
-              {
-                "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.provProperties.derivedFrom/$defs/LabeledLink"
-              }
-            ]
-          }
-        }
-      },
-      "$defs": {
-        "LabeledLink": {
-          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.labeledLink"
-        }
-      },
       "x-jsonld-prefixes": {
         "schema": "http://schema.org/",
         "prov": "http://www.w3.org/ns/prov#"
       },
-      "x-schema-source": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/provProperties/derivedFrom/schema.yaml",
-      "x-schema-version": "https://json-schema.org/draft/2020-12/schema"
-    },
-    "cdif.bbr.metadata.qualityProperties.qualityMeasure": {
-      "title": "definitions for simple quality measure property",
-      "type": "object",
-      "properties": {
-        "@type": {
-          "enum": [
-            "dqv:QualityMeasurement"
-          ]
-        },
-        "dqv:isMeasurementOf": {
-          "description": "specify the quality measure that is reported, by name, with an ID ref, or as a Defined Term",
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "object",
-              "properties": {
-                "@id": {
-                  "type": "string",
-                  "description": "a resolvable reference to a representation of a quality measure"
-                }
-              }
-            },
-            {
-              "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.qualityProperties.qualityMeasure/$defs/DefinedTerm"
-            }
-          ]
-        },
-        "dqv:value": {
-          "description": "the reported result of the quality measure, either as a string or a defined term from a vocabulary",
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.qualityProperties.qualityMeasure/$defs/DefinedTerm"
-            }
-          ]
-        }
-      },
-      "required": [
-        "dqv:isMeasurementOf",
-        "dqv:value"
-      ],
-      "$defs": {
-        "DefinedTerm": {
-          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.definedTerm"
-        }
-      },
-      "x-jsonld-prefixes": {
-        "schema": "http://schema.org/"
-      },
-      "x-schema-source": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/qualityProperties/qualityMeasure/schema.yaml",
-      "x-schema-version": "https://json-schema.org/draft/2020-12/schema"
-    },
-    "cdif.bbr.metadata.cdifProperties.cdifMandatory_1": {
-      "type": "object",
-      "title": "Optional properties for CDIF Discovery metadata schema, with schema: prefixes",
-      "description": "Building block specifies properties for minimal CDIF schama.org discovery record",
-      "properties": {
-        "@id": {
-          "type": "string",
-          "description": "The URI for the resource should be the @id value for the root of the JSON instance document tree. Note that this identifier can be interpreted to identify the resource that is the subject of this metadata record, or the JSON-LD object that is the digital object containing the metadata information."
-        },
-        "@type": {
-          "description": "a schema.org Class that specifies the expected information content for the metadata record. For CDIF, 'schema:Dataset' is required, but other possible values (e.g. CreativeWork, SoftwareApplication, Product, WebAPI) are sometimes included to enable the schema.org properties used to describe the resource without schema.org validation errors.",
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "schema:CreativeWork",
-              "schema:SoftwareApplication",
-              "schema:SoftwareSourceCode",
-              "schema:Product",
-              "schema:WebAPI",
-              "schema:Dataset",
-              "schema:DigitalDocument",
-              "schema:Collection",
-              "schema:ImageObject",
-              "schema:DataCatalog",
-              "schema:DefinedTermSet"
-            ],
-            "default": "schema:Dataset"
-          },
-          "minItems": 1
-        },
-        "schema:name": {
-          "type": "string",
-          "description": "A descriptive name of a dataset (e.g., 'Snow depth in Northern Hemisphere'). The name should uniquely identify the described resource for human use, in the scope of the metadata catalog containing this metadata record."
-        },
-        "schema:identifier": {
-          "description": "The primary identifier for the dataset; other identifiers should be listed in the sameAs field. Schema.org has three ways of encoding identifiers-- a text description, a URL, or by using the schema:PropertyValue field. The Science on Schema.org guidance strongly recommends using the PropertyValue approach. see https://github.com/ESIPFed/science-on-schema.org   .... Dataset.md#identifier.  Ideally, for any given data provided they would provide identifiers either all as strings or all as identifier_type.",
-          "anyOf": [
-            {
-              "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifMandatory_1/$defs/Identifier"
-            },
-            {
-              "type": "string"
-            }
-          ]
-        },
-        "schema:dateModified": {
-          "type": "string",
-          "description": "ISO8601 formatted date (and optional time if relevant) when Dataset was last updated"
-        },
-        "schema:conditionsOfAccess": {
-          "description": "text statement of conditions for use and access; if an online resource documents the restrictions or a URI is used to identify the conditions, recommend using schema:CreativeWork to provide a label (name) and an identifier (URI or URL). ",
-          "type": "array",
-          "minItems": 0,
-          "items": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "object",
-                "properties": {
-                  "@id": {
-                    "type": "string",
-                    "description": "a reference to a resource defining conditions of Access"
-                  }
-                }
-              },
-              {
-                "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifMandatory_1/$defs/LabeledLink"
-              }
-            ]
-          }
-        },
-        "schema:license": {
-          "description": "legal statement of conditions for use and access; recommend using schema:CreativeWork to provide a label (name) for the license, and an identifier. Sources of license identifiers: https://opensource.org/licenses/, https://creativecommons.org/about/cclicenses/, https://spdx.org/licenses/, http://cor.esipfed.org/ont/earthcube/swl. If only a string is provided, it should be an identifier for the license, ideally a resolvable URI",
-          "type": "array",
-          "minItems": 0,
-          "items": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "object",
-                "properties": {
-                  "@id": {
-                    "type": "string",
-                    "description": "a reference to a license defintion"
-                  }
-                }
-              },
-              {
-                "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifMandatory_1/$defs/LabeledLink"
-              }
-            ]
-          }
-        },
-        "schema:url": {
-          "type": "string",
-          "format": "uri",
-          "description": "Web Location of a page describing the dataset (landing page), typically providing links or instructions to get the actual resource content; analogous to dcat:accessURL. If a direct link is available to get the data, put in distribution/contentUrl"
-        },
-        "schema:distribution": {
-          "description": "specifies how to download the data in a specific format or access via a web API. This property describes where to get the data and in what format by using the schema:DataDownload type. If user must access data through a landing page, provide link to landing page in the 'url' property for the dataset",
-          "type": "array",
-          "items": {
-            "anyOf": [
-              {
-                "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifMandatory_1/$defs/DataDownload"
-              },
-              {
-                "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifMandatory_1/$defs/WebAPI"
-              }
-            ]
-          }
-        },
-        "schema:subjectOf": {
-          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifMandatory_1/$defs/MetaMetadata"
-        }
-      },
-      "allOf": [
-        {
-          "required": [
-            "@id",
-            "@type",
-            "@context",
-            "schema:name",
-            "schema:identifier",
-            "schema:dateModified",
-            "schema:subjectOf"
-          ]
-        },
-        {
-          "anyOf": [
-            {
-              "required": [
-                "schema:license"
-              ]
-            },
-            {
-              "required": [
-                "schema:conditionsOfAccess"
-              ]
-            }
-          ]
-        },
-        {
-          "anyOf": [
-            {
-              "required": [
-                "schema:url"
-              ]
-            },
-            {
-              "required": [
-                "schema:distribution"
-              ]
-            }
-          ]
-        }
-      ],
-      "$defs": {
-        "LabeledLink": {
-          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.labeledLink"
-        },
-        "Identifier": {
-          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.identifier"
-        },
-        "DefinedTerm": {
-          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.definedTerm"
-        },
-        "DataDownload": {
-          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.dataDownload"
-        },
-        "WebAPI": {
-          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.webAPI"
-        },
-        "MetaMetadata": {
-          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.metaMetadata"
-        }
-      },
-      "x-jsonld-prefixes": {
-        "schema": "http://schema.org/"
-      },
-      "x-schema-source": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifMandatory/schema.yaml",
+      "x-schema-source": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifProv/schema.yaml",
       "x-schema-version": "https://json-schema.org/draft/2020-12/schema"
     },
     "cdif.bbr.metadata.schemaorgProperties.additionalProperty": {
@@ -3501,14 +3651,14 @@
       "type": "object",
       "allOf": [
         {
-          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.metaMetadata"
+          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifCatalogRecord"
         },
         {
           "properties": {
             "dcterms:conformsTo": {
               "type": "array",
               "items": {
-                "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.metaMetadata/$defs/conformsTo_item"
+                "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifCatalogRecord/$defs/conformsTo_item"
               },
               "minItems": 2,
               "contains": {
@@ -3516,7 +3666,7 @@
                 "properties": {
                   "@id": {
                     "enum": [
-                      "cdif:profile_xasCDIF"
+                      "https://w3id.org/cdif/bbr/metadata/profiles/cdifProfiles/CDIFxas"
                     ]
                   }
                 },
@@ -3542,10 +3692,21 @@
       "properties": {
         "@type": {
           "type": "string",
-          "description": "TBD, recognize other actions, e.g. SearchAction, UpdateAction..., others?",
+          "description": "The type of action. Must be schema:Action or one of its subtypes.",
           "default": "schema:Action",
           "enum": [
-            "schema:Action"
+            "schema:Action",
+            "schema:AssessAction",
+            "schema:ConsumeAction",
+            "schema:ControlAction",
+            "schema:CreateAction",
+            "schema:FindAction",
+            "schema:InteractAction",
+            "schema:MoveAction",
+            "schema:PlayAction",
+            "schema:SearchAction",
+            "schema:TransferAction",
+            "schema:UpdateAction"
           ]
         },
         "schema:name": {
@@ -3737,8 +3898,9 @@
       "x-schema-source": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/action/schema.yaml",
       "x-schema-version": "https://json-schema.org/draft/2020-12/schema"
     },
-    "cdif.bbr.metadata.provProperties.generatedBy": {
-      "title": "very simple links or names of software or instruments used to generate a resource.",
+    "cdif.bbr.metadata.schemaorgProperties.instrument": {
+      "title": "Generic Instrument",
+      "description": "A generic instrument or instrument system. Uses schema:Thing as base type with optional schema:Product typing. Supports hierarchical instrument systems via schema:hasPart for sub-components.",
       "type": "object",
       "properties": {
         "@type": {
@@ -3749,23 +3911,72 @@
           "minItems": 1,
           "contains": {
             "enum": [
-              "prov:Activity"
+              "schema:Thing"
             ]
+          },
+          "description": "Must include schema:Thing. May also include schema:Product or domain-specific types."
+        },
+        "@id": {
+          "type": "string"
+        },
+        "schema:name": {
+          "type": "string",
+          "description": "Human-readable name for this instrument"
+        },
+        "schema:identifier": {
+          "description": "Formal identifier for this instrument",
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.instrument/$defs/Identifier"
+            }
+          ]
+        },
+        "schema:description": {
+          "type": "string",
+          "description": "Text description of this instrument"
+        },
+        "schema:alternateName": {
+          "type": "string",
+          "description": "Alternate name, e.g. specific make/model"
+        },
+        "schema:additionalType": {
+          "description": "Domain-specific type URIs for this instrument",
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ]
+        },
+        "schema:additionalProperty": {
+          "type": "array",
+          "description": "Domain-specific properties (detection limits, calibration info, etc.)",
+          "items": {
+            "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.instrument/$defs/AdditionalProperty"
           }
         },
-        "prov:used": {
+        "schema:hasPart": {
           "type": "array",
+          "description": "Sub-components of this instrument system. Use @id references or inline instrument objects.",
           "items": {
             "anyOf": [
               {
-                "type": "string"
+                "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.instrument/$defs/InstrumentRef"
               },
               {
                 "type": "object",
                 "properties": {
                   "@id": {
                     "type": "string",
-                    "description": "a resolvable reference to a representation of the software or instrument used"
+                    "description": "reference to a sub-component defined elsewhere"
                   }
                 }
               }
@@ -3773,11 +3984,90 @@
           }
         }
       },
-      "x-jsonld-prefixes": {
-        "schema": "http://schema.org/",
-        "prov": "http://www.w3.org/ns/prov#"
+      "required": [
+        "schema:name"
+      ],
+      "allOf": [
+        {
+          "required": [
+            "@type"
+          ]
+        }
+      ],
+      "$defs": {
+        "Identifier": {
+          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.identifier"
+        },
+        "AdditionalProperty": {
+          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.additionalProperty"
+        },
+        "InstrumentRef": {
+          "type": "object",
+          "description": "Inline sub-component instrument (non-recursive single level)",
+          "properties": {
+            "@type": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "minItems": 1,
+              "contains": {
+                "enum": [
+                  "schema:Thing"
+                ]
+              }
+            },
+            "@id": {
+              "type": "string"
+            },
+            "schema:name": {
+              "type": "string"
+            },
+            "schema:identifier": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.instrument/$defs/Identifier"
+                }
+              ]
+            },
+            "schema:description": {
+              "type": "string"
+            },
+            "schema:alternateName": {
+              "type": "string"
+            },
+            "schema:additionalType": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              ]
+            },
+            "schema:additionalProperty": {
+              "type": "array",
+              "items": {
+                "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.instrument/$defs/AdditionalProperty"
+              }
+            }
+          },
+          "required": [
+            "schema:name"
+          ]
+        }
       },
-      "x-schema-source": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/provProperties/generatedBy/schema.yaml",
+      "x-jsonld-prefixes": {
+        "schema": "http://schema.org/"
+      },
+      "x-schema-source": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/instrument/schema.yaml",
       "x-schema-version": "https://json-schema.org/draft/2020-12/schema"
     }
   },

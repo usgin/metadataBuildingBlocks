@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.adaProperties.detailARGT` *v0.1*
 
-ARGT (Argon) document type with phase and isotope analysis
+ARGT (Argon) document type with phase and isotope analysis. Defines properties: @type, phaseAnalyzed, isotopeType.
 
 [*Status*](http://www.opengis.net/def/status): Under development
 

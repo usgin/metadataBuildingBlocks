@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.schemaorgProperties.funder` *v0.1*
 
-properties for acknowledging funding, CDIF profile of schema.org/funding and schema.org/MonetaryGrant.
+properties for acknowledging funding, CDIF profile of schema.org/funding and schema.org/MonetaryGrant. Defines properties: @type, schema:identifier, schema:description, schema:name, schema:funder. Uses building blocks: person (schemaorgProperties), organization (schemaorgProperties), identifier (schemaorgProperties).
 
 [*Status*](http://www.opengis.net/def/status): Under development
 

@@ -1,0 +1,155 @@
+Validation report for cdif.bbr.metadata.profiles.ecrrProfiles.ECRRSpecification - ECRR Specification profile
+Generated 2026-03-04T13:42:18.681677+00:00
+=== Files ===
+Using exampleINSPIRE.json from examples
+JSON-LD context is present - uplifting
+Output JSON-LD example_1_1.jsonld created
+Output Turtle example_1_1.ttl created
+=== End Files ===
+
+=== JSON Schema ===
+
+** Validation error **
+ValidationError: [{'@type': 'schema:CreativeWork', 'schema:name': 'INSPIRE specification document', 'schema:url': 'https://inspire.ec.europa.eu/file/1519/download?token=IGCGbum3'}, {'@type': ['schema:CreativeWork'], 'schema:additionalType': ['dcat:CatalogRecord'], 'dcterms:conformsTo': [{'@id': 'https://w3id.org/cdif/bbr/metadata/cdifProperties/cdifMandatory'}, {'@id': 'https://w3id.org/cdif/bbr/metadata/profiles/ecrrProfiles/ECRRSpecification'}], 'schema:sdDatePublished': '2026-03-03'}] is not valid under any of the given schemas
+
+Failed validating 'anyOf' in schema['allOf'][1]['properties']['schema:subjectOf']:
+    {'anyOf': [{'$ref': '#/$defs/LabeledLink'},
+               {'items': {'$ref': '#/$defs/LabeledLink'}, 'type': 'array'}],
+     'description': 'Links to formal metadata records or web pages about '
+                    'this resource. Array of labeled links (CreativeWork '
+                    'objects with name and url).'}
+
+On instance['schema:subjectOf']:
+    [{'@type': 'schema:CreativeWork',
+      'schema:name': 'INSPIRE specification document',
+      'schema:url': 'https://inspire.ec.europa.eu/file/1519/download?token=IGCGbum3'},
+     {'@type': ['schema:CreativeWork'],
+      'dcterms:conformsTo': [{'@id': 'https://w3id.org/cdif/bbr/metadata/cdifProperties/cdifMandatory'},
+                             {'@id': 'https://w3id.org/cdif/bbr/metadata/profiles/ecrrProfiles/ECRRSpecification'}],
+      'schema:additionalType': ['dcat:CatalogRecord'],
+      'schema:sdDatePublished': '2026-03-03'}]
+=== End JSON Schema ===
+
+=== SHACL ===
+
+** Validation error **
+Validation result for _sources/schemaorgProperties/labeledLink/rules.shacl:
+  Validation Report
+  Conforms: False
+  Results (3):
+  Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+  	Severity: sh:Violation
+  	Source Shape: [ sh:datatype xsd:string ; sh:message Literal("value must be a resolvable URL, but we aren't testing to see if the URL resolves..... Can't get xsd:anyURI to work with JSON Schema validation...") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path schema1:url ; sh:pattern Literal("^https?:\/\/[^\s]+$") ]
+  	Focus Node: [ rdf:type schema1:CreativeWork ; schema1:name Literal("Public") ]
+  	Result Path: schema1:url
+  	Message: value must be a resolvable URL, but we aren't testing to see if the URL resolves..... Can't get xsd:anyURI to work with JSON Schema validation...
+  Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+  	Severity: sh:Violation
+  	Source Shape: [ sh:datatype xsd:string ; sh:message Literal("value must be a resolvable URL, but we aren't testing to see if the URL resolves..... Can't get xsd:anyURI to work with JSON Schema validation...") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path schema1:url ; sh:pattern Literal("^https?:\/\/[^\s]+$") ]
+  	Focus Node: [ dct:conformsTo <https://w3id.org/cdif/bbr/metadata/cdifProperties/cdifMandatory>, <https://w3id.org/cdif/bbr/metadata/profiles/ecrrProfiles/ECRRSpecification> ; rdf:type schema1:CreativeWork ; schema1:additionalType Literal("dcat:CatalogRecord") ; schema1:sdDatePublished Literal("2026-03-03") ]
+  	Result Path: schema1:url
+  	Message: value must be a resolvable URL, but we aren't testing to see if the URL resolves..... Can't get xsd:anyURI to work with JSON Schema validation...
+  Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+  	Severity: sh:Violation
+  	Source Shape: [ sh:datatype xsd:string ; sh:message Literal("value must be a resolvable URL, but we aren't testing to see if the URL resolves..... Can't get xsd:anyURI to work with JSON Schema validation...") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path schema1:url ; sh:pattern Literal("^https?:\/\/[^\s]+$") ]
+  	Focus Node: <http://n2t.net/ark:/23942/g2800001>
+  	Result Path: schema1:url
+  	Message: value must be a resolvable URL, but we aren't testing to see if the URL resolves..... Can't get xsd:anyURI to work with JSON Schema validation...
+  
+Focus nodes for _sources/schemaorgProperties/labeledLink/rules.shacl:
+ - Shape cdifd:CDIFLabeledLinkShape: <http://n2t.net/ark:/23942/g2800001>/schema1:isRelatedTo,<http://n2t.net/ark:/23942/g2800001>/ecrro:ECRRO_0000501/schema1:value,<http://n2t.net/ark:/23942/g2800001>/schema1:subjectOf,<http://n2t.net/ark:/23942/g2800001>/schema1:mainEntity,<http://n2t.net/ark:/23942/g2800001>/schema1:license,<http://n2t.net/ark:/23942/g2800001>/schema1:mainEntity,<http://n2t.net/ark:/23942/g2800001>/schema1:subjectOf,<http://n2t.net/ark:/23942/g2800001>,<http://n2t.net/ark:/23942/g2800001>/schema1:isRelatedTo
+
+
+** Validation error **
+Validation result for _sources/schemaorgProperties/person/rules.shacl:
+  Validation Report
+  Conforms: False
+  Results (1):
+  Validation Result in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+  	Severity: sh:Info
+  	Source Shape: cdifd:contactPointProperty
+  	Focus Node: [ rdf:type schema1:Person ; schema1:name Literal("Stephen M. Richard") ]
+  	Result Path: schema1:contactPoint
+  	Message: A Person should have a contactPoint (schema:ContactPoint or mailto: IRI)
+  
+Focus nodes for _sources/schemaorgProperties/person/rules.shacl:
+ - Shape cdifd:CDIFPersonShape: <http://n2t.net/ark:/23942/g2800001>/ecrro:ECRRO_0001301/schema1:value/schema1:contributor
+ - Shape _:nb470940fd7f941a69a81ab0e19653441b14: *none*
+ - Shape cdifd:maintainerOrProviderContactPointShape/sh:property/sh:or/rdf:first: *none*
+ - Shape cdifd:affiliationProperty/sh:or/rdf:first: *none*
+ - Shape cdifd:maintainerOrProviderContactPointShape: *none*
+ - Shape cdifd:CDIFPersonShape/sh:or/rdf:first: *none*
+ - Shape cdifd:affiliationProperty/sh:or/rdf:rest/rdf:first: *none*
+ - Shape cdifd:CDIFContactPointShape: *none*
+ - Shape cdifd:contactPointProperty/sh:or/rdf:first: *none*
+ - Shape cdifd:contactPointProperty/sh:or/rdf:rest/rdf:first: *none*
+ - Shape cdifd:CDIFPersonShape/sh:or/rdf:rest/rdf:first: *none*
+
+Validation result for _sources/schemaorgProperties/identifier/rules.shacl:
+  Validation Report
+  Conforms: True
+  
+Focus nodes for _sources/schemaorgProperties/identifier/rules.shacl:
+ - Shape cdifd:CDIFIdentifierShape: *none*
+ - Shape cdifd:CDIFIdentifierShape/sh:or/rdf:rest/rdf:first: *none*
+ - Shape _:n2372ddb54e134da28ccff1b1329217c9b20: *none*
+ - Shape _:n2372ddb54e134da28ccff1b1329217c9b23: *none*
+ - Shape cdifd:CDIFIdentifierShape/sh:property/sh:or/rdf:first: *none*
+ - Shape _:n2372ddb54e134da28ccff1b1329217c9b25: *none*
+ - Shape cdifd:CDIFIdentifierTypeTermShape: *none*
+ - Shape cdifd:CDIFIdentifierShape/sh:or/rdf:first: *none*
+ - Shape _:n2372ddb54e134da28ccff1b1329217c9b11: *none*
+ - Shape _:n2372ddb54e134da28ccff1b1329217c9b21: *none*
+ - Shape _:n2372ddb54e134da28ccff1b1329217c9b22: *none*
+ - Shape _:n2372ddb54e134da28ccff1b1329217c9b10: *none*
+ - Shape cdifd:CDIFIdentifierTypeTermShape/sh:property/sh:or/rdf:first: *none*
+
+Validation result for _sources/schemaorgProperties/organization/rules.shacl:
+  Validation Report
+  Conforms: True
+  
+Focus nodes for _sources/schemaorgProperties/organization/rules.shacl:
+ - Shape cdifd:CDIFOrganizationShape/sh:or/rdf:first: *none*
+ - Shape cdifd:CDIFOrganizationShape: <http://n2t.net/ark:/23942/g2800001>/ecrro:ECRRO_0000218/schema1:value,<http://n2t.net/ark:/23942/g2800001>/schema1:funding/schema1:funder
+ - Shape cdifd:CDIFOrganizationShape/sh:or/rdf:rest/rdf:first: *none*
+
+Validation result for _sources/schemaorgProperties/definedTerm/rules.shacl:
+  Validation Report
+  Conforms: True
+  
+Focus nodes for _sources/schemaorgProperties/definedTerm/rules.shacl:
+ - Shape cdifd:CDIFDefinedTermShape: *none*
+ - Shape _:n4480b836122e4094bab1746ae40132e4b8: *none*
+ - Shape _:n4480b836122e4094bab1746ae40132e4b4: *none*
+ - Shape cdifd:CDIFDefinedTermShape/sh:or/rdf:first: *none*
+ - Shape _:n4480b836122e4094bab1746ae40132e4b6: *none*
+ - Shape _:n4480b836122e4094bab1746ae40132e4b10: *none*
+ - Shape cdifd:CDIFDefinedTermShape/sh:property/sh:or/rdf:first: *none*
+ - Shape _:n4480b836122e4094bab1746ae40132e4b7: *none*
+ - Shape _:n4480b836122e4094bab1746ae40132e4b5: *none*
+ - Shape cdifd:CDIFDefinedTermShape/sh:or/rdf:rest/rdf:first: *none*
+ - Shape _:n4480b836122e4094bab1746ae40132e4b19: *none*
+ - Shape _:n4480b836122e4094bab1746ae40132e4b26: *none*
+
+Validation result for _sources/schemaorgProperties/funder/rules.shacl:
+  Validation Report
+  Conforms: True
+  
+Focus nodes for _sources/schemaorgProperties/funder/rules.shacl:
+ - Shape _:n9b9e94bec24b42d0a3e9cce86ee44187b11: *none*
+ - Shape _:n9b9e94bec24b42d0a3e9cce86ee44187b25: *none*
+ - Shape cdifd:fundingShape: <http://n2t.net/ark:/23942/g2800001>/schema1:funding
+ - Shape _:n9b9e94bec24b42d0a3e9cce86ee44187b26: *none*
+ - Shape _:n9b9e94bec24b42d0a3e9cce86ee44187b15: *none*
+ - Shape _:n9b9e94bec24b42d0a3e9cce86ee44187b5: *none*
+ - Shape _:n9b9e94bec24b42d0a3e9cce86ee44187b3: *none*
+ - Shape _:n9b9e94bec24b42d0a3e9cce86ee44187b4: *none*
+ - Shape cdifd:fundingShape/sh:or/rdf:first: *none*
+ - Shape cdifd:fundingShape/sh:or/rdf:rest/rdf:first: *none*
+ - Shape _:n9b9e94bec24b42d0a3e9cce86ee44187b13: *none*
+ - Shape _:n9b9e94bec24b42d0a3e9cce86ee44187b14: *none*
+ - Shape _:n9b9e94bec24b42d0a3e9cce86ee44187b12: *none*
+ - Shape _:n9b9e94bec24b42d0a3e9cce86ee44187b17: *none*
+
+=== End SHACL ===
+

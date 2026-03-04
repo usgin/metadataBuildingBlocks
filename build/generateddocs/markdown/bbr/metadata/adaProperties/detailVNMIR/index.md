@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.adaProperties.detailVNMIR` *v0.1*
 
-Very-Near Mid-IR spectroscopy with detailed measurement parameters
+Very-Near Mid-IR spectroscopy with detailed measurement parameters. Defines properties: @type, detector, beamsplitter, calibrationStandards, comments, numberOfScans, eMaxFitRegionMax, eMaxFitRegionMin, emissionAngle, emissivityMaximum, environmentalPressure, incidenceAngle, measurement, measurementEnvironment, phaseAngle, sampleHeated, samplePreparation, sampleTemperature, spectralRangeMax, spectralRangeMin, spectralResolution, spectralSampling, spotSize, uncertaintyNoise, vacuumExposedSample.
 
 [*Status*](http://www.opengis.net/def/status): Under development
 

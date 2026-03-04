@@ -49,7 +49,8 @@ ex:adaXANES-example-001 a schema1:Dataset,
             schema1:size [ a schema1:QuantitativeValue ;
                     schema1:unitText "byte" ;
                     schema1:value 15728640 ] ;
-            spdx:checksum [ spdx:algorithm "SHA256" ;
+            spdx:checksum [ a spdx:Checksum ;
+                    spdx:algorithm "SHA256" ;
                     spdx:checksumValue "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2" ] ] ;
     schema1:funding [ a schema1:MonetaryGrant ;
             schema1:funder [ a schema1:Organization ;
@@ -79,7 +80,7 @@ ex:adaXANES-example-001 a schema1:Dataset,
     schema1:variableMeasured ex:adaXANES-var-001,
         ex:adaXANES-var-002 ;
     schema1:version "1.0" ;
-    prov:wasGeneratedBy [ a schema1:Event,
+    prov:wasGeneratedBy [ a schema1:Action,
                 prov:Activity ;
             schema1:identifier "session-xanes-20260110-001" ;
             schema1:location [ a <http://purl.org/nexusformat/definitions/BaseClass/NXsource>,
@@ -109,7 +110,8 @@ ex:adaXANES-file-001 a schema1:ImageObject,
     schema1:size [ a schema1:QuantitativeValue ;
             schema1:unitText "byte" ;
             schema1:value 10485760 ] ;
-    spdx:checksum [ spdx:algorithm "MD5" ;
+    spdx:checksum [ a spdx:Checksum ;
+            spdx:algorithm "MD5" ;
             spdx:checksumValue "d41d8cd98f00b204e9800998ecf8427e" ] .
 
 ex:adaXANES-file-002 a schema1:DigitalDocument,
@@ -123,9 +125,9 @@ ex:adaXANES-file-002 a schema1:DigitalDocument,
             schema1:value 524288 ] .
 
 ex:adaXANES-metadata-001 a schema1:Dataset ;
-    dcterms:conformsTo <https://ada.astromat.org/profiles/adaXANES>,
-        <https://w3id.org/cdif/profiles/discovery> ;
+    dcterms:conformsTo <https://w3id.org/cdif/bbr/metadata/profiles/adaProfiles/adaXANES> ;
     schema1:about ex:adaXANES-example-001 ;
+    schema1:additionalType "dcat:CatalogRecord" ;
     schema1:dateModified "2026-01-15" ;
     schema1:includedInDataCatalog [ a schema1:DataCatalog ;
             schema1:name "Astromat Data Archive" ;

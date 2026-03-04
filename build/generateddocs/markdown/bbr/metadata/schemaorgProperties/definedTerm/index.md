@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.schemaorgProperties.definedTerm` *v0.1*
 
-Schema defining propertis of a term from a named or identified vocabulary, with a label, and URI.Based on Schema.org/definedTerm
+Schema defining propertis of a term from a named or identified vocabulary, with a label, and URI.Based on Schema.org/definedTerm. Defines properties: @type, schema:name, schema:identifier, schema:inDefinedTermSet, schema:termCode. Uses building blocks: identifier (schemaorgProperties).
 
 [*Status*](http://www.opengis.net/def/status): Under development
 
@@ -111,6 +111,8 @@ allOf:
     - schema:name
   - required:
     - schema:identifier
+  - required:
+    - schema:termCode
 x-jsonld-prefixes:
   schema: http://schema.org/
 

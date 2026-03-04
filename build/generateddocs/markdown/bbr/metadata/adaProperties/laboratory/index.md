@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.adaProperties.laboratory` *v0.1*
 
-Laboratory/facility definition combining NXsource and schema:Place
+Laboratory/facility definition combining NXsource and schema:Place. Defines properties: @type, schema:identifier, schema:name, schema:alternateName.
 
 [*Status*](http://www.opengis.net/def/status): Under development
 

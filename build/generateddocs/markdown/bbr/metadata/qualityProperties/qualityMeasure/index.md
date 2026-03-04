@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.qualityProperties.qualityMeasure` *v0.1*
 
-Schema defining properties for documenting a quality measuremenet associated with a resource.
+Schema defining properties for documenting a quality measuremenet associated with a resource. Defines properties: @type, dqv:isMeasurementOf, dqv:value. Uses building blocks: definedTerm (schemaorgProperties).
 
 [*Status*](http://www.opengis.net/def/status): Under development
 
@@ -22,22 +22,22 @@ Example quality measure
     "@type": "dqv:QualityMeasurement",
     "dqv:isMeasurementOf": {
         "@type": "schema:DefinedTerm",
-        "schema:name": "LBp",
-        "schema:identifier": "qMsuTaeO",
-        "schema:inDefinedTermSet": "GCjNHSplcIDSd",
-        "schema:termCode": "kVavhujDLioBbZc"
+        "schema:name": "Positional Accuracy",
+        "schema:identifier": "https://standards.iso.org/iso/19157/qualityMeasure/28",
+        "schema:inDefinedTermSet": "https://standards.iso.org/iso/19157",
+        "schema:termCode": "DQ_AbsoluteExternalPositionalAccuracy"
     },
     "dqv:value": {
         "@type": "schema:DefinedTerm",
-        "schema:name": "aZrfr",
+        "schema:name": "Pass",
         "schema:identifier": {
             "@type": "schema:PropertyValue",
-            "schema:propertyID": "bOQUqI",
-            "schema:value": "dzkwRNhKqfDVhOu",
+            "schema:propertyID": "https://standards.iso.org/iso/19157/qualityResult",
+            "schema:value": "conformant",
             "schema:url": "http://example.com/resource?foo=bar#fragment"
         },
-        "schema:inDefinedTermSet": "YYdmhomhxBnNBic",
-        "schema:termCode": "OgZwkLzhtqNSCcvMYKT"
+        "schema:inDefinedTermSet": "https://standards.iso.org/iso/19157/conformanceResult",
+        "schema:termCode": "pass"
     }
 }
 ```
@@ -54,22 +54,22 @@ Example quality measure
   "@type": "dqv:QualityMeasurement",
   "dqv:isMeasurementOf": {
     "@type": "schema:DefinedTerm",
-    "schema:name": "LBp",
-    "schema:identifier": "qMsuTaeO",
-    "schema:inDefinedTermSet": "GCjNHSplcIDSd",
-    "schema:termCode": "kVavhujDLioBbZc"
+    "schema:name": "Positional Accuracy",
+    "schema:identifier": "https://standards.iso.org/iso/19157/qualityMeasure/28",
+    "schema:inDefinedTermSet": "https://standards.iso.org/iso/19157",
+    "schema:termCode": "DQ_AbsoluteExternalPositionalAccuracy"
   },
   "dqv:value": {
     "@type": "schema:DefinedTerm",
-    "schema:name": "aZrfr",
+    "schema:name": "Pass",
     "schema:identifier": {
       "@type": "schema:PropertyValue",
-      "schema:propertyID": "bOQUqI",
-      "schema:value": "dzkwRNhKqfDVhOu",
+      "schema:propertyID": "https://standards.iso.org/iso/19157/qualityResult",
+      "schema:value": "conformant",
       "schema:url": "http://example.com/resource?foo=bar#fragment"
     },
-    "schema:inDefinedTermSet": "YYdmhomhxBnNBic",
-    "schema:termCode": "OgZwkLzhtqNSCcvMYKT"
+    "schema:inDefinedTermSet": "https://standards.iso.org/iso/19157/conformanceResult",
+    "schema:termCode": "pass"
   }
 }
 ```
@@ -81,18 +81,18 @@ Example quality measure
 
 [] a ns1:QualityMeasurement ;
     ns1:isMeasurementOf [ a schema1:DefinedTerm ;
-            schema1:identifier "qMsuTaeO" ;
-            schema1:inDefinedTermSet "GCjNHSplcIDSd" ;
-            schema1:name "LBp" ;
-            schema1:termCode "kVavhujDLioBbZc" ] ;
+            schema1:identifier "https://standards.iso.org/iso/19157/qualityMeasure/28" ;
+            schema1:inDefinedTermSet "https://standards.iso.org/iso/19157" ;
+            schema1:name "Positional Accuracy" ;
+            schema1:termCode "DQ_AbsoluteExternalPositionalAccuracy" ] ;
     ns1:value [ a schema1:DefinedTerm ;
             schema1:identifier [ a schema1:PropertyValue ;
-                    schema1:propertyID "bOQUqI" ;
+                    schema1:propertyID "https://standards.iso.org/iso/19157/qualityResult" ;
                     schema1:url "http://example.com/resource?foo=bar#fragment" ;
-                    schema1:value "dzkwRNhKqfDVhOu" ] ;
-            schema1:inDefinedTermSet "YYdmhomhxBnNBic" ;
-            schema1:name "aZrfr" ;
-            schema1:termCode "OgZwkLzhtqNSCcvMYKT" ] .
+                    schema1:value "conformant" ] ;
+            schema1:inDefinedTermSet "https://standards.iso.org/iso/19157/conformanceResult" ;
+            schema1:name "Pass" ;
+            schema1:termCode "pass" ] .
 
 
 ```

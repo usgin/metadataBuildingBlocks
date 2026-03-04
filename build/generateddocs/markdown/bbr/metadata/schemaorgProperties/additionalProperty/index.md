@@ -3,15 +3,27 @@
 
 `cdif.bbr.metadata.schemaorgProperties.additionalProperty` *v0.1*
 
-Schema for a schema:PropertyValue used to specify a property of an element that is not defined in the JSON schema..
+Schema for a schema:PropertyValue used to specify a property of an element that is not defined in the JSON schema. Defines properties: @type, schema:propertyID, schema:name, schema:value. Uses building blocks: definedTerm (schemaorgProperties).
 
 [*Status*](http://www.opengis.net/def/status): Under development
 
 ## Description
 
-## Person properties
+## Additional Property (PropertyValue) properties
 
-Defines a set of properties for use describing a person for the schema.org implementation of the [Cross Domain Interoperability Framework](https://cross-domain-interoperability-framework.github.io/cdifbook/metadata/schemaorgimplementation.html#implementation-of-metadata-content-items) (CDIF) discovery profile.
+PropertyValue pattern for soft-typed properties with name/value pairs. Used as values for schema:additionalProperty in extension profiles. Not used in CDIF Mandatory or CDIF Optional.
+
+### Defined properties
+
+- **@type** — must be schema:PropertyValue
+- **schema:propertyID** — identifier or name for the property concept (string, URI reference, or DefinedTerm)
+- **schema:name** — name of the property
+- **schema:value** — value of the property
+
+### Dependencies
+
+- [definedTerm](../definedTerm/) — controlled vocabulary term for property identification
+
 ## Examples
 
 ### Example additional property.
@@ -36,8 +48,8 @@ Example of soft-typed additional property implementation, based on schema.org Pr
             "schema:identifier": {
                 "@id": "ex:addPropIDPropertyValue_53yh",
                 "@type": "schema:PropertyValue",
-                "schema:propertyID":"httpUri",
-                "schema:url": "http://ogc.org/defs/rt45347278"
+                "schema:propertyID": "https://purl.org/nexusformat/definitions/Field/NXsource/probe",
+                "schema:url": "https://purl.org/nexusformat/definitions/Field/NXsource/probe"
             },
             "schema:inDefinedTermSet": "http://ogc.org/defs"
         }
@@ -73,8 +85,8 @@ Example of soft-typed additional property implementation, based on schema.org Pr
       "schema:identifier": {
         "@id": "ex:addPropIDPropertyValue_53yh",
         "@type": "schema:PropertyValue",
-        "schema:propertyID": "httpUri",
-        "schema:url": "http://ogc.org/defs/rt45347278"
+        "schema:propertyID": "https://purl.org/nexusformat/definitions/Field/NXsource/probe",
+        "schema:url": "https://purl.org/nexusformat/definitions/Field/NXsource/probe"
       },
       "schema:inDefinedTermSet": "http://ogc.org/defs"
     }
@@ -96,8 +108,8 @@ ex:exampleAdditionalProperty_lkj09 a schema1:PropertyValue ;
     schema1:value "x-ray" .
 
 ex:addPropIDPropertyValue_53yh a schema1:PropertyValue ;
-    schema1:propertyID "httpUri" ;
-    schema1:url "http://ogc.org/defs/rt45347278" .
+    schema1:propertyID "https://purl.org/nexusformat/definitions/Field/NXsource/probe" ;
+    schema1:url "https://purl.org/nexusformat/definitions/Field/NXsource/probe" .
 
 ex:addPropdefinedTerm_zZc a schema1:DefinedTerm ;
     schema1:identifier ex:addPropIDPropertyValue_53yh ;

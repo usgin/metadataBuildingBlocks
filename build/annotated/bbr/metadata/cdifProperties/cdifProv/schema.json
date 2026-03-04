@@ -21,6 +21,37 @@
           },
           "description": "Must include both schema:Action and prov:Activity (prov:Activity required by base generatedBy schema)"
         },
+        "prov:used": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "@id": {
+                    "type": "string",
+                    "description": "a resolvable reference to a representation of the software or instrument used"
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "description": "an item used by the activity that includes a schema:instrument sub-key",
+                "properties": {
+                  "schema:instrument": {
+                    "$ref": "#/$defs/Instrument"
+                  }
+                },
+                "required": [
+                  "schema:instrument"
+                ]
+              }
+            ]
+          }
+        },
         "schema:name": {
           "type": "string",
           "description": "Human-readable name for the activity"
@@ -83,32 +114,6 @@
                   "@id": {
                     "type": "string",
                     "description": "reference to a participant defined elsewhere"
-                  }
-                }
-              }
-            ]
-          }
-        },
-        "schema:instrument": {
-          "description": "Tools, software, sensors, or instruments used in this activity",
-          "type": "array",
-          "items": {
-            "anyOf": [
-              {
-                "$ref": "#/$defs/DefinedTerm"
-              },
-              {
-                "$ref": "#/$defs/LabeledLink"
-              },
-              {
-                "type": "string"
-              },
-              {
-                "type": "object",
-                "properties": {
-                  "@id": {
-                    "type": "string",
-                    "description": "reference to an instrument defined elsewhere"
                   }
                 }
               }
@@ -233,6 +238,9 @@
     },
     "Identifier": {
       "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/identifier/schema.json"
+    },
+    "Instrument": {
+      "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/instrument/schema.json"
     },
     "DefinedTerm": {
       "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/definedTerm/schema.json"
@@ -380,5 +388,9 @@
         "schema:claimReviewed"
       ]
     }
+  },
+  "x-jsonld-prefixes": {
+    "schema": "http://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#"
   }
 }

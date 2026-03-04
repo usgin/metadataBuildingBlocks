@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.adaProperties.spatialRegistration` *v0.1*
 
-Pixel coordinate system registration for images and maps
+Pixel coordinate system registration for images and maps. Defines properties: basemap, originX, originY, originZ, coordDef, coordUnits, pixelUnits, pixelScaleX, pixelScaleY, originLocation.
 
 [*Status*](http://www.opengis.net/def/status): Under development
 

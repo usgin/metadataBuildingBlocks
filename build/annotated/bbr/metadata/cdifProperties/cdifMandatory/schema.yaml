@@ -6,19 +6,22 @@ description: Building block specifies properties for minimal CDIF schama.org dis
 properties:
   '@id':
     type: string
-    description: The URI for the resource should be the @id value for the root of
-      the JSON instance document tree. Note that this identifier can be interpreted
+    description: 'The URI for the resource should be the @id value for the root of
+      the JSON instance document tree. Must be an IRI (e.g. https://doi.org/..., urn:...,
+      or a relative URI like #localid). Note that this identifier can be interpreted
       to identify the resource that is the subject of this metadata record, or the
-      JSON-LD object that is the digital object containing the metadata information.
+      JSON-LD object that is the digital object containing the metadata information.'
   '@type':
     description: a schema.org Class that specifies the expected information content
       for the metadata record. For CDIF, 'schema:Dataset' is required, but other possible
       values (e.g. CreativeWork, SoftwareApplication, Product, WebAPI) are sometimes
       included to enable the schema.org properties used to describe the resource without
-      schema.org validation errors.
+      schema.org validation errors. The array must include at least one value from
+      the known set, but can also include other strings for extensibility.
     type: array
     items:
       type: string
+    contains:
       enum:
       - schema:CreativeWork
       - schema:SoftwareApplication
@@ -31,7 +34,8 @@ properties:
       - schema:ImageObject
       - schema:DataCatalog
       - schema:DefinedTermSet
-      default: schema:Dataset
+      - schema:MediaObject
+    default: schema:Dataset
     minItems: 1
   schema:name:
     type: string
@@ -104,7 +108,7 @@ properties:
       - $ref: '#/$defs/DataDownload'
       - $ref: '#/$defs/WebAPI'
   schema:subjectOf:
-    $ref: '#/$defs/MetaMetadata'
+    $ref: '#/$defs/CdifCatalogRecord'
 allOf:
 - required:
   - '@id'
@@ -135,7 +139,7 @@ $defs:
     $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/dataDownload/schema.yaml
   WebAPI:
     $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/webAPI/schema.yaml
-  MetaMetadata:
-    $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/metaMetadata/schema.yaml
+  CdifCatalogRecord:
+    $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifCatalogRecord/schema.yaml
 x-jsonld-prefixes:
   schema: http://schema.org/

@@ -38,13 +38,37 @@
           "type": "object",
           "description": "A string value calculated from the content of the resource representation, used to test if content has been modified. The checksum is a property of a particular distribution/DataDownload.",
           "properties": {
+            "@type": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "spdx:Checksum"
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "contains": {
+                    "enum": [
+                      "spdx:Checksum"
+                    ]
+                  }
+                }
+              ]
+            },
             "spdx:algorithm": {
               "type": "string"
             },
             "spdx:checksumValue": {
               "type": "string"
             }
-          }
+          },
+          "required": [
+            "@type"
+          ]
         },
         "schema:provider": {
           "type": "array",
@@ -78,6 +102,17 @@
         "schema": "http://schema.org/"
       },
       "x-schema-source": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/dataDownload/schema.json",
+      "x-schema-version": "https://json-schema.org/draft/2020-12/schema"
+    },
+    "cdif.bbr.metadata.adaProperties.stringArray": {
+      "title": "String Array Type",
+      "description": "Simple reusable array of strings",
+      "type": "array",
+      "minItems": 0,
+      "items": {
+        "type": "string"
+      },
+      "x-schema-source": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/adaProperties/stringArray/schema.json",
       "x-schema-version": "https://json-schema.org/draft/2020-12/schema"
     },
     "cdif.bbr.metadata.adaProperties.image": {
@@ -485,7 +520,7 @@
           "description": "List of the component types in the collection",
           "allOf": [
             {
-              "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/adaProperties/files/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.adaProperties.stringArray"
+              "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/adaProperties/files/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.adaProperties.stringArray_1"
             }
           ]
         },
@@ -1208,10 +1243,10 @@
           ]
         },
         "phaseAnalyzed": {
-          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/adaProperties/files/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.adaProperties.stringArray"
+          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/adaProperties/files/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.adaProperties.stringArray_1"
         },
         "isotopeAnalyzed": {
-          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/adaProperties/files/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.adaProperties.stringArray"
+          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/adaProperties/files/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.adaProperties.stringArray_1"
         }
       },
       "x-jsonld-prefixes": {
@@ -1236,7 +1271,7 @@
           ]
         },
         "phaseAnalyzed": {
-          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/adaProperties/files/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.adaProperties.stringArray"
+          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/adaProperties/files/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.adaProperties.stringArray_1"
         }
       },
       "x-jsonld-prefixes": {
@@ -1257,7 +1292,7 @@
           ]
         },
         "imageName": {
-          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/adaProperties/files/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.adaProperties.stringArray"
+          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/adaProperties/files/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.adaProperties.stringArray_1"
         },
         "imageViewingConditions": {
           "type": "string"
@@ -1585,7 +1620,7 @@
       "x-schema-source": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifTabularData/schema.yaml",
       "x-schema-version": "https://json-schema.org/draft/2020-12/schema"
     },
-    "cdif.bbr.metadata.adaProperties.stringArray": {
+    "cdif.bbr.metadata.adaProperties.stringArray_1": {
       "title": "String Array Type",
       "description": "Simple reusable array of strings",
       "type": "array",
@@ -1853,6 +1888,11 @@
               "required": [
                 "schema:identifier"
               ]
+            },
+            {
+              "required": [
+                "schema:termCode"
+              ]
             }
           ]
         }
@@ -1964,6 +2004,9 @@
               "default": "byte"
             }
           }
+        },
+        "resultTarget": {
+          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/adaProperties/files/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.adaProperties.stringArray"
         },
         "schema:relatedLink": {
           "type": "array",

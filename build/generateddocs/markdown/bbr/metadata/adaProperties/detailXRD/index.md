@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.adaProperties.detailXRD` *v0.1*
 
-X-ray Diffraction tabular data with geometry and wavelength
+X-ray Diffraction tabular data with geometry and wavelength. Defines properties: @type, geometry, sampleMount, stepSize, timePerStep, wavelength.
 
 [*Status*](http://www.opengis.net/def/status): Under development
 

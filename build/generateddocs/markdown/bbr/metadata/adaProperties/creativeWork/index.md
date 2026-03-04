@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.adaProperties.creativeWork` *v0.1*
 
-Shell type for labeled links to creative works (schema:CreativeWork)
+Shell type for labeled links to creative works (schema:CreativeWork). Defines properties: @type, schema:name, schema:description, schema:url.
 
 [*Status*](http://www.opengis.net/def/status): Under development
 

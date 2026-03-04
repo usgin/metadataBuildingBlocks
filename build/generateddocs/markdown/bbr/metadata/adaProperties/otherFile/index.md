@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.adaProperties.otherFile` *v0.1*
 
-Non-standard file formats approved for ADA submission
+Non-standard file formats approved for ADA submission. Defines properties: @type, componentType, schema:encodingFormat, formatDescription. Uses building blocks: detailSLS (adaProperties).
 
 [*Status*](http://www.opengis.net/def/status): Under development
 

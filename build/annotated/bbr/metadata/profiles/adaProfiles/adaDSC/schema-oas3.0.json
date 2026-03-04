@@ -186,7 +186,7 @@
                 "type": "object",
                 "properties": {
                   "@type": {
-                    "description": "Include 'prov:Activity' and 'schema:Event'",
+                    "description": "Include 'schema:Action' and 'prov:Activity'",
                     "type": "array",
                     "items": {
                       "type": "string"
@@ -195,14 +195,14 @@
                       {
                         "contains": {
                           "enum": [
-                            "prov:Activity"
+                            "schema:Action"
                           ]
                         }
                       },
                       {
                         "contains": {
                           "enum": [
-                            "schema:Event"
+                            "prov:Activity"
                           ]
                         }
                       }
@@ -826,13 +826,15 @@
       "properties": {
         "@id": {
           "type": "string",
-          "description": "The URI for the resource should be the @id value for the root of the JSON instance document tree. Note that this identifier can be interpreted to identify the resource that is the subject of this metadata record, or the JSON-LD object that is the digital object containing the metadata information."
+          "description": "The URI for the resource should be the @id value for the root of the JSON instance document tree. Must be an IRI (e.g. https://doi.org/..., urn:..., or a relative URI like #localid). Note that this identifier can be interpreted to identify the resource that is the subject of this metadata record, or the JSON-LD object that is the digital object containing the metadata information."
         },
         "@type": {
-          "description": "a schema.org Class that specifies the expected information content for the metadata record. For CDIF, 'schema:Dataset' is required, but other possible values (e.g. CreativeWork, SoftwareApplication, Product, WebAPI) are sometimes included to enable the schema.org properties used to describe the resource without schema.org validation errors.",
+          "description": "a schema.org Class that specifies the expected information content for the metadata record. For CDIF, 'schema:Dataset' is required, but other possible values (e.g. CreativeWork, SoftwareApplication, Product, WebAPI) are sometimes included to enable the schema.org properties used to describe the resource without schema.org validation errors. The array must include at least one value from the known set, but can also include other strings for extensibility.",
           "type": "array",
           "items": {
-            "type": "string",
+            "type": "string"
+          },
+          "contains": {
             "enum": [
               "schema:CreativeWork",
               "schema:SoftwareApplication",
@@ -844,10 +846,11 @@
               "schema:Collection",
               "schema:ImageObject",
               "schema:DataCatalog",
-              "schema:DefinedTermSet"
-            ],
-            "default": "schema:Dataset"
+              "schema:DefinedTermSet",
+              "schema:MediaObject"
+            ]
           },
+          "default": "schema:Dataset",
           "minItems": 1
         },
         "schema:name": {
@@ -937,7 +940,7 @@
           }
         },
         "schema:subjectOf": {
-          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaDSC/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifMandatory/$defs/MetaMetadata"
+          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaDSC/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifMandatory/$defs/CdifCatalogRecord"
         }
       },
       "allOf": [
@@ -997,8 +1000,8 @@
         "WebAPI": {
           "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaDSC/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.webAPI"
         },
-        "MetaMetadata": {
-          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaDSC/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.metaMetadata"
+        "CdifCatalogRecord": {
+          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaDSC/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifCatalogRecord"
         }
       },
       "x-jsonld-prefixes": {
@@ -1368,7 +1371,7 @@
           "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaDSC/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.temporalExtent"
         },
         "GeneratedBy": {
-          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaDSC/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifProv"
+          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaDSC/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.provProperties.generatedBy"
         },
         "DerivedFrom": {
           "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaDSC/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.provProperties.derivedFrom"
@@ -1528,6 +1531,9 @@
                 }
               }
             },
+            "resultTarget": {
+              "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaDSC/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.adaProperties.stringArray"
+            },
             "schema:relatedLink": {
               "type": "array",
               "description": "Links between files in the product. Use schema:name for path to target in product, or use #id JSON-LD links. Used to link metadata files in bundle to the data or supplementary files they document.",
@@ -1644,10 +1650,21 @@
       "properties": {
         "@type": {
           "type": "string",
-          "description": "TBD, recognize other actions, e.g. SearchAction, UpdateAction..., others?",
+          "description": "The type of action. Must be schema:Action or one of its subtypes.",
           "default": "schema:Action",
           "enum": [
-            "schema:Action"
+            "schema:Action",
+            "schema:AssessAction",
+            "schema:ConsumeAction",
+            "schema:ControlAction",
+            "schema:CreateAction",
+            "schema:FindAction",
+            "schema:InteractAction",
+            "schema:MoveAction",
+            "schema:PlayAction",
+            "schema:SearchAction",
+            "schema:TransferAction",
+            "schema:UpdateAction"
           ]
         },
         "schema:name": {
@@ -1971,6 +1988,11 @@
               "required": [
                 "schema:identifier"
               ]
+            },
+            {
+              "required": [
+                "schema:termCode"
+              ]
             }
           ]
         }
@@ -2019,13 +2041,37 @@
           "type": "object",
           "description": "A string value calculated from the content of the resource representation, used to test if content has been modified. The checksum is a property of a particular distribution/DataDownload.",
           "properties": {
+            "@type": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "spdx:Checksum"
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "contains": {
+                    "enum": [
+                      "spdx:Checksum"
+                    ]
+                  }
+                }
+              ]
+            },
             "spdx:algorithm": {
               "type": "string"
             },
             "spdx:checksumValue": {
               "type": "string"
             }
-          }
+          },
+          "required": [
+            "@type"
+          ]
         },
         "schema:provider": {
           "type": "array",
@@ -2140,15 +2186,34 @@
       "x-schema-source": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/webAPI/schema.yaml",
       "x-schema-version": "https://json-schema.org/draft/2020-12/schema"
     },
-    "cdif.bbr.metadata.schemaorgProperties.metaMetadata": {
+    "cdif.bbr.metadata.cdifProperties.cdifCatalogRecord": {
       "type": "object",
       "description": "see https://github.com/Cross-Domain-Interoperability-Framework/Discovery/issues/13 for discussion on how to make assertion about the sample registration and metadata distinct from statements about the physical object",
       "properties": {
         "@type": {
-          "type": "string",
-          "enum": [
-            "schema:Dataset"
-          ]
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "contains": {
+            "enum": [
+              "schema:Dataset"
+            ]
+          },
+          "minItems": 1
+        },
+        "schema:additionalType": {
+          "type": "array",
+          "description": "additional type assertions for the catalog record node. dcat:CatalogRecord is required.",
+          "items": {
+            "type": "string"
+          },
+          "contains": {
+            "enum": [
+              "dcat:CatalogRecord"
+            ]
+          },
+          "minItems": 1
         },
         "@id": {
           "type": "string",
@@ -2166,7 +2231,7 @@
         "dcterms:conformsTo": {
           "type": "array",
           "items": {
-            "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaDSC/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.metaMetadata/$defs/conformsTo_item"
+            "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaDSC/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifCatalogRecord/$defs/conformsTo_item"
           },
           "minItems": 1,
           "description": "uri for specifications that this metadata record conforms to. Minimimally should specify uri for CDIF discovery profile.  Implement as $def to facilitate extension for profiles that need to add conformance statements"
@@ -2175,10 +2240,10 @@
           "description": "iSamples Registrant. identification of the agent that registered the sample, with contact information. Should include person name and affiliation, or position name and affiliation, or just organization name. e-mail address is preferred contact information.",
           "anyOf": [
             {
-              "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaDSC/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.metaMetadata/$defs/Person"
+              "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaDSC/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifCatalogRecord/$defs/Person"
             },
             {
-              "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaDSC/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.metaMetadata/$defs/Organization"
+              "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaDSC/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifCatalogRecord/$defs/Organization"
             }
           ]
         },
@@ -2214,7 +2279,7 @@
               "description": "identifier for the collection or catalog; use identifier_type to provide information on identifier scheme and context for identifier",
               "allOf": [
                 {
-                  "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaDSC/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.metaMetadata/$defs/Identifier"
+                  "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaDSC/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifCatalogRecord/$defs/Identifier"
                 }
               ]
             }
@@ -2224,6 +2289,7 @@
       "required": [
         "schema:about",
         "dcterms:conformsTo",
+        "schema:additionalType",
         "@type",
         "@id"
       ],
@@ -2251,9 +2317,10 @@
         "schema": "http://schema.org/",
         "ex": "https://example.org/",
         "xsd": "http://www.w3.org/2001/XMLSchema#",
-        "dcterms": "http://purl.org/dc/terms/"
+        "dcterms": "http://purl.org/dc/terms/",
+        "dcat": "http://www.w3.org/ns/dcat#"
       },
-      "x-schema-source": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/metaMetadata/schema.yaml",
+      "x-schema-source": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifCatalogRecord/schema.yaml",
       "x-schema-version": "https://json-schema.org/draft/2020-12/schema"
     },
     "cdif.bbr.metadata.schemaorgProperties.person": {
@@ -2984,397 +3051,47 @@
       "x-schema-source": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/temporalExtent/schema.yaml",
       "x-schema-version": "https://json-schema.org/draft/2020-12/schema"
     },
-    "cdif.bbr.metadata.cdifProperties.cdifProv": {
-      "title": "CDIF Provenance Activity",
-      "description": "Extended provenance activity building block for CDIF. Extends the minimal prov:Activity (generatedBy) with schema.org Action properties for comprehensive provenance documentation including agents, instruments, methodology, temporal bounds, action chaining, and more.",
+    "cdif.bbr.metadata.provProperties.generatedBy": {
+      "title": "very simple links or names of software or instruments used to generate a resource.",
       "type": "object",
-      "allOf": [
-        {
-          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaDSC/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.provProperties.generatedBy"
+      "properties": {
+        "@type": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "contains": {
+            "enum": [
+              "prov:Activity"
+            ]
+          }
         },
-        {
-          "type": "object",
-          "properties": {
-            "@type": {
-              "type": "array",
-              "items": {
+        "prov:used": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
                 "type": "string"
               },
-              "minItems": 2,
-              "contains": {
-                "enum": [
-                  "schema:Action"
-                ]
-              },
-              "description": "Must include both schema:Action and prov:Activity (prov:Activity required by base generatedBy schema)"
-            },
-            "schema:name": {
-              "type": "string",
-              "description": "Human-readable name for the activity"
-            },
-            "schema:description": {
-              "type": "string",
-              "description": "Text description of what this activity did"
-            },
-            "schema:identifier": {
-              "description": "Formal identifier for this activity",
-              "anyOf": [
-                {
-                  "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaDSC/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifProv/$defs/Identifier"
-                },
-                {
-                  "type": "string"
-                }
-              ]
-            },
-            "schema:agent": {
-              "description": "Primary responsible agent for this activity (maps to PROV wasAssociatedWith)",
-              "anyOf": [
-                {
-                  "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaDSC/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifProv/$defs/Person"
-                },
-                {
-                  "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaDSC/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifProv/$defs/Organization"
-                },
-                {
-                  "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaDSC/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifProv/$defs/AgentInRole"
-                },
-                {
-                  "type": "object",
-                  "properties": {
-                    "@id": {
-                      "type": "string",
-                      "description": "reference to an agent defined elsewhere"
-                    }
+              {
+                "type": "object",
+                "properties": {
+                  "@id": {
+                    "type": "string",
+                    "description": "a resolvable reference to a representation of the software or instrument used"
                   }
                 }
-              ]
-            },
-            "schema:participant": {
-              "description": "Other participants in this activity",
-              "type": "array",
-              "items": {
-                "anyOf": [
-                  {
-                    "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaDSC/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifProv/$defs/Person"
-                  },
-                  {
-                    "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaDSC/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifProv/$defs/Organization"
-                  },
-                  {
-                    "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaDSC/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifProv/$defs/AgentInRole"
-                  },
-                  {
-                    "type": "object",
-                    "properties": {
-                      "@id": {
-                        "type": "string",
-                        "description": "reference to a participant defined elsewhere"
-                      }
-                    }
-                  }
-                ]
               }
-            },
-            "schema:instrument": {
-              "description": "Tools, software, sensors, or instruments used in this activity",
-              "type": "array",
-              "items": {
-                "anyOf": [
-                  {
-                    "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaDSC/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifProv/$defs/DefinedTerm"
-                  },
-                  {
-                    "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaDSC/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifProv/$defs/LabeledLink"
-                  },
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "type": "object",
-                    "properties": {
-                      "@id": {
-                        "type": "string",
-                        "description": "reference to an instrument defined elsewhere"
-                      }
-                    }
-                  }
-                ]
-              }
-            },
-            "schema:object": {
-              "description": "Input entity for this activity (for action chaining, references the result of a prior activity)",
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "object",
-                  "properties": {
-                    "@id": {
-                      "type": "string",
-                      "description": "reference to an input entity"
-                    }
-                  }
-                }
-              ]
-            },
-            "schema:result": {
-              "description": "Output entity produced by this activity (for action chaining, can be referenced as object of a subsequent activity)",
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "object",
-                  "properties": {
-                    "@id": {
-                      "type": "string",
-                      "description": "reference to an output entity"
-                    }
-                  }
-                }
-              ]
-            },
-            "schema:actionStatus": {
-              "type": "string",
-              "description": "Status of this activity",
-              "enum": [
-                "schema:CompletedActionStatus",
-                "schema:ActiveActionStatus",
-                "schema:PotentialActionStatus",
-                "schema:FailedActionStatus"
-              ]
-            },
-            "schema:startTime": {
-              "type": "string",
-              "description": "ISO8601 date-time when the activity started (maps to PROV startedAtTime)"
-            },
-            "schema:endTime": {
-              "type": "string",
-              "description": "ISO8601 date-time when the activity ended (maps to PROV endedAtTime)"
-            },
-            "schema:location": {
-              "description": "Where the activity occurred",
-              "anyOf": [
-                {
-                  "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaDSC/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifProv/$defs/SpatialExtent"
-                },
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "object",
-                  "properties": {
-                    "@id": {
-                      "type": "string",
-                      "description": "reference to a place defined elsewhere"
-                    }
-                  }
-                }
-              ]
-            },
-            "schema:actionProcess": {
-              "description": "Methodology or protocol for this activity",
-              "anyOf": [
-                {
-                  "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaDSC/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifProv/$defs/HowTo"
-                },
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "object",
-                  "properties": {
-                    "@id": {
-                      "type": "string",
-                      "description": "reference to a methodology defined elsewhere"
-                    }
-                  }
-                }
-              ]
-            },
-            "schema:error": {
-              "type": "string",
-              "description": "Error description for failed activities"
-            },
-            "schema:additionalProperty": {
-              "description": "Domain-specific extension properties",
-              "type": "array",
-              "items": {
-                "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaDSC/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifProv/$defs/AdditionalProperty"
-              }
-            }
+            ]
           }
         }
-      ],
-      "$defs": {
-        "Person": {
-          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaDSC/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.person"
-        },
-        "Organization": {
-          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaDSC/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.organization"
-        },
-        "AgentInRole": {
-          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaDSC/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.agentInRole"
-        },
-        "Identifier": {
-          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaDSC/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.identifier"
-        },
-        "DefinedTerm": {
-          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaDSC/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.definedTerm"
-        },
-        "LabeledLink": {
-          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaDSC/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.labeledLink"
-        },
-        "SpatialExtent": {
-          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaDSC/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.spatialExtent"
-        },
-        "AdditionalProperty": {
-          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaDSC/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.additionalProperty"
-        },
-        "HowTo": {
-          "type": "object",
-          "description": "A methodology or protocol described as a HowTo with optional steps",
-          "properties": {
-            "@type": {
-              "type": "string",
-              "enum": [
-                "schema:HowTo"
-              ]
-            },
-            "@id": {
-              "type": "string"
-            },
-            "schema:name": {
-              "type": "string",
-              "description": "Name of the methodology or protocol"
-            },
-            "schema:description": {
-              "type": "string",
-              "description": "Description of the methodology"
-            },
-            "schema:url": {
-              "type": "string",
-              "format": "uri",
-              "description": "URL to a published methodology or protocol document"
-            },
-            "schema:step": {
-              "type": "array",
-              "description": "Ordered steps in this methodology",
-              "items": {
-                "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaDSC/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifProv/$defs/HowToStep"
-              }
-            }
-          },
-          "required": [
-            "@type"
-          ],
-          "anyOf": [
-            {
-              "required": [
-                "schema:name"
-              ]
-            },
-            {
-              "required": [
-                "schema:url"
-              ]
-            }
-          ]
-        },
-        "HowToStep": {
-          "type": "object",
-          "description": "A single step in a HowTo methodology",
-          "properties": {
-            "@type": {
-              "type": "string",
-              "enum": [
-                "schema:HowToStep"
-              ]
-            },
-            "schema:name": {
-              "type": "string",
-              "description": "Name of this step"
-            },
-            "schema:description": {
-              "type": "string",
-              "description": "Description of what this step involves"
-            },
-            "schema:url": {
-              "type": "string",
-              "format": "uri",
-              "description": "URL to documentation for this step"
-            },
-            "schema:position": {
-              "type": "integer",
-              "description": "Ordinal position of this step"
-            }
-          },
-          "required": [
-            "@type",
-            "schema:name"
-          ]
-        },
-        "Claim": {
-          "type": "object",
-          "description": "A statement or assertion about the dataset, such as a quality claim",
-          "properties": {
-            "@type": {
-              "type": "string",
-              "enum": [
-                "schema:Claim"
-              ]
-            },
-            "@id": {
-              "type": "string"
-            },
-            "schema:claimReviewed": {
-              "type": "string",
-              "description": "The claim being reviewed or asserted"
-            },
-            "schema:author": {
-              "description": "Author of this claim",
-              "anyOf": [
-                {
-                  "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaDSC/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifProv/$defs/Person"
-                },
-                {
-                  "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaDSC/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifProv/$defs/Organization"
-                },
-                {
-                  "type": "object",
-                  "properties": {
-                    "@id": {
-                      "type": "string"
-                    }
-                  }
-                }
-              ]
-            },
-            "schema:datePublished": {
-              "type": "string",
-              "description": "ISO8601 date when this claim was published"
-            },
-            "schema:appearance": {
-              "description": "Where this claim appears",
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaDSC/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifProv/$defs/LabeledLink"
-                }
-              ]
-            }
-          },
-          "required": [
-            "@type",
-            "schema:claimReviewed"
-          ]
-        }
       },
-      "x-schema-source": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifProv/schema.yaml",
+      "x-jsonld-prefixes": {
+        "schema": "http://schema.org/",
+        "prov": "http://www.w3.org/ns/prov#"
+      },
+      "x-schema-source": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/provProperties/generatedBy/schema.yaml",
       "x-schema-version": "https://json-schema.org/draft/2020-12/schema"
     },
     "cdif.bbr.metadata.provProperties.derivedFrom": {
@@ -3470,6 +3187,17 @@
         "schema": "http://schema.org/"
       },
       "x-schema-source": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/qualityProperties/qualityMeasure/schema.yaml",
+      "x-schema-version": "https://json-schema.org/draft/2020-12/schema"
+    },
+    "cdif.bbr.metadata.adaProperties.stringArray": {
+      "title": "String Array Type",
+      "description": "Simple reusable array of strings",
+      "type": "array",
+      "minItems": 0,
+      "items": {
+        "type": "string"
+      },
+      "x-schema-source": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/adaProperties/stringArray/schema.yaml",
       "x-schema-version": "https://json-schema.org/draft/2020-12/schema"
     },
     "cdif.bbr.metadata.adaProperties.image": {
@@ -4220,109 +3948,6 @@
       "x-schema-source": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/adaProperties/otherFile/schema.yaml",
       "x-schema-version": "https://json-schema.org/draft/2020-12/schema"
     },
-    "cdif.bbr.metadata.provProperties.generatedBy": {
-      "title": "very simple links or names of software or instruments used to generate a resource.",
-      "type": "object",
-      "properties": {
-        "@type": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "minItems": 1,
-          "contains": {
-            "enum": [
-              "prov:Activity"
-            ]
-          }
-        },
-        "prov:used": {
-          "type": "array",
-          "items": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "object",
-                "properties": {
-                  "@id": {
-                    "type": "string",
-                    "description": "a resolvable reference to a representation of the software or instrument used"
-                  }
-                }
-              }
-            ]
-          }
-        }
-      },
-      "x-jsonld-prefixes": {
-        "schema": "http://schema.org/",
-        "prov": "http://www.w3.org/ns/prov#"
-      },
-      "x-schema-source": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/provProperties/generatedBy/schema.yaml",
-      "x-schema-version": "https://json-schema.org/draft/2020-12/schema"
-    },
-    "cdif.bbr.metadata.schemaorgProperties.additionalProperty": {
-      "type": "object",
-      "title": "additionalProperty PropertyValue",
-      "description": "PropertyValue values required to define a soft-typed property with a value. ",
-      "properties": {
-        "@type": {
-          "type": "string",
-          "enum": [
-            "schema:PropertyValue"
-          ]
-        },
-        "schema:propertyID": {
-          "type": "array",
-          "items": {
-            "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaDSC/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.additionalProperty/$defs/propertyID_item"
-          },
-          "minItems": 1,
-          "description": "identifier or name for the property concept quantified by the values in this variable slot. Multiple values can specify the property at different levels of granularity."
-        },
-        "schema:name": {
-          "type": "string"
-        },
-        "schema:value": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "schema:name",
-        "schema:value"
-      ],
-      "$defs": {
-        "DefinedTerm": {
-          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaDSC/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.definedTerm"
-        },
-        "propertyID_item": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "object",
-              "properties": {
-                "@id": {
-                  "type": "string"
-                }
-              }
-            },
-            {
-              "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaDSC/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.additionalProperty/$defs/DefinedTerm"
-            }
-          ]
-        }
-      },
-      "x-jsonld-prefixes": {
-        "schema": "http://schema.org/",
-        "nxs": "http://purl.org/nexusformat/definitions/"
-      },
-      "x-schema-source": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/additionalProperty/schema.yaml",
-      "x-schema-version": "https://json-schema.org/draft/2020-12/schema"
-    },
     "cdif.bbr.metadata.adaProperties.detailEMPA": {
       "title": "EMPA Instrument Detail",
       "description": "Electron Microprobe Analysis with spectrometer and signal details.",
@@ -4887,17 +4512,6 @@
         "cdi": "http://ddialliance.org/Specification/DDI-CDI/1.0/RDF/"
       },
       "x-schema-source": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifTabularData/schema.yaml",
-      "x-schema-version": "https://json-schema.org/draft/2020-12/schema"
-    },
-    "cdif.bbr.metadata.adaProperties.stringArray": {
-      "title": "String Array Type",
-      "description": "Simple reusable array of strings",
-      "type": "array",
-      "minItems": 0,
-      "items": {
-        "type": "string"
-      },
-      "x-schema-source": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/adaProperties/stringArray/schema.yaml",
       "x-schema-version": "https://json-schema.org/draft/2020-12/schema"
     },
     "cdif.bbr.metadata.adaProperties.detailL2MS": {

@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.adaProperties.document` *v0.1*
 
-Supplemental documents for calibration, methods, and analysis info
+Supplemental documents for calibration, methods, and analysis info. Defines properties: @type, componentType, schema:version, schema:isBasedOn. Uses building blocks: detailARGT (adaProperties).
 
 [*Status*](http://www.opengis.net/def/status): Under development
 

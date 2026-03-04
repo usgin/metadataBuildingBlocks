@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.adaProperties.supDocImage` *v0.1*
 
-Supplemental document images including analysis locations and context photos
+Supplemental document images including analysis locations and context photos. Defines properties: @type, componentType, numPixelsX, numPixelsY, _original_name.
 
 [*Status*](http://www.opengis.net/def/status): Under development
 

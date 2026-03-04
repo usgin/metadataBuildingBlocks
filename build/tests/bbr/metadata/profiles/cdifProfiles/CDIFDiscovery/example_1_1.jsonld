@@ -13,10 +13,12 @@
       "cdi": "http://ddialliance.org/Specification/DDI-CDI/1.0/RDF/",
       "csvw": "http://www.w3.org/ns/csvw#",
       "ex": "https://example.org/",
-      "xsd": "http://www.w3.org/2001/XMLSchema#"
+      "xsd": "http://www.w3.org/2001/XMLSchema#",
+      "dcat": "http://www.w3.org/ns/dcat#",
+      "uri": "urn:"
     }
   ],
-  "@id": "ex:YOPx",
+  "@id": "ex:YOPx123",
   "@type": [
     "schema:Dataset"
   ],
@@ -165,7 +167,7 @@
       "@type": "schema:Role",
       "schema:roleName": "editor",
       "schema:contributor": {
-        "@id": "ex:PersonExample_zZc",
+        "@id": "ex:PersonExample_zZc_asContributor",
         "@type": "schema:Person",
         "schema:name": "Joe B. Test",
         "schema:alternateName": "Test, J. B.",
@@ -294,6 +296,7 @@
         "text/csv"
       ],
       "spdx:checksum": {
+        "@type": "spdx:Checksum",
         "spdx:algorithm": "MD5",
         "spdx:checksumValue": "MITGLcmBjeFYWmjP"
       },
@@ -348,6 +351,7 @@
         "sMUGwSqxWzJOYEb"
       ],
       "spdx:checksum": {
+        "@type": "spdx:Checksum",
         "spdx:algorithm": "j",
         "spdx:checksumValue": "h"
       },
@@ -424,20 +428,19 @@
     }
   ],
   "schema:subjectOf": {
-    "@type": "schema:Dataset",
+    "@type": [
+      "schema:Dataset"
+    ],
+    "schema:additionalType": [
+      "dcat:CatalogRecord"
+    ],
     "@id": "ex:BAaR",
     "schema:about": {
       "@id": "ex:YOPx"
     },
     "dcterms:conformsTo": [
       {
-        "@id": "ex:wjZwFKFIoCdVDlxdrF"
-      },
-      {
-        "@id": "ex:ESrkifcWtMnOisQmcXK"
-      },
-      {
-        "@id": "ex:AbxQQMnD"
+        "@id": "https://w3id.org/cdif/bbr/metadata/profiles/cdifProfiles/CDIFDiscovery"
       }
     ],
     "schema:maintainer": {

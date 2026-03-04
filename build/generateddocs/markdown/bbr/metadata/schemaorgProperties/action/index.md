@@ -3,15 +3,29 @@
 
 `cdif.bbr.metadata.schemaorgProperties.action` *v0.1*
 
-Schema defining properties to implement description of an action, a profile of schema.org/Action.
+Schema defining properties to implement description of an action, a profile of schema.org/Action. Defines properties: @type, schema:name, schema:target, schema:result, schema:object, schema:query-input. Uses building blocks: variableMeasured (schemaorgProperties).
 
 [*Status*](http://www.opengis.net/def/status): Under development
 
 ## Description
 
-## Person properties
+## Action properties
 
-Defines a set of properties for use describing a person for the schema.org implementation of the [Cross Domain Interoperability Framework](https://cross-domain-interoperability-framework.github.io/cdifbook/metadata/schemaorgimplementation.html#implementation-of-metadata-content-items) (CDIF) discovery profile.
+Defines an action (operation) that can be invoked via HTTP using the schema.org Action pattern. Specifies endpoint URL template, result encoding format, and query parameter documentation.
+
+### Defined properties
+
+- **@type** — the type of action (schema:Action or subtypes like SearchAction, CreateAction, UpdateAction, etc.)
+- **schema:name** — text label for the action
+- **schema:target** — request target location and syntax (schema:EntryPoint with urlTemplate, httpMethod, contentType)
+- **schema:result** — serialization scheme and encoding format for API responses (schema:DataDownload with encodingFormat)
+- **schema:object** — specification of the information model for the target resource (schema:DataFeed with variableMeasured)
+- **schema:query-input** — explanations of URL template parameters (array of schema:PropertyValueSpecification with valueName, valueRequired, valuePattern)
+
+### Dependencies
+
+- [variableMeasured](../variableMeasured/) — variable descriptions for data feed objects
+
 ## Examples
 
 ### Example Action.
@@ -61,8 +75,8 @@ Implementation of schema.org Action as described in blog post at https://schema.
             }
         ],
         "schema:encodingFormat-input": [
-            "Lp",
-            "CrYPluQBTVSdQa"
+            "application/json",
+            "text/csv"
         ]
     },
     "schema:query-input": [
@@ -72,7 +86,7 @@ Implementation of schema.org Action as described in blog post at https://schema.
             "schema:valueName": "encoding",
             "schema:description": "format of requested result",
             "schema:valueRequired": false,
-            "schema:valuePattern": "HgfKhFiAHnRPNcqj"
+            "schema:valuePattern": "^(csv|json)$"
         },
         {
             "@id": "ex:input_instruments",
@@ -80,7 +94,7 @@ Implementation of schema.org Action as described in blog post at https://schema.
             "schema:valueName": "instruments",
             "schema:description": "sensor for data requested",
             "schema:valueRequired": false,
-            "schema:valuePattern": "WMCHdQeOcsmpjBFn"
+            "schema:valuePattern": "^[A-Za-z0-9_, ]+$"
         },
         {
             "@id": "ex:input_start",
@@ -88,7 +102,7 @@ Implementation of schema.org Action as described in blog post at https://schema.
             "schema:valueName": "start",
             "schema:description": "beginning of time interval for requested data",
             "schema:valueRequired": false,
-            "schema:valuePattern": "S"
+            "schema:valuePattern": "^\\d{4}-\\d{2}-\\d{2}(T\\d{2}:\\d{2}:\\d{2}Z)?$"
         },
         {
             "@id": "ex:input_end",
@@ -96,7 +110,7 @@ Implementation of schema.org Action as described in blog post at https://schema.
             "schema:valueName": "end",
             "schema:description": "end of time interval for requested data",
             "schema:valueRequired": true,
-            "schema:valuePattern": "COollIxtaehmgu"
+            "schema:valuePattern": "^\\d{4}-\\d{2}-\\d{2}(T\\d{2}:\\d{2}:\\d{2}Z)?$"
         }
     ]
 }
@@ -167,8 +181,8 @@ Implementation of schema.org Action as described in blog post at https://schema.
       }
     ],
     "schema:encodingFormat-input": [
-      "Lp",
-      "CrYPluQBTVSdQa"
+      "application/json",
+      "text/csv"
     ]
   },
   "schema:query-input": [
@@ -178,7 +192,7 @@ Implementation of schema.org Action as described in blog post at https://schema.
       "schema:valueName": "encoding",
       "schema:description": "format of requested result",
       "schema:valueRequired": false,
-      "schema:valuePattern": "HgfKhFiAHnRPNcqj"
+      "schema:valuePattern": "^(csv|json)$"
     },
     {
       "@id": "ex:input_instruments",
@@ -186,7 +200,7 @@ Implementation of schema.org Action as described in blog post at https://schema.
       "schema:valueName": "instruments",
       "schema:description": "sensor for data requested",
       "schema:valueRequired": false,
-      "schema:valuePattern": "WMCHdQeOcsmpjBFn"
+      "schema:valuePattern": "^[A-Za-z0-9_, ]+$"
     },
     {
       "@id": "ex:input_start",
@@ -194,7 +208,7 @@ Implementation of schema.org Action as described in blog post at https://schema.
       "schema:valueName": "start",
       "schema:description": "beginning of time interval for requested data",
       "schema:valueRequired": false,
-      "schema:valuePattern": "S"
+      "schema:valuePattern": "^\\d{4}-\\d{2}-\\d{2}(T\\d{2}:\\d{2}:\\d{2}Z)?$"
     },
     {
       "@id": "ex:input_end",
@@ -202,7 +216,7 @@ Implementation of schema.org Action as described in blog post at https://schema.
       "schema:valueName": "end",
       "schema:description": "end of time interval for requested data",
       "schema:valueRequired": true,
-      "schema:valuePattern": "COollIxtaehmgu"
+      "schema:valuePattern": "^\\d{4}-\\d{2}-\\d{2}(T\\d{2}:\\d{2}:\\d{2}Z)?$"
     }
   ]
 }
@@ -218,8 +232,8 @@ ex:exampleAction_37467 a schema1:Action ;
     schema1:name "Download Data" ;
     schema1:object [ a schema1:DataFeed ;
             schema1:description "description of the structure of the api result data" ;
-            schema1:encodingFormat-input "CrYPluQBTVSdQa",
-                "Lp" ;
+            schema1:encodingFormat-input "application/json",
+                "text/csv" ;
             schema1:variableMeasured [ a schema1:PropertyValue ;
                     schema1:description "temperature of the sample" ;
                     schema1:name "temperature" ;
@@ -247,25 +261,25 @@ ex:definedTerm_zZc a schema1:PropertyValue ;
 ex:input_encoding a schema1:PropertyValueSpecification ;
     schema1:description "format of requested result" ;
     schema1:valueName "encoding" ;
-    schema1:valuePattern "HgfKhFiAHnRPNcqj" ;
+    schema1:valuePattern "^(csv|json)$" ;
     schema1:valueRequired false .
 
 ex:input_end a schema1:PropertyValueSpecification ;
     schema1:description "end of time interval for requested data" ;
     schema1:valueName "end" ;
-    schema1:valuePattern "COollIxtaehmgu" ;
+    schema1:valuePattern "^\\d{4}-\\d{2}-\\d{2}(T\\d{2}:\\d{2}:\\d{2}Z)?$" ;
     schema1:valueRequired true .
 
 ex:input_instruments a schema1:PropertyValueSpecification ;
     schema1:description "sensor for data requested" ;
     schema1:valueName "instruments" ;
-    schema1:valuePattern "WMCHdQeOcsmpjBFn" ;
+    schema1:valuePattern "^[A-Za-z0-9_, ]+$" ;
     schema1:valueRequired false .
 
 ex:input_start a schema1:PropertyValueSpecification ;
     schema1:description "beginning of time interval for requested data" ;
     schema1:valueName "start" ;
-    schema1:valuePattern "S" ;
+    schema1:valuePattern "^\\d{4}-\\d{2}-\\d{2}(T\\d{2}:\\d{2}:\\d{2}Z)?$" ;
     schema1:valueRequired false .
 
 
@@ -288,10 +302,21 @@ description: 'this element defines an action (operation) that can be invoked via
 properties:
   '@type':
     type: string
-    description: TBD, recognize other actions, e.g. SearchAction, UpdateAction...,
-      others?
+    description: The type of action. Must be schema:Action or one of its subtypes.
     default: schema:Action
-    const: schema:Action
+    enum:
+    - schema:Action
+    - schema:AssessAction
+    - schema:ConsumeAction
+    - schema:ControlAction
+    - schema:CreateAction
+    - schema:FindAction
+    - schema:InteractAction
+    - schema:MoveAction
+    - schema:PlayAction
+    - schema:SearchAction
+    - schema:TransferAction
+    - schema:UpdateAction
   schema:name:
     type: string
     description: text label for the action

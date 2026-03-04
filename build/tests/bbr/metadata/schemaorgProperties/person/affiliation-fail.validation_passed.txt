@@ -1,5 +1,5 @@
 Validation report for cdif.bbr.metadata.schemaorgProperties.person - Person
-Generated 2026-02-25T16:36:27.950731+00:00
+Generated 2026-03-04T13:42:11.359801+00:00
 === General ===
 Test was expected to fail and it did.
 === End General ===
@@ -78,12 +78,12 @@ Validation result for _sources/schemaorgProperties/person/rules.shacl:
   	Focus Node: ex:PersonExample_zZc
   	Value Node: ex:PersonExample_zZc
   	Message: A person must have a name or an identifier provided; affiliation to an organization is recommended.
-  Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-  	Severity: sh:Violation
+  Validation Result in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+  	Severity: sh:Info
   	Source Shape: cdifd:contactPointProperty
   	Focus Node: ex:PersonExample_zZc
   	Result Path: schema1:contactPoint
-  	Message: Less than 1 values on ex:PersonExample_zZc->schema1:contactPoint
+  	Message: A Person should have a contactPoint (schema:ContactPoint or mailto: IRI)
   Validation Result in OrConstraintComponent (http://www.w3.org/ns/shacl#OrConstraintComponent):
   	Severity: sh:Warning
   	Source Shape: cdifd:affiliationProperty
@@ -93,23 +93,17 @@ Validation result for _sources/schemaorgProperties/person/rules.shacl:
   	Message: Optional: an affiliation must have object schema:Organization
   
 Focus nodes for _sources/schemaorgProperties/person/rules.shacl:
- - Shape cdifd:contactPointProperty/sh:or/rdf:first: *none*
+ - Shape cdifd:CDIFPersonShape: ex:PersonExample_zZc
  - Shape cdifd:affiliationProperty/sh:or/rdf:rest/rdf:first: *none*
  - Shape cdifd:CDIFPersonShape/sh:or/rdf:first: *none*
- - Shape cdifd:CDIFContactPointShape: *none*
+ - Shape cdifd:maintainerOrProviderContactPointShape/sh:property/sh:or/rdf:first: *none*
  - Shape cdifd:affiliationProperty/sh:or/rdf:first: *none*
- - Shape cdifd:contactPointProperty/sh:or/rdf:rest/rdf:first: *none*
+ - Shape cdifd:maintainerOrProviderContactPointShape: *none*
+ - Shape cdifd:CDIFContactPointShape: *none*
  - Shape cdifd:CDIFPersonShape/sh:or/rdf:rest/rdf:first: *none*
- - Shape cdifd:CDIFPersonShape: ex:PersonExample_zZc
-
-Validation result for _sources/schemaorgProperties/organization/rules.shacl:
-  Validation Report
-  Conforms: True
-  
-Focus nodes for _sources/schemaorgProperties/organization/rules.shacl:
- - Shape cdifd:CDIFOrganizationShape/sh:or/rdf:first: *none*
- - Shape cdifd:CDIFOrganizationShape/sh:or/rdf:rest/rdf:first: *none*
- - Shape cdifd:CDIFOrganizationShape: *none*
+ - Shape _:ncdc926fd161c45db8272e86d78a9a12db14: *none*
+ - Shape cdifd:contactPointProperty/sh:or/rdf:first: *none*
+ - Shape cdifd:contactPointProperty/sh:or/rdf:rest/rdf:first: *none*
 
 Validation result for _sources/schemaorgProperties/identifier/rules.shacl:
   Validation Report
@@ -117,35 +111,45 @@ Validation result for _sources/schemaorgProperties/identifier/rules.shacl:
   
 Focus nodes for _sources/schemaorgProperties/identifier/rules.shacl:
  - Shape cdifd:CDIFIdentifierShape: *none*
- - Shape _:ne2f555d059804318829f6b10f17c870db20: *none*
+ - Shape cdifd:CDIFIdentifierTypeTermShape/sh:property/sh:or/rdf:first: *none*
+ - Shape cdifd:CDIFIdentifierTypeTermShape: *none*
+ - Shape _:nc1bfbc076eef453fa0168a32723c9af8b11: *none*
+ - Shape _:nc1bfbc076eef453fa0168a32723c9af8b21: *none*
+ - Shape _:nc1bfbc076eef453fa0168a32723c9af8b23: *none*
  - Shape cdifd:CDIFIdentifierShape/sh:or/rdf:first: *none*
  - Shape cdifd:CDIFIdentifierShape/sh:or/rdf:rest/rdf:first: *none*
- - Shape cdifd:CDIFIdentifierTypeTermShape: *none*
- - Shape _:ne2f555d059804318829f6b10f17c870db23: *none*
- - Shape _:ne2f555d059804318829f6b10f17c870db11: *none*
- - Shape _:ne2f555d059804318829f6b10f17c870db21: *none*
+ - Shape _:nc1bfbc076eef453fa0168a32723c9af8b10: *none*
  - Shape cdifd:CDIFIdentifierShape/sh:property/sh:or/rdf:first: *none*
- - Shape _:ne2f555d059804318829f6b10f17c870db10: *none*
- - Shape _:ne2f555d059804318829f6b10f17c870db22: *none*
- - Shape cdifd:CDIFIdentifierTypeTermShape/sh:property/sh:or/rdf:first: *none*
- - Shape _:ne2f555d059804318829f6b10f17c870db25: *none*
+ - Shape _:nc1bfbc076eef453fa0168a32723c9af8b20: *none*
+ - Shape _:nc1bfbc076eef453fa0168a32723c9af8b25: *none*
+ - Shape _:nc1bfbc076eef453fa0168a32723c9af8b22: *none*
+
+Validation result for _sources/schemaorgProperties/organization/rules.shacl:
+  Validation Report
+  Conforms: True
+  
+Focus nodes for _sources/schemaorgProperties/organization/rules.shacl:
+ - Shape cdifd:CDIFOrganizationShape: *none*
+ - Shape cdifd:CDIFOrganizationShape/sh:or/rdf:first: *none*
+ - Shape cdifd:CDIFOrganizationShape/sh:or/rdf:rest/rdf:first: *none*
 
 Validation result for _sources/schemaorgProperties/definedTerm/rules.shacl:
   Validation Report
   Conforms: True
   
 Focus nodes for _sources/schemaorgProperties/definedTerm/rules.shacl:
- - Shape _:n7632f6e831d14a57b22c5b5951b90604b5: *none*
- - Shape _:n7632f6e831d14a57b22c5b5951b90604b8: *none*
- - Shape _:n7632f6e831d14a57b22c5b5951b90604b23: *none*
- - Shape cdifd:CDIFDefinedTermShape/sh:or/rdf:rest/rdf:first: *none*
- - Shape cdifd:CDIFDefinedTermShape/sh:or/rdf:first: *none*
- - Shape _:n7632f6e831d14a57b22c5b5951b90604b6: *none*
- - Shape _:n7632f6e831d14a57b22c5b5951b90604b10: *none*
- - Shape _:n7632f6e831d14a57b22c5b5951b90604b7: *none*
- - Shape _:n7632f6e831d14a57b22c5b5951b90604b4: *none*
- - Shape cdifd:CDIFDefinedTermShape/sh:property/sh:or/rdf:first: *none*
  - Shape cdifd:CDIFDefinedTermShape: *none*
+ - Shape _:n079600a98e974ca286483ada5279c3bab10: *none*
+ - Shape _:n079600a98e974ca286483ada5279c3bab26: *none*
+ - Shape cdifd:CDIFDefinedTermShape/sh:or/rdf:first: *none*
+ - Shape _:n079600a98e974ca286483ada5279c3bab4: *none*
+ - Shape _:n079600a98e974ca286483ada5279c3bab5: *none*
+ - Shape _:n079600a98e974ca286483ada5279c3bab19: *none*
+ - Shape cdifd:CDIFDefinedTermShape/sh:property/sh:or/rdf:first: *none*
+ - Shape _:n079600a98e974ca286483ada5279c3bab8: *none*
+ - Shape _:n079600a98e974ca286483ada5279c3bab7: *none*
+ - Shape _:n079600a98e974ca286483ada5279c3bab6: *none*
+ - Shape cdifd:CDIFDefinedTermShape/sh:or/rdf:rest/rdf:first: *none*
 
 === End SHACL ===
 

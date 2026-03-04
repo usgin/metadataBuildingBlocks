@@ -4,13 +4,13 @@
   "itemIdentifier": "cdif.bbr.metadata.schemaorgProperties.additionalProperty",
   "$schema": "metaschema.yaml",
   "name": "schema additionalProperty properties",
-  "abstract": "Schema for a schema:PropertyValue used to specify a property of an element that is not defined in the JSON schema..",
+  "abstract": "Schema for a schema:PropertyValue used to specify a property of an element that is not defined in the JSON schema. Defines properties: @type, schema:propertyID, schema:name, schema:value. Uses building blocks: definedTerm (schemaorgProperties).",
   "status": "under-development",
   "dateTimeAddition": "2025-10-30T00:00:00Z",
   "itemClass": "schema",
   "register": "cdif-building-block-register",
   "version": "0.1",
-  "dateOfLastChange": "2026-02-25",
+  "dateOfLastChange": "2026-03-04",
   "link": "https://github.com/opengeospatial/bblock-template",
   "sources": [
     {
@@ -49,7 +49,7 @@
   "rdfData": [],
   "validationPassed": true,
   "testOutputs": "https://github.com/usgin/metadataBuildingBlocks/blob/main/build/tests/bbr/metadata/schemaorgProperties/additionalProperty/",
-  "description": "## Person properties\n\nDefines a set of properties for use describing a person for the schema.org implementation of the [Cross Domain Interoperability Framework](https://cross-domain-interoperability-framework.github.io/cdifbook/metadata/schemaorgimplementation.html#implementation-of-metadata-content-items) (CDIF) discovery profile.",
+  "description": "## Additional Property (PropertyValue) properties\n\nPropertyValue pattern for soft-typed properties with name/value pairs. Used as values for schema:additionalProperty in extension profiles. Not used in CDIF Mandatory or CDIF Optional.\n\n### Defined properties\n\n- **@type** \u2014 must be schema:PropertyValue\n- **schema:propertyID** \u2014 identifier or name for the property concept (string, URI reference, or DefinedTerm)\n- **schema:name** \u2014 name of the property\n- **schema:value** \u2014 value of the property\n\n### Dependencies\n\n- [definedTerm](../definedTerm/) \u2014 controlled vocabulary term for property identification\n",
   "examples": [
     {
       "title": "Example additional property.",
@@ -61,17 +61,17 @@
         {
           "language": "json",
           "ref": "exampleAdditionalProperty.json",
-          "code": "{\n    \"@context\": {\n        \"schema\": \"http://schema.org/\",\n        \"ex\": \"https://example.org/\",\n        \"xsd\": \"http://www.w3.org/2001/XMLSchema#\",\n        \"nxs\": \"http://purl.org/nexusformat/definitions/\"\n    },\n    \"@id\": \"ex:exampleAdditionalProperty_lkj09\",\n    \"@type\": \"schema:PropertyValue\",\n    \"schema:propertyID\": [\n        \"nxs:Field/NXsource/probe\",\n        {\n            \"@id\": \"ex:addPropdefinedTerm_zZc\",\n            \"@type\": \"schema:DefinedTerm\",\n            \"schema:name\":\"probe\",\n            \"schema:identifier\": {\n                \"@id\": \"ex:addPropIDPropertyValue_53yh\",\n                \"@type\": \"schema:PropertyValue\",\n                \"schema:propertyID\":\"httpUri\",\n                \"schema:url\": \"http://ogc.org/defs/rt45347278\"\n            },\n            \"schema:inDefinedTermSet\": \"http://ogc.org/defs\"\n        }\n    ],\n    \"schema:name\": \"example additional property\",\n    \"schema:value\": \"x-ray\"\n}",
+          "code": "{\n    \"@context\": {\n        \"schema\": \"http://schema.org/\",\n        \"ex\": \"https://example.org/\",\n        \"xsd\": \"http://www.w3.org/2001/XMLSchema#\",\n        \"nxs\": \"http://purl.org/nexusformat/definitions/\"\n    },\n    \"@id\": \"ex:exampleAdditionalProperty_lkj09\",\n    \"@type\": \"schema:PropertyValue\",\n    \"schema:propertyID\": [\n        \"nxs:Field/NXsource/probe\",\n        {\n            \"@id\": \"ex:addPropdefinedTerm_zZc\",\n            \"@type\": \"schema:DefinedTerm\",\n            \"schema:name\":\"probe\",\n            \"schema:identifier\": {\n                \"@id\": \"ex:addPropIDPropertyValue_53yh\",\n                \"@type\": \"schema:PropertyValue\",\n                \"schema:propertyID\": \"https://purl.org/nexusformat/definitions/Field/NXsource/probe\",\n                \"schema:url\": \"https://purl.org/nexusformat/definitions/Field/NXsource/probe\"\n            },\n            \"schema:inDefinedTermSet\": \"http://ogc.org/defs\"\n        }\n    ],\n    \"schema:name\": \"example additional property\",\n    \"schema:value\": \"x-ray\"\n}",
           "url": "https://usgin.github.io/metadataBuildingBlocks/build/tests/bbr/metadata/schemaorgProperties/additionalProperty/example_1_1.json"
         },
         {
           "language": "jsonld",
-          "code": "{\n  \"@context\": [\n    {\n      \"schema\": \"http://schema.org/\"\n    },\n    \"https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/additionalProperty/context.jsonld\",\n    {\n      \"schema\": \"http://schema.org/\",\n      \"ex\": \"https://example.org/\",\n      \"xsd\": \"http://www.w3.org/2001/XMLSchema#\",\n      \"nxs\": \"http://purl.org/nexusformat/definitions/\"\n    }\n  ],\n  \"@id\": \"ex:exampleAdditionalProperty_lkj09\",\n  \"@type\": \"schema:PropertyValue\",\n  \"schema:propertyID\": [\n    \"nxs:Field/NXsource/probe\",\n    {\n      \"@id\": \"ex:addPropdefinedTerm_zZc\",\n      \"@type\": \"schema:DefinedTerm\",\n      \"schema:name\": \"probe\",\n      \"schema:identifier\": {\n        \"@id\": \"ex:addPropIDPropertyValue_53yh\",\n        \"@type\": \"schema:PropertyValue\",\n        \"schema:propertyID\": \"httpUri\",\n        \"schema:url\": \"http://ogc.org/defs/rt45347278\"\n      },\n      \"schema:inDefinedTermSet\": \"http://ogc.org/defs\"\n    }\n  ],\n  \"schema:name\": \"example additional property\",\n  \"schema:value\": \"x-ray\"\n}",
+          "code": "{\n  \"@context\": [\n    {\n      \"schema\": \"http://schema.org/\"\n    },\n    \"https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/additionalProperty/context.jsonld\",\n    {\n      \"schema\": \"http://schema.org/\",\n      \"ex\": \"https://example.org/\",\n      \"xsd\": \"http://www.w3.org/2001/XMLSchema#\",\n      \"nxs\": \"http://purl.org/nexusformat/definitions/\"\n    }\n  ],\n  \"@id\": \"ex:exampleAdditionalProperty_lkj09\",\n  \"@type\": \"schema:PropertyValue\",\n  \"schema:propertyID\": [\n    \"nxs:Field/NXsource/probe\",\n    {\n      \"@id\": \"ex:addPropdefinedTerm_zZc\",\n      \"@type\": \"schema:DefinedTerm\",\n      \"schema:name\": \"probe\",\n      \"schema:identifier\": {\n        \"@id\": \"ex:addPropIDPropertyValue_53yh\",\n        \"@type\": \"schema:PropertyValue\",\n        \"schema:propertyID\": \"https://purl.org/nexusformat/definitions/Field/NXsource/probe\",\n        \"schema:url\": \"https://purl.org/nexusformat/definitions/Field/NXsource/probe\"\n      },\n      \"schema:inDefinedTermSet\": \"http://ogc.org/defs\"\n    }\n  ],\n  \"schema:name\": \"example additional property\",\n  \"schema:value\": \"x-ray\"\n}",
           "url": "https://usgin.github.io/metadataBuildingBlocks/build/tests/bbr/metadata/schemaorgProperties/additionalProperty/example_1_1.jsonld"
         },
         {
           "language": "ttl",
-          "code": "@prefix ex: <https://example.org/> .\n@prefix schema1: <http://schema.org/> .\n\nex:exampleAdditionalProperty_lkj09 a schema1:PropertyValue ;\n    schema1:name \"example additional property\" ;\n    schema1:propertyID ex:addPropdefinedTerm_zZc,\n        \"nxs:Field/NXsource/probe\" ;\n    schema1:value \"x-ray\" .\n\nex:addPropIDPropertyValue_53yh a schema1:PropertyValue ;\n    schema1:propertyID \"httpUri\" ;\n    schema1:url \"http://ogc.org/defs/rt45347278\" .\n\nex:addPropdefinedTerm_zZc a schema1:DefinedTerm ;\n    schema1:identifier ex:addPropIDPropertyValue_53yh ;\n    schema1:inDefinedTermSet \"http://ogc.org/defs\" ;\n    schema1:name \"probe\" .\n\n",
+          "code": "@prefix ex: <https://example.org/> .\n@prefix schema1: <http://schema.org/> .\n\nex:exampleAdditionalProperty_lkj09 a schema1:PropertyValue ;\n    schema1:name \"example additional property\" ;\n    schema1:propertyID ex:addPropdefinedTerm_zZc,\n        \"nxs:Field/NXsource/probe\" ;\n    schema1:value \"x-ray\" .\n\nex:addPropIDPropertyValue_53yh a schema1:PropertyValue ;\n    schema1:propertyID \"https://purl.org/nexusformat/definitions/Field/NXsource/probe\" ;\n    schema1:url \"https://purl.org/nexusformat/definitions/Field/NXsource/probe\" .\n\nex:addPropdefinedTerm_zZc a schema1:DefinedTerm ;\n    schema1:identifier ex:addPropIDPropertyValue_53yh ;\n    schema1:inDefinedTermSet \"http://ogc.org/defs\" ;\n    schema1:name \"probe\" .\n\n",
           "url": "https://usgin.github.io/metadataBuildingBlocks/build/tests/bbr/metadata/schemaorgProperties/additionalProperty/example_1_1.ttl"
         }
       ]

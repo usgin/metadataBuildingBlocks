@@ -31,10 +31,21 @@ properties:
       used to test if content has been modified. The checksum is a property of a particular
       distribution/DataDownload.
     properties:
+      '@type':
+        anyOf:
+        - type: string
+          const: spdx:Checksum
+        - type: array
+          items:
+            type: string
+          contains:
+            const: spdx:Checksum
       spdx:algorithm:
         type: string
       spdx:checksumValue:
         type: string
+    required:
+    - '@type'
   schema:provider:
     type: array
     description: Party who maintains this particular distribution option for the dataset.

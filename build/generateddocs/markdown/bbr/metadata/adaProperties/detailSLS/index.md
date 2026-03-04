@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.adaProperties.detailSLS` *v0.1*
 
-Structured Light Scanning shape models and partial scans
+Structured Light Scanning shape models and partial scans. Defines properties: @type, countScans, facets, unitsOfMeasurement, version, vertices, watertight.
 
 [*Status*](http://www.opengis.net/def/status): Under development
 

@@ -3,15 +3,34 @@
 
 `cdif.bbr.metadata.cdifProperties.cdifVariableMeasured` *v0.1*
 
-Schema defining properties for schema.org variableMeasured with some DDI-CDI properties, for implementation of CDIF discovery XAS profile. Implemented as schema.org/PropertyValue
+Schema defining properties for schema.org variableMeasured with some DDI-CDI properties, for implementation of CDIF discovery XAS profile. Implemented as schema.org/PropertyValue. Defines properties: @type, cdi:identifier, cdi:physicalDataType, cdi:intendedDataType, cdi:role, cdi:describedUnitOfMeasure, cdi:simpleUnitOfMeasure, cdi:uses, cdi:name, cdi:displayLabel. Uses building blocks: definedTerm (schemaorgProperties), variableMeasured (schemaorgProperties).
 
 [*Status*](http://www.opengis.net/def/status): Under development
 
 ## Description
 
-## additional Property, Property Value properties
+## CDIF Variable Measured properties
 
-Defines a set of properties for use describing a soft-typed PropertyValue for the schema.org implementation of the [Cross Domain Interoperability Framework](https://cross-domain-interoperability-framework.github.io/cdifbook/metadata/schemaorgimplementation.html#implementation-of-metadata-content-items) (CDIF) discovery profile.  Use for values of schema:additionalProperty, typically in the context of extension profiles. Not used in CDIF Mandatory or CDIF Optional.
+Extends the base [variableMeasured](../../schemaorgProperties/variableMeasured/) building block with DDI-CDI InstanceVariable properties for richer variable descriptions in CDIF integration profiles.
+
+### Defined properties
+
+- **@type** — must include schema:PropertyValue and cdi:InstanceVariable
+- **cdi:identifier** — identifier for this variable
+- **cdi:physicalDataType** — physical data type concept (string, URI reference, or DefinedTerm)
+- **cdi:intendedDataType** — intended data type for values (recommended: XML Schema datatypes)
+- **cdi:role** — role of variable in data structure (MeasureComponent, AttributeComponent, DimensionComponent, DescriptorComponent, ReferenceValueComponent)
+- **cdi:describedUnitOfMeasure** — structured unit of measure from controlled vocabulary (DefinedTerm)
+- **cdi:simpleUnitOfMeasure** — simple unit of measure (string, URI reference, or DefinedTerm)
+- **cdi:uses** — concepts that this variable measures or represents
+- **cdi:name** — name of variable in DDI-CDI model
+- **cdi:displayLabel** — human-readable label for display purposes
+
+### Dependencies
+
+- [variableMeasured](../../schemaorgProperties/variableMeasured/) — base variable measured properties
+- [definedTerm](../../schemaorgProperties/definedTerm/) — controlled vocabulary term
+
 ## Examples
 
 ### Variable Measured for CDIF XAS.
@@ -40,7 +59,7 @@ Implementation of Schema.org PropertyValue as value for variableMeasured propert
     "cdi:identifier": "should be URI from nexusFormat organization",
     "cdi:physicalDataType": ["https://www.w3.org/TR/xmlschema-2/#decimal"],
     "cdi:simpleUnitOfMeasure": "eV",
-    "cdi:uses": "xas:monochromatorEnergyConcept",
+    "cdi:uses": ["xas:monochromatorEnergyConcept"],
     "cdi:name": "energy",
     "cdi:displayLabel": "monochromator energy"
 }
@@ -84,7 +103,9 @@ Implementation of Schema.org PropertyValue as value for variableMeasured propert
     "https://www.w3.org/TR/xmlschema-2/#decimal"
   ],
   "cdi:simpleUnitOfMeasure": "eV",
-  "cdi:uses": "xas:monochromatorEnergyConcept",
+  "cdi:uses": [
+    "xas:monochromatorEnergyConcept"
+  ],
   "cdi:name": "energy",
   "cdi:displayLabel": "monochromator energy"
 }

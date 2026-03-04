@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.adaProperties.detailPSFD` *v0.1*
 
-Point Spread Function Data with image names and conditions
+Point Spread Function Data with image names and conditions. Defines properties: @type, imageName, imageViewingConditions. Uses building blocks: stringArray (adaProperties).
 
 [*Status*](http://www.opengis.net/def/status): Under development
 

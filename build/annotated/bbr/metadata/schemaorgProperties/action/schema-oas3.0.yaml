@@ -128,6 +128,8 @@ x-defs:
         - schema:name
       - required:
         - schema:identifier
+      - required:
+        - schema:termCode
     x-jsonld-prefixes:
       schema: http://schema.org/
     x-schema-source: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/definedTerm/schema.yaml
@@ -179,11 +181,21 @@ description: 'this element defines an action (operation) that can be invoked via
 properties:
   '@type':
     type: string
-    description: TBD, recognize other actions, e.g. SearchAction, UpdateAction...,
-      others?
+    description: The type of action. Must be schema:Action or one of its subtypes.
     default: schema:Action
     enum:
     - schema:Action
+    - schema:AssessAction
+    - schema:ConsumeAction
+    - schema:ControlAction
+    - schema:CreateAction
+    - schema:FindAction
+    - schema:InteractAction
+    - schema:MoveAction
+    - schema:PlayAction
+    - schema:SearchAction
+    - schema:TransferAction
+    - schema:UpdateAction
   schema:name:
     type: string
     description: text label for the action

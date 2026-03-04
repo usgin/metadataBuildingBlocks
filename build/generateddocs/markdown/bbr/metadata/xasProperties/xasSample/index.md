@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.xasProperties.xasSample` *v0.1*
 
-Schema defining properties for documenting a material sample that is the mainEntity (target) of an XAS analysis.
+Schema defining properties for documenting a material sample that is the mainEntity (target) of an XAS analysis. Defines properties: @type, schema:additionalType, schema:name, schema:identifier, schema:description, schema:additionalProperty. Uses building blocks: identifier (schemaorgProperties), additionalProperty (schemaorgProperties).
 
 [*Status*](http://www.opengis.net/def/status): Under development
 
@@ -207,13 +207,9 @@ Example sample documentation, for use in XAS profile, use as value for schema:Ma
 ex:exampleSampel_357h a schema1:Product,
         schema1:Thing ;
     schema1:additionalProperty [ a schema1:PropertyValue ;
-            schema1:name "sample material state" ;
-            schema1:propertyID "xas:materialState" ;
-            schema1:value "solid metal foil" ],
-        [ a schema1:PropertyValue ;
-            schema1:name "Parent sample" ;
-            schema1:propertyID "xas:parentSample" ;
-            schema1:value "igsn:10.3476/342573" ],
+            schema1:name "stoichiometry" ;
+            schema1:propertyID "xas:stoichiometry" ;
+            schema1:value "Na2SeO4" ],
         [ a schema1:PropertyValue ;
             schema1:name "sample mass" ;
             schema1:propertyID "nxs:Field/NXsample/mass" ;
@@ -224,22 +220,26 @@ ex:exampleSampel_357h a schema1:Product,
             schema1:propertyID "nxs:Field/NXsample/point_group" ;
             schema1:value "mm2" ],
         [ a schema1:PropertyValue ;
+            schema1:name "Parent sample" ;
+            schema1:propertyID "xas:parentSample" ;
+            schema1:value "igsn:10.3476/342573" ],
+        [ a schema1:PropertyValue ;
             schema1:name "porosity" ;
             schema1:propertyID "xas:porosity" ;
             schema1:unitText "percent" ;
             schema1:value "27" ],
         [ a schema1:PropertyValue ;
+            schema1:name "crystal unit cell" ;
+            schema1:propertyID "nxs:Field/NXsample/unit_cell" ;
+            schema1:value "cubic; Z = 4; a = 5.46; V = 162.77" ],
+        [ a schema1:PropertyValue ;
             schema1:name "samplePreparation" ;
             schema1:propertyID "xas:samplePreparation" ;
             schema1:value "powder on tape, 6 layers" ],
         [ a schema1:PropertyValue ;
-            schema1:name "stoichiometry" ;
-            schema1:propertyID "xas:stoichiometry" ;
-            schema1:value "Na2SeO4" ],
-        [ a schema1:PropertyValue ;
-            schema1:name "crystal unit cell" ;
-            schema1:propertyID "nxs:Field/NXsample/unit_cell" ;
-            schema1:value "cubic; Z = 4; a = 5.46; V = 162.77" ] ;
+            schema1:name "sample material state" ;
+            schema1:propertyID "xas:materialState" ;
+            schema1:value "solid metal foil" ] ;
     schema1:additionalType "MaterialSample",
         "https://w3id.org/isample/vocabulary/materialsampleobjecttype/materialsample",
         "https://www.wikidata.org/wiki/Q485146" ;

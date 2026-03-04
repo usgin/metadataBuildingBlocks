@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.adaProperties.detailEMPA` *v0.1*
 
-Electron Microprobe Analysis instrument-specific detail properties
+Electron Microprobe Analysis instrument-specific detail properties. Defines properties: @type, spectrometersUsed, signalUsed.
 
 [*Status*](http://www.opengis.net/def/status): Under development
 

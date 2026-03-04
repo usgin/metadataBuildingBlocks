@@ -33,10 +33,23 @@ x-defs:
           used to test if content has been modified. The checksum is a property of
           a particular distribution/DataDownload.
         properties:
+          '@type':
+            anyOf:
+            - type: string
+              enum:
+              - spdx:Checksum
+            - type: array
+              items:
+                type: string
+              contains:
+                enum:
+                - spdx:Checksum
           spdx:algorithm:
             type: string
           spdx:checksumValue:
             type: string
+        required:
+        - '@type'
       schema:provider:
         type: array
         description: Party who maintains this particular distribution option for the
@@ -58,6 +71,15 @@ x-defs:
     x-jsonld-prefixes:
       schema: http://schema.org/
     x-schema-source: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/dataDownload/schema.yaml
+    x-schema-version: https://json-schema.org/draft/2020-12/schema
+  cdif.bbr.metadata.adaProperties.stringArray:
+    title: String Array Type
+    description: Simple reusable array of strings
+    type: array
+    minItems: 0
+    items:
+      type: string
+    x-schema-source: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/adaProperties/stringArray/schema.yaml
     x-schema-version: https://json-schema.org/draft/2020-12/schema
   cdif.bbr.metadata.adaProperties.image:
     title: Image Type
@@ -1101,15 +1123,6 @@ x-defs:
       cdi: http://ddialliance.org/Specification/DDI-CDI/1.0/RDF/
     x-schema-source: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifTabularData/schema.yaml
     x-schema-version: https://json-schema.org/draft/2020-12/schema
-  cdif.bbr.metadata.adaProperties.stringArray:
-    title: String Array Type
-    description: Simple reusable array of strings
-    type: array
-    minItems: 0
-    items:
-      type: string
-    x-schema-source: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/adaProperties/stringArray/schema.yaml
-    x-schema-version: https://json-schema.org/draft/2020-12/schema
   cdif.bbr.metadata.adaProperties.detailL2MS:
     title: L2MS Instrument Detail
     description: Laser-2 Mass Spectrometry cube data with ionization parameters
@@ -1278,6 +1291,8 @@ x-defs:
         - schema:name
       - required:
         - schema:identifier
+      - required:
+        - schema:termCode
     x-jsonld-prefixes:
       schema: http://schema.org/
     x-schema-source: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/definedTerm/schema.yaml
@@ -1364,6 +1379,8 @@ allOf:
         schema:unitText:
           type: string
           default: byte
+    resultTarget:
+      $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/adaProperties/files/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.adaProperties.stringArray
     schema:relatedLink:
       type: array
       description: 'Links between files in the product. Use schema:name for path to

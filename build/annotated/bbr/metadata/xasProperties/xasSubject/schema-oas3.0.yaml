@@ -1,14 +1,28 @@
 x-defs:
-  cdif.bbr.metadata.schemaorgProperties.metaMetadata:
+  cdif.bbr.metadata.cdifProperties.cdifCatalogRecord:
     type: object
     description: see https://github.com/Cross-Domain-Interoperability-Framework/Discovery/issues/13
       for discussion on how to make assertion about the sample registration and metadata
       distinct from statements about the physical object
     properties:
       '@type':
-        type: string
-        enum:
-        - schema:Dataset
+        type: array
+        items:
+          type: string
+        contains:
+          enum:
+          - schema:Dataset
+        minItems: 1
+      schema:additionalType:
+        type: array
+        description: additional type assertions for the catalog record node. dcat:CatalogRecord
+          is required.
+        items:
+          type: string
+        contains:
+          enum:
+          - dcat:CatalogRecord
+        minItems: 1
       '@id':
         type: string
         description: identifier for the metadata record
@@ -22,7 +36,7 @@ x-defs:
       dcterms:conformsTo:
         type: array
         items:
-          $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasSubject/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.schemaorgProperties.metaMetadata/$defs/conformsTo_item
+          $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasSubject/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.cdifProperties.cdifCatalogRecord/$defs/conformsTo_item
         minItems: 1
         description: uri for specifications that this metadata record conforms to.
           Minimimally should specify uri for CDIF discovery profile.  Implement as
@@ -33,8 +47,8 @@ x-defs:
           or position name and affiliation, or just organization name. e-mail address
           is preferred contact information.
         anyOf:
-        - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasSubject/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.schemaorgProperties.metaMetadata/$defs/Person
-        - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasSubject/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.schemaorgProperties.metaMetadata/$defs/Organization
+        - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasSubject/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.cdifProperties.cdifCatalogRecord/$defs/Person
+        - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasSubject/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.cdifProperties.cdifCatalogRecord/$defs/Organization
       schema:sdDatePublished:
         description: date of most recent update to the metadata content, extends iSamples
           schema
@@ -65,10 +79,11 @@ x-defs:
             description: identifier for the collection or catalog; use identifier_type
               to provide information on identifier scheme and context for identifier
             allOf:
-            - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasSubject/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.schemaorgProperties.metaMetadata/$defs/Identifier
+            - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasSubject/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.cdifProperties.cdifCatalogRecord/$defs/Identifier
     required:
     - schema:about
     - dcterms:conformsTo
+    - schema:additionalType
     - '@type'
     - '@id'
     $defs:
@@ -90,7 +105,8 @@ x-defs:
       ex: https://example.org/
       xsd: http://www.w3.org/2001/XMLSchema#
       dcterms: http://purl.org/dc/terms/
-    x-schema-source: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/metaMetadata/schema.yaml
+      dcat: http://www.w3.org/ns/dcat#
+    x-schema-source: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifCatalogRecord/schema.yaml
     x-schema-version: https://json-schema.org/draft/2020-12/schema
   cdif.bbr.metadata.schemaorgProperties.identifier:
     description: Properties for a schema.org identifier
@@ -269,25 +285,27 @@ x-defs:
         - schema:name
       - required:
         - schema:identifier
+      - required:
+        - schema:termCode
     x-jsonld-prefixes:
       schema: http://schema.org/
     x-schema-source: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/definedTerm/schema.yaml
     x-schema-version: https://json-schema.org/draft/2020-12/schema
 type: object
 allOf:
-- $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasSubject/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.schemaorgProperties.metaMetadata
+- $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasSubject/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.cdifProperties.cdifCatalogRecord
 - properties:
     dcterms:conformsTo:
       type: array
       items:
-        $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasSubject/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.schemaorgProperties.metaMetadata/$defs/conformsTo_item
+        $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasSubject/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.cdifProperties.cdifCatalogRecord/$defs/conformsTo_item
       minItems: 2
       contains:
         type: object
         properties:
           '@id':
             enum:
-            - cdif:profile_xasCDIF
+            - https://w3id.org/cdif/bbr/metadata/profiles/cdifProfiles/CDIFxas
         required:
         - '@id'
       minContains: 1

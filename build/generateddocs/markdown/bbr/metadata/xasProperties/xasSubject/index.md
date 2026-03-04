@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.xasProperties.xasSubject` *v0.1*
 
-For XAS profle, need to declare conformatnce iwht provile in the metadata
+For XAS profle, need to declare conformatnce iwht provile in the metadata. Defines properties: dcterms:conformsTo. Uses building blocks: cdifCatalogRecord (cdifProperties).
 
 [*Status*](http://www.opengis.net/def/status): Under development
 
@@ -24,10 +24,13 @@ Import base schema.org SubjectOf, add requiremnet that dcterms:conformsTo has XA
         "ex": "https://example.org/",
         "xsd": "http://www.w3.org/2001/XMLSchema#",
         "xas": "https://xas.org/dictionary/",
-        "nxs": "http://purl.org/nexusformat/definitions/"
+        "nxs": "http://purl.org/nexusformat/definitions/",
+        "dcat": "http://www.w3.org/ns/dcat#",
+        "dcterms": "http://purl.org/dc/terms/"
     },
     "@id": "ex:subject-pz63",
-    "@type": "schema:Dataset",
+    "@type": ["schema:Dataset"],
+    "schema:additionalType": ["dcat:CatalogRecord"],
     "schema:dateModified": "2025-08-26",
     "schema:creator": [
         {
@@ -44,8 +47,8 @@ Import base schema.org SubjectOf, add requiremnet that dcterms:conformsTo has XA
     "schema:about": {"@id": "xas:485749"},
     "schema:description": "metadata about documentation for se_na2so4",
     "dcterms:conformsTo": [
-        {"@id": "cdif:profile_basic_1.0"},
-        {"@id": "cdif:profile_xasCDIF"}
+        {"@id": "https://w3id.org/cdif/bbr/metadata/cdifProperties/cdifMandatory"},
+        {"@id": "https://w3id.org/cdif/bbr/metadata/profiles/cdifProfiles/CDIFxas"}
     ]
 }
 
@@ -64,11 +67,18 @@ Import base schema.org SubjectOf, add requiremnet that dcterms:conformsTo has XA
       "ex": "https://example.org/",
       "xsd": "http://www.w3.org/2001/XMLSchema#",
       "xas": "https://xas.org/dictionary/",
-      "nxs": "http://purl.org/nexusformat/definitions/"
+      "nxs": "http://purl.org/nexusformat/definitions/",
+      "dcat": "http://www.w3.org/ns/dcat#",
+      "dcterms": "http://purl.org/dc/terms/"
     }
   ],
   "@id": "ex:subject-pz63",
-  "@type": "schema:Dataset",
+  "@type": [
+    "schema:Dataset"
+  ],
+  "schema:additionalType": [
+    "dcat:CatalogRecord"
+  ],
   "schema:dateModified": "2025-08-26",
   "schema:creator": [
     {
@@ -88,10 +98,10 @@ Import base schema.org SubjectOf, add requiremnet that dcterms:conformsTo has XA
   "schema:description": "metadata about documentation for se_na2so4",
   "dcterms:conformsTo": [
     {
-      "@id": "cdif:profile_basic_1.0"
+      "@id": "https://w3id.org/cdif/bbr/metadata/cdifProperties/cdifMandatory"
     },
     {
-      "@id": "cdif:profile_xasCDIF"
+      "@id": "https://w3id.org/cdif/bbr/metadata/profiles/cdifProfiles/CDIFxas"
     }
   ]
 }
@@ -105,9 +115,10 @@ Import base schema.org SubjectOf, add requiremnet that dcterms:conformsTo has XA
 @prefix xas: <https://xas.org/dictionary/> .
 
 ex:subject-pz63 a schema1:Dataset ;
-    dcterms:conformsTo <cdif:profile_basic_1.0>,
-        <cdif:profile_xasCDIF> ;
+    dcterms:conformsTo <https://w3id.org/cdif/bbr/metadata/cdifProperties/cdifMandatory>,
+        <https://w3id.org/cdif/bbr/metadata/profiles/cdifProfiles/CDIFxas> ;
     schema1:about xas:485749 ;
+    schema1:additionalType "dcat:CatalogRecord" ;
     schema1:creator <https://ada.org/person/3479> ;
     schema1:dateModified "2025-08-26" ;
     schema1:description "metadata about documentation for se_na2so4" .
@@ -127,18 +138,18 @@ ex:subject-pz63 a schema1:Dataset ;
 $schema: https://json-schema.org/draft/2020-12/schema
 type: object
 allOf:
-- $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/metaMetadata/schema.yaml
+- $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifCatalogRecord/schema.yaml
 - properties:
     dcterms:conformsTo:
       type: array
       items:
-        $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/metaMetadata/schema.yaml#/$defs/conformsTo_item
+        $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifCatalogRecord/schema.yaml#/$defs/conformsTo_item
       minItems: 2
       contains:
         type: object
         properties:
           '@id':
-            const: cdif:profile_xasCDIF
+            const: https://w3id.org/cdif/bbr/metadata/profiles/cdifProfiles/CDIFxas
         required:
         - '@id'
       minContains: 1
@@ -162,6 +173,7 @@ Links to the schema:
     "ex": "https://example.org/",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
     "dcterms": "http://purl.org/dc/terms/",
+    "dcat": "http://www.w3.org/ns/dcat#",
     "@version": 1.1
   }
 }

@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.provProperties.derivedFrom` *v0.1*
 
-Schema defining properties for documenting sources used for compiled or aggregated dataset..
+Schema defining properties for documenting sources used for compiled or aggregated dataset. Defines properties: prov:wasDerivedFrom. Uses building blocks: labeledLink (schemaorgProperties).
 
 [*Status*](http://www.opengis.net/def/status): Under development
 

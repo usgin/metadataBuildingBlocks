@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.schemaorgProperties.temporalExtent` *v0.1*
 
-Schema defining metadata elements to document the temporal extent applicable to the described resource.
+Schema defining metadata elements to document the temporal extent applicable to the described resource. Defines properties: @type, schema:description, time:intervalStartedBy, time:intervalFinishedBy, @context, time:hasBeginning, time:hasEnd.
 
 [*Status*](http://www.opengis.net/def/status): Under development
 

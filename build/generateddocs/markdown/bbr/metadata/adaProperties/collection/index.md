@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.adaProperties.collection` *v0.1*
 
-Set of related files with identical information models or composite datasets
+Set of related files with identical information models or composite datasets. Defines properties: @type, componentType, memberTypes, nFiles, filelist. Uses building blocks: stringArray (adaProperties).
 
 [*Status*](http://www.opengis.net/def/status): Under development
 

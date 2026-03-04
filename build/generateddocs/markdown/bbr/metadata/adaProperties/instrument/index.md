@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.adaProperties.instrument` *v0.1*
 
-Analytical instrument definition combining NXinstrument and prov:Entity
+Analytical instrument definition combining NXinstrument and prov:Entity. Defines properties: @type, schema:additionalType, schema:name, schema:description, schema:identifier.
 
 [*Status*](http://www.opengis.net/def/status): Under development
 

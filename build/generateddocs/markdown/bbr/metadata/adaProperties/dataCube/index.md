@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.adaProperties.dataCube` *v0.1*
 
-CDI DimensionalDataStructure for multidimensional data
+CDI DimensionalDataStructure for multidimensional data. Defines properties: @type, componentType, dataComponentResource. Uses building blocks: detailL2MS (adaProperties), cdifDataCube (cdifProperties).
 
 [*Status*](http://www.opengis.net/def/status): Under development
 

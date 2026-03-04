@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.schemaorgProperties.person` *v0.1*
 
-Schema defining propertis of a person, a profile of schema.org/Person.
+Schema defining propertis of a person, a profile of schema.org/Person. Defines properties: @id, @type, schema:name, schema:description, schema:identifier, schema:alternateName, schema:affiliation, schema:contactPoint, schema:sameAs. Uses building blocks: identifier (schemaorgProperties), organization (schemaorgProperties).
 
 [*Status*](http://www.opengis.net/def/status): Under development
 
@@ -35,9 +35,9 @@ Example person instance.
   "schema:description": "Metadata specialist, based in Portland, Maine",
   "schema:identifier": {
     "@type": "schema:PropertyValue",
-    "schema:propertyID": "https://doi.org",
-    "schema:value": "iY",
-    "schema:url": "https://doi.org/iY"
+    "schema:propertyID": "https://orcid.org",
+    "schema:value": "0000-0001-2345-6789",
+    "schema:url": "https://orcid.org/0000-0001-2345-6789"
   },
   "schema:contactPoint": {
     "@type": "schema:ContactPoint",
@@ -75,9 +75,9 @@ Example person instance.
   "schema:description": "Metadata specialist, based in Portland, Maine",
   "schema:identifier": {
     "@type": "schema:PropertyValue",
-    "schema:propertyID": "https://doi.org",
-    "schema:value": "iY",
-    "schema:url": "https://doi.org/iY"
+    "schema:propertyID": "https://orcid.org",
+    "schema:value": "0000-0001-2345-6789",
+    "schema:url": "https://orcid.org/0000-0001-2345-6789"
   },
   "schema:contactPoint": {
     "@type": "schema:ContactPoint",
@@ -103,9 +103,9 @@ ex:PersonExample_zZc a schema1:Person ;
             schema1:email "joe@bmanuco.org" ] ;
     schema1:description "Metadata specialist, based in Portland, Maine" ;
     schema1:identifier [ a schema1:PropertyValue ;
-            schema1:propertyID "https://doi.org" ;
-            schema1:url "https://doi.org/iY" ;
-            schema1:value "iY" ] ;
+            schema1:propertyID "https://orcid.org" ;
+            schema1:url "https://orcid.org/0000-0001-2345-6789" ;
+            schema1:value "0000-0001-2345-6789" ] ;
     schema1:name "Joe Test" ;
     schema1:sameAs "https://ark.org/46737",
         "uri:test:43737" .

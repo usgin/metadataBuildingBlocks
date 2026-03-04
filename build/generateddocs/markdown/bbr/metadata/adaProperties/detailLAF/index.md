@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.adaProperties.detailLAF` *v0.1*
 
-Laser Ablation Fluorescence processed/raw data detail properties
+Laser Ablation Fluorescence processed/raw data detail properties. Defines properties: @type, elementAnalyzed, sampleMassConsumed, sampleType.
 
 [*Status*](http://www.opengis.net/def/status): Under development
 

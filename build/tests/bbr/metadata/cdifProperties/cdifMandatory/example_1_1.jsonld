@@ -8,7 +8,8 @@
       "schema": "http://schema.org/",
       "ex": "https://example.org/",
       "xsd": "http://www.w3.org/2001/XMLSchema#",
-      "dcterms": "http://purl.org/dc/terms/"
+      "dcterms": "http://purl.org/dc/terms/",
+      "dcat": "http://www.w3.org/ns/dcat#"
     }
   ],
   "@id": "ex:baseDiscovery23578",
@@ -23,14 +24,19 @@
     "https://creativecommons.org/publicdomain/zero/1.0/"
   ],
   "schema:subjectOf": {
-    "@type": "schema:Dataset",
+    "@type": [
+      "schema:Dataset"
+    ],
+    "schema:additionalType": [
+      "dcat:CatalogRecord"
+    ],
     "@id": "ex:URIforMetadata3575",
     "schema:about": {
       "@id": "ex:baseDiscovery23578"
     },
     "dcterms:conformsTo": [
       {
-        "@id": "ex:cdif_SDO_profile_uri"
+        "@id": "https://w3id.org/cdif/bbr/metadata/cdifProperties/cdifMandatory"
       }
     ],
     "schema:maintainer": {

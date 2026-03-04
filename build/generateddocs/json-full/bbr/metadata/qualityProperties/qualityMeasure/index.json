@@ -4,13 +4,13 @@
   "itemIdentifier": "cdif.bbr.metadata.qualityProperties.qualityMeasure",
   "$schema": "metaschema.yaml",
   "name": "Simple quality measurement properties",
-  "abstract": "Schema defining properties for documenting a quality measuremenet associated with a resource.",
+  "abstract": "Schema defining properties for documenting a quality measuremenet associated with a resource. Defines properties: @type, dqv:isMeasurementOf, dqv:value. Uses building blocks: definedTerm (schemaorgProperties).",
   "status": "under-development",
   "dateTimeAddition": "2025-11-04T00:00:00Z",
   "itemClass": "schema",
   "register": "cdif-building-block-register",
   "version": "0.1",
-  "dateOfLastChange": "2026-02-25",
+  "dateOfLastChange": "2026-03-04",
   "link": "https://github.com/opengeospatial/bblock-template",
   "sources": [
     {
@@ -61,17 +61,17 @@
         {
           "language": "json",
           "ref": "exampleQualityMeasure.json",
-          "code": "{\n    \"@type\": \"dqv:QualityMeasurement\",\n    \"dqv:isMeasurementOf\": {\n        \"@type\": \"schema:DefinedTerm\",\n        \"schema:name\": \"LBp\",\n        \"schema:identifier\": \"qMsuTaeO\",\n        \"schema:inDefinedTermSet\": \"GCjNHSplcIDSd\",\n        \"schema:termCode\": \"kVavhujDLioBbZc\"\n    },\n    \"dqv:value\": {\n        \"@type\": \"schema:DefinedTerm\",\n        \"schema:name\": \"aZrfr\",\n        \"schema:identifier\": {\n            \"@type\": \"schema:PropertyValue\",\n            \"schema:propertyID\": \"bOQUqI\",\n            \"schema:value\": \"dzkwRNhKqfDVhOu\",\n            \"schema:url\": \"http://example.com/resource?foo=bar#fragment\"\n        },\n        \"schema:inDefinedTermSet\": \"YYdmhomhxBnNBic\",\n        \"schema:termCode\": \"OgZwkLzhtqNSCcvMYKT\"\n    }\n}",
+          "code": "{\n    \"@type\": \"dqv:QualityMeasurement\",\n    \"dqv:isMeasurementOf\": {\n        \"@type\": \"schema:DefinedTerm\",\n        \"schema:name\": \"Positional Accuracy\",\n        \"schema:identifier\": \"https://standards.iso.org/iso/19157/qualityMeasure/28\",\n        \"schema:inDefinedTermSet\": \"https://standards.iso.org/iso/19157\",\n        \"schema:termCode\": \"DQ_AbsoluteExternalPositionalAccuracy\"\n    },\n    \"dqv:value\": {\n        \"@type\": \"schema:DefinedTerm\",\n        \"schema:name\": \"Pass\",\n        \"schema:identifier\": {\n            \"@type\": \"schema:PropertyValue\",\n            \"schema:propertyID\": \"https://standards.iso.org/iso/19157/qualityResult\",\n            \"schema:value\": \"conformant\",\n            \"schema:url\": \"http://example.com/resource?foo=bar#fragment\"\n        },\n        \"schema:inDefinedTermSet\": \"https://standards.iso.org/iso/19157/conformanceResult\",\n        \"schema:termCode\": \"pass\"\n    }\n}",
           "url": "https://usgin.github.io/metadataBuildingBlocks/build/tests/bbr/metadata/qualityProperties/qualityMeasure/example_1_1.json"
         },
         {
           "language": "jsonld",
-          "code": "{\n  \"@context\": [\n    {\n      \"schema\": \"http://schema.org/\"\n    },\n    \"https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/qualityProperties/qualityMeasure/context.jsonld\"\n  ],\n  \"@type\": \"dqv:QualityMeasurement\",\n  \"dqv:isMeasurementOf\": {\n    \"@type\": \"schema:DefinedTerm\",\n    \"schema:name\": \"LBp\",\n    \"schema:identifier\": \"qMsuTaeO\",\n    \"schema:inDefinedTermSet\": \"GCjNHSplcIDSd\",\n    \"schema:termCode\": \"kVavhujDLioBbZc\"\n  },\n  \"dqv:value\": {\n    \"@type\": \"schema:DefinedTerm\",\n    \"schema:name\": \"aZrfr\",\n    \"schema:identifier\": {\n      \"@type\": \"schema:PropertyValue\",\n      \"schema:propertyID\": \"bOQUqI\",\n      \"schema:value\": \"dzkwRNhKqfDVhOu\",\n      \"schema:url\": \"http://example.com/resource?foo=bar#fragment\"\n    },\n    \"schema:inDefinedTermSet\": \"YYdmhomhxBnNBic\",\n    \"schema:termCode\": \"OgZwkLzhtqNSCcvMYKT\"\n  }\n}",
+          "code": "{\n  \"@context\": [\n    {\n      \"schema\": \"http://schema.org/\"\n    },\n    \"https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/qualityProperties/qualityMeasure/context.jsonld\"\n  ],\n  \"@type\": \"dqv:QualityMeasurement\",\n  \"dqv:isMeasurementOf\": {\n    \"@type\": \"schema:DefinedTerm\",\n    \"schema:name\": \"Positional Accuracy\",\n    \"schema:identifier\": \"https://standards.iso.org/iso/19157/qualityMeasure/28\",\n    \"schema:inDefinedTermSet\": \"https://standards.iso.org/iso/19157\",\n    \"schema:termCode\": \"DQ_AbsoluteExternalPositionalAccuracy\"\n  },\n  \"dqv:value\": {\n    \"@type\": \"schema:DefinedTerm\",\n    \"schema:name\": \"Pass\",\n    \"schema:identifier\": {\n      \"@type\": \"schema:PropertyValue\",\n      \"schema:propertyID\": \"https://standards.iso.org/iso/19157/qualityResult\",\n      \"schema:value\": \"conformant\",\n      \"schema:url\": \"http://example.com/resource?foo=bar#fragment\"\n    },\n    \"schema:inDefinedTermSet\": \"https://standards.iso.org/iso/19157/conformanceResult\",\n    \"schema:termCode\": \"pass\"\n  }\n}",
           "url": "https://usgin.github.io/metadataBuildingBlocks/build/tests/bbr/metadata/qualityProperties/qualityMeasure/example_1_1.jsonld"
         },
         {
           "language": "ttl",
-          "code": "@prefix ns1: <dqv:> .\n@prefix schema1: <http://schema.org/> .\n\n[] a ns1:QualityMeasurement ;\n    ns1:isMeasurementOf [ a schema1:DefinedTerm ;\n            schema1:identifier \"qMsuTaeO\" ;\n            schema1:inDefinedTermSet \"GCjNHSplcIDSd\" ;\n            schema1:name \"LBp\" ;\n            schema1:termCode \"kVavhujDLioBbZc\" ] ;\n    ns1:value [ a schema1:DefinedTerm ;\n            schema1:identifier [ a schema1:PropertyValue ;\n                    schema1:propertyID \"bOQUqI\" ;\n                    schema1:url \"http://example.com/resource?foo=bar#fragment\" ;\n                    schema1:value \"dzkwRNhKqfDVhOu\" ] ;\n            schema1:inDefinedTermSet \"YYdmhomhxBnNBic\" ;\n            schema1:name \"aZrfr\" ;\n            schema1:termCode \"OgZwkLzhtqNSCcvMYKT\" ] .\n\n",
+          "code": "@prefix ns1: <dqv:> .\n@prefix schema1: <http://schema.org/> .\n\n[] a ns1:QualityMeasurement ;\n    ns1:isMeasurementOf [ a schema1:DefinedTerm ;\n            schema1:identifier \"https://standards.iso.org/iso/19157/qualityMeasure/28\" ;\n            schema1:inDefinedTermSet \"https://standards.iso.org/iso/19157\" ;\n            schema1:name \"Positional Accuracy\" ;\n            schema1:termCode \"DQ_AbsoluteExternalPositionalAccuracy\" ] ;\n    ns1:value [ a schema1:DefinedTerm ;\n            schema1:identifier [ a schema1:PropertyValue ;\n                    schema1:propertyID \"https://standards.iso.org/iso/19157/qualityResult\" ;\n                    schema1:url \"http://example.com/resource?foo=bar#fragment\" ;\n                    schema1:value \"conformant\" ] ;\n            schema1:inDefinedTermSet \"https://standards.iso.org/iso/19157/conformanceResult\" ;\n            schema1:name \"Pass\" ;\n            schema1:termCode \"pass\" ] .\n\n",
           "url": "https://usgin.github.io/metadataBuildingBlocks/build/tests/bbr/metadata/qualityProperties/qualityMeasure/example_1_1.ttl"
         }
       ]

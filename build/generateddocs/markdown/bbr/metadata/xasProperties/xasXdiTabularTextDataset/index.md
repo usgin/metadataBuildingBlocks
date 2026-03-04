@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.xasProperties.xasXdiTabularTextDataset` *v0.1*
 
-Schema defining properties to describe the structure of an XDI file. This is a fixed-wide tabular text data structure for describing the result of x-ray absorption spectroscopy experiments.
+Schema defining properties to describe the structure of an XDI file. This is a fixed-wide tabular text data structure for describing the result of x-ray absorption spectroscopy experiments. Defines properties: @type, cdi:has_DataStructureComponent, cdi:allowsDuplicates, cdi:arrayBase, cdi:commentPrefix, cdi:hasHeader, cdi:headerRowCount, cdi:skipInitialSpace, cdi:isDelimited, cdi:isFixedWidth.
 
 [*Status*](http://www.opengis.net/def/status): Under development
 
@@ -145,12 +145,7 @@ ex:xasXDIdownload_23463h a cdi:WideDataStructure ;
     cdi:arrayBase 1 ;
     cdi:commentPrefix "#" ;
     cdi:hasHeader true ;
-    cdi:has_DataStructureComponent [ a cdi:MeasureComponent ;
-            cdi:has [ a cdi:ValueMapping ;
-                    cdi:hasIndex 3 ;
-                    cdi:haslength 13 ] ;
-            cdi:isDefinedBy_InstanceVariable xas:incidentIntensityVariable ],
-        [ a cdi:IdentifierComponent ;
+    cdi:has_DataStructureComponent [ a cdi:IdentifierComponent ;
             cdi:has [ a cdi:ValueMapping ;
                     cdi:hasIndex 1 ;
                     cdi:haslength 12 ] ;
@@ -159,7 +154,12 @@ ex:xasXDIdownload_23463h a cdi:WideDataStructure ;
             cdi:has [ a cdi:ValueMapping ;
                     cdi:hasIndex 2 ;
                     cdi:haslength 12 ] ;
-            cdi:isDefinedBy_InstanceVariable xas:transmittedIntensityVariable ] ;
+            cdi:isDefinedBy_InstanceVariable xas:transmittedIntensityVariable ],
+        [ a cdi:MeasureComponent ;
+            cdi:has [ a cdi:ValueMapping ;
+                    cdi:hasIndex 3 ;
+                    cdi:haslength 13 ] ;
+            cdi:isDefinedBy_InstanceVariable xas:incidentIntensityVariable ] ;
     cdi:headerRowCount 27 ;
     cdi:isDelimited false ;
     cdi:isFixedWidth true ;
