@@ -60,12 +60,11 @@ properties:
       $ref: "#/$defs/Reference"
 
   "cdi:hasSubActivity":
-    description: Nested sub-activities within this activity (cdi:Activity)
+    description: Nested sub-activities within this activity (cdi:Activity).
+      Use @id references to Activity nodes defined elsewhere in the graph.
     type: array
     items:
-      anyOf:
-        - $ref: "#"
-        - $ref: "#/$defs/id-reference"
+      $ref: "#/$defs/id-reference"
 
   "cdi:has_Step":
     description: Ordered steps within this activity (cdi:Step)
@@ -396,12 +395,11 @@ $defs:
         type: string
         description: Purpose or role description of this agent
       "cdi:performs":
-        description: Activities this agent performs (cdi:Activity)
+        description: Activities this agent performs (cdi:Activity).
+          Use @id references to Activity nodes defined elsewhere in the graph.
         type: array
         items:
-          anyOf:
-            - $ref: "#"
-            - $ref: "#/$defs/id-reference"
+          $ref: "#/$defs/id-reference"
       "cdi:operatesOn":
         description: Production environments this agent operates on (cdi:ProductionEnvironment)
         type: array
