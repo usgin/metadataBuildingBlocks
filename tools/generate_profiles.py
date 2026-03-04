@@ -651,10 +651,15 @@ def _generate_schema_yaml(cfg: dict) -> str:
         lines = [f'            - "{v}"' for v in all_values]
         contains_block = "          enum:\n" + "\n".join(lines)
 
-    # Build componentType/@type enum for hasPart-level constraint
-    all_component_types = list(cfg["component_types"]) + STANDARD_SUPPORTING_TYPES
-    ct_lines = "\n".join(
-        f'                          - "ada:{ct}"' for ct in all_component_types
+    # Build technique-specific componentType enum lines (no universal types)
+    # Indentation for distribution-level (inside oneOf branch)
+    technique_ct_lines = "\n".join(
+        f'                            - "ada:{ct}"' for ct in cfg["component_types"]
+    )
+
+    # Indentation for hasPart-level (deeper nesting in second oneOf branch)
+    haspart_ct_lines = "\n".join(
+        f'                                  - "ada:{ct}"' for ct in cfg["component_types"]
     )
 
     detail_note = ""
@@ -678,15 +683,30 @@ allOf:
 {contains_block}
       "schema:distribution":
         items:
-          properties:
-            "schema:hasPart":
-              items:
-                properties:
-                  componentType:
+          oneOf:
+            - required:
+                - componentType
+              properties:
+                componentType:
+                  anyOf:
+                    - properties:
+                        "@type":
+                          enum:
+{technique_ct_lines}
+                    - $ref: ../adaProduct/schema.yaml#/$defs/universalComponentType
+            - required:
+                - "schema:hasPart"
+              properties:
+                "schema:hasPart":
+                  items:
                     properties:
-                      "@type":
-                        enum:
-{ct_lines}
+                      componentType:
+                        anyOf:
+                          - properties:
+                              "@type":
+                                enum:
+{haspart_ct_lines}
+                          - $ref: ../adaProduct/schema.yaml#/$defs/universalComponentType
 """
 
 

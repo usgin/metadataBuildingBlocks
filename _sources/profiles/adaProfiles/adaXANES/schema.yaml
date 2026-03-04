@@ -17,39 +17,37 @@ allOf:
             - "X-ray absorption near edge structure (XANES) spectroscopy"
       "schema:distribution":
         items:
-          properties:
-            "schema:hasPart":
-              items:
-                properties:
-                  componentType:
+          oneOf:
+            - required:
+                - componentType
+              properties:
+                componentType:
+                  anyOf:
+                    - properties:
+                        "@type":
+                          enum:
+                            - "ada:XANESImageStack"
+                            - "ada:XANESStackOverviewImage"
+                            - "ada:XANESRawTabular"
+                            - "ada:XANESProcessedTabular"
+                            - "ada:XANESimage"
+                            - "ada:XANESCollection"
+                    - $ref: ../adaProduct/schema.yaml#/$defs/universalComponentType
+            - required:
+                - "schema:hasPart"
+              properties:
+                "schema:hasPart":
+                  items:
                     properties:
-                      "@type":
-                        enum:
-                          - "ada:XANESImageStack"
-                          - "ada:XANESStackOverviewImage"
-                          - "ada:XANESRawTabular"
-                          - "ada:XANESProcessedTabular"
-                          - "ada:XANESimage"
-                          - "ada:XANESCollection"
-                          - "ada:analysisLocation"
-                          - "ada:annotatedImage"
-                          - "ada:areaOfInterest"
-                          - "ada:basemap"
-                          - "ada:calibrationFile"
-                          - "ada:code"
-                          - "ada:contextPhotography"
-                          - "ada:contextVideo"
-                          - "ada:inputFile"
-                          - "ada:instrumentMetadata"
-                          - "ada:logFile"
-                          - "ada:methodDescription"
-                          - "ada:other"
-                          - "ada:plot"
-                          - "ada:processingMethod"
-                          - "ada:quickLook"
-                          - "ada:report"
-                          - "ada:samplePreparation"
-                          - "ada:shapefile"
-                          - "ada:supplementalBasemap"
-                          - "ada:supplementaryImage"
-                          - "ada:worldFile"
+                      componentType:
+                        anyOf:
+                          - properties:
+                              "@type":
+                                enum:
+                                  - "ada:XANESImageStack"
+                                  - "ada:XANESStackOverviewImage"
+                                  - "ada:XANESRawTabular"
+                                  - "ada:XANESProcessedTabular"
+                                  - "ada:XANESimage"
+                                  - "ada:XANESCollection"
+                          - $ref: ../adaProduct/schema.yaml#/$defs/universalComponentType

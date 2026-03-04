@@ -67,11 +67,11 @@ Profiles are organized into subdirectories: `_sources/profiles/adaProfiles/` (36
 
 | Profile | Description |
 |---|---|
-| `adaProduct` | Base ADA product metadata — distribution has 3 `oneOf` branches (single file, archive, WebAPI) |
-| `adaEMPA` | Electron Microprobe Analysis — constrains component types to EMPA-valid file types |
-| `adaXRD` | X-ray Diffraction — constrains to XRD-valid component and file types |
-| `adaICPMS` | ICP Mass Spectrometry — constrains to ICP-MS-valid component and file types (HR/Q/MC) |
-| `adaVNMIR` | Very-Near Mid-IR / FTIR — constrains to VNMIR-valid component and file types |
+| `adaProduct` | Base ADA product metadata — distribution has 3 `oneOf` branches (single file, archive, WebAPI); defines `$defs/universalComponentType` with 22 universal supplement/supporting types shared by all technique profiles |
+| `adaEMPA` | Electron Microprobe Analysis — constrains component types via `oneOf` (single file or archive) with technique-specific + universal types via `anyOf` |
+| `adaXRD` | X-ray Diffraction — constrains component types via `oneOf` (single file or archive) with technique-specific + universal types via `anyOf` |
+| `adaICPMS` | ICP Mass Spectrometry — constrains component types via `oneOf` (single file or archive) with technique-specific + universal types via `anyOf` (HR/Q/MC variants) |
+| `adaVNMIR` | Very-Near Mid-IR / FTIR — constrains component types via `oneOf` (single file or archive) with technique-specific + universal types via `anyOf` |
 | `CDIFDiscovery` | CDIF Discovery profile — general-purpose dataset metadata |
 | `DDEDiscovery` | DDE Geoscience Discovery profile (base) — extends CDIF Discovery with DDE resource types, topic/acquisition keywords, and browse graphics |
 | `DDEDataset` | DDE Dataset — dataset, dataCatalog, geographicDataset, nonGeographicDataset |
