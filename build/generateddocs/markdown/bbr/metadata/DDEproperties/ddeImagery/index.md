@@ -203,13 +203,13 @@ Shows additionalProperty entries with DDE propertyIDs for sensor type, platform,
 @prefix schema1: <http://schema.org/> .
 
 [] schema1:additionalProperty [ a schema1:PropertyValue ;
-            schema1:name "Wavelength Range" ;
-            schema1:propertyID "dde:wavelength" ;
-            schema1:value "0.43-2.29 micrometers" ],
-        [ a schema1:PropertyValue ;
             schema1:name "Processing Level" ;
             schema1:propertyID "dde:processedLevel" ;
-            schema1:value "Level2" ] ;
+            schema1:value "Level2" ],
+        [ a schema1:PropertyValue ;
+            schema1:name "Wavelength Range" ;
+            schema1:propertyID "dde:wavelength" ;
+            schema1:value "0.43-2.29 micrometers" ] ;
     prov:wasGeneratedBy [ a schema1:Action,
                 prov:Activity ;
             schema1:endTime "2023-06-15T03:45:12Z" ;

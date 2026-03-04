@@ -928,50 +928,56 @@ allOf:
         - Scanning electron microscopy
     schema:distribution:
       items:
-        properties:
-          schema:hasPart:
-            items:
-              properties:
-                componentType:
-                  properties:
-                    '@type':
-                      enum:
-                      - ada:SEMImageCollection
-                      - ada:SEMImageMap
-                      - ada:SEMEBSDGrainImage
-                      - ada:SEMEBSDGrainImageMap
-                      - ada:SEMEBSDGrainImageMapCube
-                      - ada:SEMEDSElementalMap
-                      - ada:SEMEDSElementalMaps
-                      - ada:SEMEDSElementalMapsCube
-                      - ada:SEMEDSPointData
-                      - ada:SEMEDSPointDataCollection
-                      - ada:SEMEDSPointDataCube
-                      - ada:SEMHRCLImage
-                      - ada:SEMHRCLMap
-                      - ada:SEMHRCLCube
-                      - ada:analysisLocation
-                      - ada:annotatedImage
-                      - ada:areaOfInterest
-                      - ada:basemap
-                      - ada:calibrationFile
-                      - ada:code
-                      - ada:contextPhotography
-                      - ada:contextVideo
-                      - ada:inputFile
-                      - ada:instrumentMetadata
-                      - ada:logFile
-                      - ada:methodDescription
-                      - ada:other
-                      - ada:plot
-                      - ada:processingMethod
-                      - ada:quickLook
-                      - ada:report
-                      - ada:samplePreparation
-                      - ada:shapefile
-                      - ada:supplementalBasemap
-                      - ada:supplementaryImage
-                      - ada:worldFile
+        oneOf:
+        - required:
+          - componentType
+          properties:
+            componentType:
+              anyOf:
+              - properties:
+                  '@type':
+                    enum:
+                    - ada:SEMImageCollection
+                    - ada:SEMImageMap
+                    - ada:SEMEBSDGrainImage
+                    - ada:SEMEBSDGrainImageMap
+                    - ada:SEMEBSDGrainImageMapCube
+                    - ada:SEMEDSElementalMap
+                    - ada:SEMEDSElementalMaps
+                    - ada:SEMEDSElementalMapsCube
+                    - ada:SEMEDSPointData
+                    - ada:SEMEDSPointDataCollection
+                    - ada:SEMEDSPointDataCube
+                    - ada:SEMHRCLImage
+                    - ada:SEMHRCLMap
+                    - ada:SEMHRCLCube
+              - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaProduct/schema.yaml#/$defs/universalComponentType
+        - required:
+          - schema:hasPart
+          properties:
+            schema:hasPart:
+              items:
+                properties:
+                  componentType:
+                    anyOf:
+                    - properties:
+                        '@type':
+                          enum:
+                          - ada:SEMImageCollection
+                          - ada:SEMImageMap
+                          - ada:SEMEBSDGrainImage
+                          - ada:SEMEBSDGrainImageMap
+                          - ada:SEMEBSDGrainImageMapCube
+                          - ada:SEMEDSElementalMap
+                          - ada:SEMEDSElementalMaps
+                          - ada:SEMEDSElementalMapsCube
+                          - ada:SEMEDSPointData
+                          - ada:SEMEDSPointDataCollection
+                          - ada:SEMEDSPointDataCube
+                          - ada:SEMHRCLImage
+                          - ada:SEMHRCLMap
+                          - ada:SEMHRCLCube
+                    - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaProduct/schema.yaml#/$defs/universalComponentType
 x-jsonld-prefixes:
   schema: http://schema.org/
   ada: https://ada.astromat.org/metadata/

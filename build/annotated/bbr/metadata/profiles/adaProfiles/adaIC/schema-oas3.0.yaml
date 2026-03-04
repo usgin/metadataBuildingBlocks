@@ -543,6 +543,37 @@ x-defs:
               - '@type'
               - schema:serviceType
               - schema:potentialAction
+    $defs:
+      universalComponentType:
+        type: object
+        description: Supplement/supporting component types valid across all ADA techniques.
+        properties:
+          '@type':
+            enum:
+            - ada:analysisLocation
+            - ada:annotatedImage
+            - ada:areaOfInterest
+            - ada:basemap
+            - ada:calibrationFile
+            - ada:code
+            - ada:contextPhotography
+            - ada:contextVideo
+            - ada:inputFile
+            - ada:instrumentMetadata
+            - ada:logFile
+            - ada:methodDescription
+            - ada:other
+            - ada:plot
+            - ada:processingMethod
+            - ada:quickLook
+            - ada:report
+            - ada:samplePreparation
+            - ada:shapefile
+            - ada:supplementalBasemap
+            - ada:supplementaryImage
+            - ada:worldFile
+        required:
+        - '@type'
     x-jsonld-prefixes:
       schema: http://schema.org/
       ada: https://ada.astromat.org/metadata/
@@ -3370,37 +3401,30 @@ allOf:
         - Ion Chromatography
     schema:distribution:
       items:
-        properties:
-          schema:hasPart:
-            items:
-              properties:
-                componentType:
-                  properties:
-                    '@type':
-                      enum:
-                      - ada:ICTabular
-                      - ada:analysisLocation
-                      - ada:annotatedImage
-                      - ada:areaOfInterest
-                      - ada:basemap
-                      - ada:calibrationFile
-                      - ada:code
-                      - ada:contextPhotography
-                      - ada:contextVideo
-                      - ada:inputFile
-                      - ada:instrumentMetadata
-                      - ada:logFile
-                      - ada:methodDescription
-                      - ada:other
-                      - ada:plot
-                      - ada:processingMethod
-                      - ada:quickLook
-                      - ada:report
-                      - ada:samplePreparation
-                      - ada:shapefile
-                      - ada:supplementalBasemap
-                      - ada:supplementaryImage
-                      - ada:worldFile
+        oneOf:
+        - required:
+          - componentType
+          properties:
+            componentType:
+              anyOf:
+              - properties:
+                  '@type':
+                    enum:
+                    - ada:ICTabular
+              - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaIC/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.profiles.adaProfiles.adaProduct/$defs/universalComponentType
+        - required:
+          - schema:hasPart
+          properties:
+            schema:hasPart:
+              items:
+                properties:
+                  componentType:
+                    anyOf:
+                    - properties:
+                        '@type':
+                          enum:
+                          - ada:ICTabular
+                    - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaIC/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.profiles.adaProfiles.adaProduct/$defs/universalComponentType
 x-jsonld-prefixes:
   schema: http://schema.org/
   ada: https://ada.astromat.org/metadata/

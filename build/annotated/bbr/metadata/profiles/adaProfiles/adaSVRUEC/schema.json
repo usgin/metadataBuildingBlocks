@@ -20,37 +20,52 @@
         },
         "schema:distribution": {
           "items": {
-            "properties": {
-              "schema:hasPart": {
-                "items": {
-                  "properties": {
-                    "componentType": {
+            "oneOf": [
+              {
+                "required": [
+                  "componentType"
+                ],
+                "properties": {
+                  "componentType": {
+                    "anyOf": [
+                      {
+                        "properties": {
+                          "@type": {
+                            "enum": [
+                              "ada:SVRUECTabular"
+                            ]
+                          }
+                        }
+                      },
+                      {
+                        "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaProduct/schema.json#/$defs/universalComponentType"
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "required": [
+                  "schema:hasPart"
+                ],
+                "properties": {
+                  "schema:hasPart": {
+                    "items": {
                       "properties": {
-                        "@type": {
-                          "enum": [
-                            "ada:SVRUECTabular",
-                            "ada:analysisLocation",
-                            "ada:annotatedImage",
-                            "ada:areaOfInterest",
-                            "ada:basemap",
-                            "ada:calibrationFile",
-                            "ada:code",
-                            "ada:contextPhotography",
-                            "ada:contextVideo",
-                            "ada:inputFile",
-                            "ada:instrumentMetadata",
-                            "ada:logFile",
-                            "ada:methodDescription",
-                            "ada:other",
-                            "ada:plot",
-                            "ada:processingMethod",
-                            "ada:quickLook",
-                            "ada:report",
-                            "ada:samplePreparation",
-                            "ada:shapefile",
-                            "ada:supplementalBasemap",
-                            "ada:supplementaryImage",
-                            "ada:worldFile"
+                        "componentType": {
+                          "anyOf": [
+                            {
+                              "properties": {
+                                "@type": {
+                                  "enum": [
+                                    "ada:SVRUECTabular"
+                                  ]
+                                }
+                              }
+                            },
+                            {
+                              "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/adaProfiles/adaProduct/schema.json#/$defs/universalComponentType"
+                            }
                           ]
                         }
                       }
@@ -58,7 +73,7 @@
                   }
                 }
               }
-            }
+            ]
           }
         }
       }
