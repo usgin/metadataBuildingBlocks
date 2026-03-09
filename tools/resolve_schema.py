@@ -7,10 +7,12 @@ schemas into one fully-inlined schema — purely for validation and inspection,
 with no form simplifications.
 
 $ref patterns handled:
-  1. Relative path:       $ref: ../detailEMPA/schema.yaml
+  1. Relative path:       $ref: ../cdifCatalogRecord/schema.yaml
   2. Fragment-only:       $ref: '#/$defs/Identifier'
   3. Cross-file fragment: $ref: ../cdifCatalogRecord/schema.yaml#/$defs/conformsTo_item
-  4. Both YAML and JSON file extensions
+  4. URL ref:             $ref: https://usgin.github.io/metadataBuildingBlocks/_sources/.../schema.yaml
+  5. Protocol-relative:   $ref: //usgin.github.io/metadataBuildingBlocks/_sources/.../schema.yaml
+  6. Both YAML and JSON file extensions
 
 Usage:
     python tools/resolve_schema.py adaEMPA
@@ -25,16 +27,63 @@ Usage:
 import argparse
 import copy
 import json
+import os
 import sys
+import tempfile
 import yaml
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlparse
+from urllib.request import urlopen
+from urllib.error import URLError
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 SOURCES_DIR = REPO_ROOT / "_sources"
 
 # Keys to strip from schemas (metadata, not useful for validation/inspection)
 STRIP_KEYS = {"$id", "x-jsonld-prefixes", "x-jsonld-context", "x-jsonld-extra-terms"}
+
+# Cache for fetched URL schemas (URL string -> local Path)
+_URL_CACHE: dict[str, Path] = {}
+_URL_CACHE_DIR = Path(tempfile.mkdtemp(prefix="resolve_schema_"))
+
+
+def _is_url(ref: str) -> bool:
+    """Return True if ref is an absolute HTTP(S) URL or protocol-relative URL."""
+    return ref.startswith("https://") or ref.startswith("http://") or ref.startswith("//")
+
+
+def _fetch_url_schema(url: str) -> Path:
+    """Fetch a schema from a URL and cache it locally. Returns the local file path."""
+    if url in _URL_CACHE:
+        return _URL_CACHE[url]
+
+    # Normalise protocol-relative URLs
+    fetch_url = url
+    if fetch_url.startswith("//"):
+        fetch_url = "https:" + fetch_url
+
+    try:
+        with urlopen(fetch_url, timeout=30) as resp:
+            data = resp.read()
+    except URLError as e:
+        print(f"  WARNING: Failed to fetch {fetch_url}: {e}", file=sys.stderr)
+        return None
+
+    # Determine extension from URL path
+    parsed = urlparse(fetch_url)
+    url_path = parsed.path
+    ext = ".yaml" if url_path.endswith((".yaml", ".yml")) else ".json"
+
+    # Write to a temp file preserving directory structure for relative refs
+    # Use the URL path to create a unique cache path
+    safe_name = url_path.strip("/").replace("/", os.sep)
+    cache_path = _URL_CACHE_DIR / safe_name
+    cache_path.parent.mkdir(parents=True, exist_ok=True)
+    cache_path.write_bytes(data)
+
+    _URL_CACHE[url] = cache_path
+    return cache_path
 
 
 # ---------------------------------------------------------------------------
@@ -267,7 +316,15 @@ def _resolve_ref(ref: str, base_dir: Path, defs: dict, seen: set) -> Any:
     else:
         file_part, fragment = ref, None
 
-    file_path = (base_dir / file_part).resolve()
+    # Handle URL refs (absolute or protocol-relative)
+    if _is_url(file_part):
+        local_path = _fetch_url_schema(file_part)
+        if local_path is None:
+            return {"$comment": f"failed to fetch URL: {file_part}"}
+        file_path = local_path
+    else:
+        file_path = (base_dir / file_part).resolve()
+
     if not file_path.exists():
         return {"$comment": f"file not found: {file_path}"}
 

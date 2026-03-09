@@ -2,7 +2,15 @@
 Created by S.M. Richard and claude-code  2026-02-15
 
 
-Modular schema components following the [OGC Building Blocks](https://opengeospatial.github.io/bblocks/) pattern for the [IEDA Data Submission Portal](https://github.com/smrgeoinfo/IEDADataSubmission) and for implementation of modular inteoperable metadata for the [Cross-Domain Interoperability Framework (CDIF)](https://cdif.org). Each building block is a self-contained directory with a JSON Schema, JSON-LD context, metadata, and description. Building blocks compose into profiles that define complete metadata schemas for specific use cases.
+Core modular schema components following the [OGC Building Blocks](https://opengeospatial.github.io/bblocks/) pattern for implementation of modular interoperable metadata for the [Cross-Domain Interoperability Framework (CDIF)](https://cdif.org). Each building block is a self-contained directory with a JSON Schema, JSON-LD context, metadata, and description. Building blocks compose into profiles that define complete metadata schemas for specific use cases.
+
+This repository contains the **shared core building blocks** (schema.org properties, CDIF properties, PROV-O provenance, data quality, XAS spectroscopy, and DDI-CDI). Domain-specific building blocks have been refactored into separate repositories:
+
+- **[ddeBuildingBlocks](https://github.com/usgin/ddeBuildingBlocks)** — DDE (Deep-time Digital Earth) geoscience properties and profiles (7 BBs + 11 profiles)
+- **[geochemBuildingBlocks](https://github.com/usgin/geochemBuildingBlocks)** — ADA (IEDA Analytics & Data Archive) geochemistry properties and profiles (30 BBs + 36 profiles)
+- **[ecrrBuildingBlocks](https://github.com/usgin/ecrrBuildingBlocks)** — ECRR (EarthCube Resource Registry) properties and profiles (10 BBs + 11 profiles)
+
+Domain-specific repos reference core building blocks in this repository via absolute URLs (`https://usgin.github.io/metadataBuildingBlocks/_sources/...`).
 
 For more info see [the OGC Documentation](https://ogcincubator.github.io/bblocks-docs/).
 
@@ -17,11 +25,11 @@ schema.yaml → resolve_schema.py → resolvedSchema.json → convert_for_jsonfo
 
 ### Step 1: Resolve (`resolve_schema.py`)
 
-Recursively resolves all `$ref` references from modular YAML/JSON source schemas into one fully-inlined JSON Schema. Handles relative paths, fragment-only refs (`#/$defs/X`), cross-file fragments, and both YAML/JSON extensions. Optionally flattens `allOf` entries.
+Recursively resolves all `$ref` references from modular YAML/JSON source schemas into one fully-inlined JSON Schema. Handles relative paths, fragment-only refs (`#/$defs/X`), cross-file fragments, URL refs, and both YAML/JSON extensions. Optionally flattens `allOf` entries.
 
 ```bash
-# Resolve a profile by name (searches adaProfiles/ and cdifProfiles/ subdirectories)
-python tools/resolve_schema.py adaProduct
+# Resolve a profile by name (searches cdifProfiles/ subdirectories)
+python tools/resolve_schema.py CDIFDiscovery
 
 # Resolve all building blocks with external $refs
 python tools/resolve_schema.py --all
@@ -38,9 +46,6 @@ Reads `resolvedSchema.json` and converts to JSON Forms-compatible Draft 7:
 - Converts `$schema` from Draft 2020-12 to Draft 7
 - Simplifies `anyOf` patterns for form rendering
 - Converts `contains` → `enum`, `const` → `default`
-- Merges technique profile constraints into distribution branches
-- Preserves `oneOf` in distribution (3 branches: single file, archive, WebAPI)
-- Merges file-type `anyOf` (from `files/schema.yaml`) into flat hasPart item properties
 - Removes `not` constraints and relaxes `minItems`
 
 ```bash
@@ -48,7 +53,7 @@ Reads `resolvedSchema.json` and converts to JSON Forms-compatible Draft 7:
 python tools/convert_for_jsonforms.py --all -v
 
 # Convert a single profile
-python tools/convert_for_jsonforms.py adaEMPA -v
+python tools/convert_for_jsonforms.py CDIFDiscovery -v
 ```
 
 ### Step 3: Augment register.json (`augment_register.py`)
@@ -61,43 +66,16 @@ python tools/augment_register.py
 
 The `generate-jsonforms` workflow runs this automatically after schema conversion.
 
-## Profiles (62 total)
+## Profiles
 
-Profiles are organized into subdirectories: `_sources/profiles/adaProfiles/` (36 ADA profiles), `_sources/profiles/cdifProfiles/` (4 CDIF profiles), `_sources/profiles/DDEProfiles/` (11 DDE profiles), and `_sources/profiles/ecrrProfiles/` (11 ECRR profiles).
+CDIF profiles are in `_sources/profiles/cdifProfiles/`:
 
 | Profile | Description |
 |---|---|
-| `adaProduct` | Base ADA product metadata — distribution has 3 `oneOf` branches (single file, archive, WebAPI); defines `$defs/universalComponentType` with 22 universal supplement/supporting types shared by all technique profiles |
-| `adaEMPA` | Electron Microprobe Analysis — constrains component types via `oneOf` (single file or archive) with technique-specific + universal types via `anyOf` |
-| `adaXRD` | X-ray Diffraction — constrains component types via `oneOf` (single file or archive) with technique-specific + universal types via `anyOf` |
-| `adaICPMS` | ICP Mass Spectrometry — constrains component types via `oneOf` (single file or archive) with technique-specific + universal types via `anyOf` (HR/Q/MC variants) |
-| `adaVNMIR` | Very-Near Mid-IR / FTIR — constrains component types via `oneOf` (single file or archive) with technique-specific + universal types via `anyOf` |
-| `CDIFDiscovery` | CDIF Discovery profile — general-purpose dataset metadata |
-| `DDEDiscovery` | DDE Geoscience Discovery profile (base) — extends CDIF Discovery with DDE resource types, topic/acquisition keywords, and browse graphics |
-| `DDEDataset` | DDE Dataset — dataset, dataCatalog, geographicDataset, nonGeographicDataset |
-| `DDECollection` | DDE Collection — aggregate, collection, series, learningResource, guide (requires hasPart) |
-| `DDEDocument` | DDE Document — document, article, thesis, book, poster, webPage |
-| `DDEImage` | DDE Image — image, map, photograph, explanatoryFigure (includes ddeImagery) |
-| `DDEService` | DDE Service — repository, service, webAPI (includes ddeServiceInfo) |
-| `DDESoftware` | DDE Software — software |
-| `DDEEvent` | DDE Event — initiative, fieldSession (requires temporalCoverage) |
-| `DDEFunctionalResource` | DDE Functional Resource — application, webApplication, model (requires implementationSoftware link) |
-| `DDESemanticResource` | DDE Semantic Resource — semanticResource, definedTermSet |
-| `DDEAudioVisualProduct` | DDE AudioVisual Product — movie, sound |
-| 31 more | Generated by `tools/generate_profiles.py`: adaAIVA, adaAMS, adaARGT, adaDSC, adaEAIRMS, adaFTICRMS, adaGCMS, adaGPYC, adaIC, adaICPOES, adaL2MS, adaLAF, adaLCMS, adaLIT, adaNGNSMS, adaNanoIR, adaNanoSIMS, adaPSFD, adaQRIS, adaRAMAN, adaRITOFNGMS, adaSEM, adaSIMS, adaSLS, adaSVRUEC, adaTEM, adaToFSIMS, adaUVFM, adaVLM, adaXANES, adaXCT |
-| `ECRRDataset` | ECRR Dataset — extends CDIFcomplete + ecrrBase + ecrrAssessment with ECRR-unique properties inline |
-| `ECRRService` | ECRR Service Instance — ecrrBase + ecrrCommon + ecrrAssessment + ecrrService |
-| `ECRRSoftware` | ECRR Software — ecrrBase + ecrrCommon + ecrrAssessment + ecrrSoftware |
-| `ECRRSpecification` | ECRR Specification — ecrrBase + ecrrCommon + ecrrAssessment + ecrrSpecification |
-| `ECRRCatalog` | ECRR Catalog/Registry — ecrrBase + ecrrCommon + ecrrAssessment + ecrrCatalog |
-| `ECRRCollection` | ECRR Bundled Object — ecrrBase + ecrrCommon + ecrrAssessment + ecrrCollection |
-| `ECRRSemanticResource` | ECRR Semantic Resource — ecrrBase + ecrrCommon + ecrrAssessment + ecrrSemanticResource |
-| `ECRRUseCase` | ECRR Use Case — ecrrBase + ecrrCommon + ecrrAssessment (base-only) |
-| `ECRRInterface` | ECRR Interface/API — ecrrBase + ecrrCommon + ecrrAssessment (base-only) |
-| `ECRRInterchangeFormat` | ECRR Interchange Format — ecrrBase + ecrrCommon + ecrrAssessment (base-only) |
-| `ECRRPlatform` | ECRR Platform — ecrrBase + ecrrCommon + ecrrAssessment (base-only) |
-
-Run `python tools/generate_profiles.py --list` to see all generated ADA profiles with their termcodes and detail building block info.
+| `CDIFDiscovery` | CDIF Discovery profile — general-purpose dataset metadata (allOf: cdifMandatory + cdifOptional) |
+| `CDIFcomplete` | CDIF Complete profile — CDIFDiscovery + cdifProv + extended distribution (3 anyOf branches: DataDownload, archive, WebAPI) |
+| `CDIFDataDescription` | CDIF Data Description profile |
+| `CDIFxas` | CDIF XAS profile — CDIFcomplete + XAS-specific properties |
 
 See [agents.md](agents.md) for the full building block structure, authoring rules, and composition hierarchy.
 
@@ -108,13 +86,10 @@ See [agents.md](agents.md) for the full building block structure, authoring rule
 | schemaorgProperties | `_sources/schemaorgProperties/` | schema.org vocabulary building blocks (person, organization, identifier, definedTerm, instrument, etc.) |
 | cdifProperties | `_sources/cdifProperties/` | CDIF-specific properties (mandatory, optional, provenance, tabular data, long data, etc.) |
 | ddiProperties | `_sources/ddiProperties/` | DDI-CDI vocabulary building blocks |
-| provProperties | `_sources/provProperties/` | PROV-O provenance (generatedBy, derivedFrom) |
+| provProperties | `_sources/provProperties/` | PROV-O provenance (generatedBy, derivedFrom, provActivity) |
 | qualityProperties | `_sources/qualityProperties/` | DQV data quality measures |
-| adaProperties | `_sources/adaProperties/` | ADA (IEDA Analytics & Data Archive) domain properties |
 | xasProperties | `_sources/xasProperties/` | X-ray Absorption Spectroscopy domain properties |
-| DDEproperties | `_sources/DDEproperties/` | DDE (Deep-time Digital Earth) geoscience metadata properties (7 BBs: subject, resourceType, required, optional, imagery, serviceInfo, geographicDataset) |
-| ecrrProperties | `_sources/ecrrProperties/` | ECRR (EarthCube Resource Registry) resource type properties (base, common, assessment, type-specific) |
-| profiles | `_sources/profiles/` | Composed profiles (ADA technique, CDIF discovery, DDE resource type, ECRR resource type) |
+| profiles | `_sources/profiles/cdifProfiles/` | CDIF profiles |
 
 ### ddiProperties
 
@@ -150,9 +125,7 @@ The repository implements a three-tier provenance architecture:
 |------|---------------|---------------|-------------|
 | 1 (simple) | `generatedBy` (provProperties) | `cdifOptional` | Minimal `prov:Activity` — `prov:used` accepts only string names or `@id` references |
 | 2 (extended) | `cdifProv` (cdifProperties) | `CDIFcomplete` | Extends `generatedBy` with schema.org Action properties (`schema:agent`, `schema:actionProcess`, `schema:object`, `schema:result`, temporal bounds, location). Requires `@type: ["schema:Action", "prov:Activity"]`. Instruments nested in `prov:used` via `schema:instrument` sub-key. |
-| 3 (domain) | `ddeImagery`, `xasGeneratedBy`, etc. | Domain-specific profiles | Extend `cdifProv` with domain-specific instrument types, agents, and additional properties |
-
-Domain-specific building blocks (`ddeImagery`, `xasOptional`, `xasRequired`) import `cdifProv` directly, so they can be used in profiles that don't include `CDIFcomplete`.
+| 3 (domain) | `xasGeneratedBy`, etc. | Domain-specific profiles | Extend `cdifProv` with domain-specific instrument types, agents, and additional properties (see [ddeBuildingBlocks](https://github.com/usgin/ddeBuildingBlocks), [geochemBuildingBlocks](https://github.com/usgin/geochemBuildingBlocks)) |
 
 ### xasProperties
 
@@ -171,7 +144,7 @@ Each building block has a persistent HTTP URI under `https://w3id.org/cdif/bbr/m
 https://w3id.org/cdif/bbr/metadata/{category}/{name}
 ```
 
-where `{category}` is one of `schemaorgProperties`, `cdifProperties`, `adaProperties`, `provProperties`, `qualityProperties`, `ddiProperties`, `xasProperties`, `DDEproperties`, `ecrrProperties` and `{name}` is the building block directory name (e.g., `person`, `cdifProv`, `xasGeneratedBy`).
+where `{category}` is one of `schemaorgProperties`, `cdifProperties`, `provProperties`, `qualityProperties`, `ddiProperties`, `xasProperties` and `{name}` is the building block directory name (e.g., `person`, `cdifProv`, `xasGeneratedBy`).
 
 Examples:
 - `https://w3id.org/cdif/bbr/metadata/schemaorgProperties/person`
@@ -218,10 +191,10 @@ These resolve directly to the named resource regardless of `Accept` header:
 
 | Sub-path | Returns |
 |---|---|
-| `…/{category}/{name}/schema` | JSON Schema (YAML; or JSON via `Accept: application/json`) |
-| `…/{category}/{name}/resolved` | Resolved schema — all `$ref` inlined (JSON) |
-| `…/{category}/{name}/shacl` | SHACL validation rules (Turtle) |
-| `…/{category}/{name}/context` | JSON-LD context |
+| `.../{category}/{name}/schema` | JSON Schema (YAML; or JSON via `Accept: application/json`) |
+| `.../{category}/{name}/resolved` | Resolved schema -- all `$ref` inlined (JSON) |
+| `.../{category}/{name}/shacl` | SHACL validation rules (Turtle) |
+| `.../{category}/{name}/context` | JSON-LD context |
 
 ```bash
 curl -L https://w3id.org/cdif/bbr/metadata/schemaorgProperties/person/schema
