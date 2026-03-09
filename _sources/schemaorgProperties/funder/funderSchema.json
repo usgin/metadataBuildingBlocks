@@ -3,6 +3,10 @@
     "description": "Funding acknowledgement properties, profile of schema.org/MonetaryGrant",
     "type": "object",
     "properties": {
+        "@id": {
+            "type": "string",
+            "description": "URI identifier for this funding record"
+        },
         "@type": {
             "type": "string",
             "default": "schema:MonetaryGrant",
@@ -31,20 +35,41 @@
                         }
                     }
                 },
-                {"$ref": "#/$defs/Person"},
-                {"$ref": "#/$defs/Organization"}
+                {
+                    "$ref": "#/$defs/Person"
+                },
+                {
+                    "$ref": "#/$defs/Organization"
+                }
             ]
         }
     },
     "anyOf": [
-        {"required": ["schema:funder"]},
-        {"required": ["schema:identifier"]},
-        {"required": ["schema:name"]},
-        {"required": ["schema:description"]}
+        {
+            "required": [
+                "schema:funder"
+            ]
+        },
+        {
+            "required": [
+                "schema:identifier"
+            ]
+        },
+        {
+            "required": [
+                "schema:name"
+            ]
+        }
     ],
     "$defs": {
-        "Person": {"$ref": "../person/personSchema.json"},
-        "Organization": {"$ref": "../organization/organizationSchema.json"},
-        "Identifier": {"$ref": "../identifier/identifierSchema.json"}
+        "Person": {
+            "$ref": "../person/personSchema.json"
+        },
+        "Organization": {
+            "$ref": "../organization/organizationSchema.json"
+        },
+        "Identifier": {
+            "$ref": "../identifier/identifierSchema.json"
+        }
     }
 }
