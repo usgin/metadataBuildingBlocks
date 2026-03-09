@@ -90,7 +90,8 @@ Example instance of properties for a catalog record describing information about
   "@context": [
     {
       "schema": "http://schema.org/",
-      "dcat": "http://www.w3.org/ns/dcat#"
+      "dcat": "http://www.w3.org/ns/dcat#",
+      "dcterms": "http://purl.org/dc/terms/"
     },
     "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifCatalogRecord/context.jsonld",
     {

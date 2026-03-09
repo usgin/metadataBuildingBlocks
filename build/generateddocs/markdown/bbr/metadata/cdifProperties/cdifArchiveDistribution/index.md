@@ -214,7 +214,8 @@ description extensions (TabularTextDataSet, StructuredDataSet).
       "schema": "http://schema.org/",
       "cdi": "http://ddialliance.org/Specification/DDI-CDI/1.0/RDF/",
       "csvw": "http://www.w3.org/ns/csvw#",
-      "spdx": "http://spdx.org/rdf/terms#"
+      "spdx": "http://spdx.org/rdf/terms#",
+      "dcterms": "http://purl.org/dc/terms/"
     },
     "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifArchiveDistribution/context.jsonld"
   ],
@@ -393,7 +394,7 @@ description extensions (TabularTextDataSet, StructuredDataSet).
 ```ttl
 @prefix cdi: <http://ddialliance.org/Specification/DDI-CDI/1.0/RDF/> .
 @prefix csvw: <http://www.w3.org/ns/csvw#> .
-@prefix ns1: <dcterms:> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix schema1: <http://schema.org/> .
 @prefix spdx: <http://spdx.org/rdf/terms#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -478,7 +479,7 @@ description extensions (TabularTextDataSet, StructuredDataSet).
             spdx:checksumValue "f962af0b2e2f02752aa258a58cede1263f05c7a78e3b9d162da960368f7dc54b" ] .
 
 [] a schema1:DataDownload ;
-    ns1:conformsTo "https://www.iana.org/assignments/media-types/application/zip" ;
+    dcterms:conformsTo "https://www.iana.org/assignments/media-types/application/zip" ;
     schema1:contentUrl "https://example.org/data/geochem-package.zip" ;
     schema1:description "This data product is distributed as a zip archive; contents of the archive are listed as parts. The component files are not individually accessible." ;
     schema1:encodingFormat "application/zip" ;

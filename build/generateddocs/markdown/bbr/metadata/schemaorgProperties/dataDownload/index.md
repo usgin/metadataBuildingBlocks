@@ -38,7 +38,8 @@ Defintion of properties to describe file-based distribution of a resource on the
   "@context": {
     "schema": "http://schema.org/",
     "ex": "https://example.org/",
-    "xsd": "http://www.w3.org/2001/XMLSchema#"
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/"
   },
   "@type": [
     "schema:DataDownload"
@@ -91,13 +92,15 @@ Defintion of properties to describe file-based distribution of a resource on the
 {
   "@context": [
     {
-      "schema": "http://schema.org/"
+      "schema": "http://schema.org/",
+      "dcterms": "http://purl.org/dc/terms/"
     },
     "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/dataDownload/context.jsonld",
     {
       "schema": "http://schema.org/",
       "ex": "https://example.org/",
-      "xsd": "http://www.w3.org/2001/XMLSchema#"
+      "xsd": "http://www.w3.org/2001/XMLSchema#",
+      "dcterms": "http://purl.org/dc/terms/"
     }
   ],
   "@type": [
@@ -147,8 +150,8 @@ Defintion of properties to describe file-based distribution of a resource on the
 
 #### ttl
 ```ttl
+@prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix ns1: <spdx:> .
-@prefix ns2: <dcterms:> .
 @prefix schema1: <http://schema.org/> .
 
 <https://orcid.org/3333-4444-5565> a schema1:Person ;
@@ -169,7 +172,7 @@ Defintion of properties to describe file-based distribution of a resource on the
     schema1:name "Houndstooth Data Repository" .
 
 [] a schema1:DataDownload ;
-    ns2:conformsTo "not specified" ;
+    dcterms:conformsTo "not specified" ;
     schema1:contentUrl "https://hounddata.org/354277.csv" ;
     schema1:encodingFormat "text/csv" ;
     schema1:name "Water levels in Beartooth reservoir, 1992-2020" ;

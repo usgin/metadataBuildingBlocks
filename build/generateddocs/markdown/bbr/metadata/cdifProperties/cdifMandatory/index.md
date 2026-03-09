@@ -87,7 +87,8 @@ Example CDIF discovery instance with mandatory properties only.
 {
   "@context": [
     {
-      "schema": "http://schema.org/"
+      "schema": "http://schema.org/",
+      "dcterms": "http://purl.org/dc/terms/"
     },
     "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifMandatory/context.jsonld",
     {
