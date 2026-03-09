@@ -19,8 +19,8 @@ The input schemas are already fully resolved (no $ref, no $defs).
 
 Usage:
     python tools/convert_for_jsonforms.py --all
-    python tools/convert_for_jsonforms.py --profile adaProduct
-    python tools/convert_for_jsonforms.py --profile adaEMPA --verbose
+    python tools/convert_for_jsonforms.py --profile CDIFDiscovery
+    python tools/convert_for_jsonforms.py --profile CDIFxas --verbose
 """
 
 import argparse
@@ -39,7 +39,6 @@ SOURCES_DIR = REPO_ROOT / "_sources" / "jsonforms" / "profiles"
 
 # Subdirectory mapping for profile categories
 _PROFILE_SUBDIR = {
-    "ada": "adaProfiles",
     "CDIF": "cdifProfiles",
 }
 
@@ -85,79 +84,9 @@ def _find_sources_dir(name: str) -> Path:
     # Legacy flat layout fallback
     return SOURCES_DIR / name
 
-ADA_PROFILES = [
-    "adaProduct", "adaEMPA", "adaXRD", "adaICPMS", "adaVNMIR",
-    "adaAIVA", "adaAMS", "adaARGT", "adaDSC", "adaEAIRMS",
-    "adaFTICRMS", "adaGCMS", "adaGPYC", "adaIC", "adaICPOES",
-    "adaL2MS", "adaLAF", "adaLCMS", "adaLIT", "adaNGNSMS",
-    "adaNanoIR", "adaNanoSIMS", "adaPSFD", "adaQRIS", "adaRAMAN",
-    "adaRITOFNGMS", "adaSEM", "adaSIMS", "adaSLS", "adaSVRUEC",
-    "adaTEM", "adaToFSIMS", "adaUVFM", "adaVLM", "adaXANES", "adaXCT",
-]
 CDIF_PROFILES = ["CDIFDiscovery", "CDIFxas"]
-ALL_PROFILES = ADA_PROFILES + CDIF_PROFILES
+ALL_PROFILES = CDIF_PROFILES
 
-# Human-readable labels for ada: IDs used in schema:additionalType dropdowns.
-# Labels come from ADA-AnalyticalMethodsAndAttributes.xlsx.
-ADA_ADDITIONAL_TYPE_LABELS = {
-    # Product types (root-level)
-    "ada:DataDeliveryPackage": "Data Delivery Package",
-    # EMPA
-    "ada:EMPAImage": "Electron Microprobe Analysis (EMPA) Image",
-    "ada:EMPACollection": "Electron Microprobe Analysis (EMPA) Collection",
-    "ada:EMPAQEA": "Electron Microprobe Analysis Quantitative Elemental Abundances (EMPAQEA)",
-    "ada:EMPAESPC": "Electron Microprobe Analysis Energy-Dispersive Spectra Processing Code (EMPAESPC)",
-    # XRD
-    "ada:XRDTabular": "X-ray Diffraction (XRD) Tabular",
-    # ICPMS
-    "ada:HRICPMSProcessed": "High-Resolution Inductively Coupled Plasma Mass Spectrometry (HRICPMS) Processed",
-    "ada:HRICPMSRaw": "High-Resolution Inductively Coupled Plasma Mass Spectrometry (HRICPMS) Raw",
-    "ada:QICPMSProcessed": "Quadrupole Inductively Coupled Plasma Mass Spectrometry (QICPMS) Processed",
-    "ada:QICPMSRaw": "Quadrupole Inductively Coupled Plasma Mass Spectrometry (QICPMS) Raw",
-    "ada:MCICPMSRaw": "Multi-Collector Inductively Coupled Plasma Mass Spectrometry (MCICPMS) Raw",
-    "ada:MCICPMSProcessed": "Multi-Collector Inductively Coupled Plasma Mass Spectrometry (MCICPMS) Processed",
-    # VNMIR
-    "ada:VNMIRPoint": "Visible, near-infrared, and mid-infrared Spectroscopy (VNMIR) Point",
-    "ada:VNMIROverviewImage": "Visible, near-infrared, and mid-infrared Spectroscopy (VNMIR) Overview Image",
-    "ada:VNMIRSpectralMap": "Visible, near-infrared, and mid-infrared Spectroscopy (VNMIR) Spectral Map",
-    # Component types (hasPart-level)
-    "ada:EMPAImageMap": "EMPA Image Map",
-    "ada:EMPAQEATabular": "EMPA QEA Tabular",
-    "ada:EMPAImageCollection": "EMPA Image Collection",
-    "ada:EMPAESPCTabular": "EMPA ESPC Tabular",
-    "ada:EMPAESPCPlot": "EMPA ESPC Plot",
-    "ada:XRDDiffractionPattern": "XRD Diffraction Pattern",
-    "ada:XRDIndexedImage": "XRD Indexed Image",
-    "ada:QICPMSProcessedTabular": "QICPMS Processed Tabular",
-    "ada:QICPMSRawTabular": "QICPMS Raw Tabular",
-    "ada:MCICPMSTabular": "MCICPMS Tabular",
-    "ada:MCICPMSCollection": "MCICPMS Collection",
-    "ada:VNMIRSpectralPoint": "VNMIR Spectral Point",
-    "ada:VNMIRSpectraPlot": "VNMIR Spectra Plot",
-    # Common supporting/supplement types
-    "ada:analysisLocation": "Analysis Location",
-    "ada:annotatedImage": "Annotated Image",
-    "ada:areaOfInterest": "Area of Interest",
-    "ada:basemap": "Basemap",
-    "ada:calibrationFile": "Calibration File",
-    "ada:code": "Code",
-    "ada:contextPhotography": "Context Photography",
-    "ada:contextVideo": "Context Video",
-    "ada:inputFile": "Input File",
-    "ada:instrumentMetadata": "Instrument Metadata",
-    "ada:logFile": "Log File",
-    "ada:methodDescription": "Method Description",
-    "ada:other": "Other",
-    "ada:plot": "Plot",
-    "ada:processingMethod": "Processing Method",
-    "ada:quickLook": "Quick Look",
-    "ada:report": "Report",
-    "ada:samplePreparation": "Sample Preparation",
-    "ada:shapefile": "Shapefile",
-    "ada:supplementalBasemap": "Supplemental Basemap",
-    "ada:supplementaryImage": "Supplementary Image",
-    "ada:worldFile": "World File",
-}
 
 # Keys to strip from schemas (metadata, not useful for forms)
 STRIP_KEYS = {"$id", "x-jsonld-prefixes", "x-jsonld-context", "x-jsonld-extra-terms"}
@@ -879,7 +808,7 @@ def _is_file_type_anyof(anyof: list) -> bool:
     """Return True if the anyOf list contains file-type branches (image, tabular, etc.).
 
     Detected by checking whether any branch defines a ``componentType`` property,
-    which is the hallmark of ADA file-type schemas.
+    which is the hallmark of file-type schemas with hasPart.
     """
     if not isinstance(anyof, list) or len(anyof) < 2:
         return False
@@ -1079,7 +1008,7 @@ def apply_anyof_simplifications(schema: Any, path: str = "") -> Any:
                     result[k] = apply_anyof_simplifications(v, current_path)
                 continue
 
-            # distribution items oneOf -> preserve structure (ADA)
+            # distribution items oneOf -> preserve structure
             # After structural simplification, continue recursion into branches
             if k == "items" and path.endswith("schema:distribution") and isinstance(v, dict) and "oneOf" in v:
                 simplified = simplify_distribution_items(v)
@@ -1310,8 +1239,8 @@ def relax_min_items(schema: Any) -> Any:
 # additionalType enum → oneOf (human-readable dropdown labels)
 # ---------------------------------------------------------------------------
 
-def _ada_id_to_label(val: str) -> str:
-    """Fallback label: strip 'ada:' prefix and split camelCase into words."""
+def _id_to_label(val: str) -> str:
+    """Generate label: strip namespace prefix and split camelCase into words."""
     name = val.split(":", 1)[1] if ":" in val else val
     # Insert space before each uppercase letter that follows a lowercase letter
     return re.sub(r"(?<=[a-z])(?=[A-Z])", " ", name)
@@ -1328,7 +1257,7 @@ def _convert_at_enum_to_oneof(at_schema: dict) -> None:
     items = at_schema.get("items")
     # Try items.enum first (legacy behavior)
     enum_vals = items.get("enum") if isinstance(items, dict) else None
-    # Fallback: contains.enum (new adaProduct structure)
+    # Fallback: contains.enum
     if not enum_vals:
         contains = at_schema.get("contains")
         if isinstance(contains, dict):
@@ -1338,7 +1267,7 @@ def _convert_at_enum_to_oneof(at_schema: dict) -> None:
 
     one_of = []
     for val in enum_vals:
-        label = ADA_ADDITIONAL_TYPE_LABELS.get(val, _ada_id_to_label(val))
+        label = _id_to_label(val)
         one_of.append({"const": val, "title": label})
 
     # Flatten: array with items → string with oneOf
@@ -1432,12 +1361,12 @@ def main():
     )
     parser.add_argument(
         "--profile",
-        help="Convert a single profile (e.g., adaProduct)",
+        help="Convert a single profile (e.g., CDIFDiscovery)",
     )
     parser.add_argument(
         "--all",
         action="store_true",
-        help="Convert all profiles (ADA + CDIF)",
+        help="Convert all profiles",
     )
     parser.add_argument(
         "-v", "--verbose",
