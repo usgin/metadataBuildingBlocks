@@ -18,3 +18,14 @@ cdifd:CDIFDataDownloadShape
     	];
     sh:message "a datadownload must have a URL that will get the described resource" ;
 	.
+
+# Info-level check for dcterms:conformsTo
+<#ConformsToInfo>
+    a sh:NodeShape ;
+    sh:targetClass schema:DataDownload ;
+    sh:property [
+        sh:path dcterms:conformsTo ;
+        sh:minCount 1 ;
+        sh:severity sh:Info ;
+        sh:message "Recommended: include dcterms:conformsTo to identify the standard or specification this distribution conforms to." ;
+    ] .

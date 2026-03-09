@@ -2,6 +2,9 @@ $schema: https://json-schema.org/draft/2020-12/schema
 description: Funding acknowledgement properties, profile of schema.org/MonetaryGrant
 type: object
 properties:
+  '@id':
+    type: string
+    description: URI identifier for this funding record
   '@type':
     type: string
     default: schema:MonetaryGrant
@@ -31,8 +34,6 @@ anyOf:
   - schema:identifier
 - required:
   - schema:name
-- required:
-  - schema:description
 $defs:
   Person:
     $ref: ../person/schema.yaml
