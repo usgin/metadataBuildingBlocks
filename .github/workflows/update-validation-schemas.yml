@@ -1,0 +1,61 @@
+name: Update validation schemas
+
+on:
+  workflow_run:
+    workflows: ["Validate and process Building Blocks"]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  update-validation:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout metadataBuildingBlocks
+        uses: actions/checkout@v4
+        with:
+          path: bb
+
+      - name: Checkout validation repo
+        uses: actions/checkout@v4
+        with:
+          repository: Cross-Domain-Interoperability-Framework/validation
+          token: ${{ secrets.VALIDATA_REPO_PAT }}
+          path: validation
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Generate CDIFDiscoverySchema.json
+        run: |
+          python validation/generate_validation_schema.py \
+            bb/_sources/profiles/cdifProfiles/CDIFDiscovery/resolvedSchema.json \
+            -o validation/CDIFDiscoverySchema.json \
+            -t "CDIF Discovery metadata schema" \
+            -d "JSON schema for validating framed JSON-LD documents that describe science datasets for the CDIF discovery profile. Combines cdifMandatory and cdifOptional building blocks with @type enum constraint. Generated from CDIFDiscovery building block profile resolvedSchema.json (https://usgin.github.io/metadataBuildingBlocks/_sources/profiles/cdifProfiles/CDIFDiscovery/resolvedSchema.json)." \
+            -v
+
+      - name: Generate CDIFCompleteSchema.json
+        run: |
+          python validation/generate_validation_schema.py \
+            bb/_sources/profiles/cdifProfiles/CDIFcomplete/resolvedSchema.json \
+            -o validation/CDIFCompleteSchema.json \
+            -t "CDIF Complete metadata schema" \
+            -d "JSON schema for validating framed JSON-LD documents that describe science datasets for the CDIF complete profile, combining discovery metadata with data description and archive distribution extensions. Generated from CDIFcomplete building block profile resolvedSchema.json (https://usgin.github.io/metadataBuildingBlocks/_sources/profiles/cdifProfiles/CDIFcomplete/resolvedSchema.json)." \
+            -v
+
+      - name: Commit and push to validation repo
+        working-directory: validation
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add CDIFDiscoverySchema.json CDIFCompleteSchema.json
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Update validation schemas from building blocks [automated]"
+            git push
+          fi
