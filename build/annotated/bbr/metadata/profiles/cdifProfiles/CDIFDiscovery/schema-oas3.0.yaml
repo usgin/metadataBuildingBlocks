@@ -15,29 +15,11 @@ x-defs:
           metadata information.'
       '@type':
         description: a schema.org Class that specifies the expected information content
-          for the metadata record. For CDIF, 'schema:Dataset' is required, but other
-          possible values (e.g. CreativeWork, SoftwareApplication, Product, WebAPI)
-          are sometimes included to enable the schema.org properties used to describe
-          the resource without schema.org validation errors. The array must include
-          at least one value from the known set, but can also include other strings
-          for extensibility.
+          for the metadata record. The array must include at least one schema.org
+          type value. Default is schema:Dataset.
         type: array
         items:
           type: string
-        contains:
-          enum:
-          - schema:CreativeWork
-          - schema:SoftwareApplication
-          - schema:SoftwareSourceCode
-          - schema:Product
-          - schema:WebAPI
-          - schema:Dataset
-          - schema:DigitalDocument
-          - schema:Collection
-          - schema:ImageObject
-          - schema:DataCatalog
-          - schema:DefinedTermSet
-          - schema:MediaObject
         default: schema:Dataset
         minItems: 1
       schema:name:
@@ -174,7 +156,7 @@ x-defs:
         description: Other identifiers for the dataset, as IRI references, literal
           strings, or structured identifiers using schema:PropertyValue.
         type: array
-        minItems: 0
+        minItems: 1
         items:
           anyOf:
           - type: string
@@ -259,6 +241,18 @@ x-defs:
                 type: string
                 description: a reference to a publishing principles statement
           - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDiscovery/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.cdifProperties.cdifOptional/$defs/LabeledLink
+      schema:measurementTechnique:
+        description: The technique, technology, or methodology used for measurement
+          or determination of the dataset values. Can be a string, a URI reference,
+          a DefinedTerm, or an array combining these.
+        anyOf:
+        - type: string
+        - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDiscovery/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.cdifProperties.cdifOptional/$defs/DefinedTerm
+        - type: array
+          items:
+            anyOf:
+            - type: string
+            - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDiscovery/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.cdifProperties.cdifOptional/$defs/DefinedTerm
       schema:keywords:
         description: Keywords are an array of strings, an array of schema:DefinedTerms,
           or some combination of these. If you have information about a controlled
@@ -1788,6 +1782,30 @@ description: 'JSON schema for JSON-LD documents that describe science datasets f
 allOf:
 - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDiscovery/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.cdifProperties.cdifMandatory
 - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDiscovery/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.cdifProperties.cdifOptional
+- type: object
+  properties:
+    '@type':
+      description: For CDIF Discovery, the @type array should include a value from
+        the known set of schema.org types used for dataset-like resources.
+      type: array
+      items:
+        type: string
+      default: schema:Dataset
+      minItems: 1
+      contains:
+        enum:
+        - schema:CreativeWork
+        - schema:SoftwareApplication
+        - schema:SoftwareSourceCode
+        - schema:Product
+        - schema:WebAPI
+        - schema:Dataset
+        - schema:DigitalDocument
+        - schema:Collection
+        - schema:ImageObject
+        - schema:DataCatalog
+        - schema:DefinedTermSet
+        - schema:MediaObject
 x-jsonld-prefixes:
   schema: http://schema.org/
   cdi: http://ddialliance.org/Specification/DDI-CDI/1.0/RDF/

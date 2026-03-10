@@ -15,29 +15,11 @@ x-defs:
           metadata information.'
       '@type':
         description: a schema.org Class that specifies the expected information content
-          for the metadata record. For CDIF, 'schema:Dataset' is required, but other
-          possible values (e.g. CreativeWork, SoftwareApplication, Product, WebAPI)
-          are sometimes included to enable the schema.org properties used to describe
-          the resource without schema.org validation errors. The array must include
-          at least one value from the known set, but can also include other strings
-          for extensibility.
+          for the metadata record. The array must include at least one schema.org
+          type value. Default is schema:Dataset.
         type: array
         items:
           type: string
-        contains:
-          enum:
-          - schema:CreativeWork
-          - schema:SoftwareApplication
-          - schema:SoftwareSourceCode
-          - schema:Product
-          - schema:WebAPI
-          - schema:Dataset
-          - schema:DigitalDocument
-          - schema:Collection
-          - schema:ImageObject
-          - schema:DataCatalog
-          - schema:DefinedTermSet
-          - schema:MediaObject
         default: schema:Dataset
         minItems: 1
       schema:name:
@@ -174,7 +156,7 @@ x-defs:
         description: Other identifiers for the dataset, as IRI references, literal
           strings, or structured identifiers using schema:PropertyValue.
         type: array
-        minItems: 0
+        minItems: 1
         items:
           anyOf:
           - type: string
@@ -259,6 +241,18 @@ x-defs:
                 type: string
                 description: a reference to a publishing principles statement
           - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.cdifProperties.cdifOptional/$defs/LabeledLink
+      schema:measurementTechnique:
+        description: The technique, technology, or methodology used for measurement
+          or determination of the dataset values. Can be a string, a URI reference,
+          a DefinedTerm, or an array combining these.
+        anyOf:
+        - type: string
+        - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.cdifProperties.cdifOptional/$defs/DefinedTerm
+        - type: array
+          items:
+            anyOf:
+            - type: string
+            - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.cdifProperties.cdifOptional/$defs/DefinedTerm
       schema:keywords:
         description: Keywords are an array of strings, an array of schema:DefinedTerms,
           or some combination of these. If you have information about a controlled
@@ -760,6 +754,129 @@ x-defs:
       schema: http://schema.org/
       cdi: http://ddialliance.org/Specification/DDI-CDI/1.0/RDF/
     x-schema-source: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifLongData/schema.yaml
+    x-schema-version: https://json-schema.org/draft/2020-12/schema
+  cdif.bbr.metadata.cdifProperties.cdifArchiveDistribution:
+    title: CDIF Archive Distribution
+    description: A DataDownload distribution that is an archive file (e.g. ZIP) containing
+      multiple component files described in schema:hasPart. The archive itself is
+      typed as schema:DataDownload; each component file is typed as schema:MediaObject
+      (not DataDownload, since they are not independently accessible via URL). Components
+      may optionally include CDIF data description extensions (cdifTabularData, cdifDataCube)
+      to describe their internal data structure.
+    type: object
+    allOf:
+    - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.schemaorgProperties.dataDownload
+    - type: object
+      properties:
+        schema:hasPart:
+          type: array
+          description: Array describing the files contained in the archive. Each item
+            represents a component file that is part of the archive and is not independently
+            accessible.
+          items:
+            allOf:
+            - type: object
+              properties:
+                '@id':
+                  type: string
+                  description: Identifier for this file, typically a hash-based anchor
+                    (e.g. '#abc123'). Used for cross-references from schema:about
+                    in metadata sidecar files.
+                '@type':
+                  type: array
+                  description: Must include schema:MediaObject. Must NOT include schema:DataDownload
+                    since this file is not independently accessible. May include additional
+                    types for categorization.
+                  items:
+                    type: string
+                  contains:
+                    enum:
+                    - schema:MediaObject
+                  not:
+                    contains:
+                      enum:
+                      - schema:DataDownload
+                  minItems: 1
+                schema:name:
+                  type: string
+                  description: Filename of the component file within the archive.
+                schema:description:
+                  type: string
+                  description: Description of the file content. May include checksum
+                    information.
+                schema:encodingFormat:
+                  type: array
+                  description: MIME type(s) for this file.
+                  items:
+                    type: string
+                schema:size:
+                  type: object
+                  description: File size as a QuantitativeValue.
+                  properties:
+                    '@type':
+                      anyOf:
+                      - type: string
+                        enum:
+                        - schema:QuantitativeValue
+                      - type: array
+                        items:
+                          type: string
+                        contains:
+                          enum:
+                          - schema:QuantitativeValue
+                    schema:value:
+                      type: number
+                      description: Numeric size value.
+                    schema:unitText:
+                      type: string
+                      description: Unit of measure for size (e.g. 'byte').
+                schema:about:
+                  type: array
+                  description: For metadata sidecar files, references the data file
+                    this metadata describes.
+                  items:
+                    type: object
+                    properties:
+                      '@id':
+                        type: string
+                        description: Reference to the @id of the data file described
+                          by this sidecar.
+                spdx:checksum:
+                  type: object
+                  description: Checksum for integrity verification of this component
+                    file.
+                  properties:
+                    '@type':
+                      anyOf:
+                      - type: string
+                        enum:
+                        - spdx:Checksum
+                      - type: array
+                        items:
+                          type: string
+                        contains:
+                          enum:
+                          - spdx:Checksum
+                    spdx:algorithm:
+                      type: string
+                    spdx:checksumValue:
+                      type: string
+                  required:
+                  - '@type'
+              required:
+              - '@type'
+              - schema:name
+              - schema:encodingFormat
+            - anyOf:
+              - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.cdifProperties.cdifDataCube
+              - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.cdifProperties.cdifTabularData
+              - {}
+    x-jsonld-prefixes:
+      schema: http://schema.org/
+      spdx: http://spdx.org/rdf/terms#
+      cdi: http://ddialliance.org/Specification/DDI-CDI/1.0/RDF/
+      csvw: http://www.w3.org/ns/csvw#
+    x-schema-source: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifArchiveDistribution/schema.yaml
     x-schema-version: https://json-schema.org/draft/2020-12/schema
   cdif.bbr.metadata.schemaorgProperties.webAPI:
     title: Direct data access to a resource via web servcie
@@ -2107,6 +2224,28 @@ allOf:
 - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.cdifProperties.cdifOptional
 - type: object
   properties:
+    '@type':
+      description: For CDIF DataDescription, the @type array should include a value
+        from the known set of schema.org types used for dataset-like resources.
+      type: array
+      items:
+        type: string
+      default: schema:Dataset
+      minItems: 1
+      contains:
+        enum:
+        - schema:CreativeWork
+        - schema:SoftwareApplication
+        - schema:SoftwareSourceCode
+        - schema:Product
+        - schema:WebAPI
+        - schema:Dataset
+        - schema:DigitalDocument
+        - schema:Collection
+        - schema:ImageObject
+        - schema:DataCatalog
+        - schema:DefinedTermSet
+        - schema:MediaObject
     schema:distribution:
       type: array
       items:
@@ -2118,6 +2257,7 @@ allOf:
             - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.cdifProperties.cdifTabularData
             - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.cdifProperties.cdifLongData
             - {}
+        - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.cdifProperties.cdifArchiveDistribution
         - allOf:
           - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.schemaorgProperties.webAPI
           - type: object

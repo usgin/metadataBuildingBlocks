@@ -13,6 +13,31 @@
     {
       "type": "object",
       "properties": {
+        "@type": {
+          "description": "For CDIF DataDescription, the @type array should include a value from the known set of schema.org types used for dataset-like resources.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": "schema:Dataset",
+          "minItems": 1,
+          "contains": {
+            "enum": [
+              "schema:CreativeWork",
+              "schema:SoftwareApplication",
+              "schema:SoftwareSourceCode",
+              "schema:Product",
+              "schema:WebAPI",
+              "schema:Dataset",
+              "schema:DigitalDocument",
+              "schema:Collection",
+              "schema:ImageObject",
+              "schema:DataCatalog",
+              "schema:DefinedTermSet",
+              "schema:MediaObject"
+            ]
+          }
+        },
         "schema:distribution": {
           "type": "array",
           "items": {
@@ -37,6 +62,9 @@
                     ]
                   }
                 ]
+              },
+              {
+                "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifArchiveDistribution/schema.json"
               },
               {
                 "allOf": [

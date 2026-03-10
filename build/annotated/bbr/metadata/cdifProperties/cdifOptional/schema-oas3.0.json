@@ -2606,7 +2606,7 @@
     "schema:sameAs": {
       "description": "Other identifiers for the dataset, as IRI references, literal strings, or structured identifiers using schema:PropertyValue.",
       "type": "array",
-      "minItems": 0,
+      "minItems": 1,
       "items": {
         "anyOf": [
           {
@@ -2746,6 +2746,30 @@
           }
         ]
       }
+    },
+    "schema:measurementTechnique": {
+      "description": "The technique, technology, or methodology used for measurement or determination of the dataset values. Can be a string, a URI reference, a DefinedTerm, or an array combining these.",
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifOptional/schema-oas3.0.json#/$defs/DefinedTerm"
+        },
+        {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifOptional/schema-oas3.0.json#/$defs/DefinedTerm"
+              }
+            ]
+          }
+        }
+      ]
     },
     "schema:keywords": {
       "description": "Keywords are an array of strings, an array of schema:DefinedTerms, or some combination of these. If you have information about a controlled vocabulary from which keywords come from, use schema:DefinedTerm to descibe that keyword. This allowed variability makes parsing metadata hard; recommend using DefinedTerm for all keywords if any of them are from a known vocabulary, otherwise an array of strings.",
