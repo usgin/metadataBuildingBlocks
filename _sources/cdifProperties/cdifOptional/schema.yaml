@@ -21,7 +21,7 @@ properties:
     description: Other identifiers for the dataset, as IRI references, literal strings,
       or structured identifiers using schema:PropertyValue.
     type: array
-    minItems: 0
+    minItems: 1
     items:
       anyOf:
       - type: string
@@ -98,6 +98,18 @@ properties:
             type: string
             description: a reference to a publishing principles statement
       - $ref: '#/$defs/LabeledLink'
+  'schema:measurementTechnique':
+    description: The technique, technology, or methodology used for measurement or determination
+      of the dataset values. Can be a string, a URI reference, a DefinedTerm, or an array
+      combining these.
+    anyOf:
+    - type: string
+    - $ref: '#/$defs/DefinedTerm'
+    - type: array
+      items:
+        anyOf:
+        - type: string
+        - $ref: '#/$defs/DefinedTerm'
   'schema:keywords':
     description: Keywords are an array of strings, an array of schema:DefinedTerms, or some combination
       of these. If you have information about a controlled vocabulary from which keywords come from, use
