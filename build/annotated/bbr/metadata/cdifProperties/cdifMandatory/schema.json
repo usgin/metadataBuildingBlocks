@@ -12,10 +12,27 @@
       "description": "a schema.org Class that specifies the expected information content for the metadata record. The array must include at least one schema.org type value. Default is schema:Dataset.",
       "type": "array",
       "items": {
-        "type": "string"
+        "type": "string",
+        "enum": [
+          "schema:CreativeWork",
+          "schema:SoftwareApplication",
+          "schema:SoftwareSourceCode",
+          "schema:Product",
+          "schema:WebAPI",
+          "schema:Dataset",
+          "schema:DigitalDocument",
+          "schema:Collection",
+          "schema:ImageObject",
+          "schema:DataCatalog",
+          "schema:DefinedTermSet",
+          "schema:MediaObject"
+        ]
       },
       "default": "schema:Dataset",
-      "minItems": 1
+      "minItems": 1,
+      "contains": {
+        "const": "schema:Dataset"
+      }
     },
     "schema:name": {
       "type": "string",

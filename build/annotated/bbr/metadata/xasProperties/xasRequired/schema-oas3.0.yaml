@@ -20,8 +20,24 @@ x-defs:
         type: array
         items:
           type: string
+          enum:
+          - schema:CreativeWork
+          - schema:SoftwareApplication
+          - schema:SoftwareSourceCode
+          - schema:Product
+          - schema:WebAPI
+          - schema:Dataset
+          - schema:DigitalDocument
+          - schema:Collection
+          - schema:ImageObject
+          - schema:DataCatalog
+          - schema:DefinedTermSet
+          - schema:MediaObject
         default: schema:Dataset
         minItems: 1
+        contains:
+          enum:
+          - schema:Dataset
       schema:name:
         type: string
         description: A descriptive name of a dataset (e.g., 'Snow depth in Northern
@@ -482,6 +498,16 @@ x-defs:
       schema:name:
         type: string
       schema:value:
+        anyOf:
+        - type: string
+        - type: number
+        - type: boolean
+        - type: object
+      schema:unitCode:
+        anyOf:
+        - type: string
+        - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasRequired/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.schemaorgProperties.additionalProperty/$defs/DefinedTerm
+      schema:unitText:
         type: string
     required:
     - schema:name
@@ -561,6 +587,7 @@ x-defs:
         description: An identifier for a standard or specification that the distribution
           conforms to. Recommended to enable machine-actionable data access.
         type: array
+        minItems: 1
         items:
           type: object
           properties:
@@ -1395,7 +1422,11 @@ x-defs:
           or contained within the specified bounding box.
         properties:
           '@type':
-            type: string
+            anyOf:
+            - type: string
+            - type: array
+              items:
+                type: string
             description: 'MUST be sf: (<http://www.opengis.net/ont/sf#>) SimpleFeature
               geometry type. See https://opengeospatial.github.io/ogc-geosparql/geosparql11/sf_geometries.ttl'
           geosparql:asWKT:
