@@ -4,8 +4,16 @@ x-defs:
     type: object
     properties:
       '@type':
-        enum:
-        - schema:DefinedTerm
+        anyOf:
+        - type: string
+          enum:
+          - schema:DefinedTerm
+        - type: array
+          items:
+            type: string
+          contains:
+            enum:
+            - schema:DefinedTerm
       schema:name:
         type: string
         description: text label for the term that is useful to human user
@@ -40,9 +48,16 @@ x-defs:
     type: object
     properties:
       '@type':
-        type: string
-        enum:
-        - schema:PropertyValue
+        anyOf:
+        - type: string
+          enum:
+          - schema:PropertyValue
+        - type: array
+          items:
+            type: string
+          contains:
+            enum:
+            - schema:PropertyValue
       schema:propertyID:
         type: string
         description: In this context for the schema:PropertyValue, this field is an
@@ -75,10 +90,17 @@ description: 'Spatial Extent description for CDIF discovery profile.  Note requi
 type: object
 properties:
   '@type':
-    type: string
     default: schema:Place
-    enum:
-    - schema:Place
+    anyOf:
+    - type: string
+      enum:
+      - schema:Place
+    - type: array
+      items:
+        type: string
+      contains:
+        enum:
+        - schema:Place
   schema:name:
     description: multiple place names or DefinedTerms that have a place name and URI
       for the location
@@ -98,10 +120,17 @@ properties:
         index or display bounding box extents or a single point location.
       properties:
         '@type':
-          type: string
           default: schema:GeoCoordinates
-          enum:
-          - schema:GeoCoordinates
+          anyOf:
+          - type: string
+            enum:
+            - schema:GeoCoordinates
+          - type: array
+            items:
+              type: string
+            contains:
+              enum:
+              - schema:GeoCoordinates
         schema:latitude:
           type: number
         schema:longitude:
@@ -117,10 +146,17 @@ properties:
         whitespace should be used when writing a list of several such points.'
       properties:
         '@type':
-          type: string
           default: schema:GeoShape
-          enum:
-          - schema:GeoShape
+          anyOf:
+          - type: string
+            enum:
+            - schema:GeoShape
+          - type: array
+            items:
+              type: string
+            contains:
+              enum:
+              - schema:GeoShape
         schema:box:
           type: string
           description: A GeoShape box defines an area on the surface of the earth
@@ -137,10 +173,17 @@ properties:
         linear trace like a ship track or airplane flight line
       properties:
         '@type':
-          type: string
           default: schema:GeoShape
-          enum:
-          - schema:GeoShape
+          anyOf:
+          - type: string
+            enum:
+            - schema:GeoShape
+          - type: array
+            items:
+              type: string
+            contains:
+              enum:
+              - schema:GeoShape
         schema:line:
           type: string
           description: 'A GeoShape box defines a curvilinear geometry as a string
@@ -169,9 +212,16 @@ properties:
         type: object
         properties:
           '@type':
-            type: string
-            enum:
-            - geosparql:wktLiteral
+            anyOf:
+            - type: string
+              enum:
+              - geosparql:wktLiteral
+            - type: array
+              items:
+                type: string
+              contains:
+                enum:
+                - geosparql:wktLiteral
           '@value':
             type: string
             description: a WKT geometry description string, e.g. 'POINT(-76 -18)'

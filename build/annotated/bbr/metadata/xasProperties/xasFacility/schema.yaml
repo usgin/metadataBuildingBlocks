@@ -5,7 +5,14 @@ properties:
   '@id':
     type: string
   '@type':
-    const: schema:Place
+    anyOf:
+    - type: string
+      const: schema:Place
+    - type: array
+      items:
+        type: string
+      contains:
+        const: schema:Place
   schema:additionalType:
     type: array
     items:

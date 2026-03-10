@@ -4,10 +4,17 @@ x-defs:
     type: object
     properties:
       '@type':
-        type: string
         default: schema:CreativeWork
-        enum:
-        - schema:CreativeWork
+        anyOf:
+        - type: string
+          enum:
+          - schema:CreativeWork
+        - type: array
+          items:
+            type: string
+          contains:
+            enum:
+            - schema:CreativeWork
       schema:name:
         type: string
       schema:description:
@@ -23,23 +30,15 @@ x-defs:
     x-schema-source: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/labeledLink/schema.yaml
     x-schema-version: https://json-schema.org/draft/2020-12/schema
 title: very simple links or names of data sources used to generate the described resource.
-type: object
-properties:
-  prov:wasDerivedFrom:
-    type: array
-    items:
-      anyOf:
-      - type: string
-      - type: object
-        properties:
-          '@id':
-            type: string
-            description: a resolvable reference to a representation of the software
-              or instrument used
-      - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/provProperties/derivedFrom/schema-oas3.0.yaml#/$defs/LabeledLink
-$defs:
-  LabeledLink:
-    $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/provProperties/derivedFrom/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.schemaorgProperties.labeledLink
+anyOf:
+- type: string
+- type: object
+  properties:
+    '@id':
+      type: string
+      description: a resolvable reference to a representation of the software or instrument
+        used
+- $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/provProperties/derivedFrom/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.schemaorgProperties.labeledLink
 x-jsonld-prefixes:
   schema: http://schema.org/
   prov: http://www.w3.org/ns/prov#

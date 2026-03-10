@@ -54,8 +54,14 @@ allOf:
               description: File size as a QuantitativeValue.
               properties:
                 '@type':
-                  type: string
-                  const: schema:QuantitativeValue
+                  anyOf:
+                  - type: string
+                    const: schema:QuantitativeValue
+                  - type: array
+                    items:
+                      type: string
+                    contains:
+                      const: schema:QuantitativeValue
                 schema:value:
                   type: number
                   description: Numeric size value.

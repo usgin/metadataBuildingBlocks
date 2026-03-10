@@ -473,8 +473,14 @@ $defs:
     description: DDI-CDI structured name wrapper (dt-ObjectName)
     properties:
       '@type':
-        type: string
-        const: cdi:ObjectName
+        anyOf:
+        - type: string
+          const: cdi:ObjectName
+        - type: array
+          items:
+            type: string
+          contains:
+            const: cdi:ObjectName
       cdi:name:
         type: string
         description: The name string
@@ -488,8 +494,14 @@ $defs:
     description: DDI-CDI multilingual display label (dt-LabelForDisplay)
     properties:
       '@type':
-        type: string
-        const: cdi:LabelForDisplay
+        anyOf:
+        - type: string
+          const: cdi:LabelForDisplay
+        - type: array
+          items:
+            type: string
+          contains:
+            const: cdi:LabelForDisplay
       cdi:locationVariant:
         description: Geographic or locale variant
         $ref: '#/$defs/ControlledVocabularyEntry'
@@ -504,8 +516,14 @@ $defs:
     description: DDI-CDI language-tagged string (dt-LanguageString)
     properties:
       '@type':
-        type: string
-        const: cdi:LanguageString
+        anyOf:
+        - type: string
+          const: cdi:LanguageString
+        - type: array
+          items:
+            type: string
+          contains:
+            const: cdi:LanguageString
       cdi:content:
         type: string
         description: The text content
@@ -519,8 +537,14 @@ $defs:
     description: DDI-CDI composite identifier (dt-Identifier)
     properties:
       '@type':
-        type: string
-        const: cdi:Identifier
+        anyOf:
+        - type: string
+          const: cdi:Identifier
+        - type: array
+          items:
+            type: string
+          contains:
+            const: cdi:Identifier
       cdi:ddiIdentifier:
         description: DDI-specific IRDI identifier
         $ref: '#/$defs/InternationalRegistrationDataIdentifier'
@@ -540,8 +564,14 @@ $defs:
     description: DDI-CDI IRDI (dt-InternationalRegistrationDataIdentifier)
     properties:
       '@type':
-        type: string
-        const: cdi:InternationalRegistrationDataIdentifier
+        anyOf:
+        - type: string
+          const: cdi:InternationalRegistrationDataIdentifier
+        - type: array
+          items:
+            type: string
+          contains:
+            const: cdi:InternationalRegistrationDataIdentifier
       cdi:dataIdentifier:
         type: string
       cdi:registrationAuthorityIdentifier:
@@ -557,8 +587,14 @@ $defs:
     description: Non-DDI identifier (dt-NonDdiIdentifier)
     properties:
       '@type':
-        type: string
-        const: cdi:NonDdiIdentifier
+        anyOf:
+        - type: string
+          const: cdi:NonDdiIdentifier
+        - type: array
+          items:
+            type: string
+          contains:
+            const: cdi:NonDdiIdentifier
       cdi:identifierContent:
         type: string
         description: The identifier value
@@ -572,8 +608,14 @@ $defs:
     description: DDI-CDI reference to an entity (dt-Reference)
     properties:
       '@type':
-        type: string
-        const: cdi:Reference
+        anyOf:
+        - type: string
+          const: cdi:Reference
+        - type: array
+          items:
+            type: string
+          contains:
+            const: cdi:Reference
       cdi:uri:
         type: string
         format: uri
@@ -592,8 +634,14 @@ $defs:
     description: DDI-CDI Step within an Activity (cls-Step, extends Activity)
     properties:
       '@type':
-        type: string
-        const: cdi:Step
+        anyOf:
+        - type: string
+          const: cdi:Step
+        - type: array
+          items:
+            type: string
+          contains:
+            const: cdi:Step
       '@id':
         type: string
         description: Identifier for this step node
@@ -654,8 +702,14 @@ $defs:
     description: DDI-CDI executable code reference (dt-CommandCode)
     properties:
       '@type':
-        type: string
-        const: cdi:CommandCode
+        anyOf:
+        - type: string
+          const: cdi:CommandCode
+        - type: array
+          items:
+            type: string
+          contains:
+            const: cdi:CommandCode
       cdi:description:
         type: string
         description: Description of the code
@@ -678,8 +732,14 @@ $defs:
     description: DDI-CDI individual command statement (dt-Command)
     properties:
       '@type':
-        type: string
-        const: cdi:Command
+        anyOf:
+        - type: string
+          const: cdi:Command
+        - type: array
+          items:
+            type: string
+          contains:
+            const: cdi:Command
       cdi:commandContent:
         type: string
         description: The command or code text
@@ -691,8 +751,14 @@ $defs:
     description: DDI-CDI external script file (dt-CommandFile)
     properties:
       '@type':
-        type: string
-        const: cdi:CommandFile
+        anyOf:
+        - type: string
+          const: cdi:CommandFile
+        - type: array
+          items:
+            type: string
+          contains:
+            const: cdi:CommandFile
       cdi:uri:
         type: string
         format: uri
@@ -705,8 +771,14 @@ $defs:
     description: DDI-CDI controlled vocabulary entry (dt-ControlledVocabularyEntry)
     properties:
       '@type':
-        type: string
-        const: cdi:ControlledVocabularyEntry
+        anyOf:
+        - type: string
+          const: cdi:ControlledVocabularyEntry
+        - type: array
+          items:
+            type: string
+          contains:
+            const: cdi:ControlledVocabularyEntry
       cdi:entryValue:
         type: string
         description: The vocabulary code or value
@@ -721,8 +793,14 @@ $defs:
     description: DDI-CDI parameter for step data flow (cls-Parameter)
     properties:
       '@type':
-        type: string
-        const: cdi:Parameter
+        anyOf:
+        - type: string
+          const: cdi:Parameter
+        - type: array
+          items:
+            type: string
+          contains:
+            const: cdi:Parameter
       '@id':
         type: string
         description: Identifier for this parameter node
@@ -750,8 +828,14 @@ $defs:
     description: DDI-CDI agent that performs activities (cls-ProcessingAgent)
     properties:
       '@type':
-        type: string
-        const: cdi:ProcessingAgent
+        anyOf:
+        - type: string
+          const: cdi:ProcessingAgent
+        - type: array
+          items:
+            type: string
+          contains:
+            const: cdi:ProcessingAgent
       '@id':
         type: string
         description: Identifier for this agent node
@@ -780,8 +864,14 @@ $defs:
     description: DDI-CDI production environment (cls-ProductionEnvironment)
     properties:
       '@type':
-        type: string
-        const: cdi:ProductionEnvironment
+        anyOf:
+        - type: string
+          const: cdi:ProductionEnvironment
+        - type: array
+          items:
+            type: string
+          contains:
+            const: cdi:ProductionEnvironment
       '@id':
         type: string
         description: Identifier for this environment node

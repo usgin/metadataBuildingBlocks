@@ -35,9 +35,16 @@ x-defs:
       '@id':
         type: string
       '@type':
-        type: string
-        enum:
-        - schema:Person
+        anyOf:
+        - type: string
+          enum:
+          - schema:Person
+        - type: array
+          items:
+            type: string
+          contains:
+            enum:
+            - schema:Person
       schema:name:
         type: string
         description: string label for person that is meaningful for human users
@@ -59,10 +66,17 @@ x-defs:
         type: object
         properties:
           '@type':
-            type: string
             default: schema:ContactPoint
-            enum:
-            - schema:ContactPoint
+            anyOf:
+            - type: string
+              enum:
+              - schema:ContactPoint
+            - type: array
+              items:
+                type: string
+              contains:
+                enum:
+                - schema:ContactPoint
           schema:email:
             type: string
         description: restrict to email only. Schema.org allows telephone and postal
@@ -96,10 +110,17 @@ x-defs:
       '@id':
         type: string
       '@type':
-        type: string
         default: schema:Organization
-        enum:
-        - schema:Organization
+        anyOf:
+        - type: string
+          enum:
+          - schema:Organization
+        - type: array
+          items:
+            type: string
+          contains:
+            enum:
+            - schema:Organization
       schema:additionalType:
         type: array
         items:
@@ -162,10 +183,17 @@ x-defs:
     type: object
     properties:
       '@type':
-        type: string
         default: schema:Role
-        enum:
-        - schema:Role
+        anyOf:
+        - type: string
+          enum:
+          - schema:Role
+        - type: array
+          items:
+            type: string
+          contains:
+            enum:
+            - schema:Role
       schema:roleName:
         anyOf:
         - type: string
@@ -191,9 +219,16 @@ x-defs:
     type: object
     properties:
       '@type':
-        type: string
-        enum:
-        - schema:PropertyValue
+        anyOf:
+        - type: string
+          enum:
+          - schema:PropertyValue
+        - type: array
+          items:
+            type: string
+          contains:
+            enum:
+            - schema:PropertyValue
       schema:propertyID:
         type: string
         description: In this context for the schema:PropertyValue, this field is an
@@ -333,8 +368,16 @@ x-defs:
     type: object
     properties:
       '@type':
-        enum:
-        - schema:DefinedTerm
+        anyOf:
+        - type: string
+          enum:
+          - schema:DefinedTerm
+        - type: array
+          items:
+            type: string
+          contains:
+            enum:
+            - schema:DefinedTerm
       schema:name:
         type: string
         description: text label for the term that is useful to human user
@@ -369,10 +412,17 @@ x-defs:
     type: object
     properties:
       '@type':
-        type: string
         default: schema:CreativeWork
-        enum:
-        - schema:CreativeWork
+        anyOf:
+        - type: string
+          enum:
+          - schema:CreativeWork
+        - type: array
+          items:
+            type: string
+          contains:
+            enum:
+            - schema:CreativeWork
       schema:name:
         type: string
       schema:description:
@@ -394,10 +444,17 @@ x-defs:
     type: object
     properties:
       '@type':
-        type: string
         default: schema:Place
-        enum:
-        - schema:Place
+        anyOf:
+        - type: string
+          enum:
+          - schema:Place
+        - type: array
+          items:
+            type: string
+          contains:
+            enum:
+            - schema:Place
       schema:name:
         description: multiple place names or DefinedTerms that have a place name and
           URI for the location
@@ -417,10 +474,17 @@ x-defs:
             might only index or display bounding box extents or a single point location.
           properties:
             '@type':
-              type: string
               default: schema:GeoCoordinates
-              enum:
-              - schema:GeoCoordinates
+              anyOf:
+              - type: string
+                enum:
+                - schema:GeoCoordinates
+              - type: array
+                items:
+                  type: string
+                contains:
+                  enum:
+                  - schema:GeoCoordinates
             schema:latitude:
               type: number
             schema:longitude:
@@ -437,10 +501,17 @@ x-defs:
             of several such points.'
           properties:
             '@type':
-              type: string
               default: schema:GeoShape
-              enum:
-              - schema:GeoShape
+              anyOf:
+              - type: string
+                enum:
+                - schema:GeoShape
+              - type: array
+                items:
+                  type: string
+                contains:
+                  enum:
+                  - schema:GeoShape
             schema:box:
               type: string
               description: A GeoShape box defines an area on the surface of the earth
@@ -457,10 +528,17 @@ x-defs:
             a linear trace like a ship track or airplane flight line
           properties:
             '@type':
-              type: string
               default: schema:GeoShape
-              enum:
-              - schema:GeoShape
+              anyOf:
+              - type: string
+                enum:
+                - schema:GeoShape
+              - type: array
+                items:
+                  type: string
+                contains:
+                  enum:
+                  - schema:GeoShape
             schema:line:
               type: string
               description: 'A GeoShape box defines a curvilinear geometry as a string
@@ -489,9 +567,16 @@ x-defs:
             type: object
             properties:
               '@type':
-                type: string
-                enum:
-                - geosparql:wktLiteral
+                anyOf:
+                - type: string
+                  enum:
+                  - geosparql:wktLiteral
+                - type: array
+                  items:
+                    type: string
+                  contains:
+                    enum:
+                    - geosparql:wktLiteral
               '@value':
                 type: string
                 description: a WKT geometry description string, e.g. 'POINT(-76 -18)'
@@ -516,9 +601,16 @@ x-defs:
       a value. '
     properties:
       '@type':
-        type: string
-        enum:
-        - schema:PropertyValue
+        anyOf:
+        - type: string
+          enum:
+          - schema:PropertyValue
+        - type: array
+          items:
+            type: string
+          contains:
+            enum:
+            - schema:PropertyValue
       schema:propertyID:
         type: array
         items:
@@ -710,9 +802,16 @@ $defs:
     description: A methodology or protocol described as a HowTo with optional steps
     properties:
       '@type':
-        type: string
-        enum:
-        - schema:HowTo
+        anyOf:
+        - type: string
+          enum:
+          - schema:HowTo
+        - type: array
+          items:
+            type: string
+          contains:
+            enum:
+            - schema:HowTo
       '@id':
         type: string
       schema:name:
@@ -742,9 +841,16 @@ $defs:
     description: A single step in a HowTo methodology
     properties:
       '@type':
-        type: string
-        enum:
-        - schema:HowToStep
+        anyOf:
+        - type: string
+          enum:
+          - schema:HowToStep
+        - type: array
+          items:
+            type: string
+          contains:
+            enum:
+            - schema:HowToStep
       schema:name:
         type: string
         description: Name of this step
@@ -766,9 +872,16 @@ $defs:
     description: A statement or assertion about the dataset, such as a quality claim
     properties:
       '@type':
-        type: string
-        enum:
-        - schema:Claim
+        anyOf:
+        - type: string
+          enum:
+          - schema:Claim
+        - type: array
+          items:
+            type: string
+          contains:
+            enum:
+            - schema:Claim
       '@id':
         type: string
       schema:claimReviewed:

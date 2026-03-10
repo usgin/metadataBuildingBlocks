@@ -6,9 +6,22 @@
       "type": "string"
     },
     "@type": {
-      "type": "string",
-      "const": "schema:Organization",
-      "default": "schema:Organization"
+      "default": "schema:Organization",
+      "anyOf": [
+        {
+          "type": "string",
+          "const": "schema:Organization"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "contains": {
+            "const": "schema:Organization"
+          }
+        }
+      ]
     },
     "schema:additionalType": {
       "type": "array",

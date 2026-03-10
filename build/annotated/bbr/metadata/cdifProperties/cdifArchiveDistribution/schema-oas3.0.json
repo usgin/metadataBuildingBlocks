@@ -352,9 +352,24 @@
           "type": "string"
         },
         "@type": {
-          "type": "string",
-          "enum": [
-            "schema:Person"
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "schema:Person"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "contains": {
+                "enum": [
+                  "schema:Person"
+                ]
+              }
+            }
           ]
         },
         "schema:name": {
@@ -391,10 +406,25 @@
           "type": "object",
           "properties": {
             "@type": {
-              "type": "string",
               "default": "schema:ContactPoint",
-              "enum": [
-                "schema:ContactPoint"
+              "anyOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "schema:ContactPoint"
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "contains": {
+                    "enum": [
+                      "schema:ContactPoint"
+                    ]
+                  }
+                }
               ]
             },
             "schema:email": {
@@ -460,10 +490,25 @@
           "type": "string"
         },
         "@type": {
-          "type": "string",
           "default": "schema:Organization",
-          "enum": [
-            "schema:Organization"
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "schema:Organization"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "contains": {
+                "enum": [
+                  "schema:Organization"
+                ]
+              }
+            }
           ]
         },
         "schema:additionalType": {
@@ -634,9 +679,24 @@
       "type": "object",
       "properties": {
         "@type": {
-          "type": "string",
-          "enum": [
-            "schema:PropertyValue"
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "schema:PropertyValue"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "contains": {
+                "enum": [
+                  "schema:PropertyValue"
+                ]
+              }
+            }
           ]
         },
         "schema:propertyID": {
@@ -685,8 +745,24 @@
       "type": "object",
       "properties": {
         "@type": {
-          "enum": [
-            "schema:DefinedTerm"
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "schema:DefinedTerm"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "contains": {
+                "enum": [
+                  "schema:DefinedTerm"
+                ]
+              }
+            }
           ]
         },
         "schema:name": {
@@ -807,9 +883,24 @@
                     "description": "File size as a QuantitativeValue.",
                     "properties": {
                       "@type": {
-                        "type": "string",
-                        "enum": [
-                          "schema:QuantitativeValue"
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "enum": [
+                              "schema:QuantitativeValue"
+                            ]
+                          },
+                          {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "contains": {
+                              "enum": [
+                                "schema:QuantitativeValue"
+                              ]
+                            }
+                          }
                         ]
                       },
                       "schema:value": {

@@ -7,10 +7,25 @@
       "description": "a w3c time proper interval with bounds that are named time ordinal eras with identifier, e.g. geologic age. This is a SOSO schema.org extension",
       "properties": {
         "@type": {
-          "type": "string",
           "default": "time:ProperInterval",
-          "enum": [
-            "time:ProperInterval"
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "time:ProperInterval"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "contains": {
+                "enum": [
+                  "time:ProperInterval"
+                ]
+              }
+            }
           ]
         },
         "schema:description": {
@@ -57,10 +72,25 @@
           "description": "Must exactly match the specified @context object."
         },
         "@type": {
-          "type": "string",
           "default": "time:ProperInterval",
-          "enum": [
-            "time:ProperInterval"
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "time:ProperInterval"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "contains": {
+                "enum": [
+                  "time:ProperInterval"
+                ]
+              }
+            }
           ]
         },
         "schema:description": {
@@ -71,9 +101,24 @@
           "type": "object",
           "properties": {
             "@type": {
-              "type": "string",
-              "enum": [
-                "time:Instant"
+              "anyOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "time:Instant"
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "contains": {
+                    "enum": [
+                      "time:Instant"
+                    ]
+                  }
+                }
               ]
             },
             "time:inTimePosition": {
@@ -85,9 +130,24 @@
           "type": "object",
           "properties": {
             "@type": {
-              "type": "string",
-              "enum": [
-                "time:Instant"
+              "anyOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "time:Instant"
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "contains": {
+                    "enum": [
+                      "time:Instant"
+                    ]
+                  }
+                }
               ]
             },
             "time:inTimePosition": {
@@ -107,10 +167,25 @@
       "type": "object",
       "properties": {
         "@type": {
-          "type": "string",
           "default": "time:TimePosition",
-          "enum": [
-            "time:TimePosition"
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "time:TimePosition"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "contains": {
+                "enum": [
+                  "time:TimePosition"
+                ]
+              }
+            }
           ]
         },
         "time:hasTRS": {

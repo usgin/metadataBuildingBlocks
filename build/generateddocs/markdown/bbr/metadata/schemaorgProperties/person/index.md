@@ -123,8 +123,14 @@ properties:
   '@id':
     type: string
   '@type':
-    type: string
-    const: schema:Person
+    anyOf:
+    - type: string
+      const: schema:Person
+    - type: array
+      items:
+        type: string
+      contains:
+        const: schema:Person
   schema:name:
     type: string
     description: string label for person that is meaningful for human users
@@ -145,9 +151,15 @@ properties:
     type: object
     properties:
       '@type':
-        type: string
-        const: schema:ContactPoint
         default: schema:ContactPoint
+        anyOf:
+        - type: string
+          const: schema:ContactPoint
+        - type: array
+          items:
+            type: string
+          contains:
+            const: schema:ContactPoint
       schema:email:
         type: string
     description: restrict to email only. Schema.org allows telephone and postal contacts

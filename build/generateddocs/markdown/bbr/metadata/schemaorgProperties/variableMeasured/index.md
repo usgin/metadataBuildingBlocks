@@ -244,8 +244,14 @@ oneOf:
           type: string
           description: reference to a skos concept for the property
         '@type':
-          type: string
-          const: schema:Property
+          anyOf:
+          - type: string
+            const: schema:Property
+          - type: array
+            items:
+              type: string
+            contains:
+              const: schema:Property
         schema:name:
           anyOf:
           - type: string

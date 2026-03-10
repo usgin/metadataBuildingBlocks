@@ -4,9 +4,16 @@ x-defs:
     type: object
     properties:
       '@type':
-        type: string
-        enum:
-        - schema:PropertyValue
+        anyOf:
+        - type: string
+          enum:
+          - schema:PropertyValue
+        - type: array
+          items:
+            type: string
+          contains:
+            enum:
+            - schema:PropertyValue
       schema:propertyID:
         type: string
         description: In this context for the schema:PropertyValue, this field is an
@@ -39,10 +46,17 @@ x-defs:
       '@id':
         type: string
       '@type':
-        type: string
         default: schema:Organization
-        enum:
-        - schema:Organization
+        anyOf:
+        - type: string
+          enum:
+          - schema:Organization
+        - type: array
+          items:
+            type: string
+          contains:
+            enum:
+            - schema:Organization
       schema:additionalType:
         type: array
         items:
@@ -101,8 +115,16 @@ x-defs:
     type: object
     properties:
       '@type':
-        enum:
-        - schema:DefinedTerm
+        anyOf:
+        - type: string
+          enum:
+          - schema:DefinedTerm
+        - type: array
+          items:
+            type: string
+          contains:
+            enum:
+            - schema:DefinedTerm
       schema:name:
         type: string
         description: text label for the term that is useful to human user
@@ -138,9 +160,16 @@ properties:
   '@id':
     type: string
   '@type':
-    type: string
-    enum:
-    - schema:Person
+    anyOf:
+    - type: string
+      enum:
+      - schema:Person
+    - type: array
+      items:
+        type: string
+      contains:
+        enum:
+        - schema:Person
   schema:name:
     type: string
     description: string label for person that is meaningful for human users
@@ -162,10 +191,17 @@ properties:
     type: object
     properties:
       '@type':
-        type: string
         default: schema:ContactPoint
-        enum:
-        - schema:ContactPoint
+        anyOf:
+        - type: string
+          enum:
+          - schema:ContactPoint
+        - type: array
+          items:
+            type: string
+          contains:
+            enum:
+            - schema:ContactPoint
       schema:email:
         type: string
     description: restrict to email only. Schema.org allows telephone and postal contacts

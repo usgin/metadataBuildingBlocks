@@ -90,9 +90,15 @@ properties:
     type: string
     description: URI identifier for this funding record
   '@type':
-    type: string
     default: schema:MonetaryGrant
-    const: schema:MonetaryGrant
+    anyOf:
+    - type: string
+      const: schema:MonetaryGrant
+    - type: array
+      items:
+        type: string
+      contains:
+        const: schema:MonetaryGrant
   schema:identifier:
     $ref: '#/$defs/Identifier'
     description: identifier for a particular grant

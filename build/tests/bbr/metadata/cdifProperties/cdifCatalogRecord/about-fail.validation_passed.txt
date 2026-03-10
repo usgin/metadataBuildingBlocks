@@ -1,5 +1,5 @@
 Validation report for cdif.bbr.metadata.cdifProperties.cdifCatalogRecord - CDIF Catalog Record
-Generated 2026-03-10T17:19:41.594513+00:00
+Generated 2026-03-10T18:00:06.866843+00:00
 === General ===
 Test was expected to fail and it did.
 === End General ===
@@ -126,9 +126,12 @@ Failed validating 'required' in schema:
                                                                                            'identifier '
                                                                                            'here',
                                                                             'type': 'string'},
-                                                                    '@type': {'const': 'schema:DataCatalog',
-                                                                              'default': 'schema:DataCatalog',
-                                                                              'type': 'string'},
+                                                                    '@type': {'anyOf': [{'const': 'schema:DataCatalog',
+                                                                                         'type': 'string'},
+                                                                                        {'contains': {'const': 'schema:DataCatalog'},
+                                                                                         'items': {'type': 'string'},
+                                                                                         'type': 'array'}],
+                                                                              'default': 'schema:DataCatalog'},
                                                                     'schema:identifier': {'$ref': '#/$defs/Identifier',
                                                                                           'description': 'identifier '
                                                                                                          'for '
@@ -238,24 +241,22 @@ Validation result for _sources/cdifProperties/cdifCatalogRecord/rules.shacl:
 Focus nodes for _sources/cdifProperties/cdifCatalogRecord/rules.shacl:
  - Shape cdifd:CDIFCatalogRecordShape: *none*
 
-Validation result for _sources/schemaorgProperties/identifier/rules.shacl:
+Validation result for _sources/schemaorgProperties/person/rules.shacl:
   Validation Report
   Conforms: True
   
-Focus nodes for _sources/schemaorgProperties/identifier/rules.shacl:
- - Shape _:n248966c8c42c43b48b769bd8fed60e60b21: *none*
- - Shape _:n248966c8c42c43b48b769bd8fed60e60b22: *none*
- - Shape _:n248966c8c42c43b48b769bd8fed60e60b10: *none*
- - Shape cdifd:CDIFIdentifierShape/sh:or/rdf:first: *none*
- - Shape _:n248966c8c42c43b48b769bd8fed60e60b20: *none*
- - Shape cdifd:CDIFIdentifierShape: *none*
- - Shape _:n248966c8c42c43b48b769bd8fed60e60b25: *none*
- - Shape cdifd:CDIFIdentifierShape/sh:or/rdf:rest/rdf:first: *none*
- - Shape cdifd:CDIFIdentifierTypeTermShape: *none*
- - Shape cdifd:CDIFIdentifierTypeTermShape/sh:property/sh:or/rdf:first: *none*
- - Shape _:n248966c8c42c43b48b769bd8fed60e60b11: *none*
- - Shape _:n248966c8c42c43b48b769bd8fed60e60b23: *none*
- - Shape cdifd:CDIFIdentifierShape/sh:property/sh:or/rdf:first: *none*
+Focus nodes for _sources/schemaorgProperties/person/rules.shacl:
+ - Shape cdifd:contactPointProperty/sh:or/rdf:rest/rdf:first: *none*
+ - Shape cdifd:CDIFPersonShape/sh:or/rdf:rest/rdf:first: *none*
+ - Shape cdifd:CDIFContactPointShape: <https://orcid.org/3333-4442-9456-9347>/schema1:contactPoint
+ - Shape cdifd:maintainerOrProviderContactPointShape: *none*
+ - Shape cdifd:CDIFPersonShape: <https://orcid.org/3333-4442-9456-9347>
+ - Shape cdifd:affiliationProperty/sh:or/rdf:first: *none*
+ - Shape cdifd:maintainerOrProviderContactPointShape/sh:property/sh:or/rdf:first: *none*
+ - Shape cdifd:CDIFPersonShape/sh:or/rdf:first: *none*
+ - Shape cdifd:affiliationProperty/sh:or/rdf:rest/rdf:first: *none*
+ - Shape cdifd:contactPointProperty/sh:or/rdf:first: *none*
+ - Shape _:n4d126e942a444dd89dc30aa52f8b51a4b14: *none*
 
 Validation result for _sources/schemaorgProperties/organization/rules.shacl:
   Validation Report
@@ -271,35 +272,37 @@ Validation result for _sources/schemaorgProperties/definedTerm/rules.shacl:
   Conforms: True
   
 Focus nodes for _sources/schemaorgProperties/definedTerm/rules.shacl:
- - Shape _:na2368e0f4dca4d7db8c17192b6bf9a6cb8: *none*
- - Shape _:na2368e0f4dca4d7db8c17192b6bf9a6cb10: *none*
- - Shape _:na2368e0f4dca4d7db8c17192b6bf9a6cb26: *none*
  - Shape cdifd:CDIFDefinedTermShape: *none*
- - Shape _:na2368e0f4dca4d7db8c17192b6bf9a6cb7: *none*
- - Shape _:na2368e0f4dca4d7db8c17192b6bf9a6cb5: *none*
- - Shape _:na2368e0f4dca4d7db8c17192b6bf9a6cb4: *none*
- - Shape _:na2368e0f4dca4d7db8c17192b6bf9a6cb6: *none*
  - Shape cdifd:CDIFDefinedTermShape/sh:or/rdf:first: *none*
- - Shape cdifd:CDIFDefinedTermShape/sh:property/sh:or/rdf:first: *none*
- - Shape _:na2368e0f4dca4d7db8c17192b6bf9a6cb19: *none*
+ - Shape _:na63c5e402bbe43528e7c21acf71c3835b10: *none*
+ - Shape _:na63c5e402bbe43528e7c21acf71c3835b19: *none*
+ - Shape _:na63c5e402bbe43528e7c21acf71c3835b7: *none*
+ - Shape _:na63c5e402bbe43528e7c21acf71c3835b26: *none*
  - Shape cdifd:CDIFDefinedTermShape/sh:or/rdf:rest/rdf:first: *none*
+ - Shape _:na63c5e402bbe43528e7c21acf71c3835b4: *none*
+ - Shape cdifd:CDIFDefinedTermShape/sh:property/sh:or/rdf:first: *none*
+ - Shape _:na63c5e402bbe43528e7c21acf71c3835b5: *none*
+ - Shape _:na63c5e402bbe43528e7c21acf71c3835b6: *none*
+ - Shape _:na63c5e402bbe43528e7c21acf71c3835b8: *none*
 
-Validation result for _sources/schemaorgProperties/person/rules.shacl:
+Validation result for _sources/schemaorgProperties/identifier/rules.shacl:
   Validation Report
   Conforms: True
   
-Focus nodes for _sources/schemaorgProperties/person/rules.shacl:
- - Shape cdifd:CDIFContactPointShape: <https://orcid.org/3333-4442-9456-9347>/schema1:contactPoint
- - Shape cdifd:affiliationProperty/sh:or/rdf:rest/rdf:first: *none*
- - Shape cdifd:CDIFPersonShape: <https://orcid.org/3333-4442-9456-9347>
- - Shape cdifd:CDIFPersonShape/sh:or/rdf:first: *none*
- - Shape cdifd:contactPointProperty/sh:or/rdf:first: *none*
- - Shape cdifd:maintainerOrProviderContactPointShape: *none*
- - Shape cdifd:CDIFPersonShape/sh:or/rdf:rest/rdf:first: *none*
- - Shape _:n5432c4ef0f414344baff5ea2997bff41b14: *none*
- - Shape cdifd:contactPointProperty/sh:or/rdf:rest/rdf:first: *none*
- - Shape cdifd:affiliationProperty/sh:or/rdf:first: *none*
- - Shape cdifd:maintainerOrProviderContactPointShape/sh:property/sh:or/rdf:first: *none*
+Focus nodes for _sources/schemaorgProperties/identifier/rules.shacl:
+ - Shape _:n679e64e06ab84cf39e55937cf51a822ab25: *none*
+ - Shape cdifd:CDIFIdentifierShape/sh:property/sh:or/rdf:first: *none*
+ - Shape _:n679e64e06ab84cf39e55937cf51a822ab21: *none*
+ - Shape _:n679e64e06ab84cf39e55937cf51a822ab11: *none*
+ - Shape _:n679e64e06ab84cf39e55937cf51a822ab20: *none*
+ - Shape _:n679e64e06ab84cf39e55937cf51a822ab10: *none*
+ - Shape cdifd:CDIFIdentifierShape: *none*
+ - Shape cdifd:CDIFIdentifierTypeTermShape/sh:property/sh:or/rdf:first: *none*
+ - Shape cdifd:CDIFIdentifierShape/sh:or/rdf:rest/rdf:first: *none*
+ - Shape _:n679e64e06ab84cf39e55937cf51a822ab22: *none*
+ - Shape cdifd:CDIFIdentifierTypeTermShape: *none*
+ - Shape cdifd:CDIFIdentifierShape/sh:or/rdf:first: *none*
+ - Shape _:n679e64e06ab84cf39e55937cf51a822ab23: *none*
 
 === End SHACL ===
 

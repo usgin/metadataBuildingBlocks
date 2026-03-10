@@ -69,8 +69,21 @@
         "type": "object",
         "properties": {
           "@type": {
-            "type": "string",
-            "const": "schema:LinkRole"
+            "anyOf": [
+              {
+                "type": "string",
+                "const": "schema:LinkRole"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "contains": {
+                  "const": "schema:LinkRole"
+                }
+              }
+            ]
           },
           "schema:linkRelationship": {
             "anyOf": [
@@ -82,12 +95,25 @@
               }
             ]
           },
-          "target": {
+          "schema:target": {
             "type": "object",
             "properties": {
               "@type": {
-                "type": "string",
-                "const": "schema:EntryPoint"
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "const": "schema:EntryPoint"
+                  },
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "contains": {
+                      "const": "schema:EntryPoint"
+                    }
+                  }
+                ]
               },
               "schema:encodingFormat": {
                 "type": "string",

@@ -5,10 +5,25 @@
       "type": "object",
       "properties": {
         "@type": {
-          "type": "string",
           "default": "schema:CreativeWork",
-          "enum": [
-            "schema:CreativeWork"
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "schema:CreativeWork"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "contains": {
+                "enum": [
+                  "schema:CreativeWork"
+                ]
+              }
+            }
           ]
         },
         "schema:name": {
@@ -34,36 +49,23 @@
     }
   },
   "title": "very simple links or names of data sources used to generate the described resource.",
-  "type": "object",
-  "properties": {
-    "prov:wasDerivedFrom": {
-      "type": "array",
-      "items": {
-        "anyOf": [
-          {
-            "type": "string"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "@id": {
-                "type": "string",
-                "description": "a resolvable reference to a representation of the software or instrument used"
-              }
-            }
-          },
-          {
-            "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/provProperties/derivedFrom/schema-oas3.0.json#/$defs/LabeledLink"
-          }
-        ]
+  "anyOf": [
+    {
+      "type": "string"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "@id": {
+          "type": "string",
+          "description": "a resolvable reference to a representation of the software or instrument used"
+        }
       }
-    }
-  },
-  "$defs": {
-    "LabeledLink": {
+    },
+    {
       "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/provProperties/derivedFrom/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.labeledLink"
     }
-  },
+  ],
   "x-jsonld-prefixes": {
     "schema": "http://schema.org/",
     "prov": "http://www.w3.org/ns/prov#"

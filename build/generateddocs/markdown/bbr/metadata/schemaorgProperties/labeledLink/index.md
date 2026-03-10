@@ -75,9 +75,15 @@ description: schema for a labeled link, a profile of schema.org/CreativeWork
 type: object
 properties:
   '@type':
-    type: string
     default: schema:CreativeWork
-    const: schema:CreativeWork
+    anyOf:
+    - type: string
+      const: schema:CreativeWork
+    - type: array
+      items:
+        type: string
+      contains:
+        const: schema:CreativeWork
   schema:name:
     type: string
   schema:description:

@@ -256,7 +256,14 @@ allOf:
         type: object
         properties:
           '@type':
-            const: schema:DefinedTerm
+            anyOf:
+            - type: string
+              const: schema:DefinedTerm
+            - type: array
+              items:
+                type: string
+              contains:
+                const: schema:DefinedTerm
           schema:name:
             type: string
           schema:identifier:

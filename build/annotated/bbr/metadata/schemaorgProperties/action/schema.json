@@ -5,22 +5,48 @@
   "description": "this element defines an action (operation) that can be invoked via messages using the protocol defined. In most cases this will be an http request via TCP/IP, but in desktop or LAN environments, other protocols might be used. The target property defines the endpoint and syntax for invoking the action. Result specifies the encoding format for the (possible) response(s) when the action is invoked. Object specifies the information model for the resource that is the object of the action. This approach is an adoptation of the Action Blog Post from schema.org (see https://schema.org/docs/actions.html, and https://github.com/schemaorg/suggestions-questions-brainstorming/issues/62) ",
   "properties": {
     "@type": {
-      "type": "string",
       "description": "The type of action. Must be schema:Action or one of its subtypes.",
       "default": "schema:Action",
-      "enum": [
-        "schema:Action",
-        "schema:AssessAction",
-        "schema:ConsumeAction",
-        "schema:ControlAction",
-        "schema:CreateAction",
-        "schema:FindAction",
-        "schema:InteractAction",
-        "schema:MoveAction",
-        "schema:PlayAction",
-        "schema:SearchAction",
-        "schema:TransferAction",
-        "schema:UpdateAction"
+      "anyOf": [
+        {
+          "type": "string",
+          "enum": [
+            "schema:Action",
+            "schema:AssessAction",
+            "schema:ConsumeAction",
+            "schema:ControlAction",
+            "schema:CreateAction",
+            "schema:FindAction",
+            "schema:InteractAction",
+            "schema:MoveAction",
+            "schema:PlayAction",
+            "schema:SearchAction",
+            "schema:TransferAction",
+            "schema:UpdateAction"
+          ]
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "contains": {
+            "enum": [
+              "schema:Action",
+              "schema:AssessAction",
+              "schema:ConsumeAction",
+              "schema:ControlAction",
+              "schema:CreateAction",
+              "schema:FindAction",
+              "schema:InteractAction",
+              "schema:MoveAction",
+              "schema:PlayAction",
+              "schema:SearchAction",
+              "schema:TransferAction",
+              "schema:UpdateAction"
+            ]
+          }
+        }
       ]
     },
     "schema:name": {
@@ -54,9 +80,22 @@
       "description": "documentation of the URL end point and syntax to invoke the service. This schema doesn't handle post requests",
       "properties": {
         "@type": {
-          "type": "string",
           "default": "schema:EntryPoint",
-          "const": "schema:EntryPoint"
+          "anyOf": [
+            {
+              "type": "string",
+              "const": "schema:EntryPoint"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "contains": {
+                "const": "schema:EntryPoint"
+              }
+            }
+          ]
         },
         "schema:description": {
           "type": "string"
@@ -134,9 +173,22 @@
             "type": "string"
           },
           "@type": {
-            "type": "string",
             "default": "schema:PropertyValueSpecification",
-            "const": "schema:PropertyValueSpecification"
+            "anyOf": [
+              {
+                "type": "string",
+                "const": "schema:PropertyValueSpecification"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "contains": {
+                  "const": "schema:PropertyValueSpecification"
+                }
+              }
+            ]
           },
           "schema:valueName": {
             "type": "string"
@@ -163,9 +215,22 @@
       "description": "description of the data structure of the return object",
       "properties": {
         "@type": {
-          "type": "string",
           "default": "schema:DataFeed",
-          "const": "schema:DataFeed"
+          "anyOf": [
+            {
+              "type": "string",
+              "const": "schema:DataFeed"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "contains": {
+                "const": "schema:DataFeed"
+              }
+            }
+          ]
         },
         "schema:description": {
           "type": "string"

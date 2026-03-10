@@ -275,10 +275,7 @@ ex:activity-soil-chem-analysis a schema1:Action,
     schema1:object "Dried and sieved soil samples (<2 mm fraction) from Great Basin transect" ;
     schema1:result ex:dataset-soil-chem-gb-2025 ;
     schema1:startTime "2025-07-15T08:00:00Z" ;
-    prov:used [ a schema1:CreativeWork ;
-            schema1:name "EPA Method 6200 - XRF Analysis of Soils" ;
-            schema1:url "https://www.epa.gov/hw-sw846/sw-846-test-method-6200-field-portable-x-ray-fluorescence-spectrometry-determination" ],
-        [ schema1:instrument [ a schema1:DefinedTerm,
+    prov:used [ schema1:instrument [ a schema1:DefinedTerm,
                         schema1:Thing ;
                     schema1:additionalProperty [ a schema1:PropertyValue ;
                             schema1:name "Typical Detection Limit" ;
@@ -288,6 +285,9 @@ ex:activity-soil-chem-analysis a schema1:Action,
                     schema1:inDefinedTermSet "https://vocab.nerc.ac.uk/collection/L05/current/" ;
                     schema1:name "Inductively Coupled Plasma Mass Spectrometry" ;
                     schema1:termCode "ICP-MS" ] ],
+        [ a schema1:CreativeWork ;
+            schema1:name "EPA Method 6200 - XRF Analysis of Soils" ;
+            schema1:url "https://www.epa.gov/hw-sw846/sw-846-test-method-6200-field-portable-x-ray-fluorescence-spectrometry-determination" ],
         "Soil core samples collected June 2025, sites GB-001 through GB-045",
         "https://vocab.nerc.ac.uk/collection/L05/current/LAB02" .
 
@@ -457,8 +457,14 @@ $defs:
     description: A methodology or protocol described as a HowTo with optional steps
     properties:
       '@type':
-        type: string
-        const: schema:HowTo
+        anyOf:
+        - type: string
+          const: schema:HowTo
+        - type: array
+          items:
+            type: string
+          contains:
+            const: schema:HowTo
       '@id':
         type: string
       schema:name:
@@ -488,8 +494,14 @@ $defs:
     description: A single step in a HowTo methodology
     properties:
       '@type':
-        type: string
-        const: schema:HowToStep
+        anyOf:
+        - type: string
+          const: schema:HowToStep
+        - type: array
+          items:
+            type: string
+          contains:
+            const: schema:HowToStep
       schema:name:
         type: string
         description: Name of this step
@@ -511,8 +523,14 @@ $defs:
     description: A statement or assertion about the dataset, such as a quality claim
     properties:
       '@type':
-        type: string
-        const: schema:Claim
+        anyOf:
+        - type: string
+          const: schema:Claim
+        - type: array
+          items:
+            type: string
+          contains:
+            const: schema:Claim
       '@id':
         type: string
       schema:claimReviewed:

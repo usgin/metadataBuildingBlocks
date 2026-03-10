@@ -129,8 +129,14 @@ description: 'PropertyValue values required to define a soft-typed property with
   value. '
 properties:
   '@type':
-    type: string
-    const: schema:PropertyValue
+    anyOf:
+    - type: string
+      const: schema:PropertyValue
+    - type: array
+      items:
+        type: string
+      contains:
+        const: schema:PropertyValue
   schema:propertyID:
     type: array
     items:

@@ -280,9 +280,15 @@ properties:
           data at https://github.com/ESIPFed/science-on-schema.org/blob/develop/guides/Dataset.md#catalog
           puts identifier here
       '@type':
-        type: string
         default: schema:DataCatalog
-        const: schema:DataCatalog
+        anyOf:
+        - type: string
+          const: schema:DataCatalog
+        - type: array
+          items:
+            type: string
+          contains:
+            const: schema:DataCatalog
       schema:name:
         type: string
       schema:url:

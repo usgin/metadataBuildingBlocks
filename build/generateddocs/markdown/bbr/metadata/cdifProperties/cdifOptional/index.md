@@ -256,12 +256,12 @@ ex:cdifOptional_23578 a schema1:Dataset ;
     schema1:name "Bathymetry Bay of Biscay" ;
     schema1:publishingPrinciples "https://example.org/principles/3478" ;
     schema1:relatedLink [ a schema1:LinkRole ;
+            schema1:linkRelationship "related data" ],
+        [ a schema1:LinkRole ;
             schema1:linkRelationship [ a schema1:DefinedTerm ;
                     schema1:inDefinedTermSet "https://www.iana.org/assignments/link-relations/" ;
                     schema1:name "related dataset" ;
-                    schema1:termCode "related" ] ],
-        [ a schema1:LinkRole ;
-            schema1:linkRelationship "related data" ] ;
+                    schema1:termCode "related" ] ] ;
     schema1:url "https://example.org/landingPage254266" ;
     schema1:version "1.0" .
 
@@ -339,18 +339,30 @@ properties:
       type: object
       properties:
         '@type':
-          type: string
-          const: schema:LinkRole
+          anyOf:
+          - type: string
+            const: schema:LinkRole
+          - type: array
+            items:
+              type: string
+            contains:
+              const: schema:LinkRole
         schema:linkRelationship:
           anyOf:
           - $ref: '#/$defs/DefinedTerm'
           - type: string
-        target:
+        schema:target:
           type: object
           properties:
             '@type':
-              type: string
-              const: schema:EntryPoint
+              anyOf:
+              - type: string
+                const: schema:EntryPoint
+              - type: array
+                items:
+                  type: string
+                contains:
+                  const: schema:EntryPoint
             schema:encodingFormat:
               type: string
               description: registered MIME types are expected

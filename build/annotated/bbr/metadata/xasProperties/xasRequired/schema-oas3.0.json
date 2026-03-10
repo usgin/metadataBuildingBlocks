@@ -453,9 +453,24 @@
           "description": "A methodology or protocol described as a HowTo with optional steps",
           "properties": {
             "@type": {
-              "type": "string",
-              "enum": [
-                "schema:HowTo"
+              "anyOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "schema:HowTo"
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "contains": {
+                    "enum": [
+                      "schema:HowTo"
+                    ]
+                  }
+                }
               ]
             },
             "@id": {
@@ -503,9 +518,24 @@
           "description": "A single step in a HowTo methodology",
           "properties": {
             "@type": {
-              "type": "string",
-              "enum": [
-                "schema:HowToStep"
+              "anyOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "schema:HowToStep"
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "contains": {
+                    "enum": [
+                      "schema:HowToStep"
+                    ]
+                  }
+                }
               ]
             },
             "schema:name": {
@@ -536,9 +566,24 @@
           "description": "A statement or assertion about the dataset, such as a quality claim",
           "properties": {
             "@type": {
-              "type": "string",
-              "enum": [
-                "schema:Claim"
+              "anyOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "schema:Claim"
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "contains": {
+                    "enum": [
+                      "schema:Claim"
+                    ]
+                  }
+                }
               ]
             },
             "@id": {
@@ -601,8 +646,24 @@
       "type": "object",
       "properties": {
         "@type": {
-          "enum": [
-            "schema:DefinedTerm"
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "schema:DefinedTerm"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "contains": {
+                "enum": [
+                  "schema:DefinedTerm"
+                ]
+              }
+            }
           ]
         },
         "schema:name": {
@@ -666,9 +727,24 @@
       "description": "PropertyValue values required to define a soft-typed property with a value. ",
       "properties": {
         "@type": {
-          "type": "string",
-          "enum": [
-            "schema:PropertyValue"
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "schema:PropertyValue"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "contains": {
+                "enum": [
+                  "schema:PropertyValue"
+                ]
+              }
+            }
           ]
         },
         "schema:propertyID": {
@@ -1009,10 +1085,25 @@
       "type": "object",
       "properties": {
         "@type": {
-          "type": "string",
           "default": "schema:CreativeWork",
-          "enum": [
-            "schema:CreativeWork"
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "schema:CreativeWork"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "contains": {
+                "enum": [
+                  "schema:CreativeWork"
+                ]
+              }
+            }
           ]
         },
         "schema:name": {
@@ -1041,9 +1132,24 @@
       "type": "object",
       "properties": {
         "@type": {
-          "type": "string",
-          "enum": [
-            "schema:PropertyValue"
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "schema:PropertyValue"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "contains": {
+                "enum": [
+                  "schema:PropertyValue"
+                ]
+              }
+            }
           ]
         },
         "schema:propertyID": {
@@ -1092,8 +1198,24 @@
       "type": "object",
       "properties": {
         "@type": {
-          "enum": [
-            "schema:DefinedTerm"
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "schema:DefinedTerm"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "contains": {
+                "enum": [
+                  "schema:DefinedTerm"
+                ]
+              }
+            }
           ]
         },
         "schema:name": {
@@ -1424,10 +1546,25 @@
               "description": "identifier for the containing catalog or repository; example data at https://github.com/ESIPFed/science-on-schema.org/blob/develop/guides/Dataset.md#catalog puts identifier here"
             },
             "@type": {
-              "type": "string",
               "default": "schema:DataCatalog",
-              "enum": [
-                "schema:DataCatalog"
+              "anyOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "schema:DataCatalog"
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "contains": {
+                    "enum": [
+                      "schema:DataCatalog"
+                    ]
+                  }
+                }
               ]
             },
             "schema:name": {
@@ -1537,9 +1674,24 @@
           "type": "string"
         },
         "@type": {
-          "type": "string",
-          "enum": [
-            "schema:Person"
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "schema:Person"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "contains": {
+                "enum": [
+                  "schema:Person"
+                ]
+              }
+            }
           ]
         },
         "schema:name": {
@@ -1576,10 +1728,25 @@
           "type": "object",
           "properties": {
             "@type": {
-              "type": "string",
               "default": "schema:ContactPoint",
-              "enum": [
-                "schema:ContactPoint"
+              "anyOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "schema:ContactPoint"
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "contains": {
+                    "enum": [
+                      "schema:ContactPoint"
+                    ]
+                  }
+                }
               ]
             },
             "schema:email": {
@@ -1645,10 +1812,25 @@
           "type": "string"
         },
         "@type": {
-          "type": "string",
           "default": "schema:Organization",
-          "enum": [
-            "schema:Organization"
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "schema:Organization"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "contains": {
+                "enum": [
+                  "schema:Organization"
+                ]
+              }
+            }
           ]
         },
         "schema:additionalType": {
@@ -1755,10 +1937,25 @@
       "type": "object",
       "properties": {
         "@type": {
-          "type": "string",
           "default": "schema:Role",
-          "enum": [
-            "schema:Role"
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "schema:Role"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "contains": {
+                "enum": [
+                  "schema:Role"
+                ]
+              }
+            }
           ]
         },
         "schema:roleName": {
@@ -1978,10 +2175,25 @@
       "type": "object",
       "properties": {
         "@type": {
-          "type": "string",
           "default": "schema:Place",
-          "enum": [
-            "schema:Place"
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "schema:Place"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "contains": {
+                "enum": [
+                  "schema:Place"
+                ]
+              }
+            }
           ]
         },
         "schema:name": {
@@ -2006,10 +2218,25 @@
               "description": "A point location. Point locations are recommended for data that is associated with specific sample locations, particularly if these are widely spaced such that an enclosing bounding box would be a misleading representation of the spatial location. Be aware that some client applications might only index or display bounding box extents or a single point location.",
               "properties": {
                 "@type": {
-                  "type": "string",
                   "default": "schema:GeoCoordinates",
-                  "enum": [
-                    "schema:GeoCoordinates"
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "enum": [
+                        "schema:GeoCoordinates"
+                      ]
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "contains": {
+                        "enum": [
+                          "schema:GeoCoordinates"
+                        ]
+                      }
+                    }
                   ]
                 },
                 "schema:latitude": {
@@ -2030,10 +2257,25 @@
               "description": "A schema:GeoShape bounding box. The geometry is described with a set of latitude/longitude pairs (in that order).The documentation for schema:GeoShape states 'Either whitespace or commas can be used to separate latitude and longitude; whitespace should be used when writing a list of several such points.'",
               "properties": {
                 "@type": {
-                  "type": "string",
                   "default": "schema:GeoShape",
-                  "enum": [
-                    "schema:GeoShape"
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "enum": [
+                        "schema:GeoShape"
+                      ]
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "contains": {
+                        "enum": [
+                          "schema:GeoShape"
+                        ]
+                      }
+                    }
                   ]
                 },
                 "schema:box": {
@@ -2051,10 +2293,25 @@
               "description": "A schema:GeoShape curvilinear trace, for resource related to a linear trace like a ship track or airplane flight line",
               "properties": {
                 "@type": {
-                  "type": "string",
                   "default": "schema:GeoShape",
-                  "enum": [
-                    "schema:GeoShape"
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "enum": [
+                        "schema:GeoShape"
+                      ]
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "contains": {
+                        "enum": [
+                          "schema:GeoShape"
+                        ]
+                      }
+                    }
                   ]
                 },
                 "schema:line": {
@@ -2081,9 +2338,24 @@
               "type": "object",
               "properties": {
                 "@type": {
-                  "type": "string",
-                  "enum": [
-                    "geosparql:wktLiteral"
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "enum": [
+                        "geosparql:wktLiteral"
+                      ]
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "contains": {
+                        "enum": [
+                          "geosparql:wktLiteral"
+                        ]
+                      }
+                    }
                   ]
                 },
                 "@value": {
@@ -2121,9 +2393,24 @@
       "description": "PropertyValue values required to define a soft-typed property with a value. ",
       "properties": {
         "@type": {
-          "type": "string",
-          "enum": [
-            "schema:PropertyValue"
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "schema:PropertyValue"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "contains": {
+                "enum": [
+                  "schema:PropertyValue"
+                ]
+              }
+            }
           ]
         },
         "schema:propertyID": {
@@ -2181,22 +2468,48 @@
       "description": "this element defines an action (operation) that can be invoked via messages using the protocol defined. In most cases this will be an http request via TCP/IP, but in desktop or LAN environments, other protocols might be used. The target property defines the endpoint and syntax for invoking the action. Result specifies the encoding format for the (possible) response(s) when the action is invoked. Object specifies the information model for the resource that is the object of the action. This approach is an adoptation of the Action Blog Post from schema.org (see https://schema.org/docs/actions.html, and https://github.com/schemaorg/suggestions-questions-brainstorming/issues/62) ",
       "properties": {
         "@type": {
-          "type": "string",
           "description": "The type of action. Must be schema:Action or one of its subtypes.",
           "default": "schema:Action",
-          "enum": [
-            "schema:Action",
-            "schema:AssessAction",
-            "schema:ConsumeAction",
-            "schema:ControlAction",
-            "schema:CreateAction",
-            "schema:FindAction",
-            "schema:InteractAction",
-            "schema:MoveAction",
-            "schema:PlayAction",
-            "schema:SearchAction",
-            "schema:TransferAction",
-            "schema:UpdateAction"
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "schema:Action",
+                "schema:AssessAction",
+                "schema:ConsumeAction",
+                "schema:ControlAction",
+                "schema:CreateAction",
+                "schema:FindAction",
+                "schema:InteractAction",
+                "schema:MoveAction",
+                "schema:PlayAction",
+                "schema:SearchAction",
+                "schema:TransferAction",
+                "schema:UpdateAction"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "contains": {
+                "enum": [
+                  "schema:Action",
+                  "schema:AssessAction",
+                  "schema:ConsumeAction",
+                  "schema:ControlAction",
+                  "schema:CreateAction",
+                  "schema:FindAction",
+                  "schema:InteractAction",
+                  "schema:MoveAction",
+                  "schema:PlayAction",
+                  "schema:SearchAction",
+                  "schema:TransferAction",
+                  "schema:UpdateAction"
+                ]
+              }
+            }
           ]
         },
         "schema:name": {
@@ -2246,10 +2559,25 @@
           "description": "documentation of the URL end point and syntax to invoke the service. This schema doesn't handle post requests",
           "properties": {
             "@type": {
-              "type": "string",
               "default": "schema:EntryPoint",
-              "enum": [
-                "schema:EntryPoint"
+              "anyOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "schema:EntryPoint"
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "contains": {
+                    "enum": [
+                      "schema:EntryPoint"
+                    ]
+                  }
+                }
               ]
             },
             "schema:description": {
@@ -2330,10 +2658,25 @@
                 "type": "string"
               },
               "@type": {
-                "type": "string",
                 "default": "schema:PropertyValueSpecification",
-                "enum": [
-                  "schema:PropertyValueSpecification"
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "schema:PropertyValueSpecification"
+                    ]
+                  },
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "contains": {
+                      "enum": [
+                        "schema:PropertyValueSpecification"
+                      ]
+                    }
+                  }
                 ]
               },
               "schema:valueName": {
@@ -2361,10 +2704,25 @@
           "description": "description of the data structure of the return object",
           "properties": {
             "@type": {
-              "type": "string",
               "default": "schema:DataFeed",
-              "enum": [
-                "schema:DataFeed"
+              "anyOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "schema:DataFeed"
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "contains": {
+                    "enum": [
+                      "schema:DataFeed"
+                    ]
+                  }
+                }
               ]
             },
             "schema:description": {
@@ -2554,9 +2912,24 @@
                   "description": "reference to a skos concept for the property"
                 },
                 "@type": {
-                  "type": "string",
-                  "enum": [
-                    "schema:Property"
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "enum": [
+                        "schema:Property"
+                      ]
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "contains": {
+                        "enum": [
+                          "schema:Property"
+                        ]
+                      }
+                    }
                   ]
                 },
                 "schema:name": {
@@ -3004,8 +3377,24 @@
             "type": "object",
             "properties": {
               "@type": {
-                "enum": [
-                  "schema:DefinedTerm"
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "schema:DefinedTerm"
+                    ]
+                  },
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "contains": {
+                      "enum": [
+                        "schema:DefinedTerm"
+                      ]
+                    }
+                  }
                 ]
               },
               "schema:name": {

@@ -3,7 +3,14 @@ title: definitions for roles used in XAS profile
 type: object
 properties:
   '@type':
-    const: cdi:WideDataStructure
+    anyOf:
+    - type: string
+      const: cdi:WideDataStructure
+    - type: array
+      items:
+        type: string
+      contains:
+        const: cdi:WideDataStructure
   cdi:has_DataStructureComponent:
     type: array
     items:
@@ -11,8 +18,22 @@ properties:
       properties:
         '@type':
           oneOf:
-          - const: cdi:IdentifierComponent
-          - const: cdi:MeasureComponent
+          - anyOf:
+            - type: string
+              const: cdi:IdentifierComponent
+            - type: array
+              items:
+                type: string
+              contains:
+                const: cdi:IdentifierComponent
+          - anyOf:
+            - type: string
+              const: cdi:MeasureComponent
+            - type: array
+              items:
+                type: string
+              contains:
+                const: cdi:MeasureComponent
         cdi:isDefinedBy_InstanceVariable:
           type: object
           description: this must be a reference to a variable defined in the schema:variableMeasured
@@ -25,7 +46,14 @@ properties:
           type: object
           properties:
             '@type':
-              const: cdi:ValueMapping
+              anyOf:
+              - type: string
+                const: cdi:ValueMapping
+              - type: array
+                items:
+                  type: string
+                contains:
+                  const: cdi:ValueMapping
             cdi:hasIndex:
               type: integer
             cdi:haslength:

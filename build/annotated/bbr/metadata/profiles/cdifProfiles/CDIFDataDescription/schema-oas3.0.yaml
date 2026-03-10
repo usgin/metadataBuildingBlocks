@@ -206,20 +206,34 @@ x-defs:
           type: object
           properties:
             '@type':
-              type: string
-              enum:
-              - schema:LinkRole
+              anyOf:
+              - type: string
+                enum:
+                - schema:LinkRole
+              - type: array
+                items:
+                  type: string
+                contains:
+                  enum:
+                  - schema:LinkRole
             schema:linkRelationship:
               anyOf:
               - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.cdifProperties.cdifOptional/$defs/DefinedTerm
               - type: string
-            target:
+            schema:target:
               type: object
               properties:
                 '@type':
-                  type: string
-                  enum:
-                  - schema:EntryPoint
+                  anyOf:
+                  - type: string
+                    enum:
+                    - schema:EntryPoint
+                  - type: array
+                    items:
+                      type: string
+                    contains:
+                      enum:
+                      - schema:EntryPoint
                 schema:encodingFormat:
                   type: string
                   description: registered MIME types are expected
@@ -821,10 +835,17 @@ x-defs:
     type: object
     properties:
       '@type':
-        type: string
         default: schema:CreativeWork
-        enum:
-        - schema:CreativeWork
+        anyOf:
+        - type: string
+          enum:
+          - schema:CreativeWork
+        - type: array
+          items:
+            type: string
+          contains:
+            enum:
+            - schema:CreativeWork
       schema:name:
         type: string
       schema:description:
@@ -844,9 +865,16 @@ x-defs:
     type: object
     properties:
       '@type':
-        type: string
-        enum:
-        - schema:PropertyValue
+        anyOf:
+        - type: string
+          enum:
+          - schema:PropertyValue
+        - type: array
+          items:
+            type: string
+          contains:
+            enum:
+            - schema:PropertyValue
       schema:propertyID:
         type: string
         description: In this context for the schema:PropertyValue, this field is an
@@ -878,8 +906,16 @@ x-defs:
     type: object
     properties:
       '@type':
-        enum:
-        - schema:DefinedTerm
+        anyOf:
+        - type: string
+          enum:
+          - schema:DefinedTerm
+        - type: array
+          items:
+            type: string
+          contains:
+            enum:
+            - schema:DefinedTerm
       schema:name:
         type: string
         description: text label for the term that is useful to human user
@@ -975,10 +1011,17 @@ x-defs:
               data at https://github.com/ESIPFed/science-on-schema.org/blob/develop/guides/Dataset.md#catalog
               puts identifier here
           '@type':
-            type: string
             default: schema:DataCatalog
-            enum:
-            - schema:DataCatalog
+            anyOf:
+            - type: string
+              enum:
+              - schema:DataCatalog
+            - type: array
+              items:
+                type: string
+              contains:
+                enum:
+                - schema:DataCatalog
           schema:name:
             type: string
           schema:url:
@@ -1025,9 +1068,16 @@ x-defs:
       '@id':
         type: string
       '@type':
-        type: string
-        enum:
-        - schema:Person
+        anyOf:
+        - type: string
+          enum:
+          - schema:Person
+        - type: array
+          items:
+            type: string
+          contains:
+            enum:
+            - schema:Person
       schema:name:
         type: string
         description: string label for person that is meaningful for human users
@@ -1049,10 +1099,17 @@ x-defs:
         type: object
         properties:
           '@type':
-            type: string
             default: schema:ContactPoint
-            enum:
-            - schema:ContactPoint
+            anyOf:
+            - type: string
+              enum:
+              - schema:ContactPoint
+            - type: array
+              items:
+                type: string
+              contains:
+                enum:
+                - schema:ContactPoint
           schema:email:
             type: string
         description: restrict to email only. Schema.org allows telephone and postal
@@ -1086,10 +1143,17 @@ x-defs:
       '@id':
         type: string
       '@type':
-        type: string
         default: schema:Organization
-        enum:
-        - schema:Organization
+        anyOf:
+        - type: string
+          enum:
+          - schema:Organization
+        - type: array
+          items:
+            type: string
+          contains:
+            enum:
+            - schema:Organization
       schema:additionalType:
         type: array
         items:
@@ -1152,10 +1216,17 @@ x-defs:
     type: object
     properties:
       '@type':
-        type: string
         default: schema:Role
-        enum:
-        - schema:Role
+        anyOf:
+        - type: string
+          enum:
+          - schema:Role
+        - type: array
+          items:
+            type: string
+          contains:
+            enum:
+            - schema:Role
       schema:roleName:
         anyOf:
         - type: string
@@ -1184,10 +1255,17 @@ x-defs:
         type: string
         description: URI identifier for this funding record
       '@type':
-        type: string
         default: schema:MonetaryGrant
-        enum:
-        - schema:MonetaryGrant
+        anyOf:
+        - type: string
+          enum:
+          - schema:MonetaryGrant
+        - type: array
+          items:
+            type: string
+          contains:
+            enum:
+            - schema:MonetaryGrant
       schema:identifier:
         description: identifier for a particular grant
         allOf:
@@ -1326,9 +1404,16 @@ x-defs:
               type: string
               description: reference to a skos concept for the property
             '@type':
-              type: string
-              enum:
-              - schema:Property
+              anyOf:
+              - type: string
+                enum:
+                - schema:Property
+              - type: array
+                items:
+                  type: string
+                contains:
+                  enum:
+                  - schema:Property
             schema:name:
               anyOf:
               - type: string
@@ -1354,10 +1439,17 @@ x-defs:
     type: object
     properties:
       '@type':
-        type: string
         default: schema:Place
-        enum:
-        - schema:Place
+        anyOf:
+        - type: string
+          enum:
+          - schema:Place
+        - type: array
+          items:
+            type: string
+          contains:
+            enum:
+            - schema:Place
       schema:name:
         description: multiple place names or DefinedTerms that have a place name and
           URI for the location
@@ -1377,10 +1469,17 @@ x-defs:
             might only index or display bounding box extents or a single point location.
           properties:
             '@type':
-              type: string
               default: schema:GeoCoordinates
-              enum:
-              - schema:GeoCoordinates
+              anyOf:
+              - type: string
+                enum:
+                - schema:GeoCoordinates
+              - type: array
+                items:
+                  type: string
+                contains:
+                  enum:
+                  - schema:GeoCoordinates
             schema:latitude:
               type: number
             schema:longitude:
@@ -1397,10 +1496,17 @@ x-defs:
             of several such points.'
           properties:
             '@type':
-              type: string
               default: schema:GeoShape
-              enum:
-              - schema:GeoShape
+              anyOf:
+              - type: string
+                enum:
+                - schema:GeoShape
+              - type: array
+                items:
+                  type: string
+                contains:
+                  enum:
+                  - schema:GeoShape
             schema:box:
               type: string
               description: A GeoShape box defines an area on the surface of the earth
@@ -1417,10 +1523,17 @@ x-defs:
             a linear trace like a ship track or airplane flight line
           properties:
             '@type':
-              type: string
               default: schema:GeoShape
-              enum:
-              - schema:GeoShape
+              anyOf:
+              - type: string
+                enum:
+                - schema:GeoShape
+              - type: array
+                items:
+                  type: string
+                contains:
+                  enum:
+                  - schema:GeoShape
             schema:line:
               type: string
               description: 'A GeoShape box defines a curvilinear geometry as a string
@@ -1449,9 +1562,16 @@ x-defs:
             type: object
             properties:
               '@type':
-                type: string
-                enum:
-                - geosparql:wktLiteral
+                anyOf:
+                - type: string
+                  enum:
+                  - geosparql:wktLiteral
+                - type: array
+                  items:
+                    type: string
+                  contains:
+                    enum:
+                    - geosparql:wktLiteral
               '@value':
                 type: string
                 description: a WKT geometry description string, e.g. 'POINT(-76 -18)'
@@ -1482,10 +1602,17 @@ x-defs:
         eras with identifier, e.g. geologic age. This is a SOSO schema.org extension
       properties:
         '@type':
-          type: string
           default: time:ProperInterval
-          enum:
-          - time:ProperInterval
+          anyOf:
+          - type: string
+            enum:
+            - time:ProperInterval
+          - type: array
+            items:
+              type: string
+            contains:
+              enum:
+              - time:ProperInterval
         schema:description:
           type: string
           description: free text description of the temporal interval
@@ -1519,10 +1646,17 @@ x-defs:
           additionalProperties: true
           description: Must exactly match the specified @context object.
         '@type':
-          type: string
           default: time:ProperInterval
-          enum:
-          - time:ProperInterval
+          anyOf:
+          - type: string
+            enum:
+            - time:ProperInterval
+          - type: array
+            items:
+              type: string
+            contains:
+              enum:
+              - time:ProperInterval
         schema:description:
           type: string
           description: free text description of the temporal interval
@@ -1530,18 +1664,32 @@ x-defs:
           type: object
           properties:
             '@type':
-              type: string
-              enum:
-              - time:Instant
+              anyOf:
+              - type: string
+                enum:
+                - time:Instant
+              - type: array
+                items:
+                  type: string
+                contains:
+                  enum:
+                  - time:Instant
             time:inTimePosition:
               $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.schemaorgProperties.temporalExtent/$defs/timePosition_type
         time:hasEnd:
           type: object
           properties:
             '@type':
-              type: string
-              enum:
-              - time:Instant
+              anyOf:
+              - type: string
+                enum:
+                - time:Instant
+              - type: array
+                items:
+                  type: string
+                contains:
+                  enum:
+                  - time:Instant
             time:inTimePosition:
               $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.schemaorgProperties.temporalExtent/$defs/timePosition_type
     - type: string
@@ -1552,10 +1700,17 @@ x-defs:
         type: object
         properties:
           '@type':
-            type: string
             default: time:TimePosition
-            enum:
-            - time:TimePosition
+            anyOf:
+            - type: string
+              enum:
+              - time:TimePosition
+            - type: array
+              items:
+                type: string
+              contains:
+                enum:
+                - time:TimePosition
           time:hasTRS:
             type: string
             description: identifier for a temporal reference system; default is million
@@ -1600,23 +1755,15 @@ x-defs:
   cdif.bbr.metadata.provProperties.derivedFrom:
     title: very simple links or names of data sources used to generate the described
       resource.
-    type: object
-    properties:
-      prov:wasDerivedFrom:
-        type: array
-        items:
-          anyOf:
-          - type: string
-          - type: object
-            properties:
-              '@id':
-                type: string
-                description: a resolvable reference to a representation of the software
-                  or instrument used
-          - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.provProperties.derivedFrom/$defs/LabeledLink
-    $defs:
-      LabeledLink:
-        $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.schemaorgProperties.labeledLink
+    anyOf:
+    - type: string
+    - type: object
+      properties:
+        '@id':
+          type: string
+          description: a resolvable reference to a representation of the software
+            or instrument used
+    - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.schemaorgProperties.labeledLink
     x-jsonld-prefixes:
       schema: http://schema.org/
       prov: http://www.w3.org/ns/prov#
@@ -1627,8 +1774,16 @@ x-defs:
     type: object
     properties:
       '@type':
-        enum:
-        - dqv:QualityMeasurement
+        anyOf:
+        - type: string
+          enum:
+          - dqv:QualityMeasurement
+        - type: array
+          items:
+            type: string
+          contains:
+            enum:
+            - dqv:QualityMeasurement
       dqv:isMeasurementOf:
         description: specify the quality measure that is reported, by name, with an
           ID ref, or as a Defined Term
@@ -1724,22 +1879,40 @@ x-defs:
       Post from schema.org (see https://schema.org/docs/actions.html, and https://github.com/schemaorg/suggestions-questions-brainstorming/issues/62) '
     properties:
       '@type':
-        type: string
         description: The type of action. Must be schema:Action or one of its subtypes.
         default: schema:Action
-        enum:
-        - schema:Action
-        - schema:AssessAction
-        - schema:ConsumeAction
-        - schema:ControlAction
-        - schema:CreateAction
-        - schema:FindAction
-        - schema:InteractAction
-        - schema:MoveAction
-        - schema:PlayAction
-        - schema:SearchAction
-        - schema:TransferAction
-        - schema:UpdateAction
+        anyOf:
+        - type: string
+          enum:
+          - schema:Action
+          - schema:AssessAction
+          - schema:ConsumeAction
+          - schema:ControlAction
+          - schema:CreateAction
+          - schema:FindAction
+          - schema:InteractAction
+          - schema:MoveAction
+          - schema:PlayAction
+          - schema:SearchAction
+          - schema:TransferAction
+          - schema:UpdateAction
+        - type: array
+          items:
+            type: string
+          contains:
+            enum:
+            - schema:Action
+            - schema:AssessAction
+            - schema:ConsumeAction
+            - schema:ControlAction
+            - schema:CreateAction
+            - schema:FindAction
+            - schema:InteractAction
+            - schema:MoveAction
+            - schema:PlayAction
+            - schema:SearchAction
+            - schema:TransferAction
+            - schema:UpdateAction
       schema:name:
         type: string
         description: text label for the action
@@ -1773,10 +1946,17 @@ x-defs:
           This schema doesn't handle post requests
         properties:
           '@type':
-            type: string
             default: schema:EntryPoint
-            enum:
-            - schema:EntryPoint
+            anyOf:
+            - type: string
+              enum:
+              - schema:EntryPoint
+            - type: array
+              items:
+                type: string
+              contains:
+                enum:
+                - schema:EntryPoint
           schema:description:
             type: string
           schema:urlTemplate:
@@ -1852,10 +2032,17 @@ x-defs:
             '@id':
               type: string
             '@type':
-              type: string
               default: schema:PropertyValueSpecification
-              enum:
-              - schema:PropertyValueSpecification
+              anyOf:
+              - type: string
+                enum:
+                - schema:PropertyValueSpecification
+              - type: array
+                items:
+                  type: string
+                contains:
+                  enum:
+                  - schema:PropertyValueSpecification
             schema:valueName:
               type: string
             schema:description:
@@ -1873,10 +2060,17 @@ x-defs:
         description: description of the data structure of the return object
         properties:
           '@type':
-            type: string
             default: schema:DataFeed
-            enum:
-            - schema:DataFeed
+            anyOf:
+            - type: string
+              enum:
+              - schema:DataFeed
+            - type: array
+              items:
+                type: string
+              contains:
+                enum:
+                - schema:DataFeed
           schema:description:
             type: string
           schema:variableMeasured:

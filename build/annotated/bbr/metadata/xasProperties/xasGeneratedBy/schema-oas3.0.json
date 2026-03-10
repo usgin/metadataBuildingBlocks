@@ -262,9 +262,24 @@
           "description": "A methodology or protocol described as a HowTo with optional steps",
           "properties": {
             "@type": {
-              "type": "string",
-              "enum": [
-                "schema:HowTo"
+              "anyOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "schema:HowTo"
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "contains": {
+                    "enum": [
+                      "schema:HowTo"
+                    ]
+                  }
+                }
               ]
             },
             "@id": {
@@ -312,9 +327,24 @@
           "description": "A single step in a HowTo methodology",
           "properties": {
             "@type": {
-              "type": "string",
-              "enum": [
-                "schema:HowToStep"
+              "anyOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "schema:HowToStep"
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "contains": {
+                    "enum": [
+                      "schema:HowToStep"
+                    ]
+                  }
+                }
               ]
             },
             "schema:name": {
@@ -345,9 +375,24 @@
           "description": "A statement or assertion about the dataset, such as a quality claim",
           "properties": {
             "@type": {
-              "type": "string",
-              "enum": [
-                "schema:Claim"
+              "anyOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "schema:Claim"
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "contains": {
+                    "enum": [
+                      "schema:Claim"
+                    ]
+                  }
+                }
               ]
             },
             "@id": {
@@ -411,9 +456,24 @@
       "description": "PropertyValue values required to define a soft-typed property with a value. ",
       "properties": {
         "@type": {
-          "type": "string",
-          "enum": [
-            "schema:PropertyValue"
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "schema:PropertyValue"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "contains": {
+                "enum": [
+                  "schema:PropertyValue"
+                ]
+              }
+            }
           ]
         },
         "schema:propertyID": {
@@ -470,9 +530,24 @@
       "type": "object",
       "properties": {
         "@type": {
-          "type": "string",
-          "enum": [
-            "schema:PropertyValue"
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "schema:PropertyValue"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "contains": {
+                "enum": [
+                  "schema:PropertyValue"
+                ]
+              }
+            }
           ]
         },
         "schema:propertyID": {
@@ -653,8 +728,24 @@
           "type": "string"
         },
         "@type": {
-          "enum": [
-            "schema:Place"
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "schema:Place"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "contains": {
+                "enum": [
+                  "schema:Place"
+                ]
+              }
+            }
           ]
         },
         "schema:additionalType": {
@@ -877,9 +968,24 @@
           "type": "string"
         },
         "@type": {
-          "type": "string",
-          "enum": [
-            "schema:Person"
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "schema:Person"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "contains": {
+                "enum": [
+                  "schema:Person"
+                ]
+              }
+            }
           ]
         },
         "schema:name": {
@@ -916,10 +1022,25 @@
           "type": "object",
           "properties": {
             "@type": {
-              "type": "string",
               "default": "schema:ContactPoint",
-              "enum": [
-                "schema:ContactPoint"
+              "anyOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "schema:ContactPoint"
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "contains": {
+                    "enum": [
+                      "schema:ContactPoint"
+                    ]
+                  }
+                }
               ]
             },
             "schema:email": {
@@ -985,10 +1106,25 @@
           "type": "string"
         },
         "@type": {
-          "type": "string",
           "default": "schema:Organization",
-          "enum": [
-            "schema:Organization"
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "schema:Organization"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "contains": {
+                "enum": [
+                  "schema:Organization"
+                ]
+              }
+            }
           ]
         },
         "schema:additionalType": {
@@ -1095,10 +1231,25 @@
       "type": "object",
       "properties": {
         "@type": {
-          "type": "string",
           "default": "schema:Role",
-          "enum": [
-            "schema:Role"
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "schema:Role"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "contains": {
+                "enum": [
+                  "schema:Role"
+                ]
+              }
+            }
           ]
         },
         "schema:roleName": {
@@ -1146,9 +1297,24 @@
       "type": "object",
       "properties": {
         "@type": {
-          "type": "string",
-          "enum": [
-            "schema:PropertyValue"
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "schema:PropertyValue"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "contains": {
+                "enum": [
+                  "schema:PropertyValue"
+                ]
+              }
+            }
           ]
         },
         "schema:propertyID": {
@@ -1369,8 +1535,24 @@
       "type": "object",
       "properties": {
         "@type": {
-          "enum": [
-            "schema:DefinedTerm"
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "schema:DefinedTerm"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "contains": {
+                "enum": [
+                  "schema:DefinedTerm"
+                ]
+              }
+            }
           ]
         },
         "schema:name": {
@@ -1433,10 +1615,25 @@
       "type": "object",
       "properties": {
         "@type": {
-          "type": "string",
           "default": "schema:CreativeWork",
-          "enum": [
-            "schema:CreativeWork"
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "schema:CreativeWork"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "contains": {
+                "enum": [
+                  "schema:CreativeWork"
+                ]
+              }
+            }
           ]
         },
         "schema:name": {
@@ -1465,10 +1662,25 @@
       "type": "object",
       "properties": {
         "@type": {
-          "type": "string",
           "default": "schema:Place",
-          "enum": [
-            "schema:Place"
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "schema:Place"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "contains": {
+                "enum": [
+                  "schema:Place"
+                ]
+              }
+            }
           ]
         },
         "schema:name": {
@@ -1493,10 +1705,25 @@
               "description": "A point location. Point locations are recommended for data that is associated with specific sample locations, particularly if these are widely spaced such that an enclosing bounding box would be a misleading representation of the spatial location. Be aware that some client applications might only index or display bounding box extents or a single point location.",
               "properties": {
                 "@type": {
-                  "type": "string",
                   "default": "schema:GeoCoordinates",
-                  "enum": [
-                    "schema:GeoCoordinates"
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "enum": [
+                        "schema:GeoCoordinates"
+                      ]
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "contains": {
+                        "enum": [
+                          "schema:GeoCoordinates"
+                        ]
+                      }
+                    }
                   ]
                 },
                 "schema:latitude": {
@@ -1517,10 +1744,25 @@
               "description": "A schema:GeoShape bounding box. The geometry is described with a set of latitude/longitude pairs (in that order).The documentation for schema:GeoShape states 'Either whitespace or commas can be used to separate latitude and longitude; whitespace should be used when writing a list of several such points.'",
               "properties": {
                 "@type": {
-                  "type": "string",
                   "default": "schema:GeoShape",
-                  "enum": [
-                    "schema:GeoShape"
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "enum": [
+                        "schema:GeoShape"
+                      ]
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "contains": {
+                        "enum": [
+                          "schema:GeoShape"
+                        ]
+                      }
+                    }
                   ]
                 },
                 "schema:box": {
@@ -1538,10 +1780,25 @@
               "description": "A schema:GeoShape curvilinear trace, for resource related to a linear trace like a ship track or airplane flight line",
               "properties": {
                 "@type": {
-                  "type": "string",
                   "default": "schema:GeoShape",
-                  "enum": [
-                    "schema:GeoShape"
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "enum": [
+                        "schema:GeoShape"
+                      ]
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "contains": {
+                        "enum": [
+                          "schema:GeoShape"
+                        ]
+                      }
+                    }
                   ]
                 },
                 "schema:line": {
@@ -1568,9 +1825,24 @@
               "type": "object",
               "properties": {
                 "@type": {
-                  "type": "string",
-                  "enum": [
-                    "geosparql:wktLiteral"
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "enum": [
+                        "geosparql:wktLiteral"
+                      ]
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "contains": {
+                        "enum": [
+                          "geosparql:wktLiteral"
+                        ]
+                      }
+                    }
                   ]
                 },
                 "@value": {
@@ -1608,9 +1880,24 @@
       "description": "PropertyValue values required to define a soft-typed property with a value. ",
       "properties": {
         "@type": {
-          "type": "string",
-          "enum": [
-            "schema:PropertyValue"
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "schema:PropertyValue"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "contains": {
+                "enum": [
+                  "schema:PropertyValue"
+                ]
+              }
+            }
           ]
         },
         "schema:propertyID": {

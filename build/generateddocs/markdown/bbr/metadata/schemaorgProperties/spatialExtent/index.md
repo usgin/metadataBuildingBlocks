@@ -200,9 +200,9 @@ ex:SpatialExtentPlaceName_45hwe6 a schema1:Place ;
     schema1:name [ a schema1:DefinedTerm ;
             schema1:identifier [ a schema1:PropertyValue ;
                     schema1:propertyID "http uri" ;
-                    schema1:url "https://edits.nationalmap.gov/apps/gaz-domestic/public/gaz-record/5573" ] ;
+                    schema1:url "https://edits.nationalmap.gov/apps/gaz-domestic/public/gaz-record/11520" ] ;
             schema1:inDefinedTermSet "https://www.usgs.gov/us-board-on-geographic-names/domestic-names" ;
-            schema1:name "Harquahala Mountains" ],
+            schema1:name "Socorro Peak" ],
         [ a schema1:DefinedTerm ;
             schema1:identifier [ a schema1:PropertyValue ;
                     schema1:propertyID "http uri" ;
@@ -212,9 +212,9 @@ ex:SpatialExtentPlaceName_45hwe6 a schema1:Place ;
         [ a schema1:DefinedTerm ;
             schema1:identifier [ a schema1:PropertyValue ;
                     schema1:propertyID "http uri" ;
-                    schema1:url "https://edits.nationalmap.gov/apps/gaz-domestic/public/gaz-record/11520" ] ;
+                    schema1:url "https://edits.nationalmap.gov/apps/gaz-domestic/public/gaz-record/5573" ] ;
             schema1:inDefinedTermSet "https://www.usgs.gov/us-board-on-geographic-names/domestic-names" ;
-            schema1:name "Socorro Peak" ] .
+            schema1:name "Harquahala Mountains" ] .
 
 
 ```
@@ -347,9 +347,15 @@ description: 'Spatial Extent description for CDIF discovery profile.  Note requi
 type: object
 properties:
   '@type':
-    type: string
-    const: schema:Place
     default: schema:Place
+    anyOf:
+    - type: string
+      const: schema:Place
+    - type: array
+      items:
+        type: string
+      contains:
+        const: schema:Place
   schema:name:
     description: multiple place names or DefinedTerms that have a place name and URI
       for the location
@@ -369,9 +375,15 @@ properties:
         index or display bounding box extents or a single point location.
       properties:
         '@type':
-          type: string
-          const: schema:GeoCoordinates
           default: schema:GeoCoordinates
+          anyOf:
+          - type: string
+            const: schema:GeoCoordinates
+          - type: array
+            items:
+              type: string
+            contains:
+              const: schema:GeoCoordinates
         schema:latitude:
           type: number
         schema:longitude:
@@ -387,9 +399,15 @@ properties:
         whitespace should be used when writing a list of several such points.'
       properties:
         '@type':
-          type: string
-          const: schema:GeoShape
           default: schema:GeoShape
+          anyOf:
+          - type: string
+            const: schema:GeoShape
+          - type: array
+            items:
+              type: string
+            contains:
+              const: schema:GeoShape
         schema:box:
           type: string
           description: A GeoShape box defines an area on the surface of the earth
@@ -406,9 +424,15 @@ properties:
         linear trace like a ship track or airplane flight line
       properties:
         '@type':
-          type: string
-          const: schema:GeoShape
           default: schema:GeoShape
+          anyOf:
+          - type: string
+            const: schema:GeoShape
+          - type: array
+            items:
+              type: string
+            contains:
+              const: schema:GeoShape
         schema:line:
           type: string
           description: 'A GeoShape box defines a curvilinear geometry as a string
@@ -437,8 +461,14 @@ properties:
         type: object
         properties:
           '@type':
-            type: string
-            const: geosparql:wktLiteral
+            anyOf:
+            - type: string
+              const: geosparql:wktLiteral
+            - type: array
+              items:
+                type: string
+              contains:
+                const: geosparql:wktLiteral
           '@value':
             type: string
             description: a WKT geometry description string, e.g. 'POINT(-76 -18)'

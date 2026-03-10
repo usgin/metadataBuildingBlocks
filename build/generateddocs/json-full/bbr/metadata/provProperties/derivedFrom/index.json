@@ -78,7 +78,7 @@
       ]
     }
   ],
-  "annotatedSchema": "$schema: https://json-schema.org/draft/2020-12/schema\ntitle: very simple links or names of data sources used to generate the described resource.\ntype: object\nproperties:\n  prov:wasDerivedFrom:\n    type: array\n    items:\n      anyOf:\n      - type: string\n      - type: object\n        properties:\n          '@id':\n            type: string\n            description: a resolvable reference to a representation of the software\n              or instrument used\n      - $ref: '#/$defs/LabeledLink'\n$defs:\n  LabeledLink:\n    $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/labeledLink/schema.yaml\nx-jsonld-prefixes:\n  schema: http://schema.org/\n  prov: http://www.w3.org/ns/prov#\n",
+  "annotatedSchema": "$schema: https://json-schema.org/draft/2020-12/schema\ntitle: very simple links or names of data sources used to generate the described resource.\nanyOf:\n- type: string\n- type: object\n  properties:\n    '@id':\n      type: string\n      description: a resolvable reference to a representation of the software or instrument\n        used\n- $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/labeledLink/schema.yaml\nx-jsonld-prefixes:\n  schema: http://schema.org/\n  prov: http://www.w3.org/ns/prov#\n",
   "gitRepository": "https://github.com/usgin/metadataBuildingBlocks",
   "gitPath": "_sources/provProperties/derivedFrom"
 }

@@ -115,9 +115,15 @@ anyOf:
     eras with identifier, e.g. geologic age. This is a SOSO schema.org extension
   properties:
     '@type':
-      type: string
       default: time:ProperInterval
-      const: time:ProperInterval
+      anyOf:
+      - type: string
+        const: time:ProperInterval
+      - type: array
+        items:
+          type: string
+        contains:
+          const: time:ProperInterval
     schema:description:
       type: string
       description: free text description of the temporal interval
@@ -149,9 +155,15 @@ anyOf:
       additionalProperties: true
       description: Must exactly match the specified @context object.
     '@type':
-      type: string
       default: time:ProperInterval
-      const: time:ProperInterval
+      anyOf:
+      - type: string
+        const: time:ProperInterval
+      - type: array
+        items:
+          type: string
+        contains:
+          const: time:ProperInterval
     schema:description:
       type: string
       description: free text description of the temporal interval
@@ -159,16 +171,28 @@ anyOf:
       type: object
       properties:
         '@type':
-          type: string
-          const: time:Instant
+          anyOf:
+          - type: string
+            const: time:Instant
+          - type: array
+            items:
+              type: string
+            contains:
+              const: time:Instant
         time:inTimePosition:
           $ref: '#/$defs/timePosition_type'
     time:hasEnd:
       type: object
       properties:
         '@type':
-          type: string
-          const: time:Instant
+          anyOf:
+          - type: string
+            const: time:Instant
+          - type: array
+            items:
+              type: string
+            contains:
+              const: time:Instant
         time:inTimePosition:
           $ref: '#/$defs/timePosition_type'
 - type: string
@@ -179,9 +203,15 @@ $defs:
     type: object
     properties:
       '@type':
-        type: string
-        const: time:TimePosition
         default: time:TimePosition
+        anyOf:
+        - type: string
+          const: time:TimePosition
+        - type: array
+          items:
+            type: string
+          contains:
+            const: time:TimePosition
       time:hasTRS:
         type: string
         description: identifier for a temporal reference system; default is million

@@ -145,12 +145,7 @@ ex:xasXDIdownload_23463h a cdi:WideDataStructure ;
     cdi:arrayBase 1 ;
     cdi:commentPrefix "#" ;
     cdi:hasHeader true ;
-    cdi:has_DataStructureComponent [ a cdi:MeasureComponent ;
-            cdi:has [ a cdi:ValueMapping ;
-                    cdi:hasIndex 3 ;
-                    cdi:haslength 13 ] ;
-            cdi:isDefinedBy_InstanceVariable xas:incidentIntensityVariable ],
-        [ a cdi:IdentifierComponent ;
+    cdi:has_DataStructureComponent [ a cdi:IdentifierComponent ;
             cdi:has [ a cdi:ValueMapping ;
                     cdi:hasIndex 1 ;
                     cdi:haslength 12 ] ;
@@ -159,7 +154,12 @@ ex:xasXDIdownload_23463h a cdi:WideDataStructure ;
             cdi:has [ a cdi:ValueMapping ;
                     cdi:hasIndex 2 ;
                     cdi:haslength 12 ] ;
-            cdi:isDefinedBy_InstanceVariable xas:transmittedIntensityVariable ] ;
+            cdi:isDefinedBy_InstanceVariable xas:transmittedIntensityVariable ],
+        [ a cdi:MeasureComponent ;
+            cdi:has [ a cdi:ValueMapping ;
+                    cdi:hasIndex 3 ;
+                    cdi:haslength 13 ] ;
+            cdi:isDefinedBy_InstanceVariable xas:incidentIntensityVariable ] ;
     cdi:headerRowCount 27 ;
     cdi:isDelimited false ;
     cdi:isFixedWidth true ;
@@ -176,7 +176,14 @@ title: definitions for roles used in XAS profile
 type: object
 properties:
   '@type':
-    const: cdi:WideDataStructure
+    anyOf:
+    - type: string
+      const: cdi:WideDataStructure
+    - type: array
+      items:
+        type: string
+      contains:
+        const: cdi:WideDataStructure
   cdi:has_DataStructureComponent:
     type: array
     items:
@@ -184,8 +191,22 @@ properties:
       properties:
         '@type':
           oneOf:
-          - const: cdi:IdentifierComponent
-          - const: cdi:MeasureComponent
+          - anyOf:
+            - type: string
+              const: cdi:IdentifierComponent
+            - type: array
+              items:
+                type: string
+              contains:
+                const: cdi:IdentifierComponent
+          - anyOf:
+            - type: string
+              const: cdi:MeasureComponent
+            - type: array
+              items:
+                type: string
+              contains:
+                const: cdi:MeasureComponent
         cdi:isDefinedBy_InstanceVariable:
           type: object
           description: this must be a reference to a variable defined in the schema:variableMeasured
@@ -198,7 +219,14 @@ properties:
           type: object
           properties:
             '@type':
-              const: cdi:ValueMapping
+              anyOf:
+              - type: string
+                const: cdi:ValueMapping
+              - type: array
+                items:
+                  type: string
+                contains:
+                  const: cdi:ValueMapping
             cdi:hasIndex:
               type: integer
             cdi:haslength:

@@ -259,8 +259,21 @@
       "description": "A methodology or protocol described as a HowTo with optional steps",
       "properties": {
         "@type": {
-          "type": "string",
-          "const": "schema:HowTo"
+          "anyOf": [
+            {
+              "type": "string",
+              "const": "schema:HowTo"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "contains": {
+                "const": "schema:HowTo"
+              }
+            }
+          ]
         },
         "@id": {
           "type": "string"
@@ -307,8 +320,21 @@
       "description": "A single step in a HowTo methodology",
       "properties": {
         "@type": {
-          "type": "string",
-          "const": "schema:HowToStep"
+          "anyOf": [
+            {
+              "type": "string",
+              "const": "schema:HowToStep"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "contains": {
+                "const": "schema:HowToStep"
+              }
+            }
+          ]
         },
         "schema:name": {
           "type": "string",
@@ -338,8 +364,21 @@
       "description": "A statement or assertion about the dataset, such as a quality claim",
       "properties": {
         "@type": {
-          "type": "string",
-          "const": "schema:Claim"
+          "anyOf": [
+            {
+              "type": "string",
+              "const": "schema:Claim"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "contains": {
+                "const": "schema:Claim"
+              }
+            }
+          ]
         },
         "@id": {
           "type": "string"
