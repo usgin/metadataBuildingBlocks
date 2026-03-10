@@ -233,7 +233,12 @@ properties:
     - type: string
     - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/definedTerm/schema.yaml
   schema:contributor:
-    oneOf:
+    anyOf:
+    - type: object
+      properties:
+        '@id':
+          type: string
+          description: IRI reference to a Person or Organization defined elsewhere
     - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/person/schema.yaml
     - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/organization/schema.yaml
 required:

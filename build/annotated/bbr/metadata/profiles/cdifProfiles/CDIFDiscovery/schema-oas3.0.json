@@ -1247,7 +1247,16 @@
           ]
         },
         "schema:contributor": {
-          "oneOf": [
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "@id": {
+                  "type": "string",
+                  "description": "IRI reference to a Person or Organization defined elsewhere"
+                }
+              }
+            },
             {
               "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDiscovery/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.person"
             },

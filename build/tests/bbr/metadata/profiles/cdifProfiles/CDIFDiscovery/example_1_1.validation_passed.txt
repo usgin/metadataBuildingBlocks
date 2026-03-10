@@ -1,39 +1,14 @@
 Validation report for cdif.bbr.metadata.profiles.cdifProfiles.CDIFDiscovery - CDIF discovery metadata
-Generated 2026-03-10T13:27:58.659379+00:00
-=== General ===
-Test was expected to fail and it did.
-=== End General ===
-
+Generated 2026-03-10T13:27:59.071318+00:00
 === Files ===
-Using shortName-fail.json from test resources
+Using exampleCDIFDiscovery.json from examples
 JSON-LD context is present - uplifting
-Output JSON-LD shortName-fail.jsonld created
-Output Turtle shortName-fail.ttl created
+Output JSON-LD example_1_1.jsonld created
+Output Turtle example_1_1.ttl created
 === End Files ===
 
 === JSON Schema ===
-
-** Validation error **
-ValidationError: 'schema:identifier' is a required property
-
-Failed validating 'required' in schema['allOf'][0]['allOf'][0]:
-    {'required': ['@id',
-                  '@type',
-                  '@context',
-                  'schema:name',
-                  'schema:identifier',
-                  'schema:dateModified',
-                  'schema:subjectOf']}
-
-On instance:
-    {'@context': {'ex': 'https://example.org/',
-                  'schema': 'http://schema.org/'},
-     '@id': 'ex:PersonExample_zZc',
-     '@type': 'schema:Person',
-     'schema:alternateName': 'Test, Joe',
-     'schema:description': 'Metadata specialist, based in Portland, Maine',
-     'schema:name': ' ',
-     'schema:sameAs': ['https://ark.org/46737', 'uri:test:43737']}
+Validation passed
 === End JSON Schema ===
 
 === SHACL ===
@@ -62,7 +37,7 @@ Focus nodes for _sources/profiles/cdifProfiles/CDIFDiscovery/rules.shacl:
  - Shape cdifd:CDIFDatasetMandatoryShape: *none*
  - Shape cdifd:resourceIdentifierProperty/sh:or/rdf:rest/rdf:first: *none*
  - Shape _:nc3a725d29b4f47bbb97da36001da6cb6b9: *none*
- - Shape cdifd:CDIFDataDownloadDetailShape: *none*
+ - Shape cdifd:CDIFDataDownloadDetailShape: ex:YOPx123/schema1:distribution,ex:YOPx123/schema1:distribution
  - Shape cdifd:CDIFDataDownloadDetailShape/sh:property/sh:or/rdf:first: *none*
  - Shape cdifd:statisticalVariableNode: *none*
  - Shape cdifd:CDIFCatalogRecordShape: *none*
@@ -131,24 +106,9 @@ Validation result for _sources/cdifProperties/cdifCatalogRecord/rules.shacl:
 Focus nodes for _sources/cdifProperties/cdifCatalogRecord/rules.shacl:
  - Shape cdifd:CDIFCatalogRecordShape: *none*
 
-
-** Validation error **
 Validation result for _sources/schemaorgProperties/person/rules.shacl:
   Validation Report
-  Conforms: False
-  Results (2):
-  Constraint Violation in OrConstraintComponent (http://www.w3.org/ns/shacl#OrConstraintComponent):
-  	Severity: sh:Violation
-  	Source Shape: cdifd:CDIFPersonShape
-  	Focus Node: ex:PersonExample_zZc
-  	Value Node: ex:PersonExample_zZc
-  	Message: A person must have a name or an identifier provided; affiliation to an organization is recommended.
-  Validation Result in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-  	Severity: sh:Info
-  	Source Shape: cdifd:contactPointProperty
-  	Focus Node: ex:PersonExample_zZc
-  	Result Path: schema1:contactPoint
-  	Message: A Person should have a contactPoint (schema:ContactPoint or mailto: IRI)
+  Conforms: True
   
 Focus nodes for _sources/schemaorgProperties/person/rules.shacl:
  - Shape cdifd:CDIFPersonShape/sh:or/rdf:first: *none*
@@ -160,8 +120,8 @@ Focus nodes for _sources/schemaorgProperties/person/rules.shacl:
  - Shape cdifd:affiliationProperty/sh:or/rdf:rest/rdf:first: *none*
  - Shape cdifd:contactPointProperty/sh:or/rdf:first: *none*
  - Shape cdifd:contactPointProperty/sh:or/rdf:rest/rdf:first: *none*
- - Shape cdifd:CDIFPersonShape: ex:PersonExample_zZc
- - Shape cdifd:CDIFContactPointShape: *none*
+ - Shape cdifd:CDIFPersonShape: <https://ada.org/person/5489>,ex:jP,ex:ihjJtFPNEKnGSFBcgS,ex:ABYcNWHKYhTiLLNEzJx,ex:PersonExample_zZc,ex:PersonExample_zZc_asContributor
+ - Shape cdifd:CDIFContactPointShape: ex:jP/schema1:contactPoint,<https://ada.org/person/5489>/schema1:contactPoint,ex:mxxInaV/schema1:contactPoint,ex:ABYcNWHKYhTiLLNEzJx/schema1:contactPoint,ex:ihjJtFPNEKnGSFBcgS/schema1:contactPoint,ex:PersonExample_zZc_asContributor/schema1:contactPoint,ex:maintainerContactPoint_3456
 
 Validation result for _sources/schemaorgProperties/organization/rules.shacl:
   Validation Report
@@ -170,22 +130,22 @@ Validation result for _sources/schemaorgProperties/organization/rules.shacl:
 Focus nodes for _sources/schemaorgProperties/organization/rules.shacl:
  - Shape cdifd:CDIFOrganizationShape/sh:or/rdf:rest/rdf:first: *none*
  - Shape cdifd:CDIFOrganizationShape/sh:or/rdf:first: *none*
- - Shape cdifd:CDIFOrganizationShape: *none*
+ - Shape cdifd:CDIFOrganizationShape: ex:gDiAxjl,<file:///github/workspace/kNKPZsCSWMc>,ex:corzCgjNrGcH,ex:xblzSwEYJKBPpkK,ex:exampleOrg_fW,ex:PersonExample_zZc_asContributor/schema1:affiliation,ex:maintainerAffiliation_3456,ex:sr68lgy,ex:mxxInaV
 
 Validation result for _sources/schemaorgProperties/dataDownload/rules.shacl:
   Validation Report
   Conforms: True
   
 Focus nodes for _sources/schemaorgProperties/dataDownload/rules.shacl:
- - Shape cdifd:CDIFDataDownloadShape: *none*
- - Shape <https://www.ogc.org/rules/template/#ConformsToInfo>: *none*
+ - Shape cdifd:CDIFDataDownloadShape: ex:YOPx123/schema1:distribution,ex:YOPx123/schema1:distribution
+ - Shape <https://www.ogc.org/rules/template/#ConformsToInfo>: ex:YOPx123/schema1:distribution,ex:YOPx123/schema1:distribution
 
 Validation result for _sources/schemaorgProperties/labeledLink/rules.shacl:
   Validation Report
   Conforms: True
   
 Focus nodes for _sources/schemaorgProperties/labeledLink/rules.shacl:
- - Shape cdifd:CDIFLabeledLinkShape: *none*
+ - Shape cdifd:CDIFLabeledLinkShape: ex:YOPx123/schema1:publishingPrinciples
 
 Validation result for _sources/schemaorgProperties/webAPI/rules.shacl:
   Validation Report
@@ -254,7 +214,7 @@ Validation result for _sources/cdifProperties/cdifOptional/rules.shacl:
 Focus nodes for _sources/cdifProperties/cdifOptional/rules.shacl:
  - Shape cdifd:keywordsNoCommaTest/sh:or/rdf:first: *none*
  - Shape cdifd:relatedResourceProperty/sh:property/sh:or/rdf:first: *none*
- - Shape cdifd:creatorListValidation: *none*
+ - Shape cdifd:creatorListValidation: ex:BAaR,ex:YOPx123
  - Shape _:n1d124dacea714797918d9392cfe543b1b7: *none*
  - Shape _:n1d124dacea714797918d9392cfe543b1b14: *none*
  - Shape _:n1d124dacea714797918d9392cfe543b1b13: *none*
@@ -286,7 +246,7 @@ Focus nodes for _sources/schemaorgProperties/funder/rules.shacl:
  - Shape _:n0e36ff3110264a7cabaf937db33f9b37b25: *none*
  - Shape _:n0e36ff3110264a7cabaf937db33f9b37b17: *none*
  - Shape _:n0e36ff3110264a7cabaf937db33f9b37b13: *none*
- - Shape cdifd:fundingShape: *none*
+ - Shape cdifd:fundingShape: ex:YOPx123/schema1:funding,ex:YOPx123/schema1:funding,ex:YOPx123/schema1:funding
  - Shape _:n0e36ff3110264a7cabaf937db33f9b37b15: *none*
  - Shape _:n0e36ff3110264a7cabaf937db33f9b37b5: *none*
  - Shape _:n0e36ff3110264a7cabaf937db33f9b37b4: *none*
@@ -317,7 +277,7 @@ Focus nodes for _sources/schemaorgProperties/spatialExtent/rules.shacl:
  - Shape _:nd8f0806623c44cb0baef451453acc581b33: *none*
  - Shape _:nd8f0806623c44cb0baef451453acc581b32: *none*
  - Shape _:nd8f0806623c44cb0baef451453acc581b35: *none*
- - Shape cdifd:CDIFDefinedTermShape: *none*
+ - Shape cdifd:CDIFDefinedTermShape: ex:YOPx123/schema1:keywords,ex:YOPx123/schema1:keywords,ex:OjHgIDO/schema1:measurementTechnique
  - Shape cdifd:spatialExtentProperty: *none*
  - Shape cdifd:spatialExtentProperty/sh:or/rdf:rest/rdf:first: *none*
 
@@ -329,7 +289,7 @@ Focus nodes for _sources/schemaorgProperties/agentInRole/rules.shacl:
  - Shape _:nd956f23c354a49b8af19874950ef3dcab18: *none*
  - Shape _:nd956f23c354a49b8af19874950ef3dcab16: *none*
  - Shape _:nd956f23c354a49b8af19874950ef3dcab3: *none*
- - Shape cdifd:CDIFDefinedTermShape: *none*
+ - Shape cdifd:CDIFDefinedTermShape: ex:YOPx123/schema1:keywords,ex:YOPx123/schema1:keywords,ex:OjHgIDO/schema1:measurementTechnique
  - Shape cdifd:CDIFDefinedTermShape/sh:or/rdf:rest/rdf:first: *none*
  - Shape _:nd956f23c354a49b8af19874950ef3dcab4: *none*
  - Shape cdifd:CDIFDefinedTermShape/sh:or/rdf:first: *none*
@@ -339,7 +299,7 @@ Focus nodes for _sources/schemaorgProperties/agentInRole/rules.shacl:
  - Shape _:nd956f23c354a49b8af19874950ef3dcab15: *none*
  - Shape _:nd956f23c354a49b8af19874950ef3dcab14: *none*
  - Shape _:nd956f23c354a49b8af19874950ef3dcab20: *none*
- - Shape cdifd:CDIFRoleShape: *none*
+ - Shape cdifd:CDIFRoleShape: ex:YOPx123/schema1:contributor,ex:YOPx123/schema1:contributor
  - Shape _:nd956f23c354a49b8af19874950ef3dcab17: *none*
 
 Validation result for _sources/provProperties/generatedBy/rules.shacl:

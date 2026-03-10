@@ -1296,7 +1296,12 @@ x-defs:
         - type: string
         - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFcomplete/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.schemaorgProperties.definedTerm
       schema:contributor:
-        oneOf:
+        anyOf:
+        - type: object
+          properties:
+            '@id':
+              type: string
+              description: IRI reference to a Person or Organization defined elsewhere
         - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFcomplete/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.schemaorgProperties.person
         - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFcomplete/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.schemaorgProperties.organization
     required:

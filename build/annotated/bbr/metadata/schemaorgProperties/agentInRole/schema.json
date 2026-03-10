@@ -19,7 +19,16 @@
       ]
     },
     "schema:contributor": {
-      "oneOf": [
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "@id": {
+              "type": "string",
+              "description": "IRI reference to a Person or Organization defined elsewhere"
+            }
+          }
+        },
         {
           "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/person/schema.json"
         },
