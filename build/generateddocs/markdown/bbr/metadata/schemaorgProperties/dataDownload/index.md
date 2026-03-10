@@ -82,7 +82,7 @@ Defintion of properties to describe file-based distribution of a resource on the
       }
     }
   ],
-  "dcterms:conformsTo": "not specified"
+  "dcterms:conformsTo": [{"@id": "not specified"}]
 }
 
 ```
@@ -144,13 +144,16 @@ Defintion of properties to describe file-based distribution of a resource on the
       }
     }
   ],
-  "dcterms:conformsTo": "not specified"
+  "dcterms:conformsTo": [
+    {
+      "@id": "not specified"
+    }
+  ]
 }
 ```
 
 #### ttl
 ```ttl
-@prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix ns1: <spdx:> .
 @prefix schema1: <http://schema.org/> .
 
@@ -172,7 +175,6 @@ Defintion of properties to describe file-based distribution of a resource on the
     schema1:name "Houndstooth Data Repository" .
 
 [] a schema1:DataDownload ;
-    dcterms:conformsTo "not specified" ;
     schema1:contentUrl "https://hounddata.org/354277.csv" ;
     schema1:encodingFormat "text/csv" ;
     schema1:name "Water levels in Beartooth reservoir, 1992-2020" ;
@@ -238,14 +240,13 @@ properties:
   dcterms:conformsTo:
     description: An identifier for a standard or specification that the distribution
       conforms to. Recommended to enable machine-actionable data access.
-    anyOf:
-    - type: string
-      format: uri
-    - type: object
+    type: array
+    items:
+      type: object
       properties:
         '@id':
           type: string
-          format: uri
+          description: uri for specification that this distribution conforms to
   schema:provider:
     type: array
     description: Party who maintains this particular distribution option for the dataset.

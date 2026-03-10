@@ -42,7 +42,7 @@ description extensions (TabularTextDataSet, StructuredDataSet).
   "schema:encodingFormat": [
     "application/zip"
   ],
-  "dcterms:conformsTo": "https://www.iana.org/assignments/media-types/application/zip",
+  "dcterms:conformsTo": [{"@id": "https://www.iana.org/assignments/media-types/application/zip"}],
   "schema:description": "This data product is distributed as a zip archive; contents of the archive are listed as parts. The component files are not individually accessible.",
   "spdx:checksum": {
     "@type": "spdx:Checksum",
@@ -227,7 +227,11 @@ description extensions (TabularTextDataSet, StructuredDataSet).
   "schema:encodingFormat": [
     "application/zip"
   ],
-  "dcterms:conformsTo": "https://www.iana.org/assignments/media-types/application/zip",
+  "dcterms:conformsTo": [
+    {
+      "@id": "https://www.iana.org/assignments/media-types/application/zip"
+    }
+  ],
   "schema:description": "This data product is distributed as a zip archive; contents of the archive are listed as parts. The component files are not individually accessible.",
   "spdx:checksum": {
     "@type": "spdx:Checksum",
@@ -409,17 +413,17 @@ description extensions (TabularTextDataSet, StructuredDataSet).
 
 <file:///github/workspace/#7c6ef03f6b0e88dec54d9897f591deab> a cdi:TabularTextDataSet,
         schema1:MediaObject ;
-    cdi:hasPhysicalMapping [ cdi:format "string" ;
-            cdi:formats_InstanceVariable <file:///github/workspace/#var-sample-id> ;
-            cdi:index 0 ;
-            cdi:isRequired true ;
-            cdi:physicalDataType "string" ],
-        [ cdi:format "decimal" ;
+    cdi:hasPhysicalMapping [ cdi:format "decimal" ;
             cdi:formats_InstanceVariable <file:///github/workspace/#var-uncertainty> ;
             cdi:index 2 ;
             cdi:isRequired false ;
             cdi:nullSequence "NA" ;
             cdi:physicalDataType "float64" ],
+        [ cdi:format "string" ;
+            cdi:formats_InstanceVariable <file:///github/workspace/#var-sample-id> ;
+            cdi:index 0 ;
+            cdi:isRequired true ;
+            cdi:physicalDataType "string" ],
         [ cdi:format "decimal" ;
             cdi:formats_InstanceVariable <file:///github/workspace/#var-concentration> ;
             cdi:index 1 ;
@@ -479,7 +483,7 @@ description extensions (TabularTextDataSet, StructuredDataSet).
             spdx:checksumValue "f962af0b2e2f02752aa258a58cede1263f05c7a78e3b9d162da960368f7dc54b" ] .
 
 [] a schema1:DataDownload ;
-    dcterms:conformsTo "https://www.iana.org/assignments/media-types/application/zip" ;
+    dcterms:conformsTo <https://www.iana.org/assignments/media-types/application/zip> ;
     schema1:contentUrl "https://example.org/data/geochem-package.zip" ;
     schema1:description "This data product is distributed as a zip archive; contents of the archive are listed as parts. The component files are not individually accessible." ;
     schema1:encodingFormat "application/zip" ;

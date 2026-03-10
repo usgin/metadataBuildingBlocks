@@ -202,7 +202,14 @@ allOf:
             - contains:
                 const: cdi:PhysicalDataset
           dcterms:conformsTo:
-            const: https://github.com/XraySpectroscopy/XAS-Data-Interchange/blob/master/specification/spec.md
+            type: array
+            contains:
+              type: object
+              properties:
+                '@id':
+                  const: https://github.com/XraySpectroscopy/XAS-Data-Interchange/blob/master/specification/spec.md
+              required:
+              - '@id'
         required:
         - '@type'
         - dcterms:conformsTo

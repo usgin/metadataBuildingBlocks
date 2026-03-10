@@ -792,21 +792,16 @@
         },
         "dcterms:conformsTo": {
           "description": "An identifier for a standard or specification that the distribution conforms to. Recommended to enable machine-actionable data access.",
-          "anyOf": [
-            {
-              "type": "string",
-              "format": "uri"
-            },
-            {
-              "type": "object",
-              "properties": {
-                "@id": {
-                  "type": "string",
-                  "format": "uri"
-                }
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "@id": {
+                "type": "string",
+                "description": "uri for specification that this distribution conforms to"
               }
             }
-          ]
+          }
         },
         "schema:provider": {
           "type": "array",
@@ -1228,21 +1223,16 @@
         },
         "dcterms:conformsTo": {
           "description": "An identifier for a standard or specification that the distribution conforms to. Recommended to enable machine-actionable data access.",
-          "anyOf": [
-            {
-              "type": "string",
-              "format": "uri"
-            },
-            {
-              "type": "object",
-              "properties": {
-                "@id": {
-                  "type": "string",
-                  "format": "uri"
-                }
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "@id": {
+                "type": "string",
+                "description": "uri for specification that this distribution conforms to"
               }
             }
-          ]
+          }
         },
         "schema:provider": {
           "type": "array",
@@ -2894,9 +2884,20 @@
                 ]
               },
               "dcterms:conformsTo": {
-                "enum": [
-                  "https://github.com/XraySpectroscopy/XAS-Data-Interchange/blob/master/specification/spec.md"
-                ]
+                "type": "array",
+                "contains": {
+                  "type": "object",
+                  "properties": {
+                    "@id": {
+                      "enum": [
+                        "https://github.com/XraySpectroscopy/XAS-Data-Interchange/blob/master/specification/spec.md"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "@id"
+                  ]
+                }
               }
             },
             "required": [
