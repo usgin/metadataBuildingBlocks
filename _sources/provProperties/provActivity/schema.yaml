@@ -147,8 +147,14 @@ $defs:
     description: A methodology or protocol described as a HowTo with optional steps
     properties:
       '@type':
-        type: string
-        const: schema:HowTo
+        anyOf:
+        - type: string
+          const: schema:HowTo
+        - type: array
+          items:
+            type: string
+          contains:
+            const: schema:HowTo
       '@id':
         type: string
       'schema:name':
@@ -178,8 +184,14 @@ $defs:
     description: A single step in a HowTo methodology
     properties:
       '@type':
-        type: string
-        const: schema:HowToStep
+        anyOf:
+        - type: string
+          const: schema:HowToStep
+        - type: array
+          items:
+            type: string
+          contains:
+            const: schema:HowToStep
       'schema:name':
         type: string
         description: Name of this step

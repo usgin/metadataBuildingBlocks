@@ -4,7 +4,21 @@
   "type": "object",
   "properties": {
     "@type": {
-      "const": "dqv:QualityMeasurement"
+      "anyOf": [
+        {
+          "type": "string",
+          "const": "dqv:QualityMeasurement"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "contains": {
+            "const": "dqv:QualityMeasurement"
+          }
+        }
+      ]
     },
     "dqv:isMeasurementOf": {
       "description": "specify the quality measure that is reported, by name, with an ID ref, or as a Defined Term",
@@ -26,7 +40,21 @@
           "type": "object",
           "properties": {
             "@type": {
-              "const": "schema:DefinedTerm"
+              "anyOf": [
+                {
+                  "type": "string",
+                  "const": "schema:DefinedTerm"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "contains": {
+                    "const": "schema:DefinedTerm"
+                  }
+                }
+              ]
             },
             "schema:name": {
               "type": "string",
@@ -42,8 +70,21 @@
                   "type": "object",
                   "properties": {
                     "@type": {
-                      "type": "string",
-                      "const": "schema:PropertyValue"
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "const": "schema:PropertyValue"
+                        },
+                        {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "contains": {
+                            "const": "schema:PropertyValue"
+                          }
+                        }
+                      ]
                     },
                     "schema:propertyID": {
                       "type": "string",
@@ -132,7 +173,21 @@
           "type": "object",
           "properties": {
             "@type": {
-              "const": "schema:DefinedTerm"
+              "anyOf": [
+                {
+                  "type": "string",
+                  "const": "schema:DefinedTerm"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "contains": {
+                    "const": "schema:DefinedTerm"
+                  }
+                }
+              ]
             },
             "schema:name": {
               "type": "string",
@@ -148,8 +203,21 @@
                   "type": "object",
                   "properties": {
                     "@type": {
-                      "type": "string",
-                      "const": "schema:PropertyValue"
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "const": "schema:PropertyValue"
+                        },
+                        {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "contains": {
+                            "const": "schema:PropertyValue"
+                          }
+                        }
+                      ]
                     },
                     "schema:propertyID": {
                       "type": "string",

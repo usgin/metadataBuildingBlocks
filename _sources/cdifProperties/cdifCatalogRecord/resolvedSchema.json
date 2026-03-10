@@ -62,8 +62,21 @@
               "type": "string"
             },
             "@type": {
-              "type": "string",
-              "const": "schema:Person"
+              "anyOf": [
+                {
+                  "type": "string",
+                  "const": "schema:Person"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "contains": {
+                    "const": "schema:Person"
+                  }
+                }
+              ]
             },
             "schema:name": {
               "type": "string",
@@ -80,8 +93,21 @@
                   "type": "object",
                   "properties": {
                     "@type": {
-                      "type": "string",
-                      "const": "schema:PropertyValue"
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "const": "schema:PropertyValue"
+                        },
+                        {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "contains": {
+                            "const": "schema:PropertyValue"
+                          }
+                        }
+                      ]
                     },
                     "schema:propertyID": {
                       "type": "string",
@@ -135,9 +161,22 @@
                   "type": "string"
                 },
                 "@type": {
-                  "type": "string",
-                  "const": "schema:Organization",
-                  "default": "schema:Organization"
+                  "default": "schema:Organization",
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "const": "schema:Organization"
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "contains": {
+                        "const": "schema:Organization"
+                      }
+                    }
+                  ]
                 },
                 "schema:additionalType": {
                   "type": "array",
@@ -162,7 +201,21 @@
                         "type": "object",
                         "properties": {
                           "@type": {
-                            "const": "schema:DefinedTerm"
+                            "anyOf": [
+                              {
+                                "type": "string",
+                                "const": "schema:DefinedTerm"
+                              },
+                              {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "contains": {
+                                  "const": "schema:DefinedTerm"
+                                }
+                              }
+                            ]
                           },
                           "schema:name": {
                             "type": "string",
@@ -178,8 +231,21 @@
                                 "type": "object",
                                 "properties": {
                                   "@type": {
-                                    "type": "string",
-                                    "const": "schema:PropertyValue"
+                                    "anyOf": [
+                                      {
+                                        "type": "string",
+                                        "const": "schema:PropertyValue"
+                                      },
+                                      {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        },
+                                        "contains": {
+                                          "const": "schema:PropertyValue"
+                                        }
+                                      }
+                                    ]
                                   },
                                   "schema:propertyID": {
                                     "type": "string",
@@ -280,8 +346,21 @@
                       "type": "object",
                       "properties": {
                         "@type": {
-                          "type": "string",
-                          "const": "schema:PropertyValue"
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "const": "schema:PropertyValue"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              },
+                              "contains": {
+                                "const": "schema:PropertyValue"
+                              }
+                            }
+                          ]
                         },
                         "schema:propertyID": {
                           "type": "string",
@@ -345,8 +424,21 @@
                         "type": "object",
                         "properties": {
                           "@type": {
-                            "type": "string",
-                            "const": "schema:PropertyValue"
+                            "anyOf": [
+                              {
+                                "type": "string",
+                                "const": "schema:PropertyValue"
+                              },
+                              {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "contains": {
+                                  "const": "schema:PropertyValue"
+                                }
+                              }
+                            ]
                           },
                           "schema:propertyID": {
                             "type": "string",
@@ -415,9 +507,22 @@
               "type": "object",
               "properties": {
                 "@type": {
-                  "type": "string",
-                  "const": "schema:ContactPoint",
-                  "default": "schema:ContactPoint"
+                  "default": "schema:ContactPoint",
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "const": "schema:ContactPoint"
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "contains": {
+                        "const": "schema:ContactPoint"
+                      }
+                    }
+                  ]
                 },
                 "schema:email": {
                   "type": "string"
@@ -446,8 +551,21 @@
                     "type": "object",
                     "properties": {
                       "@type": {
-                        "type": "string",
-                        "const": "schema:PropertyValue"
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "const": "schema:PropertyValue"
+                          },
+                          {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "contains": {
+                              "const": "schema:PropertyValue"
+                            }
+                          }
+                        ]
                       },
                       "schema:propertyID": {
                         "type": "string",
@@ -518,9 +636,22 @@
               "type": "string"
             },
             "@type": {
-              "type": "string",
-              "const": "schema:Organization",
-              "default": "schema:Organization"
+              "default": "schema:Organization",
+              "anyOf": [
+                {
+                  "type": "string",
+                  "const": "schema:Organization"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "contains": {
+                    "const": "schema:Organization"
+                  }
+                }
+              ]
             },
             "schema:additionalType": {
               "type": "array",
@@ -545,7 +676,21 @@
                     "type": "object",
                     "properties": {
                       "@type": {
-                        "const": "schema:DefinedTerm"
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "const": "schema:DefinedTerm"
+                          },
+                          {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "contains": {
+                              "const": "schema:DefinedTerm"
+                            }
+                          }
+                        ]
                       },
                       "schema:name": {
                         "type": "string",
@@ -561,8 +706,21 @@
                             "type": "object",
                             "properties": {
                               "@type": {
-                                "type": "string",
-                                "const": "schema:PropertyValue"
+                                "anyOf": [
+                                  {
+                                    "type": "string",
+                                    "const": "schema:PropertyValue"
+                                  },
+                                  {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    },
+                                    "contains": {
+                                      "const": "schema:PropertyValue"
+                                    }
+                                  }
+                                ]
                               },
                               "schema:propertyID": {
                                 "type": "string",
@@ -663,8 +821,21 @@
                   "type": "object",
                   "properties": {
                     "@type": {
-                      "type": "string",
-                      "const": "schema:PropertyValue"
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "const": "schema:PropertyValue"
+                        },
+                        {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "contains": {
+                            "const": "schema:PropertyValue"
+                          }
+                        }
+                      ]
                     },
                     "schema:propertyID": {
                       "type": "string",
@@ -728,8 +899,21 @@
                     "type": "object",
                     "properties": {
                       "@type": {
-                        "type": "string",
-                        "const": "schema:PropertyValue"
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "const": "schema:PropertyValue"
+                          },
+                          {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "contains": {
+                              "const": "schema:PropertyValue"
+                            }
+                          }
+                        ]
                       },
                       "schema:propertyID": {
                         "type": "string",
@@ -809,9 +993,22 @@
           "description": "identifier for the containing catalog or repository; example data at https://github.com/ESIPFed/science-on-schema.org/blob/develop/guides/Dataset.md#catalog puts identifier here"
         },
         "@type": {
-          "type": "string",
           "default": "schema:DataCatalog",
-          "const": "schema:DataCatalog"
+          "anyOf": [
+            {
+              "type": "string",
+              "const": "schema:DataCatalog"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "contains": {
+                "const": "schema:DataCatalog"
+              }
+            }
+          ]
         },
         "schema:name": {
           "type": "string"
@@ -826,8 +1023,21 @@
           "type": "object",
           "properties": {
             "@type": {
-              "type": "string",
-              "const": "schema:PropertyValue"
+              "anyOf": [
+                {
+                  "type": "string",
+                  "const": "schema:PropertyValue"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "contains": {
+                    "const": "schema:PropertyValue"
+                  }
+                }
+              ]
             },
             "schema:propertyID": {
               "type": "string",

@@ -4,7 +4,14 @@ title: definitions for simple quality measure property
 type: object
 properties:
   '@type':
-    const: dqv:QualityMeasurement
+    anyOf:
+    - type: string
+      const: dqv:QualityMeasurement
+    - type: array
+      items:
+        type: string
+      contains:
+        const: dqv:QualityMeasurement
   'dqv:isMeasurementOf':
     description: specify the quality measure that is reported, by name, with an ID ref, or as a Defined
       Term

@@ -6,9 +6,15 @@ description: "Spatial Extent description for CDIF discovery profile.  Note requi
 type: object
 properties:
   '@type':
-    type: string
-    const: schema:Place
     default: schema:Place
+    anyOf:
+    - type: string
+      const: schema:Place
+    - type: array
+      items:
+        type: string
+      contains:
+        const: schema:Place
   'schema:name':
     description: multiple place names or DefinedTerms that have a place name and URI for the location
     type: array
@@ -26,9 +32,15 @@ properties:
         might only index or display bounding box extents or a single point location.
       properties:
         '@type':
-          type: string
-          const: schema:GeoCoordinates
           default: schema:GeoCoordinates
+          anyOf:
+          - type: string
+            const: schema:GeoCoordinates
+          - type: array
+            items:
+              type: string
+            contains:
+              const: schema:GeoCoordinates
         'schema:latitude':
           type: number
         'schema:longitude':
@@ -44,9 +56,15 @@ properties:
         of several such points.'
       properties:
         '@type':
-          type: string
-          const: schema:GeoShape
           default: schema:GeoShape
+          anyOf:
+          - type: string
+            const: schema:GeoShape
+          - type: array
+            items:
+              type: string
+            contains:
+              const: schema:GeoShape
         'schema:box':
           type: string
           description: A GeoShape box defines an area on the surface of the earth defined by point locations
@@ -62,9 +80,15 @@ properties:
         ship track or airplane flight line
       properties:
         '@type':
-          type: string
-          const: schema:GeoShape
           default: schema:GeoShape
+          anyOf:
+          - type: string
+            const: schema:GeoShape
+          - type: array
+            items:
+              type: string
+            contains:
+              const: schema:GeoShape
         'schema:line':
           type: string
           description: 'A GeoShape box defines a curvilinear geometry as a string of latitude-longitude
@@ -89,8 +113,14 @@ properties:
         type: object
         properties:
           '@type':
-            type: string
-            const: geosparql:wktLiteral
+            anyOf:
+            - type: string
+              const: geosparql:wktLiteral
+            - type: array
+              items:
+                type: string
+              contains:
+                const: geosparql:wktLiteral
           '@value':
             type: string
             description: a WKT geometry description string, e.g. 'POINT(-76 -18)'
