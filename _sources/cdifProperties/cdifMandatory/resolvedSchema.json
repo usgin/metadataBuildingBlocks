@@ -239,6 +239,10 @@
               "schema:name": {
                 "type": "string"
               },
+              "schema:description": {
+                "type": "string",
+                "description": "Description of this distribution, e.g. what format, access constraints, etc."
+              },
               "schema:contentUrl": {
                 "type": "string",
                 "format": "uri"
@@ -307,7 +311,10 @@
                           "type": "string",
                           "description": "a identifier for an agent defined in this metadata, or externally; must be dereferenceable"
                         }
-                      }
+                      },
+                      "required": [
+                        "@id"
+                      ]
                     },
                     {
                       "description": "schema for cdif profile of schema.org/Person",

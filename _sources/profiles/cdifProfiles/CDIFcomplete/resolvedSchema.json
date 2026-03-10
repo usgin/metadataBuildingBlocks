@@ -249,6 +249,10 @@
                       "schema:name": {
                         "type": "string"
                       },
+                      "schema:description": {
+                        "type": "string",
+                        "description": "Description of this distribution, e.g. what format, access constraints, etc."
+                      },
                       "schema:contentUrl": {
                         "type": "string",
                         "format": "uri"
@@ -317,7 +321,10 @@
                                   "type": "string",
                                   "description": "a identifier for an agent defined in this metadata, or externally; must be dereferenceable"
                                 }
-                              }
+                              },
+                              "required": [
+                                "@id"
+                              ]
                             },
                             {
                               "description": "schema for cdif profile of schema.org/Person",
@@ -4585,7 +4592,10 @@
                             "type": "string",
                             "description": "a identifier for an agent defined in this metadata, or externally; must be dereferenceable"
                           }
-                        }
+                        },
+                        "required": [
+                          "@id"
+                        ]
                       },
                       {
                         "description": "schema for cdif profile of schema.org/Person",
@@ -5527,7 +5537,10 @@
                         "type": "string",
                         "description": "a identifier for an agent defined in this metadata, or externally; must be dereferenceable"
                       }
-                    }
+                    },
+                    "required": [
+                      "@id"
+                    ]
                   },
                   {
                     "description": "schema for cdif profile of schema.org/Person",
@@ -6615,7 +6628,10 @@
                                 "type": "string",
                                 "description": "IRI reference to a Person or Organization defined elsewhere"
                               }
-                            }
+                            },
+                            "required": [
+                              "@id"
+                            ]
                           },
                           {
                             "description": "schema for cdif profile of schema.org/Person",
@@ -7561,7 +7577,10 @@
                       "type": "string",
                       "description": "a identifier for an agent defined in this metadata, or externally; must be dereferenceable"
                     }
-                  }
+                  },
+                  "required": [
+                    "@id"
+                  ]
                 },
                 {
                   "description": "schema for cdif profile of schema.org/Person",
@@ -8500,7 +8519,10 @@
                         "type": "string",
                         "description": "a identifier for an agent defined in this metadata, or externally; must be dereferenceable"
                       }
-                    }
+                    },
+                    "required": [
+                      "@id"
+                    ]
                   },
                   {
                     "description": "schema for cdif profile of schema.org/Person",
@@ -9530,7 +9552,10 @@
                             "type": "string",
                             "description": "a identifier for an agent defined in this metadata, or externally; must be dereferenceable"
                           }
-                        }
+                        },
+                        "required": [
+                          "@id"
+                        ]
                       },
                       {
                         "description": "schema for cdif profile of schema.org/Person",
@@ -10481,28 +10506,318 @@
               "description": "What does the dataset measure? (e.g., temperature, pressure)",
               "type": "array",
               "items": {
-                "description": "CDIF schema.org implementation of variableMeasured",
+                "description": "Extends cdif variableMeasured with properties for DDI-CDI InstanceVariable",
                 "type": "object",
                 "properties": {
-                  "@id": {
+                  "@type": {
+                    "type": "array",
+                    "description": "Must include both schema:PropertyValue and cdi:InstanceVariable. Additional types may be included.",
+                    "items": {
+                      "type": "string"
+                    },
+                    "minItems": 2,
+                    "allOf": [
+                      {
+                        "contains": {
+                          "const": "schema:PropertyValue"
+                        }
+                      },
+                      {
+                        "contains": {
+                          "const": "cdi:InstanceVariable"
+                        }
+                      }
+                    ]
+                  },
+                  "cdi:identifier": {
                     "type": "string"
                   },
-                  "schema:name": {
-                    "type": "string",
-                    "description": "string label associated with the variable in the dataset serialization"
-                  },
-                  "schema:description": {
-                    "type": "string",
-                    "default": "missing"
-                  },
-                  "schema:alternateName": {
+                  "cdi:physicalDataType": {
                     "type": "array",
                     "items": {
-                      "type": "string",
-                      "description": "human intelligible name for variable that conveys semantics"
-                    }
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "@id": {
+                              "type": "string",
+                              "description": "reference to a skos concept for the data type"
+                            }
+                          }
+                        },
+                        {
+                          "description": "schema.org Defined Term schema",
+                          "type": "object",
+                          "properties": {
+                            "@type": {
+                              "anyOf": [
+                                {
+                                  "type": "string",
+                                  "const": "schema:DefinedTerm"
+                                },
+                                {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  },
+                                  "contains": {
+                                    "const": "schema:DefinedTerm"
+                                  }
+                                }
+                              ]
+                            },
+                            "schema:name": {
+                              "type": "string",
+                              "description": "text label for the term that is useful to human user"
+                            },
+                            "schema:identifier": {
+                              "anyOf": [
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "description": "Properties for a schema.org identifier",
+                                  "type": "object",
+                                  "properties": {
+                                    "@type": {
+                                      "anyOf": [
+                                        {
+                                          "type": "string",
+                                          "const": "schema:PropertyValue"
+                                        },
+                                        {
+                                          "type": "array",
+                                          "items": {
+                                            "type": "string"
+                                          },
+                                          "contains": {
+                                            "const": "schema:PropertyValue"
+                                          }
+                                        }
+                                      ]
+                                    },
+                                    "schema:propertyID": {
+                                      "type": "string",
+                                      "description": "In this context for the schema:PropertyValue, this field is an identifier for the identifier schema, e.g. DOI, ARK.  Get values from https://registry.identifiers.org/registry/ for interoperability"
+                                    },
+                                    "schema:value": {
+                                      "type": "string",
+                                      "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
+                                    },
+                                    "schema:url": {
+                                      "type": "string",
+                                      "format": "uri",
+                                      "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
+                                    }
+                                  },
+                                  "allOf": [
+                                    {
+                                      "required": [
+                                        "@type"
+                                      ]
+                                    },
+                                    {
+                                      "anyOf": [
+                                        {
+                                          "required": [
+                                            "schema:value"
+                                          ]
+                                        },
+                                        {
+                                          "required": [
+                                            "schema:url"
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            "schema:inDefinedTermSet": {
+                              "type": "string",
+                              "description": "Identifier for the controlled vocabulary responsible for this keyword."
+                            },
+                            "schema:termCode": {
+                              "type": "string",
+                              "description": "A representative code for this keyword in the controlled vocabulary (Optional).  Analogous to skos:Notation"
+                            }
+                          },
+                          "allOf": [
+                            {
+                              "required": [
+                                "@type"
+                              ]
+                            },
+                            {
+                              "anyOf": [
+                                {
+                                  "required": [
+                                    "schema:name"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "schema:identifier"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "schema:termCode"
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "description": "identifier or name for the data type concept."
                   },
-                  "schema:measurementTechnique": {
+                  "cdi:intendedDataType": {
+                    "type": "string",
+                    "description": "The intended data type for values of this variable, from DDI-CDI RepresentedVariable.hasIntendedDataType. Recommended values are XML Schema datatypes (e.g. https://www.w3.org/TR/xmlschema-2/#decimal)."
+                  },
+                  "cdi:role": {
+                    "type": "string",
+                    "enum": [
+                      "MeasureComponent",
+                      "AttributeComponent",
+                      "DimensionComponent",
+                      "DescriptorComponent",
+                      "ReferenceValueComponent"
+                    ],
+                    "description": "Specifies the relation of the variable to the data structure, corresponding to DDI-CDI DataStructureComponent subtypes."
+                  },
+                  "cdi:describedUnitOfMeasure": {
+                    "description": "A structured unit of measure from a controlled vocabulary, from DDI-CDI RepresentedVariable.describedUnitOfMeasure.",
+                    "type": "object",
+                    "properties": {
+                      "@type": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "const": "schema:DefinedTerm"
+                          },
+                          {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "contains": {
+                              "const": "schema:DefinedTerm"
+                            }
+                          }
+                        ]
+                      },
+                      "schema:name": {
+                        "type": "string",
+                        "description": "text label for the term that is useful to human user"
+                      },
+                      "schema:identifier": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "description": "Properties for a schema.org identifier",
+                            "type": "object",
+                            "properties": {
+                              "@type": {
+                                "anyOf": [
+                                  {
+                                    "type": "string",
+                                    "const": "schema:PropertyValue"
+                                  },
+                                  {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    },
+                                    "contains": {
+                                      "const": "schema:PropertyValue"
+                                    }
+                                  }
+                                ]
+                              },
+                              "schema:propertyID": {
+                                "type": "string",
+                                "description": "In this context for the schema:PropertyValue, this field is an identifier for the identifier schema, e.g. DOI, ARK.  Get values from https://registry.identifiers.org/registry/ for interoperability"
+                              },
+                              "schema:value": {
+                                "type": "string",
+                                "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
+                              },
+                              "schema:url": {
+                                "type": "string",
+                                "format": "uri",
+                                "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
+                              }
+                            },
+                            "allOf": [
+                              {
+                                "required": [
+                                  "@type"
+                                ]
+                              },
+                              {
+                                "anyOf": [
+                                  {
+                                    "required": [
+                                      "schema:value"
+                                    ]
+                                  },
+                                  {
+                                    "required": [
+                                      "schema:url"
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      "schema:inDefinedTermSet": {
+                        "type": "string",
+                        "description": "Identifier for the controlled vocabulary responsible for this keyword."
+                      },
+                      "schema:termCode": {
+                        "type": "string",
+                        "description": "A representative code for this keyword in the controlled vocabulary (Optional).  Analogous to skos:Notation"
+                      }
+                    },
+                    "allOf": [
+                      {
+                        "required": [
+                          "@type"
+                        ]
+                      },
+                      {
+                        "anyOf": [
+                          {
+                            "required": [
+                              "schema:name"
+                            ]
+                          },
+                          {
+                            "required": [
+                              "schema:identifier"
+                            ]
+                          },
+                          {
+                            "required": [
+                              "schema:termCode"
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "cdi:simpleUnitOfMeasure": {
                     "anyOf": [
                       {
                         "type": "string"
@@ -10512,7 +10827,7 @@
                         "properties": {
                           "@id": {
                             "type": "string",
-                            "description": "reference to a skos concept"
+                            "description": "reference to a skos concept for the data type"
                           }
                         }
                       },
@@ -10641,176 +10956,192 @@
                           }
                         ]
                       }
-                    ],
-                    "description": "Text description or URI identifying the measurement method."
-                  }
-                },
-                "required": [
-                  "schema:name"
-                ],
-                "oneOf": [
-                  {
-                    "type": "object",
-                    "properties": {
-                      "@type": {
-                        "type": "array",
-                        "items": {
+                    ]
+                  },
+                  "cdi:uses": {
+                    "type": "array",
+                    "items": {
+                      "anyOf": [
+                        {
                           "type": "string"
                         },
-                        "contains": {
-                          "const": "schema:PropertyValue"
+                        {
+                          "type": "object",
+                          "properties": {
+                            "@id": {
+                              "type": "string",
+                              "description": "reference to a skos concept for the property"
+                            }
+                          }
                         },
-                        "minItems": 1
-                      },
-                      "schema:propertyID": {
-                        "type": "array",
-                        "items": {
-                          "anyOf": [
-                            {
-                              "type": "string"
-                            },
-                            {
-                              "type": "object",
-                              "properties": {
-                                "@id": {
-                                  "type": "string"
-                                }
-                              }
-                            },
-                            {
-                              "description": "schema.org Defined Term schema",
-                              "type": "object",
-                              "properties": {
-                                "@type": {
-                                  "anyOf": [
-                                    {
-                                      "type": "string",
-                                      "const": "schema:DefinedTerm"
-                                    },
-                                    {
-                                      "type": "array",
-                                      "items": {
-                                        "type": "string"
-                                      },
-                                      "contains": {
-                                        "const": "schema:DefinedTerm"
-                                      }
-                                    }
-                                  ]
-                                },
-                                "schema:name": {
+                        {
+                          "description": "schema.org Defined Term schema",
+                          "type": "object",
+                          "properties": {
+                            "@type": {
+                              "anyOf": [
+                                {
                                   "type": "string",
-                                  "description": "text label for the term that is useful to human user"
+                                  "const": "schema:DefinedTerm"
                                 },
-                                "schema:identifier": {
-                                  "anyOf": [
+                                {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  },
+                                  "contains": {
+                                    "const": "schema:DefinedTerm"
+                                  }
+                                }
+                              ]
+                            },
+                            "schema:name": {
+                              "type": "string",
+                              "description": "text label for the term that is useful to human user"
+                            },
+                            "schema:identifier": {
+                              "anyOf": [
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "description": "Properties for a schema.org identifier",
+                                  "type": "object",
+                                  "properties": {
+                                    "@type": {
+                                      "anyOf": [
+                                        {
+                                          "type": "string",
+                                          "const": "schema:PropertyValue"
+                                        },
+                                        {
+                                          "type": "array",
+                                          "items": {
+                                            "type": "string"
+                                          },
+                                          "contains": {
+                                            "const": "schema:PropertyValue"
+                                          }
+                                        }
+                                      ]
+                                    },
+                                    "schema:propertyID": {
+                                      "type": "string",
+                                      "description": "In this context for the schema:PropertyValue, this field is an identifier for the identifier schema, e.g. DOI, ARK.  Get values from https://registry.identifiers.org/registry/ for interoperability"
+                                    },
+                                    "schema:value": {
+                                      "type": "string",
+                                      "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
+                                    },
+                                    "schema:url": {
+                                      "type": "string",
+                                      "format": "uri",
+                                      "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
+                                    }
+                                  },
+                                  "allOf": [
                                     {
-                                      "type": "string"
+                                      "required": [
+                                        "@type"
+                                      ]
                                     },
                                     {
-                                      "description": "Properties for a schema.org identifier",
-                                      "type": "object",
-                                      "properties": {
-                                        "@type": {
-                                          "anyOf": [
-                                            {
-                                              "type": "string",
-                                              "const": "schema:PropertyValue"
-                                            },
-                                            {
-                                              "type": "array",
-                                              "items": {
-                                                "type": "string"
-                                              },
-                                              "contains": {
-                                                "const": "schema:PropertyValue"
-                                              }
-                                            }
-                                          ]
-                                        },
-                                        "schema:propertyID": {
-                                          "type": "string",
-                                          "description": "In this context for the schema:PropertyValue, this field is an identifier for the identifier schema, e.g. DOI, ARK.  Get values from https://registry.identifiers.org/registry/ for interoperability"
-                                        },
-                                        "schema:value": {
-                                          "type": "string",
-                                          "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
-                                        },
-                                        "schema:url": {
-                                          "type": "string",
-                                          "format": "uri",
-                                          "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
-                                        }
-                                      },
-                                      "allOf": [
+                                      "anyOf": [
                                         {
                                           "required": [
-                                            "@type"
+                                            "schema:value"
                                           ]
                                         },
                                         {
-                                          "anyOf": [
-                                            {
-                                              "required": [
-                                                "schema:value"
-                                              ]
-                                            },
-                                            {
-                                              "required": [
-                                                "schema:url"
-                                              ]
-                                            }
+                                          "required": [
+                                            "schema:url"
                                           ]
                                         }
-                                      ]
-                                    }
-                                  ]
-                                },
-                                "schema:inDefinedTermSet": {
-                                  "type": "string",
-                                  "description": "Identifier for the controlled vocabulary responsible for this keyword."
-                                },
-                                "schema:termCode": {
-                                  "type": "string",
-                                  "description": "A representative code for this keyword in the controlled vocabulary (Optional).  Analogous to skos:Notation"
-                                }
-                              },
-                              "allOf": [
-                                {
-                                  "required": [
-                                    "@type"
-                                  ]
-                                },
-                                {
-                                  "anyOf": [
-                                    {
-                                      "required": [
-                                        "schema:name"
-                                      ]
-                                    },
-                                    {
-                                      "required": [
-                                        "schema:identifier"
-                                      ]
-                                    },
-                                    {
-                                      "required": [
-                                        "schema:termCode"
                                       ]
                                     }
                                   ]
                                 }
                               ]
+                            },
+                            "schema:inDefinedTermSet": {
+                              "type": "string",
+                              "description": "Identifier for the controlled vocabulary responsible for this keyword."
+                            },
+                            "schema:termCode": {
+                              "type": "string",
+                              "description": "A representative code for this keyword in the controlled vocabulary (Optional).  Analogous to skos:Notation"
+                            }
+                          },
+                          "allOf": [
+                            {
+                              "required": [
+                                "@type"
+                              ]
+                            },
+                            {
+                              "anyOf": [
+                                {
+                                  "required": [
+                                    "schema:name"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "schema:identifier"
+                                  ]
+                                },
+                                {
+                                  "required": [
+                                    "schema:termCode"
+                                  ]
+                                }
+                              ]
                             }
                           ]
-                        },
-                        "description": "identifier or name for the property concept"
+                        }
+                      ]
+                    },
+                    "description": "Essentially the same as schema:propertyID. References to concepts that this variable measures or represents."
+                  },
+                  "cdi:name": {
+                    "type": "string",
+                    "description": "DDI-CDI Concept.name. The name of this variable in the DDI-CDI model."
+                  },
+                  "cdi:displayLabel": {
+                    "type": "string",
+                    "description": "DDI-CDI Concept.displayLabel. A human-readable label for display purposes."
+                  }
+                },
+                "allOf": [
+                  {
+                    "required": [
+                      "@type",
+                      "cdi:physicalDataType"
+                    ]
+                  },
+                  {
+                    "description": "CDIF schema.org implementation of variableMeasured",
+                    "type": "object",
+                    "properties": {
+                      "@id": {
+                        "type": "string"
                       },
-                      "schema:unitText": {
+                      "schema:name": {
                         "type": "string",
-                        "description": "unit of measurement as text"
+                        "description": "string label associated with the variable in the dataset serialization"
                       },
-                      "schema:unitCode": {
+                      "schema:description": {
+                        "type": "string",
+                        "default": "missing"
+                      },
+                      "schema:alternateName": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "description": "human intelligible name for variable that conveys semantics"
+                        }
+                      },
+                      "schema:measurementTechnique": {
                         "anyOf": [
                           {
                             "type": "string"
@@ -10819,7 +11150,8 @@
                             "type": "object",
                             "properties": {
                               "@id": {
-                                "type": "string"
+                                "type": "string",
+                                "description": "reference to a skos concept"
                               }
                             }
                           },
@@ -10949,204 +11281,347 @@
                             ]
                           }
                         ],
-                        "description": "URI or code identifying the unit of measure"
-                      },
-                      "schema:minValue": {
-                        "type": "number",
-                        "description": "minimum numeric value in the dataset"
-                      },
-                      "schema:maxValue": {
-                        "type": "number",
-                        "description": "maximum numeric value in the dataset"
-                      },
-                      "schema:url": {
-                        "type": "string",
-                        "format": "uri",
-                        "description": "link to a web page useful for interpreting the variable"
+                        "description": "Text description or URI identifying the measurement method."
                       }
                     },
                     "required": [
-                      "@type"
-                    ]
-                  },
-                  {
-                    "type": "object",
-                    "properties": {
-                      "@type": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        },
-                        "contains": {
-                          "const": "schema:StatisticalVariable"
-                        },
-                        "minItems": 1
-                      },
-                      "schema:statType": {
-                        "anyOf": [
-                          {
-                            "type": "string"
-                          },
-                          {
-                            "type": "object",
-                            "properties": {
-                              "@id": {
-                                "type": "string"
-                              }
-                            }
-                          },
-                          {
-                            "description": "schema.org Defined Term schema",
-                            "type": "object",
-                            "properties": {
-                              "@type": {
-                                "anyOf": [
-                                  {
-                                    "type": "string",
-                                    "const": "schema:DefinedTerm"
-                                  },
-                                  {
-                                    "type": "array",
-                                    "items": {
-                                      "type": "string"
-                                    },
-                                    "contains": {
-                                      "const": "schema:DefinedTerm"
-                                    }
-                                  }
-                                ]
-                              },
-                              "schema:name": {
-                                "type": "string",
-                                "description": "text label for the term that is useful to human user"
-                              },
-                              "schema:identifier": {
-                                "anyOf": [
-                                  {
-                                    "type": "string"
-                                  },
-                                  {
-                                    "description": "Properties for a schema.org identifier",
-                                    "type": "object",
-                                    "properties": {
-                                      "@type": {
-                                        "anyOf": [
-                                          {
-                                            "type": "string",
-                                            "const": "schema:PropertyValue"
-                                          },
-                                          {
-                                            "type": "array",
-                                            "items": {
-                                              "type": "string"
-                                            },
-                                            "contains": {
-                                              "const": "schema:PropertyValue"
-                                            }
-                                          }
-                                        ]
-                                      },
-                                      "schema:propertyID": {
-                                        "type": "string",
-                                        "description": "In this context for the schema:PropertyValue, this field is an identifier for the identifier schema, e.g. DOI, ARK.  Get values from https://registry.identifiers.org/registry/ for interoperability"
-                                      },
-                                      "schema:value": {
-                                        "type": "string",
-                                        "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
-                                      },
-                                      "schema:url": {
-                                        "type": "string",
-                                        "format": "uri",
-                                        "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
-                                      }
-                                    },
-                                    "allOf": [
-                                      {
-                                        "required": [
-                                          "@type"
-                                        ]
-                                      },
-                                      {
-                                        "anyOf": [
-                                          {
-                                            "required": [
-                                              "schema:value"
-                                            ]
-                                          },
-                                          {
-                                            "required": [
-                                              "schema:url"
-                                            ]
-                                          }
-                                        ]
-                                      }
-                                    ]
-                                  }
-                                ]
-                              },
-                              "schema:inDefinedTermSet": {
-                                "type": "string",
-                                "description": "Identifier for the controlled vocabulary responsible for this keyword."
-                              },
-                              "schema:termCode": {
-                                "type": "string",
-                                "description": "A representative code for this keyword in the controlled vocabulary (Optional).  Analogous to skos:Notation"
-                              }
-                            },
-                            "allOf": [
-                              {
-                                "required": [
-                                  "@type"
-                                ]
-                              },
-                              {
-                                "anyOf": [
-                                  {
-                                    "required": [
-                                      "schema:name"
-                                    ]
-                                  },
-                                  {
-                                    "required": [
-                                      "schema:identifier"
-                                    ]
-                                  },
-                                  {
-                                    "required": [
-                                      "schema:termCode"
-                                    ]
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      "schema:measuredProperty": {
+                      "schema:name"
+                    ],
+                    "oneOf": [
+                      {
                         "type": "object",
                         "properties": {
-                          "@id": {
-                            "type": "string",
-                            "description": "reference to a skos concept for the property"
-                          },
                           "@type": {
-                            "anyOf": [
-                              {
-                                "type": "string",
-                                "const": "schema:Property"
-                              },
-                              {
-                                "type": "array",
-                                "items": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "contains": {
+                              "const": "schema:PropertyValue"
+                            },
+                            "minItems": 1
+                          },
+                          "schema:propertyID": {
+                            "type": "array",
+                            "items": {
+                              "anyOf": [
+                                {
                                   "type": "string"
                                 },
-                                "contains": {
-                                  "const": "schema:Property"
+                                {
+                                  "type": "object",
+                                  "properties": {
+                                    "@id": {
+                                      "type": "string"
+                                    }
+                                  }
+                                },
+                                {
+                                  "description": "schema.org Defined Term schema",
+                                  "type": "object",
+                                  "properties": {
+                                    "@type": {
+                                      "anyOf": [
+                                        {
+                                          "type": "string",
+                                          "const": "schema:DefinedTerm"
+                                        },
+                                        {
+                                          "type": "array",
+                                          "items": {
+                                            "type": "string"
+                                          },
+                                          "contains": {
+                                            "const": "schema:DefinedTerm"
+                                          }
+                                        }
+                                      ]
+                                    },
+                                    "schema:name": {
+                                      "type": "string",
+                                      "description": "text label for the term that is useful to human user"
+                                    },
+                                    "schema:identifier": {
+                                      "anyOf": [
+                                        {
+                                          "type": "string"
+                                        },
+                                        {
+                                          "description": "Properties for a schema.org identifier",
+                                          "type": "object",
+                                          "properties": {
+                                            "@type": {
+                                              "anyOf": [
+                                                {
+                                                  "type": "string",
+                                                  "const": "schema:PropertyValue"
+                                                },
+                                                {
+                                                  "type": "array",
+                                                  "items": {
+                                                    "type": "string"
+                                                  },
+                                                  "contains": {
+                                                    "const": "schema:PropertyValue"
+                                                  }
+                                                }
+                                              ]
+                                            },
+                                            "schema:propertyID": {
+                                              "type": "string",
+                                              "description": "In this context for the schema:PropertyValue, this field is an identifier for the identifier schema, e.g. DOI, ARK.  Get values from https://registry.identifiers.org/registry/ for interoperability"
+                                            },
+                                            "schema:value": {
+                                              "type": "string",
+                                              "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
+                                            },
+                                            "schema:url": {
+                                              "type": "string",
+                                              "format": "uri",
+                                              "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
+                                            }
+                                          },
+                                          "allOf": [
+                                            {
+                                              "required": [
+                                                "@type"
+                                              ]
+                                            },
+                                            {
+                                              "anyOf": [
+                                                {
+                                                  "required": [
+                                                    "schema:value"
+                                                  ]
+                                                },
+                                                {
+                                                  "required": [
+                                                    "schema:url"
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    "schema:inDefinedTermSet": {
+                                      "type": "string",
+                                      "description": "Identifier for the controlled vocabulary responsible for this keyword."
+                                    },
+                                    "schema:termCode": {
+                                      "type": "string",
+                                      "description": "A representative code for this keyword in the controlled vocabulary (Optional).  Analogous to skos:Notation"
+                                    }
+                                  },
+                                  "allOf": [
+                                    {
+                                      "required": [
+                                        "@type"
+                                      ]
+                                    },
+                                    {
+                                      "anyOf": [
+                                        {
+                                          "required": [
+                                            "schema:name"
+                                          ]
+                                        },
+                                        {
+                                          "required": [
+                                            "schema:identifier"
+                                          ]
+                                        },
+                                        {
+                                          "required": [
+                                            "schema:termCode"
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
                                 }
-                              }
-                            ]
+                              ]
+                            },
+                            "description": "identifier or name for the property concept"
                           },
-                          "schema:name": {
+                          "schema:unitText": {
+                            "type": "string",
+                            "description": "unit of measurement as text"
+                          },
+                          "schema:unitCode": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "@id": {
+                                    "type": "string"
+                                  }
+                                }
+                              },
+                              {
+                                "description": "schema.org Defined Term schema",
+                                "type": "object",
+                                "properties": {
+                                  "@type": {
+                                    "anyOf": [
+                                      {
+                                        "type": "string",
+                                        "const": "schema:DefinedTerm"
+                                      },
+                                      {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        },
+                                        "contains": {
+                                          "const": "schema:DefinedTerm"
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  "schema:name": {
+                                    "type": "string",
+                                    "description": "text label for the term that is useful to human user"
+                                  },
+                                  "schema:identifier": {
+                                    "anyOf": [
+                                      {
+                                        "type": "string"
+                                      },
+                                      {
+                                        "description": "Properties for a schema.org identifier",
+                                        "type": "object",
+                                        "properties": {
+                                          "@type": {
+                                            "anyOf": [
+                                              {
+                                                "type": "string",
+                                                "const": "schema:PropertyValue"
+                                              },
+                                              {
+                                                "type": "array",
+                                                "items": {
+                                                  "type": "string"
+                                                },
+                                                "contains": {
+                                                  "const": "schema:PropertyValue"
+                                                }
+                                              }
+                                            ]
+                                          },
+                                          "schema:propertyID": {
+                                            "type": "string",
+                                            "description": "In this context for the schema:PropertyValue, this field is an identifier for the identifier schema, e.g. DOI, ARK.  Get values from https://registry.identifiers.org/registry/ for interoperability"
+                                          },
+                                          "schema:value": {
+                                            "type": "string",
+                                            "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
+                                          },
+                                          "schema:url": {
+                                            "type": "string",
+                                            "format": "uri",
+                                            "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
+                                          }
+                                        },
+                                        "allOf": [
+                                          {
+                                            "required": [
+                                              "@type"
+                                            ]
+                                          },
+                                          {
+                                            "anyOf": [
+                                              {
+                                                "required": [
+                                                  "schema:value"
+                                                ]
+                                              },
+                                              {
+                                                "required": [
+                                                  "schema:url"
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  "schema:inDefinedTermSet": {
+                                    "type": "string",
+                                    "description": "Identifier for the controlled vocabulary responsible for this keyword."
+                                  },
+                                  "schema:termCode": {
+                                    "type": "string",
+                                    "description": "A representative code for this keyword in the controlled vocabulary (Optional).  Analogous to skos:Notation"
+                                  }
+                                },
+                                "allOf": [
+                                  {
+                                    "required": [
+                                      "@type"
+                                    ]
+                                  },
+                                  {
+                                    "anyOf": [
+                                      {
+                                        "required": [
+                                          "schema:name"
+                                        ]
+                                      },
+                                      {
+                                        "required": [
+                                          "schema:identifier"
+                                        ]
+                                      },
+                                      {
+                                        "required": [
+                                          "schema:termCode"
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ],
+                            "description": "URI or code identifying the unit of measure"
+                          },
+                          "schema:minValue": {
+                            "type": "number",
+                            "description": "minimum numeric value in the dataset"
+                          },
+                          "schema:maxValue": {
+                            "type": "number",
+                            "description": "maximum numeric value in the dataset"
+                          },
+                          "schema:url": {
+                            "type": "string",
+                            "format": "uri",
+                            "description": "link to a web page useful for interpreting the variable"
+                          }
+                        },
+                        "required": [
+                          "@type"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "@type": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "contains": {
+                              "const": "schema:StatisticalVariable"
+                            },
+                            "minItems": 1
+                          },
+                          "schema:statType": {
                             "anyOf": [
                               {
                                 "type": "string"
@@ -11285,13 +11760,179 @@
                                 ]
                               }
                             ]
+                          },
+                          "schema:measuredProperty": {
+                            "type": "object",
+                            "properties": {
+                              "@id": {
+                                "type": "string",
+                                "description": "reference to a skos concept for the property"
+                              },
+                              "@type": {
+                                "anyOf": [
+                                  {
+                                    "type": "string",
+                                    "const": "schema:Property"
+                                  },
+                                  {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    },
+                                    "contains": {
+                                      "const": "schema:Property"
+                                    }
+                                  }
+                                ]
+                              },
+                              "schema:name": {
+                                "anyOf": [
+                                  {
+                                    "type": "string"
+                                  },
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "@id": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "description": "schema.org Defined Term schema",
+                                    "type": "object",
+                                    "properties": {
+                                      "@type": {
+                                        "anyOf": [
+                                          {
+                                            "type": "string",
+                                            "const": "schema:DefinedTerm"
+                                          },
+                                          {
+                                            "type": "array",
+                                            "items": {
+                                              "type": "string"
+                                            },
+                                            "contains": {
+                                              "const": "schema:DefinedTerm"
+                                            }
+                                          }
+                                        ]
+                                      },
+                                      "schema:name": {
+                                        "type": "string",
+                                        "description": "text label for the term that is useful to human user"
+                                      },
+                                      "schema:identifier": {
+                                        "anyOf": [
+                                          {
+                                            "type": "string"
+                                          },
+                                          {
+                                            "description": "Properties for a schema.org identifier",
+                                            "type": "object",
+                                            "properties": {
+                                              "@type": {
+                                                "anyOf": [
+                                                  {
+                                                    "type": "string",
+                                                    "const": "schema:PropertyValue"
+                                                  },
+                                                  {
+                                                    "type": "array",
+                                                    "items": {
+                                                      "type": "string"
+                                                    },
+                                                    "contains": {
+                                                      "const": "schema:PropertyValue"
+                                                    }
+                                                  }
+                                                ]
+                                              },
+                                              "schema:propertyID": {
+                                                "type": "string",
+                                                "description": "In this context for the schema:PropertyValue, this field is an identifier for the identifier schema, e.g. DOI, ARK.  Get values from https://registry.identifiers.org/registry/ for interoperability"
+                                              },
+                                              "schema:value": {
+                                                "type": "string",
+                                                "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
+                                              },
+                                              "schema:url": {
+                                                "type": "string",
+                                                "format": "uri",
+                                                "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
+                                              }
+                                            },
+                                            "allOf": [
+                                              {
+                                                "required": [
+                                                  "@type"
+                                                ]
+                                              },
+                                              {
+                                                "anyOf": [
+                                                  {
+                                                    "required": [
+                                                      "schema:value"
+                                                    ]
+                                                  },
+                                                  {
+                                                    "required": [
+                                                      "schema:url"
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      },
+                                      "schema:inDefinedTermSet": {
+                                        "type": "string",
+                                        "description": "Identifier for the controlled vocabulary responsible for this keyword."
+                                      },
+                                      "schema:termCode": {
+                                        "type": "string",
+                                        "description": "A representative code for this keyword in the controlled vocabulary (Optional).  Analogous to skos:Notation"
+                                      }
+                                    },
+                                    "allOf": [
+                                      {
+                                        "required": [
+                                          "@type"
+                                        ]
+                                      },
+                                      {
+                                        "anyOf": [
+                                          {
+                                            "required": [
+                                              "schema:name"
+                                            ]
+                                          },
+                                          {
+                                            "required": [
+                                              "schema:identifier"
+                                            ]
+                                          },
+                                          {
+                                            "required": [
+                                              "schema:termCode"
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            }
                           }
-                        }
+                        },
+                        "required": [
+                          "@type",
+                          "schema:measuredProperty"
+                        ]
                       }
-                    },
-                    "required": [
-                      "@type",
-                      "schema:measuredProperty"
                     ]
                   }
                 ]
@@ -12244,6 +12885,10 @@
                       "schema:name": {
                         "type": "string"
                       },
+                      "schema:description": {
+                        "type": "string",
+                        "description": "Description of this distribution, e.g. what format, access constraints, etc."
+                      },
                       "schema:contentUrl": {
                         "type": "string",
                         "format": "uri"
@@ -12312,7 +12957,10 @@
                                   "type": "string",
                                   "description": "a identifier for an agent defined in this metadata, or externally; must be dereferenceable"
                                 }
-                              }
+                              },
+                              "required": [
+                                "@id"
+                              ]
                             },
                             {
                               "description": "schema for cdif profile of schema.org/Person",
@@ -16438,7 +17086,10 @@
                                     "type": "string",
                                     "description": "IRI reference to a Person or Organization defined elsewhere"
                                   }
-                                }
+                                },
+                                "required": [
+                                  "@id"
+                                ]
                               },
                               {
                                 "description": "schema for cdif profile of schema.org/Person",
@@ -17378,7 +18029,10 @@
                             "type": "string",
                             "description": "reference to an agent defined elsewhere"
                           }
-                        }
+                        },
+                        "required": [
+                          "@id"
+                        ]
                       }
                     ]
                   },
@@ -18473,7 +19127,10 @@
                                       "type": "string",
                                       "description": "IRI reference to a Person or Organization defined elsewhere"
                                     }
-                                  }
+                                  },
+                                  "required": [
+                                    "@id"
+                                  ]
                                 },
                                 {
                                   "description": "schema for cdif profile of schema.org/Person",
@@ -19413,7 +20070,10 @@
                               "type": "string",
                               "description": "reference to a participant defined elsewhere"
                             }
-                          }
+                          },
+                          "required": [
+                            "@id"
+                          ]
                         }
                       ]
                     }
@@ -20139,6 +20799,10 @@
                       "schema:name": {
                         "type": "string"
                       },
+                      "schema:description": {
+                        "type": "string",
+                        "description": "Description of this distribution, e.g. what format, access constraints, etc."
+                      },
                       "schema:contentUrl": {
                         "type": "string",
                         "format": "uri"
@@ -20207,7 +20871,10 @@
                                   "type": "string",
                                   "description": "a identifier for an agent defined in this metadata, or externally; must be dereferenceable"
                                 }
-                              }
+                              },
+                              "required": [
+                                "@id"
+                              ]
                             },
                             {
                               "description": "schema for cdif profile of schema.org/Person",
@@ -21635,6 +22302,10 @@
                       "schema:name": {
                         "type": "string"
                       },
+                      "schema:description": {
+                        "type": "string",
+                        "description": "Description of this distribution, e.g. what format, access constraints, etc."
+                      },
                       "schema:contentUrl": {
                         "type": "string",
                         "format": "uri"
@@ -21703,7 +22374,10 @@
                                   "type": "string",
                                   "description": "a identifier for an agent defined in this metadata, or externally; must be dereferenceable"
                                 }
-                              }
+                              },
+                              "required": [
+                                "@id"
+                              ]
                             },
                             {
                               "description": "schema for cdif profile of schema.org/Person",
@@ -24421,6 +25095,10 @@
                                     "schema:name": {
                                       "type": "string"
                                     },
+                                    "schema:description": {
+                                      "type": "string",
+                                      "description": "Description of this distribution, e.g. what format, access constraints, etc."
+                                    },
                                     "schema:contentUrl": {
                                       "type": "string",
                                       "format": "uri"
@@ -24489,7 +25167,10 @@
                                                 "type": "string",
                                                 "description": "a identifier for an agent defined in this metadata, or externally; must be dereferenceable"
                                               }
-                                            }
+                                            },
+                                            "required": [
+                                              "@id"
+                                            ]
                                           },
                                           {
                                             "description": "schema for cdif profile of schema.org/Person",

@@ -14,6 +14,9 @@ properties:
     minItems: 1
   'schema:name':
     type: string
+  'schema:description':
+    type: string
+    description: Description of this distribution, e.g. what format, access constraints, etc.
   'schema:contentUrl':
     type: string
     format: uri
@@ -64,6 +67,8 @@ properties:
           '@id':
             type: string
             description: a identifier for an agent defined in this metadata, or externally; must be dereferenceable
+        required:
+        - '@id'
       - $ref: ../person/schema.yaml
       - $ref: ../organization/schema.yaml
 required:

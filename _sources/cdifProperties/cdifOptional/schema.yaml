@@ -137,6 +137,8 @@ properties:
                 type: string
                 description: a identifier for an agent defined in this metadata, or externally; must be
                   dereferenceable
+            required:
+            - '@id'
           - $ref: '#/$defs/Person'
           - $ref: '#/$defs/Organization'
   'schema:contributor':
@@ -149,6 +151,8 @@ properties:
           '@id':
             type: string
             description: a identifier for an agent defined in this metadata, or externally; must be dereferenceable
+        required:
+        - '@id'
       - $ref: '#/$defs/Person'
       - $ref: '#/$defs/Organization'
       - $ref: '#/$defs/Contributor'
@@ -160,6 +164,8 @@ properties:
         '@id':
           type: string
           description: a identifier for an agent defined in this metadata, or externally; must be dereferenceable
+      required:
+      - '@id'
     - $ref: '#/$defs/Person'
     - $ref: '#/$defs/Organization'
   'schema:provider':
@@ -173,6 +179,8 @@ properties:
           '@id':
             type: string
             description: a identifier for an agent defined in this metadata, or externally; must be dereferenceable
+        required:
+        - '@id'
       - $ref: '#/$defs/Person'
       - $ref: '#/$defs/Organization'
   'schema:funding':
@@ -237,7 +245,7 @@ $defs:
   Funder:
     $ref: ../../schemaorgProperties/funder/schema.yaml
   VariableMeasured:
-    $ref: ../../schemaorgProperties/variableMeasured/schema.yaml
+    $ref: ../cdifVariableMeasured/schema.yaml
   SpatialExtent:
     $ref: ../../schemaorgProperties/spatialExtent/schema.yaml
   TemporalExtent:
