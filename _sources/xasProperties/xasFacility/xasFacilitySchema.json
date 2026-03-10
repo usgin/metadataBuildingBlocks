@@ -3,24 +3,54 @@
     "title": "definitions a Facility location, type schema:Place",
     "type": "object",
     "properties": {
-        "@id": {"type": "string"},
-        "@type": {"const": "schema:Place"},
+        "@id": {
+            "type": "string"
+        },
+        "@type": {
+            "anyOf": [
+                {
+                    "type": "string",
+                    "const": "schema:Place"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "contains": {
+                        "const": "schema:Place"
+                    }
+                }
+            ]
+        },
         "schema:additionalType": {
             "type": "array",
-            "items": {"type": "string"},
-            "contains": {"const": "xas:Facility"},
+            "items": {
+                "type": "string"
+            },
+            "contains": {
+                "const": "xas:Facility"
+            },
             "minItems": 1
         },
         "schema:identifier": {
             "anyOf": [
-                {"type": "string"},
-                {"$ref": "#/$defs/Identifier"}
+                {
+                    "type": "string"
+                },
+                {
+                    "$ref": "#/$defs/Identifier"
+                }
             ]
         },
-        "schema:name": {"type": "string"},
+        "schema:name": {
+            "type": "string"
+        },
         "schema:additionalProperty": {
             "type": "array",
-            "items": {"$ref": "#/$defs/AdditionalProperty"}
+            "items": {
+                "$ref": "#/$defs/AdditionalProperty"
+            }
         }
     },
     "required": [
@@ -29,7 +59,11 @@
         "schema:name"
     ],
     "$defs": {
-        "AdditionalProperty": {"$ref": "../../schemaorgProperties/additionalProperty/additionalPropertySchema.json"},
-        "Identifier": {"$ref": "../../schemaorgProperties/identifier/identifierSchema.json"}
+        "AdditionalProperty": {
+            "$ref": "../../schemaorgProperties/additionalProperty/additionalPropertySchema.json"
+        },
+        "Identifier": {
+            "$ref": "../../schemaorgProperties/identifier/identifierSchema.json"
+        }
     }
 }

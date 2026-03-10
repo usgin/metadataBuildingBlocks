@@ -4,17 +4,34 @@
     "type": "object",
     "properties": {
         "@type": {
-            "type": "string",
-            "const": "schema:Place",
-            "default": "schema:Place"
+            "default": "schema:Place",
+            "anyOf": [
+                {
+                    "type": "string",
+                    "const": "schema:Place"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "contains": {
+                        "const": "schema:Place"
+                    }
+                }
+            ]
         },
         "schema:name": {
             "description": "multiple place names or DefinedTerms that have a place name and URI for the location",
             "type": "array",
             "items": {
                 "anyOf": [
-                    {"type": "string"},
-                    {"$ref": "#/$defs/DefinedTerm"}
+                    {
+                        "type": "string"
+                    },
+                    {
+                        "$ref": "#/$defs/DefinedTerm"
+                    }
                 ]
             }
         },
@@ -26,12 +43,33 @@
                     "description": "A point location. Point locations are recommended for data that is associated with specific sample locations, particularly if these are widely spaced such that an enclosing bounding box would be a misleading representation of the spatial location. Be aware that some client applications might only index or display bounding box extents or a single point location.",
                     "properties": {
                         "@type": {
-                            "type": "string",
-                            "const": "schema:GeoCoordinates",
-                            "default": "schema:GeoCoordinates"
+                            "default": "schema:GeoCoordinates",
+                            "anyOf": [
+                                {
+                                    "type": "string",
+                                    "const": "schema:GeoCoordinates"
+                                },
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "contains": {
+                                        "const": "schema:GeoCoordinates"
+                                    }
+                                }
+                            ]
                         },
-                        "schema:latitude": {"type": "number"},
-                        "schema:longitude": {"type": "number"}
+                        "schema:latitude": {
+                            "type": "number",
+                            "minimum": -90,
+                            "maximum": 90
+                        },
+                        "schema:longitude": {
+                            "type": "number",
+                            "minimum": -180,
+                            "maximum": 180
+                        }
                     },
                     "required": [
                         "@type",
@@ -44,9 +82,22 @@
                     "description": "A schema:GeoShape bounding box. The geometry is described with a set of latitude/longitude pairs (in that order).The documentation for schema:GeoShape states 'Either whitespace or commas can be used to separate latitude and longitude; whitespace should be used when writing a list of several such points.'",
                     "properties": {
                         "@type": {
-                            "type": "string",
-                            "const": "schema:GeoShape",
-                            "default": "schema:GeoShape"
+                            "default": "schema:GeoShape",
+                            "anyOf": [
+                                {
+                                    "type": "string",
+                                    "const": "schema:GeoShape"
+                                },
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "contains": {
+                                        "const": "schema:GeoShape"
+                                    }
+                                }
+                            ]
                         },
                         "schema:box": {
                             "type": "string",
@@ -63,9 +114,22 @@
                     "description": "A schema:GeoShape curvilinear trace, for resource related to a linear trace like a ship track or airplane flight line",
                     "properties": {
                         "@type": {
-                            "type": "string",
-                            "const": "schema:GeoShape",
-                            "default": "schema:GeoShape"
+                            "default": "schema:GeoShape",
+                            "anyOf": [
+                                {
+                                    "type": "string",
+                                    "const": "schema:GeoShape"
+                                },
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "contains": {
+                                        "const": "schema:GeoShape"
+                                    }
+                                }
+                            ]
                         },
                         "schema:line": {
                             "type": "string",
@@ -84,15 +148,38 @@
             "description": "Optional geographic extent using wkt geometry, see Ocean InfoHub (https://book.oceaninfohub.org/thematics/spatial/README.html#simple-geosparql-wkt). Other geometry schemes might be specified in a specific domain profile, e.g. for atmospheric, subsurface data, or local coordinate systems. NOTE that the location specified here should be the same as the schema.org point or contained within the specified bounding box.",
             "properties": {
                 "@type": {
-                    "type": "string",
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    ],
                     "description": "MUST be sf: (<http://www.opengis.net/ont/sf#>) SimpleFeature geometry type. See https://opengeospatial.github.io/ogc-geosparql/geosparql11/sf_geometries.ttl"
                 },
                 "geosparql:asWKT": {
                     "type": "object",
                     "properties": {
                         "@type": {
-                            "type": "string",
-                            "const": "geosparql:wktLiteral"
+                            "anyOf": [
+                                {
+                                    "type": "string",
+                                    "const": "geosparql:wktLiteral"
+                                },
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "contains": {
+                                        "const": "geosparql:wktLiteral"
+                                    }
+                                }
+                            ]
                         },
                         "@value": {
                             "type": "string",
@@ -113,6 +200,8 @@
         }
     },
     "$defs": {
-        "DefinedTerm": {"$ref": "../definedTerm/definedTermSchema.json"}
+        "DefinedTerm": {
+            "$ref": "../definedTerm/definedTermSchema.json"
+        }
     }
 }

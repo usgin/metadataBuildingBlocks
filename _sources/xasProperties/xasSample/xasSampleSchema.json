@@ -5,50 +5,72 @@
     "properties": {
         "@type": {
             "type": "array",
-            "items": {"type": "string"},
+            "items": {
+                "type": "string"
+            },
             "minItems": 2,
             "uniqueItems": true,
             "allOf": [
                 {
-                    "contains": {"const": "schema:Product"},
+                    "contains": {
+                        "const": "schema:Product"
+                    },
                     "minContains": 1
                 },
                 {
-                    "contains": {"const": "schema:Thing"},
+                    "contains": {
+                        "const": "schema:Thing"
+                    },
                     "minContains": 1
                 }
             ]
         },
         "schema:additionalType": {
             "type": "array",
-            "items": {"type": "string"},
+            "items": {
+                "type": "string"
+            },
             "minItems": 2,
             "uniqueItems": true,
             "allOf": [
                 {
-                    "contains": {"const": "MaterialSample"},
+                    "contains": {
+                        "const": "MaterialSample"
+                    },
                     "minContains": 1
                 },
                 {
-                    "contains": {"const": "https://w3id.org/isample/vocabulary/materialsampleobjecttype/materialsample"},
+                    "contains": {
+                        "const": "https://w3id.org/isample/vocabulary/materialsampleobjecttype/materialsample"
+                    },
                     "minContains": 1
                 }
             ]
         },
-        "schema:name": {"type": "string"},
+        "schema:name": {
+            "type": "string"
+        },
         "schema:identifier": {
             "anyOf": [
-                {"type": "string"},
-                {"$ref": "#/$defs/Identifier"}
+                {
+                    "type": "string"
+                },
+                {
+                    "$ref": "#/$defs/Identifier"
+                }
             ]
         },
-        "schema:description": {"type": "string"},
+        "schema:description": {
+            "type": "string"
+        },
         "schema:additionalProperty": {
             "type": "array",
             "description": "extend base definition (AdditionalProperty) with some expected propertyID values from NEXUS and XDI specs added in the enum",
             "items": {
                 "allOf": [
-                    {"$ref": "#/$defs/AdditionalProperty"},
+                    {
+                        "$ref": "#/$defs/AdditionalProperty"
+                    },
                     {
                         "properties": {
                             "schema:propertyID": {
@@ -56,7 +78,9 @@
                                 "minItems": 1,
                                 "items": {
                                     "anyOf": [
-                                        {"$ref": "../../schemaorgProperties/additionalProperty/additionalPropertySchema.json#/$defs/propertyID_item"},
+                                        {
+                                            "$ref": "../../schemaorgProperties/additionalProperty/schema.yaml#/$defs/propertyID_item"
+                                        },
                                         {
                                             "enum": [
                                                 "xas:stoichiometry",
@@ -83,7 +107,11 @@
         "schema:name"
     ],
     "$defs": {
-        "Identifier": {"$ref": "../../schemaorgProperties/identifier/identifierSchema.json"},
-        "AdditionalProperty": {"$ref": "../../schemaorgProperties/additionalProperty/additionalPropertySchema.json"}
+        "Identifier": {
+            "$ref": "../../schemaorgProperties/identifier/identifierSchema.json"
+        },
+        "AdditionalProperty": {
+            "$ref": "../../schemaorgProperties/additionalProperty/additionalPropertySchema.json"
+        }
     }
 }

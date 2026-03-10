@@ -20,12 +20,17 @@
         "schema:name": {
             "type": "string"
         },
+        "schema:description": {
+            "type": "string",
+            "description": "Description of this distribution, e.g. what format, access constraints, etc."
+        },
         "schema:contentUrl": {
             "type": "string",
             "format": "uri"
         },
         "schema:encodingFormat": {
             "type": "array",
+            "description": "MIME type with extension; should indicate the serialization scheme in sufficient detail that machine can know how to parse.",
             "items": {
                 "type": "string"
             }
@@ -34,17 +39,38 @@
             "type": "object",
             "description": "A string value calculated from the content of the resource representation, used to test if content has been modified. The checksum is a property of a particular distribution/DataDownload.",
             "properties": {
+                "@type": {
+                    "anyOf": [
+                        {
+                            "type": "string",
+                            "const": "spdx:Checksum"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "contains": {
+                                "const": "spdx:Checksum"
+                            }
+                        }
+                    ]
+                },
                 "spdx:algorithm": {
                     "type": "string"
                 },
                 "spdx:checksumValue": {
                     "type": "string"
                 }
-            }
+            },
+            "required": [
+                "@type"
+            ]
         },
         "dcterms:conformsTo": {
             "description": "An identifier for a standard or specification that the distribution conforms to. Recommended to enable machine-actionable data access.",
             "type": "array",
+            "minItems": 1,
             "items": {
                 "type": "object",
                 "properties": {
@@ -67,13 +93,16 @@
                                 "type": "string",
                                 "description": "a identifier for an agent defined in this metadata, or externally; must be dereferenceable"
                             }
-                        }
+                        },
+                        "required": [
+                            "@id"
+                        ]
                     },
                     {
-                        "$ref": "#/$defs/Person"
+                        "$ref": "../person/personSchema.json"
                     },
                     {
-                        "$ref": "#/$defs/Organization"
+                        "$ref": "../organization/organizationSchema.json"
                     }
                 ]
             }
@@ -82,13 +111,5 @@
     "required": [
         "schema:contentUrl",
         "@type"
-    ],
-    "$defs": {
-        "Person": {
-            "$ref": "../person/personSchema.json"
-        },
-        "Organization": {
-            "$ref": "../organization/organizationSchema.json"
-        }
-    }
+    ]
 }

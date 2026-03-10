@@ -7,9 +7,22 @@
             "description": "a w3c time proper interval with bounds that are named time ordinal eras with identifier, e.g. geologic age. This is a SOSO schema.org extension",
             "properties": {
                 "@type": {
-                    "type": "string",
                     "default": "time:ProperInterval",
-                    "const": "time:ProperInterval"
+                    "anyOf": [
+                        {
+                            "type": "string",
+                            "const": "time:ProperInterval"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "contains": {
+                                "const": "time:ProperInterval"
+                            }
+                        }
+                    ]
                 },
                 "schema:description": {
                     "type": "string",
@@ -51,9 +64,22 @@
                     "description": "Must exactly match the specified @context object."
                 },
                 "@type": {
-                    "type": "string",
                     "default": "time:ProperInterval",
-                    "const": "time:ProperInterval"
+                    "anyOf": [
+                        {
+                            "type": "string",
+                            "const": "time:ProperInterval"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "contains": {
+                                "const": "time:ProperInterval"
+                            }
+                        }
+                    ]
                 },
                 "schema:description": {
                     "type": "string",
@@ -63,20 +89,50 @@
                     "type": "object",
                     "properties": {
                         "@type": {
-                            "type": "string",
-                            "const": "time:Instant"
+                            "anyOf": [
+                                {
+                                    "type": "string",
+                                    "const": "time:Instant"
+                                },
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "contains": {
+                                        "const": "time:Instant"
+                                    }
+                                }
+                            ]
                         },
-                        "time:inTimePosition": {"$ref": "#/$defs/timePosition_type"}
+                        "time:inTimePosition": {
+                            "$ref": "#/$defs/timePosition_type"
+                        }
                     }
                 },
                 "time:hasEnd": {
                     "type": "object",
                     "properties": {
                         "@type": {
-                            "type": "string",
-                            "const": "time:Instant"
+                            "anyOf": [
+                                {
+                                    "type": "string",
+                                    "const": "time:Instant"
+                                },
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "contains": {
+                                        "const": "time:Instant"
+                                    }
+                                }
+                            ]
                         },
-                        "time:inTimePosition": {"$ref": "#/$defs/timePosition_type"}
+                        "time:inTimePosition": {
+                            "$ref": "#/$defs/timePosition_type"
+                        }
                     }
                 }
             }
@@ -91,16 +147,31 @@
             "type": "object",
             "properties": {
                 "@type": {
-                    "type": "string",
-                    "const": "time:TimePosition",
-                    "default": "time:TimePosition"
+                    "default": "time:TimePosition",
+                    "anyOf": [
+                        {
+                            "type": "string",
+                            "const": "time:TimePosition"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "contains": {
+                                "const": "time:TimePosition"
+                            }
+                        }
+                    ]
                 },
                 "time:hasTRS": {
                     "type": "string",
                     "description": "identifier for a temporal reference system; default is million years before prsent as a decimal number",
                     "default": "http://www.opengis.net/def/crs/OGC/0/ChronometricGeologicTime"
                 },
-                "time:numericPosition": {"type": "number"}
+                "time:numericPosition": {
+                    "type": "number"
+                }
             }
         }
     }

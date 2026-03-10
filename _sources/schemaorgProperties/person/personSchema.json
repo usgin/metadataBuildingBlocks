@@ -3,61 +3,119 @@
     "description": "schema for cdif profile of schema.org/Person",
     "type": "object",
     "properties": {
-        "@id": {"type": "string"},
+        "@id": {
+            "type": "string"
+        },
         "@type": {
-            "type": "string",
-            "const": "schema:Person"
+            "anyOf": [
+                {
+                    "type": "string",
+                    "const": "schema:Person"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "contains": {
+                        "const": "schema:Person"
+                    }
+                }
+            ]
         },
         "schema:name": {
             "type": "string",
             "description": "string label for person that is meaningful for human users"
         },
+        "schema:description": {
+            "type": "string"
+        },
+        "schema:identifier": {
+            "description": "identifier for person, recommend ORCID",
+            "anyOf": [
+                {
+                    "$ref": "../identifier/identifierSchema.json"
+                },
+                {
+                    "type": "string"
+                }
+            ]
+        },
         "schema:alternateName": {
             "type": "string",
             "description": "other labels by which the person might be known"
         },
-        "schema:affiliation": {"$ref": "#/$defs/Organization"},
+        "schema:affiliation": {
+            "$ref": "../organization/organizationSchema.json",
+            "description": "if affiliation is present, value must be a schema:Organization."
+        },
         "schema:contactPoint": {
-            "description": "restrict to email only. Schema.org allows telephone and postal contacts as well",
             "type": "object",
             "properties": {
                 "@type": {
-                    "type": "string",
-                    "const": "schema:ContactPoint",
-                    "default": "schema:ContactPoint"
+                    "default": "schema:ContactPoint",
+                    "anyOf": [
+                        {
+                            "type": "string",
+                            "const": "schema:ContactPoint"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "contains": {
+                                "const": "schema:ContactPoint"
+                            }
+                        }
+                    ]
                 },
-                "schema:email": {"type": "string"}
-            }
-        },
-        "schema:description": {"type": "string"},
-        "schema:identifier": {
-            "description": "identifier for person, recommend ORCID",
-            "anyOf": [
-                {"$ref": "#/$defs/Identifier"},
-                {"type": "string"}
-            ]
+                "schema:email": {
+                    "type": "string"
+                }
+            },
+            "description": "restrict to email only. Schema.org allows telephone and postal contacts as well"
         },
         "schema:sameAs": {
             "type": "array",
             "description": "other identifiers for the person",
-            "items": {"type": "string"}
+            "items": {
+                "anyOf": [
+                    {
+                        "type": "string"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "@id": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    {
+                        "$ref": "../identifier/identifierSchema.json"
+                    }
+                ]
+            }
         }
-    },
-    "$defs": {
-        "Organization": {"$ref": "../organization/organizationSchema.json"},
-        "Identifier": {"$ref": "../identifier/identifierSchema.json"}
     },
     "allOf": [
         {
-            "required": ["@type"]
+            "required": [
+                "@type"
+            ]
         },
         {
             "anyOf": [
                 {
-                    "required": ["schema:name"]
+                    "required": [
+                        "schema:name"
+                    ]
                 },
                 {
-                    "required": ["schema:identifier"]
+                    "required": [
+                        "schema:identifier"
+                    ]
                 }
             ]
         }

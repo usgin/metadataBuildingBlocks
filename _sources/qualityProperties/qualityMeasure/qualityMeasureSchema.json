@@ -3,11 +3,29 @@
     "title": "definitions for simple quality measure property",
     "type": "object",
     "properties": {
-        "@type": {"const": "dqv:QualityMeasurement"},
-        "dqv:isMeasurementOf": {
-            "description":"specify the quality measure that is reported, by name, with an ID ref, or as a Defined Term", 
+        "@type": {
             "anyOf": [
-                {"type": "string"},
+                {
+                    "type": "string",
+                    "const": "dqv:QualityMeasurement"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "contains": {
+                        "const": "dqv:QualityMeasurement"
+                    }
+                }
+            ]
+        },
+        "dqv:isMeasurementOf": {
+            "description": "specify the quality measure that is reported, by name, with an ID ref, or as a Defined Term",
+            "anyOf": [
+                {
+                    "type": "string"
+                },
                 {
                     "type": "object",
                     "properties": {
@@ -17,14 +35,20 @@
                         }
                     }
                 },
-                {"$ref": "#/$defs/DefinedTerm"}
+                {
+                    "$ref": "#/$defs/DefinedTerm"
+                }
             ]
         },
         "dqv:value": {
-            "description":"the reported result of the quality measure, either as a string or a defined term from a vocabulary",
+            "description": "the reported result of the quality measure, either as a string or a defined term from a vocabulary",
             "anyOf": [
-                {"type": "string"},
-                {"$ref": "#/$defs/DefinedTerm"}
+                {
+                    "type": "string"
+                },
+                {
+                    "$ref": "#/$defs/DefinedTerm"
+                }
             ]
         }
     },
@@ -33,6 +57,8 @@
         "dqv:value"
     ],
     "$defs": {
-        "DefinedTerm": {"$ref": "../../schemaorgProperties/definedTerm/definedTermSchema.json"}
+        "DefinedTerm": {
+            "$ref": "../../schemaorgProperties/definedTerm/definedTermSchema.json"
+        }
     }
 }

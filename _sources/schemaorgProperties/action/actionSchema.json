@@ -5,22 +5,50 @@
     "description": "this element defines an action (operation) that can be invoked via messages using the protocol defined. In most cases this will be an http request via TCP/IP, but in desktop or LAN environments, other protocols might be used. The target property defines the endpoint and syntax for invoking the action. Result specifies the encoding format for the (possible) response(s) when the action is invoked. Object specifies the information model for the resource that is the object of the action. This approach is an adoptation of the Action Blog Post from schema.org (see https://schema.org/docs/actions.html, and https://github.com/schemaorg/suggestions-questions-brainstorming/issues/62) ",
     "properties": {
         "@type": {
-            "type": "string",
-            "description": "The type of action. Use schema:Action for a generic action, or a more specific subclass.",
+            "description": "The type of action. Must be schema:Action or one of its subtypes.",
             "default": "schema:Action",
-            "enum": [
-                "schema:Action",
-                "schema:AssessAction",
-                "schema:ConsumeAction",
-                "schema:ControlAction",
-                "schema:CreateAction",
-                "schema:FindAction",
-                "schema:InteractAction",
-                "schema:MoveAction",
-                "schema:PlayAction",
-                "schema:SearchAction",
-                "schema:TransferAction",
-                "schema:UpdateAction"
+            "anyOf": [
+                {
+                    "type": "string",
+                    "enum": [
+                        "schema:Action",
+                        "schema:AssessAction",
+                        "schema:ConsumeAction",
+                        "schema:ControlAction",
+                        "schema:CreateAction",
+                        "schema:DeleteAction",
+                        "schema:FindAction",
+                        "schema:InteractAction",
+                        "schema:MoveAction",
+                        "schema:PlayAction",
+                        "schema:SearchAction",
+                        "schema:TransferAction",
+                        "schema:UpdateAction"
+                    ]
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "contains": {
+                        "enum": [
+                            "schema:Action",
+                            "schema:AssessAction",
+                            "schema:ConsumeAction",
+                            "schema:ControlAction",
+                            "schema:CreateAction",
+                            "schema:DeleteAction",
+                            "schema:FindAction",
+                            "schema:InteractAction",
+                            "schema:MoveAction",
+                            "schema:PlayAction",
+                            "schema:SearchAction",
+                            "schema:TransferAction",
+                            "schema:UpdateAction"
+                        ]
+                    }
+                }
             ]
         },
         "schema:name": {
@@ -54,19 +82,29 @@
             "description": "documentation of the URL end point and syntax to invoke the service. This schema doesn't handle post requests",
             "properties": {
                 "@type": {
-                    "type": "string",
                     "default": "schema:EntryPoint",
-                    "const": "schema:EntryPoint"
+                    "anyOf": [
+                        {
+                            "type": "string",
+                            "const": "schema:EntryPoint"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "contains": {
+                                "const": "schema:EntryPoint"
+                            }
+                        }
+                    ]
                 },
-                "schema:description": {"type": "string"},
+                "schema:description": {
+                    "type": "string"
+                },
                 "schema:urlTemplate": {
                     "type": "string",
-                    "description": "a templated URL; parameters are enclosed in curly braces ('{..}'); parameters are not required. If included, parameters MUST be documented in the query-input element. Template should be consitent with URI Template (https://datatracker.ietf.org/doc/html/rfc6570)",
-                    "examples": [
-                        "http://portal.chordsrt.com/api/v1/data.{encoding}; single parameter",
-                        "http://portal.chordsrt.com/api/v1/data.{encoding}?instruments={instruments}&start={start}&end={end} ; multiple parameters",
-                        "{endpoint}{encoding}; endpoint URL path is a parameter,should only appear in potential actions for API specification descriptions, which are generic-not specific to a particular endpoint."
-                    ]
+                    "description": "a templated URL; parameters are enclosed in curly braces ({..}); parameters are not required. If included, parameters MUST be documented in the query-input element. Template should be consitent with URI Template (https://datatracker.ietf.org/doc/html/rfc6570) examples: - http://portal.chordsrt.com/api/v1/data.{encoding}; single parameter - http://portal.chordsrt.com/api/v1/data.{encoding}?instruments={instruments}&start={start}&end={end} ; multiple parameters - {endpoint}{encoding}; endpoint URL path is a parameter,should only appear in potential actions for API specification descriptions, which are generic-not specific to a particular endpoint."
                 },
                 "schema:httpMethod": {
                     "title": "HTTP Method",
@@ -91,10 +129,14 @@
                 "schema:contentType": {
                     "type": "array",
                     "description": "The supported content type(s) for an EntryPoint response. a MIME type (https://www.iana.org/assignments/media-types/media-types.xhtml) that specifies the content type for messages in resonses from the service endpoint. This is a schema.org property, and is redundant with encodingFormat in the result property for the Action.",
-                    "items": {"type": "string"}
+                    "items": {
+                        "type": "string"
+                    }
                 }
             },
-            "required": ["schema:urlTemplate"]
+            "required": [
+                "schema:urlTemplate"
+            ]
         },
         "result_type": {
             "type": "object",
@@ -103,37 +145,66 @@
                 "@type": {
                     "type": "array",
                     "description": "Type of result object. Typically schema:DataDownload, but may include additional types.",
-                    "items": {"type": "string"},
-                    "contains": {"const": "schema:DataDownload"},
+                    "items": {
+                        "type": "string"
+                    },
+                    "contains": {
+                        "const": "schema:DataDownload"
+                    },
                     "minItems": 1
                 },
                 "schema:encodingFormat": {
                     "type": "array",
-                    "items": {"type": "string"}
+                    "items": {
+                        "type": "string"
+                    }
                 },
-                "schema:description": {"type": "string"}
+                "schema:description": {
+                    "type": "string"
+                }
             }
         },
         "query-input_type": {
             "type": "array",
-            "description": "object that maps the parameters (in braces '{  }' in the url template to specifications for the kind of value expected. parameters must all be strings in the URL",
+            "description": "object that maps the parameters (in braces {  } in the url template to specifications for the kind of value expected. parameters must all be strings in the URL",
             "minItems": 0,
             "items": {
                 "type": "object",
                 "properties": {
-                    "@id": {"type": "string"},
-                    "@type": {
-                        "type": "string",
-                        "default": "schema:PropertyValueSpecification",
-                        "const": "schema:PropertyValueSpecification"
+                    "@id": {
+                        "type": "string"
                     },
-                    "schema:valueName": {"type": "string"},
-                    "schema:description": {"type": "string"},
+                    "@type": {
+                        "default": "schema:PropertyValueSpecification",
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "const": "schema:PropertyValueSpecification"
+                            },
+                            {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                },
+                                "contains": {
+                                    "const": "schema:PropertyValueSpecification"
+                                }
+                            }
+                        ]
+                    },
+                    "schema:valueName": {
+                        "type": "string"
+                    },
+                    "schema:description": {
+                        "type": "string"
+                    },
                     "schema:valueRequired": {
                         "type": "boolean",
                         "default": true
                     },
-                    "schema:valuePattern": {"type": "string"}
+                    "schema:valuePattern": {
+                        "type": "string"
+                    }
                 },
                 "required": [
                     "schema:valueName",
@@ -146,17 +217,43 @@
             "description": "description of the data structure of the return object",
             "properties": {
                 "@type": {
-                    "type": "string",
                     "default": "schema:DataFeed",
-                    "const": "schema:DataFeed"
+                    "anyOf": [
+                        {
+                            "type": "string",
+                            "const": "schema:DataFeed"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "contains": {
+                                "const": "schema:DataFeed"
+                            }
+                        }
+                    ]
                 },
-                "schema:description": {"type": "string"},
+                "schema:description": {
+                    "type": "string"
+                },
+                "schema:encodingFormat-input": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "MIME types accepted as input encoding formats for the action."
+                },
                 "schema:variableMeasured": {
                     "type": "array",
-                    "items": {"$ref": "#/$defs/VariableMeasured"}
+                    "items": {
+                        "$ref": "#/$defs/VariableMeasured"
+                    }
                 }
             }
         },
-        "VariableMeasured": {"$ref": "../variableMeasured/variableMeasuredSchema.json"}
+        "VariableMeasured": {
+            "$ref": "../variableMeasured/variableMeasuredSchema.json"
+        }
     }
 }

@@ -5,57 +5,81 @@
     "properties": {
         "@type": {
             "type": "array",
-            "items": {"type": "string"},
+            "items": {
+                "type": "string"
+            },
             "minItems": 2,
             "uniqueItems": true,
             "description": "Product and Thing are dummy place holders to get schema.org properties to validate",
             "allOf": [
                 {
-                    "contains": {"const": "schema:Product"},
+                    "contains": {
+                        "const": "schema:Product"
+                    },
                     "minContains": 1
                 },
                 {
-                    "contains": {"const": "schema:Thing"},
+                    "contains": {
+                        "const": "schema:Thing"
+                    },
                     "minContains": 1
                 }
             ]
         },
         "schema:additionalType": {
             "type": "array",
-            "items": {"type": "string"},
+            "items": {
+                "type": "string"
+            },
             "minItems": 1,
             "uniqueItems": true,
             "allOf": [
                 {
-                    "contains": {"const": "wd:Q3099911"},
+                    "contains": {
+                        "const": "wd:Q3099911"
+                    },
                     "description": "3099911 is 'scientific instrument', use this a flag for instruments. Have to declare prefix wd: https://www.wikidata.org/entity/",
                     "minContains": 1
                 }
             ]
         },
-        "schema:name": {"type": "string"},
+        "schema:name": {
+            "type": "string"
+        },
         "schema:identifier": {
             "anyOf": [
-                {"type": "string"},
-                {"$ref": "#/$defs/Identifier"}
+                {
+                    "type": "string"
+                },
+                {
+                    "$ref": "#/$defs/Identifier"
+                }
             ]
         },
-        "schema:description": {"type": "string"},
+        "schema:description": {
+            "type": "string"
+        },
         "schema:additionalProperty": {
             "type": "array",
             "description": "AdditionalProperty propertyID will depend on the kind of instrument; validation in that detail is a future project",
-            "items": {"$ref": "#/$defs/AdditionalProperty"}
+            "items": {
+                "$ref": "#/$defs/AdditionalProperty"
+            }
         },
         "schema:hasPart": {
             "type": "array",
             "description": "Sub-components of the instrument system",
             "items": {
                 "anyOf": [
-                    {"$ref": "#/$defs/Instrument"},
+                    {
+                        "$ref": "#/$defs/Instrument"
+                    },
                     {
                         "type": "object",
                         "properties": {
-                            "@id": {"type": "string"}
+                            "@id": {
+                                "type": "string"
+                            }
                         }
                     }
                 ]
@@ -68,8 +92,14 @@
         "schema:name"
     ],
     "$defs": {
-        "Identifier": {"$ref": "../../schemaorgProperties/identifier/identifierSchema.json"},
-        "AdditionalProperty": {"$ref": "../../schemaorgProperties/additionalProperty/additionalPropertySchema.json"},
-        "Instrument": {"$ref": "../../schemaorgProperties/instrument/instrumentSchema.json"}
+        "Identifier": {
+            "$ref": "../../schemaorgProperties/identifier/identifierSchema.json"
+        },
+        "AdditionalProperty": {
+            "$ref": "../../schemaorgProperties/additionalProperty/additionalPropertySchema.json"
+        },
+        "Instrument": {
+            "$ref": "../../schemaorgProperties/instrument/instrumentSchema.json"
+        }
     }
 }

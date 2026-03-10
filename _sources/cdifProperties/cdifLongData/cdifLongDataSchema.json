@@ -6,19 +6,27 @@
     "properties": {
         "@type": {
             "type": "array",
-            "items": {"type": "string"},
+            "items": {
+                "type": "string"
+            },
             "allOf": [
                 {
-                    "contains": {"const": "cdi:LongStructureDataSet"}
+                    "contains": {
+                        "const": "cdi:LongStructureDataSet"
+                    }
                 }
             ]
         },
         "cdi:hasPhysicalMapping": {
             "type": "array",
             "description": "Links variables to their physical representation in this dataset.",
-            "items": {"$ref": "../cdifPhysicalMapping/cdifPhysicalMappingSchema.json"}
+            "items": {
+                "$ref": "../cdifPhysicalMapping/cdifPhysicalMappingSchema.json"
+            }
         },
-        "cdi:arrayBase": {"type": "integer"},
+        "cdi:arrayBase": {
+            "type": "integer"
+        },
         "csvw:delimiter": {
             "type": "string",
             "description": "Sets the delimiter flag to the single provided value, which MUST be a string. The default is ','."
@@ -77,5 +85,7 @@
             "description": "The character used to escape special characters in the data. From DDI-CDI PhysicalSegmentLayout.escapeCharacter."
         }
     },
-    "required": ["@type"]
+    "required": [
+        "@type"
+    ]
 }

@@ -9,8 +9,7 @@ description: 'JSON schema for JSON-LD documents that describe science datasets f
   tabular/dataCube data description, archive distributions with hasPart component files,
   and WebAPI distributions with potentialAction result data description.'
 allOf:
-- $ref: ../CDIFDiscovery/schema.yaml
-- $ref: ../../../cdifProperties/cdifDataDescription/schema.yaml
+- $ref: ../CDIFDataDescription/schema.yaml
 - type: object
   properties:
     'prov:wasGeneratedBy':
@@ -19,32 +18,3 @@ allOf:
       type: array
       items:
         $ref: ../../../cdifProperties/cdifProv/schema.yaml
-- type: object
-  properties:
-    schema:distribution:
-      type: array
-      items:
-        anyOf:
-        - allOf:
-          - $ref: ../../../schemaorgProperties/dataDownload/schema.yaml
-          - anyOf:
-            - $ref: ../../../cdifProperties/cdifDataCube/schema.yaml
-            - $ref: ../../../cdifProperties/cdifTabularData/schema.yaml
-            - $ref: ../../../cdifProperties/cdifLongData/schema.yaml
-        - $ref: ../../../cdifProperties/cdifArchiveDistribution/schema.yaml
-        - allOf:
-          - $ref: ../../../schemaorgProperties/webAPI/schema.yaml
-          - type: object
-            properties:
-              schema:potentialAction:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    schema:result:
-                      allOf:
-                      - $ref: ../../../schemaorgProperties/dataDownload/schema.yaml
-                      - anyOf:
-                        - $ref: ../../../cdifProperties/cdifDataCube/schema.yaml
-                        - $ref: ../../../cdifProperties/cdifTabularData/schema.yaml
-                        - $ref: ../../../cdifProperties/cdifLongData/schema.yaml

@@ -4,7 +4,9 @@
     "description": "A DataDownload distribution that is an archive file (e.g. ZIP) containing multiple component files described in schema:hasPart. The archive itself is typed as schema:DataDownload; each component file is typed as schema:MediaObject (not DataDownload, since they are not independently accessible via URL). Components may optionally include CDIF data description extensions (cdifTabularData, cdifDataCube) to describe their internal data structure.",
     "type": "object",
     "allOf": [
-        {"$ref": "../../schemaorgProperties/dataDownload/dataDownloadSchema.json"},
+        {
+            "$ref": "../../schemaorgProperties/dataDownload/dataDownloadSchema.json"
+        },
         {
             "type": "object",
             "properties": {
@@ -23,10 +25,16 @@
                                     "@type": {
                                         "type": "array",
                                         "description": "Must include schema:MediaObject. Must NOT include schema:DataDownload since this file is not independently accessible. May include additional types for categorization.",
-                                        "items": {"type": "string"},
-                                        "contains": {"const": "schema:MediaObject"},
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "contains": {
+                                            "const": "schema:MediaObject"
+                                        },
                                         "not": {
-                                            "contains": {"const": "schema:DataDownload"}
+                                            "contains": {
+                                                "const": "schema:DataDownload"
+                                            }
                                         },
                                         "minItems": 1
                                     },
@@ -41,15 +49,30 @@
                                     "schema:encodingFormat": {
                                         "type": "array",
                                         "description": "MIME type(s) for this file.",
-                                        "items": {"type": "string"}
+                                        "items": {
+                                            "type": "string"
+                                        }
                                     },
                                     "schema:size": {
                                         "type": "object",
                                         "description": "File size as a QuantitativeValue.",
                                         "properties": {
                                             "@type": {
-                                                "type": "string",
-                                                "const": "schema:QuantitativeValue"
+                                                "anyOf": [
+                                                    {
+                                                        "type": "string",
+                                                        "const": "schema:QuantitativeValue"
+                                                    },
+                                                    {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "string"
+                                                        },
+                                                        "contains": {
+                                                            "const": "schema:QuantitativeValue"
+                                                        }
+                                                    }
+                                                ]
                                             },
                                             "schema:value": {
                                                 "type": "number",
@@ -78,17 +101,49 @@
                                         "type": "object",
                                         "description": "Checksum for integrity verification of this component file.",
                                         "properties": {
-                                            "spdx:algorithm": {"type": "string"},
-                                            "spdx:checksumValue": {"type": "string"}
-                                        }
+                                            "@type": {
+                                                "anyOf": [
+                                                    {
+                                                        "type": "string",
+                                                        "const": "spdx:Checksum"
+                                                    },
+                                                    {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "string"
+                                                        },
+                                                        "contains": {
+                                                            "const": "spdx:Checksum"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            "spdx:algorithm": {
+                                                "type": "string"
+                                            },
+                                            "spdx:checksumValue": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "required": [
+                                            "@type"
+                                        ]
                                     }
                                 },
-                                "required": ["@type", "schema:name", "schema:encodingFormat"]
+                                "required": [
+                                    "@type",
+                                    "schema:name",
+                                    "schema:encodingFormat"
+                                ]
                             },
                             {
                                 "anyOf": [
-                                    {"$ref": "../cdifDataCube/cdifDataCubeSchema.json"},
-                                    {"$ref": "../cdifTabularData/cdifTabularDataSchema.json"},
+                                    {
+                                        "$ref": "../cdifDataCube/cdifDataCubeSchema.json"
+                                    },
+                                    {
+                                        "$ref": "../cdifTabularData/cdifTabularDataSchema.json"
+                                    },
                                     {}
                                 ]
                             }

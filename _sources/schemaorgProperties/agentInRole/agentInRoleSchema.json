@@ -1,12 +1,25 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "type": "object",
     "description": "For more granularity on how a person contributed to a Dataset, use schema:Role. The schema.org documentation does not state that the Role type is an expected data type of author, creator and contributor, but that is addressed in this blog post (http://blog.schema.org/2014/06/introducing-role.html). see https://github.com/ESIPFed/science-on-schema.org/blob/develop/guides/Dataset.md#roles-of-people",
+    "type": "object",
     "properties": {
         "@type": {
-            "type": "string",
             "default": "schema:Role",
-            "const": "schema:Role"
+            "anyOf": [
+                {
+                    "type": "string",
+                    "const": "schema:Role"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "contains": {
+                        "const": "schema:Role"
+                    }
+                }
+            ]
         },
         "schema:roleName": {
             "anyOf": [
@@ -14,7 +27,7 @@
                     "type": "string"
                 },
                 {
-                    "$ref": "#/$defs/DefinedTerm"
+                    "$ref": "../definedTerm/definedTermSchema.json"
                 }
             ]
         },
@@ -27,13 +40,16 @@
                             "type": "string",
                             "description": "IRI reference to a Person or Organization defined elsewhere"
                         }
-                    }
+                    },
+                    "required": [
+                        "@id"
+                    ]
                 },
                 {
-                    "$ref": "#/$defs/Person"
+                    "$ref": "../person/personSchema.json"
                 },
                 {
-                    "$ref": "#/$defs/Organization"
+                    "$ref": "../organization/organizationSchema.json"
                 }
             ]
         }
@@ -41,16 +57,5 @@
     "required": [
         "schema:roleName",
         "schema:contributor"
-    ],
-    "$defs": {
-        "Person": {
-            "$ref": "../person/personSchema.json"
-        },
-        "Organization": {
-            "$ref": "../organization/organizationSchema.json"
-        },
-        "DefinedTerm": {
-            "$ref": "../definedTerm/definedTermSchema.json"
-        }
-    }
+    ]
 }

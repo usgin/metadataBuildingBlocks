@@ -1,164 +1,296 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "allOf": [
-        {"$ref": "#/$defs/CdifMandatory"},
+        {
+            "$ref": "#/$defs/CdifMandatory"
+        },
         {
             "type": "object",
             "properties": {
-                "schema:subjectOf": {"$ref": "#/$defs/XasSubject"},
+                "schema:subjectOf": {
+                    "$ref": "#/$defs/XasSubject"
+                },
                 "prov:wasGeneratedBy": {
                     "type": "array",
                     "items": {
-                    "type": "object",
-                    "properties": {
-                        "prov:used": {
-                            "type": "array",
-                            "description": "Array of used entities. Must contain an instrument wrapper with schema:hasPart sub-components. The x-ray source type and probe, and monochromator properties type, d-spacing and reflection plane are required.",
-                            "contains": {
+                        "allOf": [
+                            {
+                                "$ref": "#/$defs/CdifProv"
+                            },
+                            {
                                 "type": "object",
-                                "required": ["schema:instrument"],
                                 "properties": {
-                                    "schema:instrument": {
-                                        "type": "object",
-                                        "required": ["schema:hasPart"],
-                                        "properties": {
-                                            "schema:hasPart": {
-                                                "type": "array",
-                                                "minItems": 2,
-                                                "allOf": [
-                                                    {
-                                                        "contains": {
-                                                            "type": "object",
-                                                            "properties": {
-                                                                "@type": {
-                                                                    "type": "array",
-                                                                    "items": {"type": "string"},
-                                                                    "minItems": 2,
-                                                                    "allOf": [
-                                                                        {"contains": {"const": "schema:Thing"}},
-                                                                        {"contains": {"const": "schema:Product"}}
-                                                                    ]
-                                                                },
-                                                                "schema:additionalType": {"const": "nxs:BaseClass/NXsource"},
-                                                                "schema:additionalProperty": {
-                                                                    "type": "array",
-                                                                    "minItems": 2,
-                                                                    "items": {"$ref": "#/$defs/AdditionalProperty"},
-                                                                    "allOf": [
-                                                                        {
-                                                                            "contains": {
-                                                                                "type": "object",
-                                                                                "properties": {
-                                                                                    "schema:propertyID": {"type": "array", "contains": {"const": "nxs:Field/NXsource/type"}},
-                                                                                    "schema:value": {"type": "string"}
-                                                                                },
-                                                                                "required": ["schema:propertyID", "schema:value"]
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "contains": {
-                                                                                "type": "object",
-                                                                                "properties": {
-                                                                                    "schema:propertyID": {"type": "array", "contains": {"const": "nxs:Field/NXsource/probe"}},
-                                                                                    "schema:name": {"const": "Probe"},
-                                                                                    "schema:value": {"type": "string"}
-                                                                                },
-                                                                                "required": ["schema:name", "schema:propertyID", "schema:value"]
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            },
-                                                            "required": ["@type", "schema:additionalType", "schema:additionalProperty"]
-                                                        }
-                                                    },
-                                                    {
-                                                        "contains": {
-                                                            "type": "object",
-                                                            "properties": {
-                                                                "@type": {
-                                                                    "type": "array",
-                                                                    "items": {"type": "string"},
-                                                                    "minItems": 2,
-                                                                    "allOf": [
-                                                                        {"contains": {"const": "schema:Thing"}},
-                                                                        {"contains": {"const": "schema:Product"}}
-                                                                    ]
-                                                                },
-                                                                "schema:additionalType": {"const": "nxs:BaseClass/NXmonochromator"},
-                                                                "schema:name": {"type": "string"},
-                                                                "schema:additionalProperty": {
-                                                                    "description": "Require additional properties for monochromator, requires d-space, crystal type, reflection plane.",
-                                                                    "type": "array",
-                                                                    "minItems": 3,
-                                                                    "items": {"$ref": "#/$defs/AdditionalProperty"},
+                                    "prov:used": {
+                                        "type": "array",
+                                        "description": "Array of used entities. Must contain an instrument wrapper with schema:hasPart sub-components. The x-ray source type and probe, and monochromator properties type, d-spacing and reflection plane are required.",
+                                        "contains": {
+                                            "type": "object",
+                                            "required": [
+                                                "schema:instrument"
+                                            ],
+                                            "properties": {
+                                                "schema:instrument": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "schema:hasPart": {
+                                                            "type": "array",
+                                                            "minItems": 2,
+                                                            "allOf": [
+                                                                {
                                                                     "contains": {
                                                                         "type": "object",
                                                                         "properties": {
-                                                                            "schema:propertyID": {"type": "array", "contains": {"const": "nxs:Field/NXcrystal/type"}},
-                                                                            "schema:value": {"type": "string"}
-                                                                        },
-                                                                        "required": ["schema:value", "schema:propertyID"]
-                                                                    },
-                                                                    "allOf": [
-                                                                        {
-                                                                            "contains": {
-                                                                                "type": "object",
-                                                                                "properties": {
-                                                                                    "schema:propertyID": {"type": "array", "contains": {"const": "nxs:Field/NXcrystal/d_spacing"}},
-                                                                                    "schema:value": {"type": "string"},
-                                                                                    "schema:unitText": {"type": "string"}
+                                                                            "@type": {
+                                                                                "type": "array",
+                                                                                "items": {
+                                                                                    "type": "string"
                                                                                 },
-                                                                                "required": ["schema:propertyID", "schema:value", "schema:unitText"]
+                                                                                "minItems": 2,
+                                                                                "allOf": [
+                                                                                    {
+                                                                                        "contains": {
+                                                                                            "const": "schema:Thing"
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "contains": {
+                                                                                            "const": "schema:Product"
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            "schema:additionalType": {
+                                                                                "const": "nxs:BaseClass/NXsource"
+                                                                            },
+                                                                            "schema:additionalProperty": {
+                                                                                "type": "array",
+                                                                                "minItems": 2,
+                                                                                "items": {
+                                                                                    "$ref": "#/$defs/AdditionalProperty"
+                                                                                },
+                                                                                "allOf": [
+                                                                                    {
+                                                                                        "contains": {
+                                                                                            "type": "object",
+                                                                                            "properties": {
+                                                                                                "schema:propertyID": {
+                                                                                                    "type": "array",
+                                                                                                    "contains": {
+                                                                                                        "const": "nxs:Field/NXsource/type"
+                                                                                                    }
+                                                                                                },
+                                                                                                "schema:value": {
+                                                                                                    "type": "string"
+                                                                                                }
+                                                                                            },
+                                                                                            "required": [
+                                                                                                "schema:propertyID",
+                                                                                                "schema:value"
+                                                                                            ]
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "contains": {
+                                                                                            "type": "object",
+                                                                                            "properties": {
+                                                                                                "schema:propertyID": {
+                                                                                                    "type": "array",
+                                                                                                    "contains": {
+                                                                                                        "const": "nxs:Field/NXsource/probe"
+                                                                                                    }
+                                                                                                },
+                                                                                                "schema:name": {
+                                                                                                    "const": "Probe"
+                                                                                                },
+                                                                                                "schema:value": {
+                                                                                                    "type": "string"
+                                                                                                }
+                                                                                            },
+                                                                                            "required": [
+                                                                                                "schema:name",
+                                                                                                "schema:propertyID",
+                                                                                                "schema:value"
+                                                                                            ]
+                                                                                        }
+                                                                                    }
+                                                                                ]
                                                                             }
                                                                         },
-                                                                        {
-                                                                            "contains": {
-                                                                                "type": "object",
-                                                                                "properties": {
-                                                                                    "schema:propertyID": {"type": "array", "contains": {"const": "nxs:Field/NXcrystal/reflection"}},
-                                                                                    "schema:value": {"type": "string"}
+                                                                        "required": [
+                                                                            "@type",
+                                                                            "schema:additionalType",
+                                                                            "schema:additionalProperty"
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "contains": {
+                                                                        "type": "object",
+                                                                        "properties": {
+                                                                            "@type": {
+                                                                                "type": "array",
+                                                                                "items": {
+                                                                                    "type": "string"
                                                                                 },
-                                                                                "required": ["schema:value", "schema:propertyID"]
+                                                                                "minItems": 2,
+                                                                                "allOf": [
+                                                                                    {
+                                                                                        "contains": {
+                                                                                            "const": "schema:Thing"
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "contains": {
+                                                                                            "const": "schema:Product"
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            "schema:additionalType": {
+                                                                                "const": "nxs:BaseClass/NXmonochromator"
+                                                                            },
+                                                                            "schema:name": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "schema:additionalProperty": {
+                                                                                "description": "Require additional properties for monochromator, requires d-space, crystal type, reflection plane.",
+                                                                                "type": "array",
+                                                                                "minItems": 3,
+                                                                                "items": {
+                                                                                    "$ref": "#/$defs/AdditionalProperty"
+                                                                                },
+                                                                                "contains": {
+                                                                                    "type": "object",
+                                                                                    "properties": {
+                                                                                        "schema:propertyID": {
+                                                                                            "type": "array",
+                                                                                            "contains": {
+                                                                                                "const": "nxs:Field/NXcrystal/type"
+                                                                                            }
+                                                                                        },
+                                                                                        "schema:value": {
+                                                                                            "type": "string"
+                                                                                        }
+                                                                                    },
+                                                                                    "required": [
+                                                                                        "schema:value",
+                                                                                        "schema:propertyID"
+                                                                                    ]
+                                                                                },
+                                                                                "allOf": [
+                                                                                    {
+                                                                                        "contains": {
+                                                                                            "type": "object",
+                                                                                            "properties": {
+                                                                                                "schema:propertyID": {
+                                                                                                    "type": "array",
+                                                                                                    "contains": {
+                                                                                                        "const": "nxs:Field/NXcrystal/d_spacing"
+                                                                                                    }
+                                                                                                },
+                                                                                                "schema:value": {
+                                                                                                    "type": "string"
+                                                                                                },
+                                                                                                "schema:unitText": {
+                                                                                                    "type": "string"
+                                                                                                }
+                                                                                            },
+                                                                                            "required": [
+                                                                                                "schema:propertyID",
+                                                                                                "schema:value",
+                                                                                                "schema:unitText"
+                                                                                            ]
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "contains": {
+                                                                                            "type": "object",
+                                                                                            "properties": {
+                                                                                                "schema:propertyID": {
+                                                                                                    "type": "array",
+                                                                                                    "contains": {
+                                                                                                        "const": "nxs:Field/NXcrystal/reflection"
+                                                                                                    }
+                                                                                                },
+                                                                                                "schema:value": {
+                                                                                                    "type": "string"
+                                                                                                }
+                                                                                            },
+                                                                                            "required": [
+                                                                                                "schema:value",
+                                                                                                "schema:propertyID"
+                                                                                            ]
+                                                                                        }
+                                                                                    }
+                                                                                ]
                                                                             }
-                                                                        }
-                                                                    ]
+                                                                        },
+                                                                        "required": [
+                                                                            "@type",
+                                                                            "schema:additionalType",
+                                                                            "schema:additionalProperty"
+                                                                        ]
+                                                                    }
                                                                 }
-                                                            },
-                                                            "required": ["@type", "schema:additionalType", "schema:additionalProperty"]
+                                                            ]
                                                         }
-                                                    }
-                                                ]
+                                                    },
+                                                    "required": [
+                                                        "schema:hasPart"
+                                                    ]
+                                                }
                                             }
                                         }
+                                    },
+                                    "schema:object": {
+                                        "$ref": "#/$defs/XasSample"
                                     }
                                 }
                             }
-                        },
-                        "schema:object": {"$ref": "#/$defs/XasSample"}
-                    }
+                        ]
                     }
                 },
                 "schema:distribution": {
                     "type": "array",
-                    "items": {"$ref": "#/$defs/DataDownload"},
+                    "items": {
+                        "$ref": "#/$defs/DataDownload"
+                    },
                     "contains": {
                         "type": "object",
                         "properties": {
                             "@type": {
                                 "type": "array",
-                                "items": {"type": "string"},
+                                "items": {
+                                    "type": "string"
+                                },
                                 "minItems": 2,
                                 "allOf": [
                                     {
-                                        "contains": {"const": "schema:DataDownload"}
+                                        "contains": {
+                                            "const": "schema:DataDownload"
+                                        }
                                     },
                                     {
-                                        "contains": {"const": "cdi:PhysicalDataset"}
+                                        "contains": {
+                                            "const": "cdi:PhysicalDataset"
+                                        }
                                     }
                                 ]
                             },
-                            "dcterms:conformsTo": {"type": "array", "contains": {"type": "object", "properties": {"@id": {"const": "https://github.com/XraySpectroscopy/XAS-Data-Interchange/blob/master/specification/spec.md"}}, "required": ["@id"]}}
+                            "dcterms:conformsTo": {
+                                "type": "array",
+                                "contains": {
+                                    "type": "object",
+                                    "properties": {
+                                        "@id": {
+                                            "const": "https://github.com/XraySpectroscopy/XAS-Data-Interchange/blob/master/specification/spec.md"
+                                        }
+                                    },
+                                    "required": [
+                                        "@id"
+                                    ]
+                                }
+                            }
                         },
                         "required": [
                             "@type",
@@ -170,16 +302,26 @@
                     "type": "array",
                     "description": "Require DefinedTerms for both: absorption edge (XDI dict) and target element (SWEET).",
                     "minItems": 2,
-                    "items": {"$ref": "#/$defs/DefinedTerm"},
+                    "items": {
+                        "$ref": "#/$defs/DefinedTerm"
+                    },
                     "allOf": [
                         {
                             "contains": {
                                 "type": "object",
                                 "properties": {
-                                    "schema:name": {"const": "X-Ray Absorption Spectroscopy"},
-                                    "schema:termCode": {"const": "XAS"},
-                                    "schema:identifier": {"const": "http://purl.org/pan-science/PaNET/PaNET01196"},
-                                    "schema:inDefinedTermSet": {"const": "http://purl.org/pan-science/PaNET/PaNET.owl"}
+                                    "schema:name": {
+                                        "const": "X-Ray Absorption Spectroscopy"
+                                    },
+                                    "schema:termCode": {
+                                        "const": "XAS"
+                                    },
+                                    "schema:identifier": {
+                                        "const": "http://purl.org/pan-science/PaNET/PaNET01196"
+                                    },
+                                    "schema:inDefinedTermSet": {
+                                        "const": "http://purl.org/pan-science/PaNET/PaNET.owl"
+                                    }
                                 },
                                 "required": [
                                     "schema:name",
@@ -193,8 +335,12 @@
                             "contains": {
                                 "type": "object",
                                 "properties": {
-                                    "schema:name": {"type": "string"},
-                                    "schema:inDefinedTermSet": {"const": "nxs:Field/NXxas/ENTRY/DATA/mode"}
+                                    "schema:name": {
+                                        "type": "string"
+                                    },
+                                    "schema:inDefinedTermSet": {
+                                        "const": "nxs:Field/NXxas/ENTRY/DATA/mode"
+                                    }
                                 },
                                 "required": [
                                     "schema:name",
@@ -211,9 +357,29 @@
                     "items": {
                         "type": "object",
                         "properties": {
-                            "@type": {"const": "schema:DefinedTerm"},
-                            "schema:name": {"type": "string"},
-                            "schema:identifier": {"type": "string"},
+                            "@type": {
+                                "anyOf": [
+                                    {
+                                        "type": "string",
+                                        "const": "schema:DefinedTerm"
+                                    },
+                                    {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "contains": {
+                                            "const": "schema:DefinedTerm"
+                                        }
+                                    }
+                                ]
+                            },
+                            "schema:name": {
+                                "type": "string"
+                            },
+                            "schema:identifier": {
+                                "type": "string"
+                            },
                             "schema:inDefinedTermSet": {
                                 "type": "string",
                                 "description": "need to include this to tag what the keyword is about; we're using the keywords as soft-typed properties"
@@ -231,18 +397,26 @@
                             "contains": {
                                 "type": "object",
                                 "properties": {
-                                    "schema:inDefinedTermSet": {"const": "https://github.com/XraySpectroscopy/XAS-Data-Interchange/blob/master/specification/dictionary.md"}
+                                    "schema:inDefinedTermSet": {
+                                        "const": "https://github.com/XraySpectroscopy/XAS-Data-Interchange/blob/master/specification/dictionary.md"
+                                    }
                                 },
-                                "required": ["schema:inDefinedTermSet"]
+                                "required": [
+                                    "schema:inDefinedTermSet"
+                                ]
                             }
                         },
                         {
                             "contains": {
                                 "type": "object",
                                 "properties": {
-                                    "schema:inDefinedTermSet": {"const": "http://sweetontology.net/matrElement"}
+                                    "schema:inDefinedTermSet": {
+                                        "const": "http://sweetontology.net/matrElement"
+                                    }
                                 },
-                                "required": ["schema:inDefinedTermSet"]
+                                "required": [
+                                    "schema:inDefinedTermSet"
+                                ]
                             }
                         }
                     ]
@@ -251,11 +425,26 @@
         }
     ],
     "$defs": {
-        "CdifMandatory": {"$ref": "../../cdifProperties/cdifMandatory/cdifMandatorySchema.json"},
-        "DefinedTerm": {"$ref": "../../schemaorgProperties/definedTerm/definedTermSchema.json"},
-        "AdditionalProperty": {"$ref": "../../schemaorgProperties/additionalProperty/additionalPropertySchema.json"},
-        "DataDownload": {"$ref": "../../schemaorgProperties/dataDownload/dataDownloadSchema.json"},
-        "XasSample": {"$ref": "../xasSample/xasSampleSchema.json"},
-        "XasSubject": {"$ref": "../xasSubject/xasSubjectSchema.json"}
+        "CdifMandatory": {
+            "$ref": "../../cdifProperties/cdifMandatory/cdifMandatorySchema.json"
+        },
+        "CdifProv": {
+            "$ref": "../../cdifProperties/cdifProv/cdifProvSchema.json"
+        },
+        "DefinedTerm": {
+            "$ref": "../../schemaorgProperties/definedTerm/definedTermSchema.json"
+        },
+        "AdditionalProperty": {
+            "$ref": "../../schemaorgProperties/additionalProperty/additionalPropertySchema.json"
+        },
+        "DataDownload": {
+            "$ref": "../../schemaorgProperties/dataDownload/dataDownloadSchema.json"
+        },
+        "XasSample": {
+            "$ref": "../xasSample/xasSampleSchema.json"
+        },
+        "XasSubject": {
+            "$ref": "../xasSubject/xasSubjectSchema.json"
+        }
     }
 }

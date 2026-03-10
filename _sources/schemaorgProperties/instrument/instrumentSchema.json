@@ -6,12 +6,18 @@
     "properties": {
         "@type": {
             "type": "array",
-            "items": {"type": "string"},
+            "items": {
+                "type": "string"
+            },
             "minItems": 1,
-            "contains": {"const": "schema:Thing"},
+            "contains": {
+                "const": "schema:Thing"
+            },
             "description": "Must include schema:Thing. May also include schema:Product or domain-specific types."
         },
-        "@id": {"type": "string"},
+        "@id": {
+            "type": "string"
+        },
         "schema:name": {
             "type": "string",
             "description": "Human-readable name for this instrument"
@@ -19,8 +25,12 @@
         "schema:identifier": {
             "description": "Formal identifier for this instrument",
             "anyOf": [
-                {"type": "string"},
-                {"$ref": "#/$defs/Identifier"}
+                {
+                    "type": "string"
+                },
+                {
+                    "$ref": "#/$defs/Identifier"
+                }
             ]
         },
         "schema:description": {
@@ -34,24 +44,32 @@
         "schema:additionalType": {
             "description": "Domain-specific type URIs for this instrument",
             "anyOf": [
-                {"type": "string"},
+                {
+                    "type": "string"
+                },
                 {
                     "type": "array",
-                    "items": {"type": "string"}
+                    "items": {
+                        "type": "string"
+                    }
                 }
             ]
         },
         "schema:additionalProperty": {
             "type": "array",
             "description": "Domain-specific properties (detection limits, calibration info, etc.)",
-            "items": {"$ref": "#/$defs/AdditionalProperty"}
+            "items": {
+                "$ref": "#/$defs/AdditionalProperty"
+            }
         },
         "schema:hasPart": {
             "type": "array",
-            "description": "Sub-components of this instrument system",
+            "description": "Sub-components of this instrument system. Use @id references or inline instrument objects.",
             "items": {
                 "anyOf": [
-                    {"$ref": "#"},
+                    {
+                        "$ref": "#/$defs/InstrumentRef"
+                    },
                     {
                         "type": "object",
                         "properties": {
@@ -65,12 +83,82 @@
             }
         }
     },
-    "required": ["schema:name"],
+    "required": [
+        "schema:name"
+    ],
     "allOf": [
-        {"required": ["@type"]}
+        {
+            "required": [
+                "@type"
+            ]
+        }
     ],
     "$defs": {
-        "Identifier": {"$ref": "../identifier/identifierSchema.json"},
-        "AdditionalProperty": {"$ref": "../additionalProperty/additionalPropertySchema.json"}
+        "Identifier": {
+            "$ref": "../identifier/identifierSchema.json"
+        },
+        "AdditionalProperty": {
+            "$ref": "../additionalProperty/additionalPropertySchema.json"
+        },
+        "InstrumentRef": {
+            "type": "object",
+            "description": "Inline sub-component instrument (non-recursive single level)",
+            "properties": {
+                "@type": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "minItems": 1,
+                    "contains": {
+                        "const": "schema:Thing"
+                    }
+                },
+                "@id": {
+                    "type": "string"
+                },
+                "schema:name": {
+                    "type": "string"
+                },
+                "schema:identifier": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "$ref": "#/$defs/Identifier"
+                        }
+                    ]
+                },
+                "schema:description": {
+                    "type": "string"
+                },
+                "schema:alternateName": {
+                    "type": "string"
+                },
+                "schema:additionalType": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    ]
+                },
+                "schema:additionalProperty": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/$defs/AdditionalProperty"
+                    }
+                }
+            },
+            "required": [
+                "schema:name"
+            ]
+        }
     }
 }

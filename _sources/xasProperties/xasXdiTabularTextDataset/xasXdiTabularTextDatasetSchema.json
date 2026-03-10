@@ -4,7 +4,21 @@
     "type": "object",
     "properties": {
         "@type": {
-            "const": "cdi:WideDataStructure"
+            "anyOf": [
+                {
+                    "type": "string",
+                    "const": "cdi:WideDataStructure"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "contains": {
+                        "const": "cdi:WideDataStructure"
+                    }
+                }
+            ]
         },
         "cdi:has_DataStructureComponent": {
             "type": "array",
@@ -14,10 +28,38 @@
                     "@type": {
                         "oneOf": [
                             {
-                                "const": "cdi:IdentifierComponent"
+                                "anyOf": [
+                                    {
+                                        "type": "string",
+                                        "const": "cdi:IdentifierComponent"
+                                    },
+                                    {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "contains": {
+                                            "const": "cdi:IdentifierComponent"
+                                        }
+                                    }
+                                ]
                             },
                             {
-                                "const": "cdi:MeasureComponent"
+                                "anyOf": [
+                                    {
+                                        "type": "string",
+                                        "const": "cdi:MeasureComponent"
+                                    },
+                                    {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "contains": {
+                                            "const": "cdi:MeasureComponent"
+                                        }
+                                    }
+                                ]
                             }
                         ]
                     },
@@ -34,7 +76,21 @@
                         "type": "object",
                         "properties": {
                             "@type": {
-                                "const": "cdi:ValueMapping"
+                                "anyOf": [
+                                    {
+                                        "type": "string",
+                                        "const": "cdi:ValueMapping"
+                                    },
+                                    {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "contains": {
+                                            "const": "cdi:ValueMapping"
+                                        }
+                                    }
+                                ]
                             },
                             "cdi:hasIndex": {
                                 "type": "integer"
