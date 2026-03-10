@@ -171,17 +171,19 @@ x-defs:
           - type: string
           - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.cdifProperties.cdifOptional/$defs/DefinedTerm
       schema:sameAs:
-        description: The other identifiers for the dataset. Schema.org has three ways
-          of encoding identifiers-- a text description, a URL, or by using the schema:PropertyValue
-          field. The Science on Schema.org guidance strongly recommends using the
-          PropertyValue approach. see https://github.com/ESIPFed/science-on-schema.org   ....
-          Dataset.md#identifier.
+        description: Other identifiers for the dataset, as IRI references, literal
+          strings, or structured identifiers using schema:PropertyValue.
         type: array
         minItems: 0
         items:
           anyOf:
-          - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.cdifProperties.cdifOptional/$defs/Identifier
           - type: string
+          - type: object
+            properties:
+              '@id':
+                type: string
+                description: IRI for an equivalent resource or alternate identifier
+          - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.cdifProperties.cdifOptional/$defs/Identifier
       schema:version:
         description: The version number or identifier for this dataset (text or numeric).
           The values should sort from oldest to newest using an alphanumeric sort
@@ -1059,7 +1061,13 @@ x-defs:
         type: array
         description: other identifiers for the person
         items:
-          type: string
+          anyOf:
+          - type: string
+          - type: object
+            properties:
+              '@id':
+                type: string
+          - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.schemaorgProperties.identifier
     allOf:
     - required:
       - '@type'
@@ -1116,7 +1124,13 @@ x-defs:
         type: array
         description: other identifiers for the organization
         items:
-          type: string
+          anyOf:
+          - type: string
+          - type: object
+            properties:
+              '@id':
+                type: string
+          - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.schemaorgProperties.identifier
     allOf:
     - required:
       - '@type'

@@ -1,5 +1,5 @@
 Validation report for cdif.bbr.metadata.schemaorgProperties.dataDownload - DataDownload
-Generated 2026-03-10T14:40:28.606252+00:00
+Generated 2026-03-10T15:15:47.708641+00:00
 === General ===
 Test was expected to fail and it did.
 === End General ===
@@ -22,6 +22,12 @@ Validation result for _sources/schemaorgProperties/dataDownload/rules.shacl:
   Validation Report
   Conforms: False
   Results (2):
+  Validation Result in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+  	Severity: sh:Info
+  	Source Shape: [ sh:message Literal("Recommended: include dcterms:conformsTo to identify the standard or specification this distribution conforms to.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path dcterms:conformsTo ; sh:severity sh:Info ]
+  	Focus Node: [ ns1:checksum [ ns1:algorithm Literal("MD5") ; ns1:checksumValue Literal("35247-39u83-7ik") ; rdf:type ns1:Checksum ] ; rdf:type schema1:DataDownload ; schema1:contentUrl Literal("") ; schema1:encodingFormat Literal("text/csv") ; schema1:name Literal("Water levels in Beartooth reservoir, 1992-2020") ; schema1:provider <https://orcid.org/3333-4444-5565> ]
+  	Result Path: dcterms:conformsTo
+  	Message: Recommended: include dcterms:conformsTo to identify the standard or specification this distribution conforms to.
   Constraint Violation in PatternConstraintComponent (http://www.w3.org/ns/shacl#PatternConstraintComponent):
   	Severity: sh:Violation
   	Source Shape: [ sh:datatype xsd:string ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path schema1:contentUrl ; sh:pattern Literal("^[a-zA-Z][a-zA-Z0-9+.-]*:[^\s]*$") ]
@@ -29,60 +35,18 @@ Validation result for _sources/schemaorgProperties/dataDownload/rules.shacl:
   	Value Node: Literal("")
   	Result Path: schema1:contentUrl
   	Message: Value does not match pattern '^[a-zA-Z][a-zA-Z0-9+.-]*:[^\s]*$'
-  Validation Result in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-  	Severity: sh:Info
-  	Source Shape: [ sh:message Literal("Recommended: include dcterms:conformsTo to identify the standard or specification this distribution conforms to.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path dcterms:conformsTo ; sh:severity sh:Info ]
-  	Focus Node: [ ns1:checksum [ ns1:algorithm Literal("MD5") ; ns1:checksumValue Literal("35247-39u83-7ik") ; rdf:type ns1:Checksum ] ; rdf:type schema1:DataDownload ; schema1:contentUrl Literal("") ; schema1:encodingFormat Literal("text/csv") ; schema1:name Literal("Water levels in Beartooth reservoir, 1992-2020") ; schema1:provider <https://orcid.org/3333-4444-5565> ]
-  	Result Path: dcterms:conformsTo
-  	Message: Recommended: include dcterms:conformsTo to identify the standard or specification this distribution conforms to.
   
 Focus nodes for _sources/schemaorgProperties/dataDownload/rules.shacl:
- - Shape cdifd:CDIFDataDownloadShape: _:Nc09014f3c247452ba63fe2df94bf7e0e
- - Shape <https://www.ogc.org/rules/template/#ConformsToInfo>: _:Nc09014f3c247452ba63fe2df94bf7e0e
-
-Validation result for _sources/schemaorgProperties/person/rules.shacl:
-  Validation Report
-  Conforms: True
-  
-Focus nodes for _sources/schemaorgProperties/person/rules.shacl:
- - Shape cdifd:CDIFPersonShape/sh:or/rdf:rest/rdf:first: *none*
- - Shape cdifd:affiliationProperty/sh:or/rdf:rest/rdf:first: *none*
- - Shape cdifd:CDIFContactPointShape: <https://orcid.org/3333-4444-5565>/schema1:contactPoint
- - Shape cdifd:maintainerOrProviderContactPointShape: *none*
- - Shape cdifd:CDIFPersonShape/sh:or/rdf:first: *none*
- - Shape cdifd:affiliationProperty/sh:or/rdf:first: *none*
- - Shape _:nc6b04f7c32534ad59ee09a3bdefeaf85b14: *none*
- - Shape cdifd:CDIFPersonShape: <https://orcid.org/3333-4444-5565>
- - Shape cdifd:maintainerOrProviderContactPointShape/sh:property/sh:or/rdf:first: *none*
- - Shape cdifd:contactPointProperty/sh:or/rdf:rest/rdf:first: *none*
- - Shape cdifd:contactPointProperty/sh:or/rdf:first: *none*
-
-Validation result for _sources/schemaorgProperties/identifier/rules.shacl:
-  Validation Report
-  Conforms: True
-  
-Focus nodes for _sources/schemaorgProperties/identifier/rules.shacl:
- - Shape cdifd:CDIFIdentifierShape/sh:property/sh:or/rdf:first: *none*
- - Shape _:n5b3071d839c74d84a680fbb11d5a6951b20: *none*
- - Shape _:n5b3071d839c74d84a680fbb11d5a6951b21: *none*
- - Shape _:n5b3071d839c74d84a680fbb11d5a6951b10: *none*
- - Shape cdifd:CDIFIdentifierShape/sh:or/rdf:first: *none*
- - Shape cdifd:CDIFIdentifierShape: *none*
- - Shape _:n5b3071d839c74d84a680fbb11d5a6951b22: *none*
- - Shape cdifd:CDIFIdentifierTypeTermShape/sh:property/sh:or/rdf:first: *none*
- - Shape cdifd:CDIFIdentifierTypeTermShape: *none*
- - Shape _:n5b3071d839c74d84a680fbb11d5a6951b23: *none*
- - Shape cdifd:CDIFIdentifierShape/sh:or/rdf:rest/rdf:first: *none*
- - Shape _:n5b3071d839c74d84a680fbb11d5a6951b11: *none*
- - Shape _:n5b3071d839c74d84a680fbb11d5a6951b25: *none*
+ - Shape <https://www.ogc.org/rules/template/#ConformsToInfo>: _:Nf37a7e92fb4646e8bbda59d1025b2de3
+ - Shape cdifd:CDIFDataDownloadShape: _:Nf37a7e92fb4646e8bbda59d1025b2de3
 
 Validation result for _sources/schemaorgProperties/organization/rules.shacl:
   Validation Report
   Conforms: True
   
 Focus nodes for _sources/schemaorgProperties/organization/rules.shacl:
- - Shape cdifd:CDIFOrganizationShape/sh:or/rdf:rest/rdf:first: *none*
  - Shape cdifd:CDIFOrganizationShape: <https://ror.org/347237>
+ - Shape cdifd:CDIFOrganizationShape/sh:or/rdf:rest/rdf:first: *none*
  - Shape cdifd:CDIFOrganizationShape/sh:or/rdf:first: *none*
 
 Validation result for _sources/schemaorgProperties/definedTerm/rules.shacl:
@@ -90,18 +54,54 @@ Validation result for _sources/schemaorgProperties/definedTerm/rules.shacl:
   Conforms: True
   
 Focus nodes for _sources/schemaorgProperties/definedTerm/rules.shacl:
- - Shape _:n9b58f641cf8946d5a4468d6759da68d4b26: *none*
- - Shape cdifd:CDIFDefinedTermShape/sh:or/rdf:rest/rdf:first: *none*
- - Shape _:n9b58f641cf8946d5a4468d6759da68d4b7: *none*
- - Shape _:n9b58f641cf8946d5a4468d6759da68d4b19: *none*
+ - Shape _:n5edc6d884db94e6cae643cdbc115372eb4: *none*
+ - Shape _:n5edc6d884db94e6cae643cdbc115372eb19: *none*
+ - Shape _:n5edc6d884db94e6cae643cdbc115372eb26: *none*
+ - Shape _:n5edc6d884db94e6cae643cdbc115372eb7: *none*
  - Shape cdifd:CDIFDefinedTermShape/sh:or/rdf:first: *none*
  - Shape cdifd:CDIFDefinedTermShape: *none*
- - Shape _:n9b58f641cf8946d5a4468d6759da68d4b10: *none*
- - Shape _:n9b58f641cf8946d5a4468d6759da68d4b6: *none*
- - Shape _:n9b58f641cf8946d5a4468d6759da68d4b4: *none*
- - Shape _:n9b58f641cf8946d5a4468d6759da68d4b5: *none*
+ - Shape _:n5edc6d884db94e6cae643cdbc115372eb6: *none*
+ - Shape cdifd:CDIFDefinedTermShape/sh:or/rdf:rest/rdf:first: *none*
+ - Shape _:n5edc6d884db94e6cae643cdbc115372eb10: *none*
+ - Shape _:n5edc6d884db94e6cae643cdbc115372eb8: *none*
  - Shape cdifd:CDIFDefinedTermShape/sh:property/sh:or/rdf:first: *none*
- - Shape _:n9b58f641cf8946d5a4468d6759da68d4b8: *none*
+ - Shape _:n5edc6d884db94e6cae643cdbc115372eb5: *none*
+
+Validation result for _sources/schemaorgProperties/identifier/rules.shacl:
+  Validation Report
+  Conforms: True
+  
+Focus nodes for _sources/schemaorgProperties/identifier/rules.shacl:
+ - Shape cdifd:CDIFIdentifierShape/sh:property/sh:or/rdf:first: *none*
+ - Shape cdifd:CDIFIdentifierShape: *none*
+ - Shape _:n71fe372ee74e4621a415693ea0b400c7b25: *none*
+ - Shape _:n71fe372ee74e4621a415693ea0b400c7b11: *none*
+ - Shape cdifd:CDIFIdentifierTypeTermShape: *none*
+ - Shape _:n71fe372ee74e4621a415693ea0b400c7b22: *none*
+ - Shape cdifd:CDIFIdentifierTypeTermShape/sh:property/sh:or/rdf:first: *none*
+ - Shape _:n71fe372ee74e4621a415693ea0b400c7b21: *none*
+ - Shape cdifd:CDIFIdentifierShape/sh:or/rdf:first: *none*
+ - Shape _:n71fe372ee74e4621a415693ea0b400c7b10: *none*
+ - Shape _:n71fe372ee74e4621a415693ea0b400c7b20: *none*
+ - Shape cdifd:CDIFIdentifierShape/sh:or/rdf:rest/rdf:first: *none*
+ - Shape _:n71fe372ee74e4621a415693ea0b400c7b23: *none*
+
+Validation result for _sources/schemaorgProperties/person/rules.shacl:
+  Validation Report
+  Conforms: True
+  
+Focus nodes for _sources/schemaorgProperties/person/rules.shacl:
+ - Shape cdifd:CDIFPersonShape/sh:or/rdf:rest/rdf:first: *none*
+ - Shape _:nfe745bd64277498da8a75e0404bcf5b6b14: *none*
+ - Shape cdifd:CDIFContactPointShape: <https://orcid.org/3333-4444-5565>/schema1:contactPoint
+ - Shape cdifd:CDIFPersonShape: <https://orcid.org/3333-4444-5565>
+ - Shape cdifd:contactPointProperty/sh:or/rdf:first: *none*
+ - Shape cdifd:affiliationProperty/sh:or/rdf:rest/rdf:first: *none*
+ - Shape cdifd:contactPointProperty/sh:or/rdf:rest/rdf:first: *none*
+ - Shape cdifd:affiliationProperty/sh:or/rdf:first: *none*
+ - Shape cdifd:maintainerOrProviderContactPointShape/sh:property/sh:or/rdf:first: *none*
+ - Shape cdifd:CDIFPersonShape/sh:or/rdf:first: *none*
+ - Shape cdifd:maintainerOrProviderContactPointShape: *none*
 
 === End SHACL ===
 

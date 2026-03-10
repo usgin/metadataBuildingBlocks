@@ -970,7 +970,13 @@ x-defs:
         type: array
         description: other identifiers for the person
         items:
-          type: string
+          anyOf:
+          - type: string
+          - type: object
+            properties:
+              '@id':
+                type: string
+          - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasOptional/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.schemaorgProperties.identifier
     allOf:
     - required:
       - '@type'
@@ -1027,7 +1033,13 @@ x-defs:
         type: array
         description: other identifiers for the organization
         items:
-          type: string
+          anyOf:
+          - type: string
+          - type: object
+            properties:
+              '@id':
+                type: string
+          - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasOptional/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.schemaorgProperties.identifier
     allOf:
     - required:
       - '@type'

@@ -256,12 +256,12 @@ ex:cdifOptional_23578 a schema1:Dataset ;
     schema1:name "Bathymetry Bay of Biscay" ;
     schema1:publishingPrinciples "https://example.org/principles/3478" ;
     schema1:relatedLink [ a schema1:LinkRole ;
-            schema1:linkRelationship "related data" ],
-        [ a schema1:LinkRole ;
             schema1:linkRelationship [ a schema1:DefinedTerm ;
                     schema1:inDefinedTermSet "https://www.iana.org/assignments/link-relations/" ;
                     schema1:name "related dataset" ;
-                    schema1:termCode "related" ] ] ;
+                    schema1:termCode "related" ] ],
+        [ a schema1:LinkRole ;
+            schema1:linkRelationship "related data" ] ;
     schema1:url "https://example.org/landingPage254266" ;
     schema1:version "1.0" .
 
@@ -304,16 +304,19 @@ properties:
       - type: string
       - $ref: '#/$defs/DefinedTerm'
   schema:sameAs:
-    description: The other identifiers for the dataset. Schema.org has three ways
-      of encoding identifiers-- a text description, a URL, or by using the schema:PropertyValue
-      field. The Science on Schema.org guidance strongly recommends using the PropertyValue
-      approach. see https://github.com/ESIPFed/science-on-schema.org   .... Dataset.md#identifier.
+    description: Other identifiers for the dataset, as IRI references, literal strings,
+      or structured identifiers using schema:PropertyValue.
     type: array
     minItems: 0
     items:
       anyOf:
-      - $ref: '#/$defs/Identifier'
       - type: string
+      - type: object
+        properties:
+          '@id':
+            type: string
+            description: IRI for an equivalent resource or alternate identifier
+      - $ref: '#/$defs/Identifier'
   schema:version:
     type:
     - string

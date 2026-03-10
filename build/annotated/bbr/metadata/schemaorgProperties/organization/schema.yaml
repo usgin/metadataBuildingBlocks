@@ -41,7 +41,13 @@ properties:
     type: array
     description: other identifiers for the organization
     items:
-      type: string
+      anyOf:
+      - type: string
+      - type: object
+        properties:
+          '@id':
+            type: string
+      - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/identifier/schema.yaml
 allOf:
 - required:
   - '@type'
