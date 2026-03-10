@@ -221,7 +221,6 @@ $defs:
 allOf:
 - required:
   - '@type'
-  - cdi:physicalDataType
 - $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/variableMeasured/schema.yaml
 x-jsonld-prefixes:
   schema: http://schema.org/

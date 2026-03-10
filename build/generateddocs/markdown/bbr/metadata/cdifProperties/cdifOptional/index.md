@@ -290,6 +290,18 @@ type: object
 title: 'Optional properties for CDIF discovery metadata schema, with schema: prefixes'
 description: Building block specifies properties for CDIF schama.org discovery record
 properties:
+  '@context':
+    type: object
+    description: Additional JSON-LD namespace prefixes used by optional CDIF properties.
+    properties:
+      geosparql:
+        const: http://www.opengis.net/ont/geosparql#
+      prov:
+        const: http://www.w3.org/ns/prov#
+      dqv:
+        const: http://www.w3.org/ns/dqv#
+      cdi:
+        const: http://ddialliance.org/Specification/DDI-CDI/1.0/RDF/
   schema:description:
     type: string
     description: A short summary describing a dataset. This text will be indexed by
@@ -486,7 +498,9 @@ properties:
     description: What does the dataset measure? (e.g., temperature, pressure)
     type: array
     items:
-      $ref: '#/$defs/VariableMeasured'
+      anyOf:
+      - $ref: '#/$defs/VariableMeasured'
+      - $ref: '#/$defs/StatisticalVariable'
   schema:spatialCoverage:
     description: To specify location that is the subject of resource content; use
       schema.org place names, bounding box, point or optional OGC WKT gemetry.
@@ -543,6 +557,8 @@ $defs:
     $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/funder/schema.yaml
   VariableMeasured:
     $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifVariableMeasured/schema.yaml
+  StatisticalVariable:
+    $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/statisticalVariable/schema.yaml
   SpatialExtent:
     $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/spatialExtent/schema.yaml
   TemporalExtent:

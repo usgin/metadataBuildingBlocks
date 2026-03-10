@@ -5,6 +5,36 @@
       "title": "Optional properties for CDIF Discovery metadata schema, with schema: prefixes",
       "description": "Building block specifies properties for minimal CDIF schama.org discovery record",
       "properties": {
+        "@context": {
+          "type": "object",
+          "description": "JSON-LD context declaring namespace prefixes used in the metadata record.",
+          "properties": {
+            "schema": {
+              "enum": [
+                "http://schema.org/"
+              ]
+            },
+            "dcterms": {
+              "enum": [
+                "http://purl.org/dc/terms/"
+              ]
+            },
+            "spdx": {
+              "enum": [
+                "http://spdx.org/rdf/terms#"
+              ]
+            },
+            "dcat": {
+              "enum": [
+                "http://www.w3.org/ns/dcat#"
+              ]
+            }
+          },
+          "required": [
+            "schema",
+            "dcterms"
+          ]
+        },
         "@id": {
           "type": "string",
           "description": "The URI for the resource should be the @id value for the root of the JSON instance document tree. Must be an IRI (e.g. https://doi.org/..., urn:..., or a relative URI like #localid). Note that this identifier can be interpreted to identify the resource that is the subject of this metadata record, or the JSON-LD object that is the digital object containing the metadata information."
@@ -199,6 +229,32 @@
       "title": "Optional properties for CDIF discovery metadata schema, with schema: prefixes",
       "description": "Building block specifies properties for CDIF schama.org discovery record",
       "properties": {
+        "@context": {
+          "type": "object",
+          "description": "Additional JSON-LD namespace prefixes used by optional CDIF properties.",
+          "properties": {
+            "geosparql": {
+              "enum": [
+                "http://www.opengis.net/ont/geosparql#"
+              ]
+            },
+            "prov": {
+              "enum": [
+                "http://www.w3.org/ns/prov#"
+              ]
+            },
+            "dqv": {
+              "enum": [
+                "http://www.w3.org/ns/dqv#"
+              ]
+            },
+            "cdi": {
+              "enum": [
+                "http://ddialliance.org/Specification/DDI-CDI/1.0/RDF/"
+              ]
+            }
+          }
+        },
         "schema:description": {
           "type": "string",
           "description": "A short summary describing a dataset. This text will be indexed by search applications, so the more information here, the better."
@@ -519,7 +575,14 @@
           "description": "What does the dataset measure? (e.g., temperature, pressure)",
           "type": "array",
           "items": {
-            "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifOptional/$defs/VariableMeasured"
+            "anyOf": [
+              {
+                "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifOptional/$defs/VariableMeasured"
+              },
+              {
+                "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifOptional/$defs/StatisticalVariable"
+              }
+            ]
           }
         },
         "schema:spatialCoverage": {
@@ -596,6 +659,9 @@
         },
         "VariableMeasured": {
           "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifVariableMeasured"
+        },
+        "StatisticalVariable": {
+          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.statisticalVariable"
         },
         "SpatialExtent": {
           "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.spatialExtent"
@@ -2760,8 +2826,7 @@
       "allOf": [
         {
           "required": [
-            "@type",
-            "cdi:physicalDataType"
+            "@type"
           ]
         },
         {
@@ -2778,6 +2843,139 @@
         "prov": "http://www.w3.org/ns/prov#"
       },
       "x-schema-source": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifVariableMeasured/schema.yaml",
+      "x-schema-version": "https://json-schema.org/draft/2020-12/schema"
+    },
+    "cdif.bbr.metadata.schemaorgProperties.statisticalVariable": {
+      "description": "A statistical variable description using schema.org/StatisticalVariable. Defines a variable that represents a statistical measure, such as median income or unemployment rate.",
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "contains": {
+            "enum": [
+              "schema:StatisticalVariable"
+            ]
+          },
+          "minItems": 1
+        },
+        "@id": {
+          "type": "string"
+        },
+        "schema:name": {
+          "type": "string",
+          "description": "string label for the statistical variable"
+        },
+        "schema:description": {
+          "type": "string"
+        },
+        "schema:alternateName": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "human intelligible name for variable that conveys semantics"
+          }
+        },
+        "schema:measurementTechnique": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@id": {
+                  "type": "string",
+                  "description": "reference to a skos concept"
+                }
+              }
+            },
+            {
+              "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.statisticalVariable/$defs/DefinedTerm"
+            }
+          ],
+          "description": "Text description or URI identifying the measurement method."
+        },
+        "schema:statType": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@id": {
+                  "type": "string"
+                }
+              }
+            },
+            {
+              "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.statisticalVariable/$defs/DefinedTerm"
+            }
+          ]
+        },
+        "schema:measuredProperty": {
+          "type": "object",
+          "properties": {
+            "@id": {
+              "type": "string",
+              "description": "reference to a skos concept for the property"
+            },
+            "@type": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "schema:Property"
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "contains": {
+                    "enum": [
+                      "schema:Property"
+                    ]
+                  }
+                }
+              ]
+            },
+            "schema:name": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "@id": {
+                      "type": "string"
+                    }
+                  }
+                },
+                {
+                  "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.statisticalVariable/$defs/DefinedTerm"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "required": [
+        "@type",
+        "schema:name",
+        "schema:measuredProperty"
+      ],
+      "$defs": {
+        "DefinedTerm": {
+          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.definedTerm"
+        }
+      },
+      "x-schema-source": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/statisticalVariable/schema.yaml",
       "x-schema-version": "https://json-schema.org/draft/2020-12/schema"
     },
     "cdif.bbr.metadata.schemaorgProperties.spatialExtent": {
@@ -3360,6 +3558,36 @@
       "title": "Optional properties for CDIF Discovery metadata schema, with schema: prefixes",
       "description": "Building block specifies properties for minimal CDIF schama.org discovery record",
       "properties": {
+        "@context": {
+          "type": "object",
+          "description": "JSON-LD context declaring namespace prefixes used in the metadata record.",
+          "properties": {
+            "schema": {
+              "enum": [
+                "http://schema.org/"
+              ]
+            },
+            "dcterms": {
+              "enum": [
+                "http://purl.org/dc/terms/"
+              ]
+            },
+            "spdx": {
+              "enum": [
+                "http://spdx.org/rdf/terms#"
+              ]
+            },
+            "dcat": {
+              "enum": [
+                "http://www.w3.org/ns/dcat#"
+              ]
+            }
+          },
+          "required": [
+            "schema",
+            "dcterms"
+          ]
+        },
         "@id": {
           "type": "string",
           "description": "The URI for the resource should be the @id value for the root of the JSON instance document tree. Must be an IRI (e.g. https://doi.org/..., urn:..., or a relative URI like #localid). Note that this identifier can be interpreted to identify the resource that is the subject of this metadata record, or the JSON-LD object that is the digital object containing the metadata information."
@@ -4558,9 +4786,21 @@
       "x-schema-version": "https://json-schema.org/draft/2020-12/schema"
     },
     "cdif.bbr.metadata.schemaorgProperties.variableMeasured": {
-      "description": "CDIF schema.org implementation of variableMeasured",
+      "description": "Schema.org PropertyValue-based variableMeasured. Defines properties for a measured variable in a dataset, typed as schema:PropertyValue.",
       "type": "object",
       "properties": {
+        "@type": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "contains": {
+            "enum": [
+              "schema:PropertyValue"
+            ]
+          },
+          "minItems": 1
+        },
         "@id": {
           "type": "string"
         },
@@ -4598,177 +4838,69 @@
             }
           ],
           "description": "Text description or URI identifying the measurement method."
-        }
-      },
-      "required": [
-        "schema:name"
-      ],
-      "oneOf": [
-        {
-          "type": "object",
-          "properties": {
-            "@type": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              },
-              "contains": {
-                "enum": [
-                  "schema:PropertyValue"
-                ]
-              },
-              "minItems": 1
-            },
-            "schema:propertyID": {
-              "type": "array",
-              "items": {
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "type": "object",
-                    "properties": {
-                      "@id": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  {
-                    "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.variableMeasured/$defs/DefinedTerm"
-                  }
-                ]
-              },
-              "description": "identifier or name for the property concept"
-            },
-            "schema:unitText": {
-              "type": "string",
-              "description": "unit of measurement as text"
-            },
-            "schema:unitCode": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "object",
-                  "properties": {
-                    "@id": {
-                      "type": "string"
-                    }
-                  }
-                },
-                {
-                  "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.variableMeasured/$defs/DefinedTerm"
-                }
-              ],
-              "description": "URI or code identifying the unit of measure"
-            },
-            "schema:minValue": {
-              "type": "number",
-              "description": "minimum numeric value in the dataset"
-            },
-            "schema:maxValue": {
-              "type": "number",
-              "description": "maximum numeric value in the dataset"
-            },
-            "schema:url": {
-              "type": "string",
-              "format": "uri",
-              "description": "link to a web page useful for interpreting the variable"
-            }
-          },
-          "required": [
-            "@type"
-          ]
         },
-        {
-          "type": "object",
-          "properties": {
-            "@type": {
-              "type": "array",
-              "items": {
+        "schema:propertyID": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
                 "type": "string"
               },
-              "contains": {
-                "enum": [
-                  "schema:StatisticalVariable"
-                ]
-              },
-              "minItems": 1
-            },
-            "schema:statType": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "object",
-                  "properties": {
-                    "@id": {
-                      "type": "string"
-                    }
+              {
+                "type": "object",
+                "properties": {
+                  "@id": {
+                    "type": "string"
                   }
-                },
-                {
-                  "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.variableMeasured/$defs/DefinedTerm"
                 }
-              ]
+              },
+              {
+                "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.variableMeasured/$defs/DefinedTerm"
+              }
+            ]
+          },
+          "description": "identifier or name for the property concept"
+        },
+        "schema:unitText": {
+          "type": "string",
+          "description": "unit of measurement as text"
+        },
+        "schema:unitCode": {
+          "anyOf": [
+            {
+              "type": "string"
             },
-            "schema:measuredProperty": {
+            {
               "type": "object",
               "properties": {
                 "@id": {
-                  "type": "string",
-                  "description": "reference to a skos concept for the property"
-                },
-                "@type": {
-                  "anyOf": [
-                    {
-                      "type": "string",
-                      "enum": [
-                        "schema:Property"
-                      ]
-                    },
-                    {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      },
-                      "contains": {
-                        "enum": [
-                          "schema:Property"
-                        ]
-                      }
-                    }
-                  ]
-                },
-                "schema:name": {
-                  "anyOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "@id": {
-                          "type": "string"
-                        }
-                      }
-                    },
-                    {
-                      "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.variableMeasured/$defs/DefinedTerm"
-                    }
-                  ]
+                  "type": "string"
                 }
               }
+            },
+            {
+              "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFxas/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.variableMeasured/$defs/DefinedTerm"
             }
-          },
-          "required": [
-            "@type",
-            "schema:measuredProperty"
-          ]
+          ],
+          "description": "URI or code identifying the unit of measure"
+        },
+        "schema:minValue": {
+          "type": "number",
+          "description": "minimum numeric value in the dataset"
+        },
+        "schema:maxValue": {
+          "type": "number",
+          "description": "maximum numeric value in the dataset"
+        },
+        "schema:url": {
+          "type": "string",
+          "format": "uri",
+          "description": "link to a web page useful for interpreting the variable"
         }
+      },
+      "required": [
+        "@type",
+        "schema:name"
       ],
       "$defs": {
         "DefinedTerm": {

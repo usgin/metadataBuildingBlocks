@@ -205,6 +205,22 @@ title: 'Optional properties for CDIF Discovery metadata schema, with schema: pre
 description: Building block specifies properties for minimal CDIF schama.org discovery
   record
 properties:
+  '@context':
+    type: object
+    description: JSON-LD context declaring namespace prefixes used in the metadata
+      record.
+    properties:
+      schema:
+        const: http://schema.org/
+      dcterms:
+        const: http://purl.org/dc/terms/
+      spdx:
+        const: http://spdx.org/rdf/terms#
+      dcat:
+        const: http://www.w3.org/ns/dcat#
+    required:
+    - schema
+    - dcterms
   '@id':
     type: string
     description: 'The URI for the resource should be the @id value for the root of
