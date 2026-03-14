@@ -56,7 +56,7 @@ Example point location spatial extent instance.
       "geosparql": "http://www.opengis.net/ont/geosparql#,",
       "sf": "http://www.opengis.net/ont/sf#"
     },
-    "https://raw.githubusercontent.com/Cross-Domain-Interoperability-Framework/metadataBuildingBlocks/undefined/build/annotated/bbr/metadata/schemaorgProperties/spatialExtent/context.jsonld",
+    "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/spatialExtent/context.jsonld",
     {
       "schema": "http://schema.org/",
       "ex": "https://example.org/",
@@ -146,7 +146,7 @@ Example place names spatial extent instance.
       "geosparql": "http://www.opengis.net/ont/geosparql#,",
       "sf": "http://www.opengis.net/ont/sf#"
     },
-    "https://raw.githubusercontent.com/Cross-Domain-Interoperability-Framework/metadataBuildingBlocks/undefined/build/annotated/bbr/metadata/schemaorgProperties/spatialExtent/context.jsonld",
+    "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/spatialExtent/context.jsonld",
     {
       "schema": "http://schema.org/",
       "ex": "https://example.org/",
@@ -249,7 +249,7 @@ Example curvilinear trace spatial extent instance.
       "geosparql": "http://www.opengis.net/ont/geosparql#,",
       "sf": "http://www.opengis.net/ont/sf#"
     },
-    "https://raw.githubusercontent.com/Cross-Domain-Interoperability-Framework/metadataBuildingBlocks/undefined/build/annotated/bbr/metadata/schemaorgProperties/spatialExtent/context.jsonld",
+    "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/spatialExtent/context.jsonld",
     {
       "schema": "http://schema.org/",
       "ex": "https://example.org/",
@@ -308,7 +308,7 @@ Example bounding box spatial extent instance.
       "geosparql": "http://www.opengis.net/ont/geosparql#,",
       "sf": "http://www.opengis.net/ont/sf#"
     },
-    "https://raw.githubusercontent.com/Cross-Domain-Interoperability-Framework/metadataBuildingBlocks/undefined/build/annotated/bbr/metadata/schemaorgProperties/spatialExtent/context.jsonld",
+    "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/spatialExtent/context.jsonld",
     {
       "schema": "http://schema.org/",
       "ex": "https://example.org/",
@@ -489,7 +489,7 @@ properties:
               'CRS84'
 $defs:
   DefinedTerm:
-    $ref: https://raw.githubusercontent.com/Cross-Domain-Interoperability-Framework/metadataBuildingBlocks/undefined/build/annotated/bbr/metadata/schemaorgProperties/definedTerm/schema.yaml
+    $ref: https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/definedTerm/schema.yaml
 x-jsonld-prefixes:
   schema: http://schema.org/
 
@@ -497,8 +497,8 @@ x-jsonld-prefixes:
 
 Links to the schema:
 
-* YAML version: [schema.yaml](https://raw.githubusercontent.com/Cross-Domain-Interoperability-Framework/metadataBuildingBlocks/undefined/build/annotated/bbr/metadata/schemaorgProperties/spatialExtent/schema.json)
-* JSON version: [schema.json](https://raw.githubusercontent.com/Cross-Domain-Interoperability-Framework/metadataBuildingBlocks/undefined/build/annotated/bbr/metadata/schemaorgProperties/spatialExtent/schema.yaml)
+* YAML version: [schema.yaml](https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/spatialExtent/schema.json)
+* JSON version: [schema.json](https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/spatialExtent/schema.yaml)
 
 
 # JSON-LD Context
@@ -513,7 +513,7 @@ Links to the schema:
 ```
 
 You can find the full JSON-LD context here:
-[context.jsonld](https://raw.githubusercontent.com/Cross-Domain-Interoperability-Framework/metadataBuildingBlocks/undefined/build/annotated/bbr/metadata/schemaorgProperties/spatialExtent/context.jsonld)
+[context.jsonld](https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/spatialExtent/context.jsonld)
 
 ## Sources
 
