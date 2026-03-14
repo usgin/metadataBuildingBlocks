@@ -52,18 +52,18 @@ jobs:
 
       - name: Generate CDIF-Discovery-Shapes.ttl
         run: |
-          python validation/generate_shacl_shapes.py \
+          python validation/ShaclValidation/generate_shacl_shapes.py \
             --profile discovery \
             --bb-dir bb/_sources \
-            --output validation/CDIF-Discovery-Shapes.ttl \
+            --output validation/ShaclValidation/CDIF-Discovery-Shapes.ttl \
             -v
 
       - name: Generate CDIF-Complete-Shapes.ttl
         run: |
-          python validation/generate_shacl_shapes.py \
+          python validation/ShaclValidation/generate_shacl_shapes.py \
             --profile complete \
             --bb-dir bb/_sources \
-            --output validation/CDIF-Complete-Shapes.ttl \
+            --output validation/ShaclValidation/CDIF-Complete-Shapes.ttl \
             -v
 
       - name: Commit and push to validation repo
@@ -72,7 +72,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git remote set-url origin https://x-access-token:${{ secrets.VALIDATION_REPO_PAT }}@github.com/Cross-Domain-Interoperability-Framework/validation.git
-          git add CDIFDiscoverySchema.json CDIFCompleteSchema.json CDIF-Discovery-Shapes.ttl CDIF-Complete-Shapes.ttl
+          git add CDIFDiscoverySchema.json CDIFCompleteSchema.json ShaclValidation/CDIF-Discovery-Shapes.ttl ShaclValidation/CDIF-Complete-Shapes.ttl
           if git diff --cached --quiet; then
             echo "No changes to commit"
           else
