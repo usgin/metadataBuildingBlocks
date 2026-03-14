@@ -236,7 +236,7 @@ Example use wikidata id for additionalType scientific equipment , schema.org Pro
       "nxs": "http://purl.org/nexusformat/definitions/",
       "wd": "https://www.wikidata.org/entity/"
     },
-    "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasInstrument/context.jsonld",
+    "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasInstrument/context.jsonld",
     {
       "schema": "http://schema.org/",
       "dcterms": "http://purl.org/dc/terms/",
@@ -422,6 +422,27 @@ xas:487y54 a schema1:Product,
     schema1:hasPart [ a schema1:Product,
                 schema1:Thing ;
             schema1:additionalProperty [ a schema1:PropertyValue ;
+                    schema1:alternateName "incident flux measurement method" ;
+                    schema1:name "detector mode i0" ;
+                    schema1:propertyID "xas:detector.i0" ;
+                    schema1:value "10cm  N2" ],
+                [ a schema1:PropertyValue ;
+                    schema1:name "monitor preset" ;
+                    schema1:propertyID "nxs:Field/NXmonitor/preset" ;
+                    schema1:value "N.A." ],
+                [ a schema1:PropertyValue ;
+                    schema1:alternateName "transmitted flux measurement method" ;
+                    schema1:name "detector mode it" ;
+                    schema1:propertyID "xas:detector.it" ;
+                    schema1:value "10cm  N2" ],
+                [ a schema1:PropertyValue ;
+                    schema1:name "monitor mode" ;
+                    schema1:propertyID "nxs:Field/NXmonitor/mode" ;
+                    schema1:value "monitor" ] ;
+            schema1:additionalType "nxs:BaseClass/NXmonitor" ],
+        [ a schema1:Product,
+                schema1:Thing ;
+            schema1:additionalProperty [ a schema1:PropertyValue ;
                     schema1:name "focusing" ;
                     schema1:propertyID "xas:focusing" ;
                     schema1:value "???" ],
@@ -476,24 +497,25 @@ xas:487y54 a schema1:Product,
         [ a schema1:Product,
                 schema1:Thing ;
             schema1:additionalProperty [ a schema1:PropertyValue ;
-                    schema1:alternateName "incident flux measurement method" ;
-                    schema1:name "detector mode i0" ;
-                    schema1:propertyID "xas:detector.i0" ;
-                    schema1:value "10cm  N2" ],
+                    schema1:name "chemical formula" ;
+                    schema1:propertyID "nxs:Field/NXcrystal/chemical_formula" ;
+                    schema1:value "Si" ],
                 [ a schema1:PropertyValue ;
-                    schema1:name "monitor mode" ;
-                    schema1:propertyID "nxs:Field/NXmonitor/mode" ;
-                    schema1:value "monitor" ],
+                    schema1:name "crystal type" ;
+                    schema1:propertyID "nxs:Field/NXcrystal/type" ;
+                    schema1:value "channel-cut" ],
                 [ a schema1:PropertyValue ;
-                    schema1:alternateName "transmitted flux measurement method" ;
-                    schema1:name "detector mode it" ;
-                    schema1:propertyID "xas:detector.it" ;
-                    schema1:value "10cm  N2" ],
+                    schema1:name "reflection plane (hkl)" ;
+                    schema1:propertyID "nxs:Field/NXcrystal/reflection" ;
+                    schema1:value "1,1,1" ],
                 [ a schema1:PropertyValue ;
-                    schema1:name "monitor preset" ;
-                    schema1:propertyID "nxs:Field/NXmonitor/preset" ;
-                    schema1:value "N.A." ] ;
-            schema1:additionalType "nxs:BaseClass/NXmonitor" ] ;
+                    schema1:name "d-spacing" ;
+                    schema1:propertyID "nxs:Field/NXcrystal/d_spacing" ;
+                    schema1:unitText "Angstrom" ;
+                    schema1:value "3.13550" ] ;
+            schema1:additionalType "nxs:BaseClass/NXmonochromator",
+                "wd:Q3099911" ;
+            schema1:name "Si 111" ] ;
     schema1:name "x-ray absorption analysis system" .
 
 
@@ -563,11 +585,11 @@ required:
 - schema:name
 $defs:
   Identifier:
-    $ref: https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/identifier/schema.yaml
+    $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/identifier/schema.yaml
   AdditionalProperty:
-    $ref: https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/additionalProperty/schema.yaml
+    $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/additionalProperty/schema.yaml
   Instrument:
-    $ref: https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/instrument/schema.yaml
+    $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/instrument/schema.yaml
 x-jsonld-prefixes:
   schema: http://schema.org/
 
@@ -575,8 +597,8 @@ x-jsonld-prefixes:
 
 Links to the schema:
 
-* YAML version: [schema.yaml](https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasInstrument/schema.json)
-* JSON version: [schema.json](https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasInstrument/schema.yaml)
+* YAML version: [schema.yaml](https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasInstrument/schema.json)
+* JSON version: [schema.json](https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasInstrument/schema.yaml)
 
 
 # JSON-LD Context
@@ -592,7 +614,7 @@ Links to the schema:
 ```
 
 You can find the full JSON-LD context here:
-[context.jsonld](https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasInstrument/context.jsonld)
+[context.jsonld](https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasInstrument/context.jsonld)
 
 ## Sources
 
@@ -602,6 +624,6 @@ You can find the full JSON-LD context here:
 
 The source code for this Building Block can be found in the following repository:
 
-* URL: [https://github.com/Cross-Domain-Interoperability-Framework/metadataBuildingBlocks](https://github.com/Cross-Domain-Interoperability-Framework/metadataBuildingBlocks)
+* URL: [https://github.com/usgin/metadataBuildingBlocks](https://github.com/usgin/metadataBuildingBlocks)
 * Path: `_sources/xasProperties/xasInstrument`
 
