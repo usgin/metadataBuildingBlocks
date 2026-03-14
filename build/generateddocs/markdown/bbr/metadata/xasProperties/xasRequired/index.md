@@ -668,18 +668,18 @@ ex:xas-dataset-001 a schema1:Dataset,
                                 [ a schema1:Product,
                                         schema1:Thing ;
                                     schema1:additionalProperty [ a schema1:PropertyValue ;
-                                            schema1:name "crystal type" ;
-                                            schema1:propertyID "nxs:Field/NXcrystal/type" ;
-                                            schema1:value "Si(111)" ],
+                                            schema1:name "d-spacing" ;
+                                            schema1:propertyID "nxs:Field/NXcrystal/d_spacing" ;
+                                            schema1:unitText "Angstrom" ;
+                                            schema1:value "3.13550" ],
                                         [ a schema1:PropertyValue ;
                                             schema1:name "reflection plane (hkl)" ;
                                             schema1:propertyID "nxs:Field/NXcrystal/reflection" ;
                                             schema1:value "1,1,1" ],
                                         [ a schema1:PropertyValue ;
-                                            schema1:name "d-spacing" ;
-                                            schema1:propertyID "nxs:Field/NXcrystal/d_spacing" ;
-                                            schema1:unitText "Angstrom" ;
-                                            schema1:value "3.13550" ] ;
+                                            schema1:name "crystal type" ;
+                                            schema1:propertyID "nxs:Field/NXcrystal/type" ;
+                                            schema1:value "Si(111)" ] ;
                                     schema1:additionalType "nxs:BaseClass/NXmonochromator" ;
                                     schema1:name "Si 111" ] ] ] ] .
 
@@ -962,9 +962,9 @@ allOf:
           - schema:inDefinedTermSet
 $defs:
   CdifMandatory:
-    $ref: https://raw.githubusercontent.com/Cross-Domain-Interoperability-Framework/metadataBuildingBlocks/undefined/build/annotated/bbr/metadata/cdifProperties/cdifMandatory/schema.yaml
+    $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifMandatory/schema.yaml
   CdifProvActivity:
-    $ref: https://raw.githubusercontent.com/Cross-Domain-Interoperability-Framework/metadataBuildingBlocks/undefined/build/annotated/bbr/metadata/cdifProperties/cdifProvActivity/schema.yaml
+    $ref: https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifProvActivity/schema.yaml
   DefinedTerm:
     $ref: https://raw.githubusercontent.com/Cross-Domain-Interoperability-Framework/metadataBuildingBlocks/undefined/build/annotated/bbr/metadata/schemaorgProperties/definedTerm/schema.yaml
   AdditionalProperty:

@@ -209,10 +209,10 @@
           "$ref": "https://raw.githubusercontent.com/Cross-Domain-Interoperability-Framework/metadataBuildingBlocks/undefined/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.definedTerm"
         },
         "DataDownload": {
-          "$ref": "https://raw.githubusercontent.com/Cross-Domain-Interoperability-Framework/metadataBuildingBlocks/undefined/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.dataDownload"
+          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.dataDownload"
         },
         "WebAPI": {
-          "$ref": "https://raw.githubusercontent.com/Cross-Domain-Interoperability-Framework/metadataBuildingBlocks/undefined/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.webAPI"
+          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.webAPI"
         },
         "CdifCatalogRecord": {
           "$ref": "https://raw.githubusercontent.com/Cross-Domain-Interoperability-Framework/metadataBuildingBlocks/undefined/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifCatalogRecord"
@@ -679,10 +679,10 @@
           "$ref": "https://raw.githubusercontent.com/Cross-Domain-Interoperability-Framework/metadataBuildingBlocks/undefined/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.qualityProperties.qualityMeasure"
         },
         "DataDownload": {
-          "$ref": "https://raw.githubusercontent.com/Cross-Domain-Interoperability-Framework/metadataBuildingBlocks/undefined/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.dataDownload"
+          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.dataDownload"
         },
         "WebAPI": {
-          "$ref": "https://raw.githubusercontent.com/Cross-Domain-Interoperability-Framework/metadataBuildingBlocks/undefined/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.webAPI"
+          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.webAPI"
         }
       },
       "x-jsonld-prefixes": {
@@ -960,6 +960,199 @@
       "x-schema-source": "https://raw.githubusercontent.com/Cross-Domain-Interoperability-Framework/metadataBuildingBlocks/undefined/build/annotated/bbr/metadata/schemaorgProperties/definedTerm/schema.yaml",
       "x-schema-version": "https://json-schema.org/draft/2020-12/schema"
     },
+    "cdif.bbr.metadata.schemaorgProperties.labeledLink": {
+      "description": "schema for a labeled link, a profile of schema.org/CreativeWork",
+      "type": "object",
+      "properties": {
+        "@type": {
+          "default": "schema:CreativeWork",
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "schema:CreativeWork"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "contains": {
+                "enum": [
+                  "schema:CreativeWork"
+                ]
+              }
+            }
+          ]
+        },
+        "schema:name": {
+          "type": "string"
+        },
+        "schema:description": {
+          "type": "string"
+        },
+        "schema:url": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "required": [
+        "@type",
+        "schema:url"
+      ],
+      "x-jsonld-prefixes": {
+        "schema": "http://schema.org/"
+      },
+      "x-schema-source": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/labeledLink/schema.yaml",
+      "x-schema-version": "https://json-schema.org/draft/2020-12/schema"
+    },
+    "cdif.bbr.metadata.schemaorgProperties.identifier": {
+      "description": "Properties for a schema.org identifier",
+      "type": "object",
+      "properties": {
+        "@type": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "schema:PropertyValue"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "contains": {
+                "enum": [
+                  "schema:PropertyValue"
+                ]
+              }
+            }
+          ]
+        },
+        "schema:propertyID": {
+          "type": "string",
+          "description": "In this context for the schema:PropertyValue, this field is an identifier for the identifier schema, e.g. DOI, ARK.  Get values from https://registry.identifiers.org/registry/ for interoperability"
+        },
+        "schema:value": {
+          "type": "string",
+          "description": "the identifier string. E.g. 10.5066/F7VX0DMQ"
+        },
+        "schema:url": {
+          "type": "string",
+          "format": "uri",
+          "description": "web-resolveable string for the identifier; host name part is location of a resolver that will return some representation for the given identifier value. E.g. https://doi.org/10.5066/F7VX0DMQ "
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "@type"
+          ]
+        },
+        {
+          "anyOf": [
+            {
+              "required": [
+                "schema:value"
+              ]
+            },
+            {
+              "required": [
+                "schema:url"
+              ]
+            }
+          ]
+        }
+      ],
+      "x-jsonld-prefixes": {
+        "schema": "http://schema.org/"
+      },
+      "x-schema-source": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/identifier/schema.yaml",
+      "x-schema-version": "https://json-schema.org/draft/2020-12/schema"
+    },
+    "cdif.bbr.metadata.schemaorgProperties.definedTerm": {
+      "description": "schema.org Defined Term schema",
+      "type": "object",
+      "properties": {
+        "@type": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "schema:DefinedTerm"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "contains": {
+                "enum": [
+                  "schema:DefinedTerm"
+                ]
+              }
+            }
+          ]
+        },
+        "schema:name": {
+          "type": "string",
+          "description": "text label for the term that is useful to human user"
+        },
+        "schema:identifier": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.identifier"
+            }
+          ]
+        },
+        "schema:inDefinedTermSet": {
+          "type": "string",
+          "description": "Identifier for the controlled vocabulary responsible for this keyword."
+        },
+        "schema:termCode": {
+          "type": "string",
+          "description": "A representative code for this keyword in the controlled vocabulary (Optional).  Analogous to skos:Notation"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "@type"
+          ]
+        },
+        {
+          "anyOf": [
+            {
+              "required": [
+                "schema:name"
+              ]
+            },
+            {
+              "required": [
+                "schema:identifier"
+              ]
+            },
+            {
+              "required": [
+                "schema:termCode"
+              ]
+            }
+          ]
+        }
+      ],
+      "x-jsonld-prefixes": {
+        "schema": "http://schema.org/"
+      },
+      "x-schema-source": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/definedTerm/schema.yaml",
+      "x-schema-version": "https://json-schema.org/draft/2020-12/schema"
+    },
     "cdif.bbr.metadata.schemaorgProperties.dataDownload": {
       "description": "schema to document file-based access to a resoruce via URL, based on schema.org/DataDownload",
       "type": "object",
@@ -1066,10 +1259,10 @@
                 ]
               },
               {
-                "$ref": "https://raw.githubusercontent.com/Cross-Domain-Interoperability-Framework/metadataBuildingBlocks/undefined/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.person"
+                "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.person"
               },
               {
-                "$ref": "https://raw.githubusercontent.com/Cross-Domain-Interoperability-Framework/metadataBuildingBlocks/undefined/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.organization"
+                "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.organization"
               }
             ]
           }
@@ -1082,7 +1275,7 @@
       "x-jsonld-prefixes": {
         "schema": "http://schema.org/"
       },
-      "x-schema-source": "https://raw.githubusercontent.com/Cross-Domain-Interoperability-Framework/metadataBuildingBlocks/undefined/build/annotated/bbr/metadata/schemaorgProperties/dataDownload/schema.yaml",
+      "x-schema-source": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/dataDownload/schema.yaml",
       "x-schema-version": "https://json-schema.org/draft/2020-12/schema"
     },
     "cdif.bbr.metadata.schemaorgProperties.webAPI": {
@@ -1108,7 +1301,7 @@
               "type": "string"
             },
             {
-              "$ref": "https://raw.githubusercontent.com/Cross-Domain-Interoperability-Framework/metadataBuildingBlocks/undefined/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.webAPI/$defs/DefinedTerm"
+              "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.webAPI/$defs/DefinedTerm"
             }
           ],
           "description": "specify the kind of service. Ideally this should be a resolvable identifier. Currently there is no widely adopted registry for serviceType identifiers, in large part because services might be defined at different levels of granularity, and classifications might focus on function, data formats, thematic content, security, or other aspects of the service definition. For interoperability, there must be an external arrangement between data providers and consumers on the strings that will be used to specify service types."
@@ -1121,7 +1314,7 @@
               "default": "not specified"
             },
             {
-              "$ref": "https://raw.githubusercontent.com/Cross-Domain-Interoperability-Framework/metadataBuildingBlocks/undefined/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.webAPI/$defs/LabeledLink"
+              "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.webAPI/$defs/LabeledLink"
             }
           ]
         },
@@ -1132,7 +1325,7 @@
               "type": "string"
             },
             {
-              "$ref": "https://raw.githubusercontent.com/Cross-Domain-Interoperability-Framework/metadataBuildingBlocks/undefined/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.webAPI/$defs/LabeledLink"
+              "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.webAPI/$defs/LabeledLink"
             }
           ]
         },
@@ -1140,7 +1333,7 @@
           "type": "array",
           "description": "actions that can be invoked via the API",
           "items": {
-            "$ref": "https://raw.githubusercontent.com/Cross-Domain-Interoperability-Framework/metadataBuildingBlocks/undefined/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.webAPI/$defs/Action"
+            "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.webAPI/$defs/Action"
           }
         }
       },
@@ -1151,19 +1344,19 @@
       ],
       "$defs": {
         "LabeledLink": {
-          "$ref": "https://raw.githubusercontent.com/Cross-Domain-Interoperability-Framework/metadataBuildingBlocks/undefined/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.labeledLink"
+          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.labeledLink"
         },
         "DefinedTerm": {
-          "$ref": "https://raw.githubusercontent.com/Cross-Domain-Interoperability-Framework/metadataBuildingBlocks/undefined/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.definedTerm"
+          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.definedTerm"
         },
         "Action": {
-          "$ref": "https://raw.githubusercontent.com/Cross-Domain-Interoperability-Framework/metadataBuildingBlocks/undefined/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.action"
+          "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.action"
         }
       },
       "x-jsonld-prefixes": {
         "schema": "http://schema.org/"
       },
-      "x-schema-source": "https://raw.githubusercontent.com/Cross-Domain-Interoperability-Framework/metadataBuildingBlocks/undefined/build/annotated/bbr/metadata/schemaorgProperties/webAPI/schema.yaml",
+      "x-schema-source": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/webAPI/schema.yaml",
       "x-schema-version": "https://json-schema.org/draft/2020-12/schema"
     },
     "cdif.bbr.metadata.cdifProperties.cdifCatalogRecord": {
@@ -2620,7 +2813,7 @@
       "x-jsonld-prefixes": {
         "schema": "http://schema.org/"
       },
-      "x-schema-source": "https://raw.githubusercontent.com/Cross-Domain-Interoperability-Framework/metadataBuildingBlocks/undefined/build/annotated/bbr/metadata/qualityProperties/qualityMeasure/schema.yaml",
+      "x-schema-source": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/qualityProperties/qualityMeasure/schema.yaml",
       "x-schema-version": "https://json-schema.org/draft/2020-12/schema"
     },
     "cdif.bbr.metadata.schemaorgProperties.action": {
@@ -3056,7 +3249,7 @@
       "$ref": "https://raw.githubusercontent.com/Cross-Domain-Interoperability-Framework/metadataBuildingBlocks/undefined/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifOptional"
     },
     {
-      "$ref": "https://raw.githubusercontent.com/Cross-Domain-Interoperability-Framework/metadataBuildingBlocks/undefined/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifDataDescription"
+      "$ref": "https://usgin.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescription/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifDataDescription"
     }
   ],
   "x-jsonld-extra-terms": {
