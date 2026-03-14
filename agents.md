@@ -32,7 +32,8 @@ metadataBuildingBlocks/
 │   │   ├── cdifCatalogRecord/       # dcat:CatalogRecord metadata-about-metadata
 │   │   ├── cdifMandatory/           # CDIF mandatory property group
 │   │   ├── cdifOptional/            # CDIF optional property group
-│   │   ├── cdifProv/                # CDIF provenance (extends generatedBy)
+│   │   ├── cdifProvActivity/         # CDIF provenance activity (extends generatedBy)
+│   │   ├── cdifProvenance/          # CDIF provenance (prov:wasGeneratedBy wrapper)
 │   │   ├── cdifTabularData/         # CDIF tabular data description
 │   │   ├── cdifDataCube/            # CDIF data cube description
 │   │   ├── cdifLongData/            # CDIF long data description
@@ -50,7 +51,7 @@ metadataBuildingBlocks/
 │   │   ├── xasSample/               # XAS sample (extends schema:Product)
 │   │   ├── xasInstrument/           # XAS instrument (beamline, synchrotron)
 │   │   ├── xasFacility/             # XAS facility (synchrotron source)
-│   │   ├── xasGeneratedBy/          # XAS analysis event (extends cdifProv)
+│   │   ├── xasGeneratedBy/          # XAS analysis event (extends cdifProvActivity)
 │   │   ├── xasHDF5DataStructure/    # HDF5 data structure for XAS
 │   │   ├── xasXdiTabularTextDataset/ # XDI tabular text dataset
 │   │   ├── xasRequired/             # XAS mandatory property group
@@ -59,7 +60,7 @@ metadataBuildingBlocks/
 │   └── profiles/                    # Top-level profiles that compose BBs
 │       └── cdifProfiles/
 │           ├── CDIFDiscovery/       # CDIF Discovery profile
-│           ├── CDIFcomplete/        # CDIF Complete profile (discovery + cdifProv + data description)
+│           ├── CDIFcomplete/        # CDIF Complete profile (discovery + data description + provenance + archive)
 │           ├── CDIFDataDescription/ # CDIF Data Description profile
 │           └── CDIFxas/             # CDIF XAS profile
 ├── tools/

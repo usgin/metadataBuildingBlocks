@@ -71,10 +71,10 @@ CDIF profiles are in `_sources/profiles/cdifProfiles/`:
 
 | Profile | Description |
 |---|---|
-| `CDIFDiscovery` | CDIF Discovery profile — general-purpose dataset metadata (allOf: cdifMandatory + cdifOptional) |
-| `CDIFcomplete` | CDIF Complete profile — CDIFDiscovery + cdifProv + extended distribution (3 anyOf branches: DataDownload, archive, WebAPI) |
-| `CDIFDataDescription` | CDIF Data Description profile |
-| `CDIFxas` | CDIF XAS profile — CDIFcomplete + XAS-specific properties |
+| `CDIFDiscovery` | CDIF Discovery profile (allOf: cdifMandatory + cdifOptional) |
+| `CDIFDataDescription` | CDIF Data Description profile (allOf: cdifMandatory + cdifOptional + cdifDataDescription) |
+| `CDIFcomplete` | CDIF Complete profile (allOf: cdifMandatory + cdifOptional + cdifDataDescription + cdifArchiveDistribution + cdifProvenance) |
+| `CDIFxas` | CDIF XAS profile (allOf: cdifMandatory + cdifOptional + xasOptional + xasRequired) |
 
 See [agents.md](agents.md) for the full building block structure, authoring rules, and composition hierarchy.
 
@@ -96,7 +96,7 @@ DDI-CDI vocabulary building blocks for communities using the DDI Cross-Domain In
 
 | Building Block | Description |
 |----------------|-------------|
-| `ddicdiProv` | DDI-CDI native provenance activity -- expresses workflows using `cdi:Activity`, `cdi:Step`, `cdi:ProcessingAgent`, and `cdi:Parameter`. Alternative to the schema.org/PROV-based `cdifProv` building block. Includes JSON Schema with `anyOf [inline-type, id-reference]` pattern for graph node links, SHACL validation shapes, and a soil chemistry analysis example as a multi-node `@graph` document. |
+| `ddicdiProv` | DDI-CDI native provenance activity -- expresses workflows using `cdi:Activity`, `cdi:Step`, `cdi:ProcessingAgent`, and `cdi:Parameter`. Alternative to the schema.org/PROV-based `cdifProvActivity` building block. Includes JSON Schema with `anyOf [inline-type, id-reference]` pattern for graph node links, SHACL validation shapes, and a soil chemistry analysis example as a multi-node `@graph` document. |
 
 ### schemaorgProperties
 
@@ -104,7 +104,7 @@ Schema.org vocabulary building blocks for reusable metadata components.
 
 | Building Block | Description |
 |----------------|-------------|
-| `instrument` | Generic instrument or instrument system -- uses `schema:Thing` base type with optional `schema:Product` typing. Supports hierarchical instrument systems via `schema:hasPart` for sub-components. Instruments are nested within `prov:used` items via a `schema:instrument` sub-key (instruments are `prov:Entity` subclasses). Referenced by `cdifProv`, `provActivity`, and `xasInstrument`. |
+| `instrument` | Generic instrument or instrument system -- uses `schema:Thing` base type with optional `schema:Product` typing. Supports hierarchical instrument systems via `schema:hasPart` for sub-components. Instruments are nested within `prov:used` items via a `schema:instrument` sub-key (instruments are `prov:Entity` subclasses). Referenced by `cdifProvActivity`, `provActivity`, and `xasInstrument`. |
 
 ### provProperties
 
@@ -112,7 +112,7 @@ PROV-O provenance building blocks.
 
 | Building Block | Description |
 |----------------|-------------|
-| `generatedBy` | Base provenance activity -- minimal `prov:Activity` with `prov:used`. Extended by `cdifProv` and `provActivity`. |
+| `generatedBy` | Base provenance activity -- minimal `prov:Activity` with `prov:used`. Extended by `cdifProvActivity` and `provActivity`. |
 | `provActivity` | PROV-O native provenance activity -- extends `generatedBy` with W3C PROV-O properties (`prov:wasAssociatedWith`, `prov:startedAtTime`, `prov:endedAtTime`, `prov:atLocation`, `prov:wasInformedBy`, `prov:generated`). Uses schema.org fallbacks only where PROV-O has no equivalent (name, description, methodology, status). Instruments nested in `prov:used` via `schema:instrument` sub-key. |
 | `derivedFrom` | Provenance derivation -- `prov:wasDerivedFrom` linking. |
 
@@ -123,17 +123,17 @@ The repository implements a three-tier provenance architecture:
 | Tier | Building Block | Introduced At | Description |
 |------|---------------|---------------|-------------|
 | 1 (simple) | `generatedBy` (provProperties) | `cdifOptional` | Minimal `prov:Activity` — `prov:used` accepts only string names or `@id` references |
-| 2 (extended) | `cdifProv` (cdifProperties) | `CDIFcomplete` | Extends `generatedBy` with schema.org Action properties (`schema:agent`, `schema:actionProcess`, `schema:object`, `schema:result`, temporal bounds, location). Requires `@type: ["schema:Action", "prov:Activity"]`. Instruments nested in `prov:used` via `schema:instrument` sub-key. |
-| 3 (domain) | `xasGeneratedBy`, etc. | Domain-specific profiles | Extend `cdifProv` with domain-specific instrument types, agents, and additional properties (see [ddeBuildingBlocks](https://github.com/usgin/ddeBuildingBlocks), [geochemBuildingBlocks](https://github.com/usgin/geochemBuildingBlocks)) |
+| 2 (extended) | `cdifProvActivity` (cdifProperties) | `CDIFcomplete` (via `cdifProvenance`) | Extends `generatedBy` with schema.org Action properties (`schema:agent`, `schema:actionProcess`, `schema:object`, `schema:result`, temporal bounds, location). Requires `@type: ["schema:Action", "prov:Activity"]`. Instruments nested in `prov:used` via `schema:instrument` sub-key. The `cdifProvenance` building block wraps `cdifProvActivity` items in the `prov:wasGeneratedBy` root property. |
+| 3 (domain) | `xasGeneratedBy`, etc. | Domain-specific profiles | Extend `cdifProvActivity` with domain-specific instrument types, agents, and additional properties (see [ddeBuildingBlocks](https://github.com/usgin/ddeBuildingBlocks), [geochemBuildingBlocks](https://github.com/usgin/geochemBuildingBlocks)) |
 
 ### xasProperties
 
 | Building Block | Description |
 |----------------|-------------|
 | `xasInstrument` | XAS instrument with `schema:hasPart` for hierarchical sub-components (refs generic instrument building block). |
-| `xasGeneratedBy` | XAS analysis event — extends `cdifProv` with `xas:AnalysisEvent` typing, XAS facility location, sample object, XAS-specific instrument types, and XAS additional properties (edge_energy, calibration method, etc.). |
-| `xasRequired` | XAS mandatory properties — `prov:wasGeneratedBy` items use `allOf` with `cdifProv` + NXsource/NXmonochromator instrument constraints via `schema:instrument` sub-key. |
-| `xasOptional` | Same provenance structure as `xasRequired` — `cdifProv` activity with XAS instrument constraints. |
+| `xasGeneratedBy` | XAS analysis event — extends `cdifProvActivity` with `xas:AnalysisEvent` typing, XAS facility location, sample object, XAS-specific instrument types, and XAS additional properties (edge_energy, calibration method, etc.). |
+| `xasRequired` | XAS mandatory properties — `prov:wasGeneratedBy` items use `allOf` with `cdifProvActivity` + NXsource/NXmonochromator instrument constraints via `schema:instrument` sub-key. |
+| `xasOptional` | Same provenance structure as `xasRequired` — `cdifProvActivity` activity with XAS instrument constraints. |
 
 ## Building Block Identifiers and Web Resolution
 
@@ -143,11 +143,11 @@ Each building block has a persistent HTTP URI under `https://w3id.org/cdif/bbr/m
 https://w3id.org/cdif/bbr/metadata/{category}/{name}
 ```
 
-where `{category}` is one of `schemaorgProperties`, `cdifProperties`, `provProperties`, `qualityProperties`, `ddiProperties`, `xasProperties` and `{name}` is the building block directory name (e.g., `person`, `cdifProv`, `xasGeneratedBy`).
+where `{category}` is one of `schemaorgProperties`, `cdifProperties`, `provProperties`, `qualityProperties`, `ddiProperties`, `xasProperties` and `{name}` is the building block directory name (e.g., `person`, `cdifProvActivity`, `xasGeneratedBy`).
 
 Examples:
 - `https://w3id.org/cdif/bbr/metadata/schemaorgProperties/person`
-- `https://w3id.org/cdif/bbr/metadata/cdifProperties/cdifProv`
+- `https://w3id.org/cdif/bbr/metadata/cdifProperties/cdifProvActivity`
 - `https://w3id.org/cdif/bbr/metadata/xasProperties/xasGeneratedBy`
 
 The register root `https://w3id.org/cdif/bbr/metadata` resolves to the building blocks viewer home page.

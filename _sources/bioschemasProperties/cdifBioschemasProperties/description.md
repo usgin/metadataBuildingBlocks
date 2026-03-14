@@ -12,7 +12,7 @@ bios: https://bioschemas.org/
 
 ### Classes
 
-| Class | Description | cdifProv Mapping |
+| Class | Description | cdifProvActivity Mapping |
 |---|---|---|
 | `bios:LabProcess` | A laboratory process execution | `schema:additionalType` on `["schema:Action", "prov:Activity"]` |
 | `bios:LabProtocol` | Methodology describing how a lab process should be carried out | `schema:HowTo` via `schema:actionProcess` |
@@ -30,9 +30,9 @@ bios: https://bioschemas.org/
 | `bios:computationalTool` | `bios:LabProtocol` | `schema:SoftwareApplication` | Software tools used in the protocol |
 | `bios:reagent` | `bios:LabProtocol` | `schema:Thing` | Materials or chemical substances used |
 
-### Relationship to cdifProv
+### Relationship to cdifProvActivity
 
-This building block extends cdifProv for laboratory analytical workflows. A cdifProv activity node with Bioschemas extensions looks like:
+This building block extends cdifProvActivity for laboratory analytical workflows. A cdifProvActivity activity node with Bioschemas extensions looks like:
 
 ```json
 {

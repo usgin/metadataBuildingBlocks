@@ -4,4 +4,4 @@ Defines simple properties included in CDIF discovery metadata for the schema.org
 
 ### Provenance
 
-At this level, `prov:wasGeneratedBy` uses the simple `generatedBy` pattern from provProperties — activity items accept only string names or `@id` references to instruments/software. The extended `cdifProv` pattern (with structured instruments, agents, temporal bounds, methodology, and action chaining) is introduced at the CDIFcomplete profile level or by domain-specific building blocks (e.g., ddeImagery, xasRequired).
+At this level, `prov:wasGeneratedBy` uses the simple `generatedBy` pattern from provProperties — activity items accept only string names or `@id` references to instruments/software. The extended `cdifProvActivity` pattern (with structured instruments, agents, temporal bounds, methodology, and action chaining) is introduced at the CDIFcomplete profile level or by domain-specific building blocks (e.g., ddeImagery, xasRequired).
