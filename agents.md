@@ -37,7 +37,8 @@ metadataBuildingBlocks/
 │   │   ├── cdifTabularData/         # CDIF tabular data description
 │   │   ├── cdifDataCube/            # CDIF data cube description
 │   │   ├── cdifLongData/            # CDIF long data description
-│   │   ├── cdifArchiveDistribution/ # CDIF archive distribution
+│   │   ├── cdifArchive/              # CDIF archive item (DataDownload with hasPart)
+│   │   ├── cdifArchiveDistribution/ # CDIF archive distribution (schema:distribution wrapper)
 │   │   └── cdifVariableMeasured/    # CDIF variable measured extension
 │   ├── provProperties/              # W3C PROV provenance types
 │   │   ├── generatedBy/             # prov:wasGeneratedBy (Activity)
@@ -77,6 +78,17 @@ Domain-specific building blocks (moved to separate repositories):
   geochemBuildingBlocks/ → adaProperties/ + adaProfiles/       (github.com/usgin/geochemBuildingBlocks)
   ecrrBuildingBlocks/    → ecrrProperties/ + ecrrProfiles/     (github.com/usgin/ecrrBuildingBlocks)
 ```
+
+## Building Block Composition
+
+Profiles are defined as pure `allOf` compositions of building block `$ref`s, with no inline property definitions. All properties come from building block components.
+
+Some building blocks define **item-level schemas** (e.g., a provenance activity object, an archive distribution item) rather than root-level dataset properties. Placing these directly in a profile's `allOf` would apply their constraints to the root object. **Wrapper building blocks** solve this by defining the root-level property (e.g., `prov:wasGeneratedBy`, `schema:distribution`) whose items reference the item-level building block.
+
+| Wrapper BB | Root Property | Wraps |
+|------------|--------------|-------|
+| `cdifProvenance` | `prov:wasGeneratedBy` (array) | `cdifProvActivity` |
+| `cdifArchiveDistribution` | `schema:distribution` (adds archive option) | `cdifArchive` |
 
 ## Building Block Structure
 

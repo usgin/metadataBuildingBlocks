@@ -78,6 +78,19 @@ CDIF profiles are in `_sources/profiles/cdifProfiles/`:
 
 See [agents.md](agents.md) for the full building block structure, authoring rules, and composition hierarchy.
 
+### Wrapper Building Blocks
+
+Some building blocks define *item-level* schemas (e.g., a single provenance activity, or a single archive distribution item) rather than root-level dataset properties. These cannot be placed directly in a profile's `allOf` because their constraints would apply to the root dataset object instead of to items within a property array.
+
+**Wrapper building blocks** solve this by defining a root-level property whose items reference the item-level building block. This keeps profiles as pure `allOf` compositions of building block refs, with no inline property definitions.
+
+| Wrapper | Root Property | Item Building Block |
+|---------|--------------|---------------------|
+| `cdifProvenance` | `prov:wasGeneratedBy` (array) | `cdifProvActivity` |
+| `cdifArchiveDistribution` | `schema:distribution` (array, adds archive option) | `cdifArchive` |
+
+For example, `cdifProvActivity` defines the schema for a single provenance Activity object. The `cdifProvenance` wrapper defines `prov:wasGeneratedBy` as an array of `cdifProvActivity` items, making it composable at the profile level. Similarly, `cdifArchive` defines the schema for a single archive DataDownload item (with `schema:hasPart` component files), and `cdifArchiveDistribution` adds it as a valid `schema:distribution` item type alongside the DataDownload and WebAPI options already provided by `cdifOptional`.
+
 ## Building Block Categories
 
 | Category | Directory | Description |
