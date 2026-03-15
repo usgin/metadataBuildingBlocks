@@ -19,21 +19,67 @@ cdifd:instrumentNode
           FILTER (isIRI(?this) || isBlank(?this))
           }""";
 	] ;
+
+	# -- REQUIRED (Violation) --
+
     sh:property [
       sh:path schema:name ;
       sh:minCount 1 ;
       sh:datatype xsd:string ;
       sh:minLength 3 ;
+      sh:severity sh:Violation ;
       sh:message "An instrument must have a name with at least 3 characters."
     ] ;
+
+	# -- RECOMMENDED (Warning) --
+
+    sh:property [
+      sh:path schema:category ;
+      sh:minCount 1 ;
+      sh:severity sh:Warning ;
+      sh:message "An instrument should have a category classification from a controlled vocabulary (schema:category)."
+    ] ;
+
+	# -- INFORMATIONAL (Info) --
+
     sh:property [
       sh:path schema:identifier ;
-      sh:severity sh:Warning ;
+      sh:severity sh:Info ;
       sh:message "An instrument should have an identifier (schema:identifier)."
     ] ;
     sh:property [
       sh:path schema:description ;
-      sh:severity sh:Info ;
       sh:datatype xsd:string ;
+      sh:severity sh:Info ;
       sh:message "An instrument should have a text description."
+    ] ;
+    sh:property [
+      sh:path schema:manufacturer ;
+      sh:severity sh:Info ;
+      sh:message "An instrument should identify its manufacturer (schema:manufacturer)."
+    ] ;
+    sh:property [
+      sh:path schema:model ;
+      sh:severity sh:Info ;
+      sh:message "An instrument should specify its product model (schema:model)."
+    ] ;
+    sh:property [
+      sh:path schema:contributor ;
+      sh:severity sh:Info ;
+      sh:message "An instrument should identify at least one contributor with a role (e.g. owner, operator)."
+    ] ;
+    sh:property [
+      sh:path schema:additionalType ;
+      sh:severity sh:Info ;
+      sh:message "An instrument should have a domain-specific type URI (schema:additionalType)."
+    ] ;
+    sh:property [
+      sh:path schema:url ;
+      sh:severity sh:Info ;
+      sh:message "An instrument should have a landing page URL (schema:url)."
+    ] ;
+    sh:property [
+      sh:path schema:validFrom ;
+      sh:severity sh:Info ;
+      sh:message "An instrument should have a commissioned date (schema:validFrom)."
     ] .
