@@ -70,12 +70,15 @@ metadataBuildingBlocks/
 │   ├── compare_schemas.py           # Schema comparison tool
 │   ├── validate_instance.py         # Profile-aware validation tool
 │   ├── augment_register.py          # Adds resolvedSchema URLs to register.json
+│   ├── regenerate_schema_json.py    # Regenerates schema.json files from resolvedSchema.json
+│   ├── test_redirects.py            # Tests w3id.org redirect rules for building block URIs
+│   ├── update_conformsto_uris.py    # Updates conformsTo URIs in building block schemas
 │   └── cors_server.py               # CORS dev server for local testing
 └── .github/workflows/               # Validation + JSON Forms generation + custom Pages deploy
 
 Domain-specific building blocks (moved to separate repositories):
   ddeBuildingBlocks/     → DDEproperties/ + DDEProfiles/       (github.com/usgin/ddeBuildingBlocks)
-  geochemBuildingBlocks/ → adaProperties/ + adaProfiles/       (github.com/usgin/geochemBuildingBlocks)
+  geochemBuildingBlocks/ → adaProperties/ + adaProfiles/       (github.com/usgin/geochemBuildingBlocks)  [formerly in this repo]
   ecrrBuildingBlocks/    → ecrrProperties/ + ecrrProfiles/     (github.com/usgin/ecrrBuildingBlocks)
 ```
 
@@ -164,7 +167,7 @@ Every `bblock.json` must include all of these fields:
   "register": "ogc-building-block",
   "version": "0.1",
   "dateOfLastChange": "2026-01-01",
-  "link": "https://github.com/usgin/metadataBuildingBlocks",
+  "link": "https://github.com/Cross-Domain-Interoperability-Framework/metadataBuildingBlocks",
   "maturity": "development",
   "scope": "unstable",
   "tags": ["tag1", "tag2"],
@@ -259,7 +262,7 @@ The following building block categories have been refactored into separate repos
 - **DDE (geoscience)**: [ddeBuildingBlocks](https://github.com/usgin/ddeBuildingBlocks) — 7 property BBs + 11 resource type profiles
 - **ECRR (EarthCube)**: [ecrrBuildingBlocks](https://github.com/usgin/ecrrBuildingBlocks) — 10 property BBs + 11 resource type profiles
 
-These repos reference core building blocks in this repository via absolute URLs (`https://usgin.github.io/metadataBuildingBlocks/_sources/...`).
+These repos reference core building blocks in this repository via absolute URLs (`https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/_sources/...`).
 
 ---
 
@@ -309,7 +312,7 @@ python tools/resolve_schema.py --all --flatten-allof
 
 ## convert_for_jsonforms.py
 
-Reads `resolvedSchema.json` (from `_sources/profiles/{adaProfiles,cdifProfiles}/{name}/`) and converts to JSON Forms-compatible Draft 7:
+Reads `resolvedSchema.json` (from `_sources/profiles/cdifProfiles/{name}/`) and converts to JSON Forms-compatible Draft 7:
 - Converts `$schema` from Draft 2020-12 to Draft 7
 - Simplifies `anyOf` patterns for form rendering (single-item anyOf unwrapped, duplicate removal)
 - Converts `contains` → `enum`, `const` → `default`
@@ -324,11 +327,11 @@ python tools/convert_for_jsonforms.py CDIFDiscovery -v
 python tools/convert_for_jsonforms.py --all -v
 ```
 
-**Output:** `build/jsonforms/profiles/{adaProfiles,cdifProfiles}/{name}/schema.json`
+**Output:** `build/jsonforms/profiles/cdifProfiles/{name}/schema.json`
 
 ## augment_register.py
 
-Adds `resolvedSchema` URLs to `build/register.json` for each profile building block. Scans bblock identifiers for `.profiles.{name}` patterns and checks whether `_sources/profiles/{adaProfiles,cdifProfiles}/{name}/resolvedSchema.json` exists. If so, adds the GitHub Pages URL as `bblock.resolvedSchema`.
+Adds `resolvedSchema` URLs to `build/register.json` for each profile building block. Scans bblock identifiers for `.profiles.{name}` patterns and checks whether `_sources/profiles/cdifProfiles/{name}/resolvedSchema.json` exists. If so, adds the GitHub Pages URL as `bblock.resolvedSchema`.
 
 **Usage:**
 ```bash

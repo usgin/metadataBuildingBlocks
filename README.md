@@ -9,7 +9,7 @@ This repository contains the **shared core building blocks** (schema.org propert
 - **[geochemBuildingBlocks](https://github.com/usgin/geochemBuildingBlocks)** — ADA (IEDA Analytics & Data Archive) geochemistry properties and profiles (30 BBs + 36 profiles)
 - **[ecrrBuildingBlocks](https://github.com/usgin/ecrrBuildingBlocks)** — ECRR (EarthCube Resource Registry) properties and profiles (10 BBs + 11 profiles)
 
-Domain-specific repos reference core building blocks in this repository via absolute URLs (`https://usgin.github.io/metadataBuildingBlocks/_sources/...`).
+Domain-specific repos reference core building blocks in this repository via absolute URLs (`https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/_sources/...`).
 
 For more info see [the OGC Documentation](https://ogcincubator.github.io/bblocks-docs/).
 
