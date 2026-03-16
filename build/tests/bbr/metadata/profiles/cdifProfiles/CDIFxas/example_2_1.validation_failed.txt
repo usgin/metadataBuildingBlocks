@@ -1,14 +1,46 @@
 Validation report for cdif.bbr.metadata.profiles.cdifProfiles.CDIFxas - X-ray absorbtion spectroscopy (Xas) CDIF profile
-Generated 2026-03-16T04:11:21.723885+00:00
+Generated 2026-03-16T04:11:22.160153+00:00
 === Files ===
-Using exampleCDIFxas.json from examples
+Using CDIF-XAS-Full.json from examples
 JSON-LD context is present - uplifting
-Output JSON-LD example_1_1.jsonld created
-Output Turtle example_1_1.ttl created
+Output JSON-LD example_2_1.jsonld created
+Output Turtle example_2_1.ttl created
 === End Files ===
 
 === JSON Schema ===
-Validation passed
+
+** Validation error **
+ValidationError: {'@type': 'schema:DefinedTerm', 'schema:name': 'X-Ray Absorption Spectroscopy (Transmission mode)', 'schema:identifier': 'http://purl.org/pan-science/PaNET/PaNET01196', 'schema:termCode': 'XAS', 'schema:inDefinedTermSet': 'http://purl.org/pan-science/PaNET/PaNET.owl'} is not of type 'array'
+
+Failed validating 'type' in schema['allOf'][2]['allOf'][1]['properties']['schema:measurementTechnique']:
+    {'allOf': [{'contains': {'properties': {'schema:identifier': {'const': 'http://purl.org/pan-science/PaNET/PaNET01196'},
+                                            'schema:inDefinedTermSet': {'const': 'http://purl.org/pan-science/PaNET/PaNET.owl'},
+                                            'schema:name': {'const': 'X-Ray '
+                                                                     'Absorption '
+                                                                     'Spectroscopy'},
+                                            'schema:termCode': {'const': 'XAS'}},
+                             'required': ['schema:name',
+                                          'schema:termCode',
+                                          'schema:identifier',
+                                          'schema:inDefinedTermSet'],
+                             'type': 'object'}},
+               {'contains': {'properties': {'schema:inDefinedTermSet': {'const': 'nxs:Field/NXxas/ENTRY/DATA/mode'},
+                                            'schema:name': {'type': 'string'}},
+                             'required': ['schema:name',
+                                          'schema:inDefinedTermSet'],
+                             'type': 'object'}}],
+     'description': 'Require DefinedTerms for both: absorption edge (XDI '
+                    'dict) and target element (SWEET).',
+     'items': {'$ref': '#/$defs/DefinedTerm'},
+     'minItems': 2,
+     'type': 'array'}
+
+On instance['schema:measurementTechnique']:
+    {'@type': 'schema:DefinedTerm',
+     'schema:identifier': 'http://purl.org/pan-science/PaNET/PaNET01196',
+     'schema:inDefinedTermSet': 'http://purl.org/pan-science/PaNET/PaNET.owl',
+     'schema:name': 'X-Ray Absorption Spectroscopy (Transmission mode)',
+     'schema:termCode': 'XAS'}
 === End JSON Schema ===
 
 === SHACL ===
@@ -34,7 +66,7 @@ Validation result for _sources/cdifProperties/cdifOptional/rules.shacl:
 Focus nodes for _sources/cdifProperties/cdifOptional/rules.shacl:
  - Shape cdifd:CDIFDatasetOptionalShape: *none*
  - Shape _:nc90d3ae13c22478f8277c1fd4fc91cceb7: *none*
- - Shape cdifd:creatorListValidation: xas:487y54,xas:ja51-pz63
+ - Shape cdifd:creatorListValidation: xas:487y54123,xas:ja51-pz63
  - Shape cdifd:keywordsNoCommaTest/sh:or/rdf:first: *none*
  - Shape cdifd:keywordsNoCommaTest/sh:or/rdf:rest/rdf:first: *none*
  - Shape cdifd:CDIFDiscoveryConformsToShape: *none*
@@ -120,7 +152,7 @@ Focus nodes for _sources/schemaorgProperties/person/rules.shacl:
  - Shape cdifd:maintainerOrProviderContactPointShape/sh:property/sh:or/rdf:first: *none*
  - Shape cdifd:CDIFPersonShape/sh:or/rdf:rest/rdf:first: *none*
  - Shape cdifd:maintainerOrProviderContactPointShape: *none*
- - Shape cdifd:CDIFContactPointShape: <https://orcid.org/35735ul>/schema1:contactPoint,<https://ada.org/person/3479>/schema1:contactPoint,<https://orcid.org/3547ulkj>/schema1:contactPoint
+ - Shape cdifd:CDIFContactPointShape: <https://orcid.org/3547ulkj>/schema1:contactPoint,<https://orcid.org/35735ul>/schema1:contactPoint,<https://ada.org/person/3479>/schema1:contactPoint
  - Shape cdifd:affiliationProperty/sh:or/rdf:rest/rdf:first: *none*
  - Shape cdifd:CDIFPersonShape: <https://ada.org/person/3479>,<https://orcid.org/35735ul>,<https://orcid.org/3547ulkj>
  - Shape cdifd:contactPointProperty/sh:or/rdf:rest/rdf:first: *none*
@@ -142,8 +174,8 @@ Validation result for _sources/schemaorgProperties/dataDownload/rules.shacl:
   Conforms: True
   
 Focus nodes for _sources/schemaorgProperties/dataDownload/rules.shacl:
- - Shape cdifd:CDIFDataDownloadShape: xas:487y54/schema1:distribution
- - Shape <https://www.ogc.org/rules/template/#ConformsToInfo>: xas:487y54/schema1:distribution
+ - Shape cdifd:CDIFDataDownloadShape: xas:487y54123/schema1:distribution
+ - Shape <https://www.ogc.org/rules/template/#ConformsToInfo>: xas:487y54123/schema1:distribution
 
 Validation result for _sources/schemaorgProperties/webAPI/rules.shacl:
   Validation Report
@@ -174,18 +206,9 @@ Focus nodes for _sources/schemaorgProperties/webAPI/rules.shacl:
  - Shape _:nbdeb1d73a21941d396f664b84bd90dafb26: *none*
  - Shape cdifd:webAPINode/sh:property/sh:or/rdf:first: *none*
 
-
-** Validation error **
 Validation result for _sources/schemaorgProperties/action/rules.shacl:
   Validation Report
-  Conforms: False
-  Results (1):
-  Validation Result in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-  	Severity: sh:Warning
-  	Source Shape: [ sh:class schema1:EntryPoint ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path schema1:target ; sh:property [ sh:datatype xsd:string ; sh:message Literal("A web service distribution must include a URL; the CDIF schema allows URL Templates") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path schema1:urlTemplate ], [ sh:datatype xsd:string ; sh:path schema1:contentType ], [ sh:datatype xsd:string ; sh:path schema1:httpMethod ] ; sh:severity sh:Warning ]
-  	Focus Node: [ prov:used [ schema1:instrument [ schema1:hasPart [ rdf:type schema1:Product, schema1:Thing ; schema1:additionalProperty <http://recursion.too.deep>, <http://recursion.too.deep> ; schema1:additionalType Literal("nxs:BaseClass/NXsource") ; schema1:identifier Literal("should have a registry with URIs") ; schema1:name Literal("source, made up for this example") ], [ rdf:type schema1:Product, schema1:Thing ; schema1:additionalProperty <http://recursion.too.deep>, <http://recursion.too.deep>, <http://recursion.too.deep> ; schema1:additionalType Literal("xas:Beamline") ; schema1:identifier Literal("should have a registry with URIs") ; schema1:name Literal("13-BM-D") ], [ rdf:type schema1:Product, schema1:Thing ; schema1:additionalProperty <http://recursion.too.deep>, <http://recursion.too.deep>, <http://recursion.too.deep>, <http://recursion.too.deep> ; schema1:additionalType Literal("nxs:BaseClass/NXmonitor") ], [ rdf:type schema1:Product, schema1:Thing ; schema1:additionalProperty <http://recursion.too.deep>, <http://recursion.too.deep>, <http://recursion.too.deep>, <http://recursion.too.deep> ; schema1:additionalType Literal("nxs:BaseClass/NXmonochromator") ; schema1:name Literal("Si 111") ] ] ] ; rdf:type prov:Activity, schema1:Action, xas:AnalysisEvent ; schema1:additionalProperty [ rdf:type schema1:PropertyValue ; schema1:description Literal("extrinsic properties of measurement environment--temperature, pressure, e-field, mag-field.  have to check magnetic_moment, electrochemical_potential") ; schema1:name Literal("experiment environment-pressure") ; schema1:propertyID Literal("xas:pressure") ; schema1:unitText Literal("KPa") ; schema1:value Literal("3567") ], [ rdf:type schema1:PropertyValue ; schema1:name Literal("Absorption edge") ; schema1:propertyID Literal("xas:edge_energy") ; schema1:unitText Literal("eV") ; schema1:value Literal("12658.0") ], [ rdf:type schema1:PropertyValue ; schema1:name Literal("Installed Options") ; schema1:propertyID Literal("xas:installedOptions") ; schema1:value Literal("Description of extra equipment installed on the base instrument(?)") ], [ rdf:type schema1:PropertyValue ; schema1:name Literal("Instrument configuration") ; schema1:propertyID Literal("nxs:Group/NXentry/experiment_documentation") ; schema1:url Literal("http://protocols.io/link/to/calibrationMethod") ; schema1:value Literal("description of instrument configuration") ], [ rdf:type schema1:PropertyValue ; schema1:name Literal("calibration method") ; schema1:propertyID Literal("nxs:Group/NXdetector/calibration_method") ; schema1:url Literal("http://protocols.io/link/to/calibrationMethod") ; schema1:value Literal("description of calibration procedure") ] ; schema1:identifier Literal("20241111_DSC_NU_OREX-803224-0_1") ; schema1:location ex:xasfacility_37yht ; schema1:object [ rdf:type schema1:Product, schema1:Thing ; schema1:additionalProperty [ rdf:type schema1:PropertyValue ; schema1:name Literal("Crystal unit cell dimensions") ; schema1:propertyID Literal("nxs:Field/NXsample/unit_cell") ; schema1:value Literal("cubic; Z = 4; a = 5.46; V = 162.77") ], [ rdf:type schema1:PropertyValue ; schema1:name Literal("Porosity") ; schema1:propertyID Literal("xas:porosity") ; schema1:unitText Literal("percent") ; schema1:value Literal("27") ], [ rdf:type schema1:PropertyValue ; schema1:name Literal("Stoichiometry") ; schema1:propertyID Literal("xas:stoichiometry") ; schema1:value Literal("Na2SeO4") ], [ rdf:type schema1:PropertyValue ; schema1:name Literal("crystallographic point group") ; schema1:propertyID Literal("nxs:Field/NXsample/point_group") ; schema1:value Literal("mm2") ], [ rdf:type schema1:PropertyValue ; schema1:name Literal("material state") ; schema1:propertyID Literal("xas:materialState") ; schema1:value Literal("solid metal foil") ], [ rdf:type schema1:PropertyValue ; schema1:name Literal("parent sample identifier") ; schema1:propertyID Literal("xas:parentSample") ; schema1:value Literal("igsn:10.3476/342573") ], [ rdf:type schema1:PropertyValue ; schema1:name Literal("samaple preparation method") ; schema1:propertyID Literal("xas:samplePreparation") ; schema1:value Literal("powder on tape, 6 layers") ], [ rdf:type schema1:PropertyValue ; schema1:name Literal("sample mass") ; schema1:propertyID Literal("nxs:Field/NXsample/mass") ; schema1:unitText Literal("mg") ; schema1:value Literal("10") ] ; schema1:additionalType Literal("MaterialSample"), Literal("https://w3id.org/isample/vocabulary/materialsampleobjecttype/materialsample") ; schema1:description Literal("physical properties of sample: ph, eh, volume, porosity, density, concentration, resistivity, viscosity, crystal structure, opacity from xdi list...") ; schema1:identifier Literal("igsn:10.6620/357lkj") ; schema1:name Literal("Na2SeO4") ] ; schema1:startDate Literal("2008-04-10T21:58:50") ]
-  	Result Path: schema1:target
-  	Message: Less than 1 values on [ prov:used [ schema1:instrument [ schema1:hasPart [ rdf:type schema1:Product, schema1:Thing ; schema1:additionalProperty <http://recursion.too.deep>, <http://recursion.too.deep> ; schema1:additionalType Literal("nxs:BaseClass/NXsource") ; schema1:identifier Literal("should have a registry with URIs") ; schema1:name Literal("source, made up for this example") ], [ rdf:type schema1:Product, schema1:Thing ; schema1:additionalProperty <http://recursion.too.deep>, <http://recursion.too.deep>, <http://recursion.too.deep> ; schema1:additionalType Literal("xas:Beamline") ; schema1:identifier Literal("should have a registry with URIs") ; schema1:name Literal("13-BM-D") ], [ rdf:type schema1:Product, schema1:Thing ; schema1:additionalProperty <http://recursion.too.deep>, <http://recursion.too.deep>, <http://recursion.too.deep>, <http://recursion.too.deep> ; schema1:additionalType Literal("nxs:BaseClass/NXmonitor") ], [ rdf:type schema1:Product, schema1:Thing ; schema1:additionalProperty <http://recursion.too.deep>, <http://recursion.too.deep>, <http://recursion.too.deep>, <http://recursion.too.deep> ; schema1:additionalType Literal("nxs:BaseClass/NXmonochromator") ; schema1:name Literal("Si 111") ] ] ] ; rdf:type prov:Activity, schema1:Action, xas:AnalysisEvent ; schema1:additionalProperty [ rdf:type schema1:PropertyValue ; schema1:description Literal("extrinsic properties of measurement environment--temperature, pressure, e-field, mag-field.  have to check magnetic_moment, electrochemical_potential") ; schema1:name Literal("experiment environment-pressure") ; schema1:propertyID Literal("xas:pressure") ; schema1:unitText Literal("KPa") ; schema1:value Literal("3567") ], [ rdf:type schema1:PropertyValue ; schema1:name Literal("Absorption edge") ; schema1:propertyID Literal("xas:edge_energy") ; schema1:unitText Literal("eV") ; schema1:value Literal("12658.0") ], [ rdf:type schema1:PropertyValue ; schema1:name Literal("Installed Options") ; schema1:propertyID Literal("xas:installedOptions") ; schema1:value Literal("Description of extra equipment installed on the base instrument(?)") ], [ rdf:type schema1:PropertyValue ; schema1:name Literal("Instrument configuration") ; schema1:propertyID Literal("nxs:Group/NXentry/experiment_documentation") ; schema1:url Literal("http://protocols.io/link/to/calibrationMethod") ; schema1:value Literal("description of instrument configuration") ], [ rdf:type schema1:PropertyValue ; schema1:name Literal("calibration method") ; schema1:propertyID Literal("nxs:Group/NXdetector/calibration_method") ; schema1:url Literal("http://protocols.io/link/to/calibrationMethod") ; schema1:value Literal("description of calibration procedure") ] ; schema1:identifier Literal("20241111_DSC_NU_OREX-803224-0_1") ; schema1:location ex:xasfacility_37yht ; schema1:object [ rdf:type schema1:Product, schema1:Thing ; schema1:additionalProperty [ rdf:type schema1:PropertyValue ; schema1:name Literal("Crystal unit cell dimensions") ; schema1:propertyID Literal("nxs:Field/NXsample/unit_cell") ; schema1:value Literal("cubic; Z = 4; a = 5.46; V = 162.77") ], [ rdf:type schema1:PropertyValue ; schema1:name Literal("Porosity") ; schema1:propertyID Literal("xas:porosity") ; schema1:unitText Literal("percent") ; schema1:value Literal("27") ], [ rdf:type schema1:PropertyValue ; schema1:name Literal("Stoichiometry") ; schema1:propertyID Literal("xas:stoichiometry") ; schema1:value Literal("Na2SeO4") ], [ rdf:type schema1:PropertyValue ; schema1:name Literal("crystallographic point group") ; schema1:propertyID Literal("nxs:Field/NXsample/point_group") ; schema1:value Literal("mm2") ], [ rdf:type schema1:PropertyValue ; schema1:name Literal("material state") ; schema1:propertyID Literal("xas:materialState") ; schema1:value Literal("solid metal foil") ], [ rdf:type schema1:PropertyValue ; schema1:name Literal("parent sample identifier") ; schema1:propertyID Literal("xas:parentSample") ; schema1:value Literal("igsn:10.3476/342573") ], [ rdf:type schema1:PropertyValue ; schema1:name Literal("samaple preparation method") ; schema1:propertyID Literal("xas:samplePreparation") ; schema1:value Literal("powder on tape, 6 layers") ], [ rdf:type schema1:PropertyValue ; schema1:name Literal("sample mass") ; schema1:propertyID Literal("nxs:Field/NXsample/mass") ; schema1:unitText Literal("mg") ; schema1:value Literal("10") ] ; schema1:additionalType Literal("MaterialSample"), Literal("https://w3id.org/isample/vocabulary/materialsampleobjecttype/materialsample") ; schema1:description Literal("physical properties of sample: ph, eh, volume, porosity, density, concentration, resistivity, viscosity, crystal structure, opacity from xdi list...") ; schema1:identifier Literal("igsn:10.6620/357lkj") ; schema1:name Literal("Na2SeO4") ] ; schema1:startDate Literal("2008-04-10T21:58:50") ]->schema1:target
+  Conforms: True
   
 Focus nodes for _sources/schemaorgProperties/action/rules.shacl:
  - Shape cdifd:CDIFActionShape: *none*
@@ -242,7 +265,7 @@ Validation result for _sources/schemaorgProperties/spatialExtent/rules.shacl:
   
 Focus nodes for _sources/schemaorgProperties/spatialExtent/rules.shacl:
  - Shape cdifd:geoCoordinatesNode/sh:property/sh:or/rdf:first: *none*
- - Shape cdifd:CDIFDefinedTermShape: xas:487y54/schema1:measurementTechnique,xas:487y54/schema1:keywords,xas:487y54/schema1:measurementTechnique,xas:487y54/schema1:keywords
+ - Shape cdifd:CDIFDefinedTermShape: xas:487y54123/schema1:measurementTechnique,xas:487y54123/schema1:keywords,xas:487y54123/schema1:keywords
  - Shape _:ne0d27294f0654d0aadc66201e5c393beb32: *none*
  - Shape _:ne0d27294f0654d0aadc66201e5c393beb9: *none*
  - Shape _:ne0d27294f0654d0aadc66201e5c393beb37: *none*
@@ -270,9 +293,9 @@ Validation result for _sources/schemaorgProperties/agentInRole/rules.shacl:
   
 Focus nodes for _sources/schemaorgProperties/agentInRole/rules.shacl:
  - Shape _:ne84ad084c3c844bd99866d7876c0e309b17: *none*
- - Shape cdifd:CDIFDefinedTermShape: xas:487y54/schema1:measurementTechnique,xas:487y54/schema1:keywords,xas:487y54/schema1:measurementTechnique,xas:487y54/schema1:keywords
+ - Shape cdifd:CDIFDefinedTermShape: xas:487y54123/schema1:measurementTechnique,xas:487y54123/schema1:keywords,xas:487y54123/schema1:keywords
  - Shape cdifd:CDIFDefinedTermShape/sh:or/rdf:first: *none*
- - Shape cdifd:CDIFRoleShape: xas:487y54/schema1:contributor,xas:487y54/schema1:contributor,xas:487y54/schema1:contributor
+ - Shape cdifd:CDIFRoleShape: xas:487y54123/schema1:contributor,xas:487y54123/schema1:contributor,xas:487y54123/schema1:contributor
  - Shape _:ne84ad084c3c844bd99866d7876c0e309b3: *none*
  - Shape cdifd:roleNameProperty/sh:or/rdf:first: *none*
  - Shape _:ne84ad084c3c844bd99866d7876c0e309b4: *none*
@@ -379,7 +402,7 @@ Validation result for _sources/xasProperties/xasRequired/rules.shacl:
   
 Focus nodes for _sources/xasProperties/xasRequired/rules.shacl:
  - Shape cdifd:XasCoreConformsToShape: *none*
- - Shape cdifd:CDIFDataDownloadShape: xas:487y54/schema1:distribution
+ - Shape cdifd:CDIFDataDownloadShape: xas:487y54123/schema1:distribution
 
 Validation result for _sources/xasProperties/xasSample/rules.shacl:
   Validation Report
@@ -434,24 +457,9 @@ Focus nodes for _sources/cdifProperties/cdifProvActivity/rules.shacl:
  - Shape cdifd:cdifProvHowToStepShape: *none*
  - Shape cdifd:cdifProvHowToShape: *none*
 
-
-** Validation error **
 Validation result for _sources/schemaorgProperties/instrument/rules.shacl:
   Validation Report
-  Conforms: False
-  Results (2):
-  Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-  	Severity: sh:Violation
-  	Source Shape: [ sh:datatype xsd:string ; sh:message Literal("An instrument must have a name with at least 3 characters.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:minLength Literal("3", datatype=xsd:integer) ; sh:path schema1:name ; sh:severity sh:Violation ]
-  	Focus Node: [ schema1:hasPart [ rdf:type schema1:Product, schema1:Thing ; schema1:additionalProperty [ rdf:type schema1:PropertyValue ; schema1:alternateName Literal("incident flux measurement method") ; schema1:name Literal("detector mode i0") ; schema1:propertyID Literal("xas:detector.i0") ; schema1:value Literal("10cm  N2") ], [ rdf:type schema1:PropertyValue ; schema1:alternateName Literal("transmitted flux measurement method") ; schema1:name Literal("detector mode it") ; schema1:propertyID Literal("xas:detector.it") ; schema1:value Literal("10cm  N2") ], [ rdf:type schema1:PropertyValue ; schema1:name Literal("monitor mode") ; schema1:propertyID Literal("nxs:Field/NXmonitor/mode") ; schema1:value Literal("monitor") ], [ rdf:type schema1:PropertyValue ; schema1:name Literal("monitor preset") ; schema1:propertyID Literal("nxs:Field/NXmonitor/preset") ; schema1:value Literal("N.A.") ] ; schema1:additionalType Literal("nxs:BaseClass/NXmonitor") ], [ rdf:type schema1:Product, schema1:Thing ; schema1:additionalProperty [ rdf:type schema1:PropertyValue ; schema1:name Literal("Probe") ; schema1:propertyID Literal("nxs:Field/NXsource/probe") ; schema1:value Literal("x-ray") ], [ rdf:type schema1:PropertyValue ; schema1:name Literal("x-ray source") ; schema1:propertyID Literal("nxs:Field/NXsource/type") ; schema1:value Literal("Synchrotron X-ray Source") ] ; schema1:additionalType Literal("nxs:BaseClass/NXsource") ; schema1:identifier Literal("should have a registry with URIs") ; schema1:name Literal("source, made up for this example") ], [ rdf:type schema1:Product, schema1:Thing ; schema1:additionalProperty [ rdf:type schema1:PropertyValue ; schema1:name Literal("chemical formula") ; schema1:propertyID Literal("nxs:Field/NXcrystal/chemical_formula") ; schema1:value Literal("Si") ], [ rdf:type schema1:PropertyValue ; schema1:name Literal("crystal type") ; schema1:propertyID Literal("nxs:Field/NXcrystal/type") ; schema1:value Literal("missing") ], [ rdf:type schema1:PropertyValue ; schema1:name Literal("d-spacing") ; schema1:propertyID Literal("nxs:Field/NXcrystal/d_spacing") ; schema1:unitText Literal("Angstrom") ; schema1:value Literal("3.13550") ], [ rdf:type schema1:PropertyValue ; schema1:name Literal("reflection plane (hkl)") ; schema1:propertyID Literal("nxs:Field/NXcrystal/reflection") ; schema1:value Literal("1,1,1") ] ; schema1:additionalType Literal("nxs:BaseClass/NXmonochromator") ; schema1:name Literal("Si 111") ], [ rdf:type schema1:Product, schema1:Thing ; schema1:additionalProperty [ rdf:type schema1:PropertyValue ; schema1:name Literal("collimation technique") ; schema1:propertyID Literal("xas:collimation") ; schema1:value Literal("none") ], [ rdf:type schema1:PropertyValue ; schema1:name Literal("focusing") ; schema1:propertyID Literal("xas:focusing") ; schema1:value Literal("???") ], [ rdf:type schema1:PropertyValue ; schema1:name Literal("harmonic_rejection") ; schema1:propertyID Literal("xas:harmonic_rejection") ; schema1:value Literal("Rh-coated mirror, detuned") ] ; schema1:additionalType Literal("xas:Beamline") ; schema1:identifier Literal("should have a registry with URIs") ; schema1:name Literal("13-BM-D") ] ]
-  	Result Path: schema1:name
-  	Message: An instrument must have a name with at least 3 characters.
-  Validation Result in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-  	Severity: sh:Warning
-  	Source Shape: [ sh:message Literal("An instrument should have a category classification from a controlled vocabulary (schema:category).") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path schema1:category ; sh:severity sh:Warning ]
-  	Focus Node: [ schema1:hasPart [ rdf:type schema1:Product, schema1:Thing ; schema1:additionalProperty [ rdf:type schema1:PropertyValue ; schema1:alternateName Literal("incident flux measurement method") ; schema1:name Literal("detector mode i0") ; schema1:propertyID Literal("xas:detector.i0") ; schema1:value Literal("10cm  N2") ], [ rdf:type schema1:PropertyValue ; schema1:alternateName Literal("transmitted flux measurement method") ; schema1:name Literal("detector mode it") ; schema1:propertyID Literal("xas:detector.it") ; schema1:value Literal("10cm  N2") ], [ rdf:type schema1:PropertyValue ; schema1:name Literal("monitor mode") ; schema1:propertyID Literal("nxs:Field/NXmonitor/mode") ; schema1:value Literal("monitor") ], [ rdf:type schema1:PropertyValue ; schema1:name Literal("monitor preset") ; schema1:propertyID Literal("nxs:Field/NXmonitor/preset") ; schema1:value Literal("N.A.") ] ; schema1:additionalType Literal("nxs:BaseClass/NXmonitor") ], [ rdf:type schema1:Product, schema1:Thing ; schema1:additionalProperty [ rdf:type schema1:PropertyValue ; schema1:name Literal("Probe") ; schema1:propertyID Literal("nxs:Field/NXsource/probe") ; schema1:value Literal("x-ray") ], [ rdf:type schema1:PropertyValue ; schema1:name Literal("x-ray source") ; schema1:propertyID Literal("nxs:Field/NXsource/type") ; schema1:value Literal("Synchrotron X-ray Source") ] ; schema1:additionalType Literal("nxs:BaseClass/NXsource") ; schema1:identifier Literal("should have a registry with URIs") ; schema1:name Literal("source, made up for this example") ], [ rdf:type schema1:Product, schema1:Thing ; schema1:additionalProperty [ rdf:type schema1:PropertyValue ; schema1:name Literal("chemical formula") ; schema1:propertyID Literal("nxs:Field/NXcrystal/chemical_formula") ; schema1:value Literal("Si") ], [ rdf:type schema1:PropertyValue ; schema1:name Literal("crystal type") ; schema1:propertyID Literal("nxs:Field/NXcrystal/type") ; schema1:value Literal("missing") ], [ rdf:type schema1:PropertyValue ; schema1:name Literal("d-spacing") ; schema1:propertyID Literal("nxs:Field/NXcrystal/d_spacing") ; schema1:unitText Literal("Angstrom") ; schema1:value Literal("3.13550") ], [ rdf:type schema1:PropertyValue ; schema1:name Literal("reflection plane (hkl)") ; schema1:propertyID Literal("nxs:Field/NXcrystal/reflection") ; schema1:value Literal("1,1,1") ] ; schema1:additionalType Literal("nxs:BaseClass/NXmonochromator") ; schema1:name Literal("Si 111") ], [ rdf:type schema1:Product, schema1:Thing ; schema1:additionalProperty [ rdf:type schema1:PropertyValue ; schema1:name Literal("collimation technique") ; schema1:propertyID Literal("xas:collimation") ; schema1:value Literal("none") ], [ rdf:type schema1:PropertyValue ; schema1:name Literal("focusing") ; schema1:propertyID Literal("xas:focusing") ; schema1:value Literal("???") ], [ rdf:type schema1:PropertyValue ; schema1:name Literal("harmonic_rejection") ; schema1:propertyID Literal("xas:harmonic_rejection") ; schema1:value Literal("Rh-coated mirror, detuned") ] ; schema1:additionalType Literal("xas:Beamline") ; schema1:identifier Literal("should have a registry with URIs") ; schema1:name Literal("13-BM-D") ] ]
-  	Result Path: schema1:category
-  	Message: An instrument should have a category classification from a controlled vocabulary (schema:category).
+  Conforms: True
   
 Focus nodes for _sources/schemaorgProperties/instrument/rules.shacl:
  - Shape cdifd:instrumentNode: *none*
@@ -462,7 +470,7 @@ Validation result for _sources/xasProperties/xasOptional/rules.shacl:
   
 Focus nodes for _sources/xasProperties/xasOptional/rules.shacl:
  - Shape cdifd:XasDiscoveryConformsToShape: *none*
- - Shape cdifd:CDIFDataDownloadShape: xas:487y54/schema1:distribution
+ - Shape cdifd:CDIFDataDownloadShape: xas:487y54123/schema1:distribution
 
 === End SHACL ===
 

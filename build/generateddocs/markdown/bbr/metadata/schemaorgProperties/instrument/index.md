@@ -27,7 +27,8 @@ Schema for describing laboratory instruments and instrument systems. Combines in
 - **schema:manufacturer** - organization that manufactured the instrument
 - **schema:model** - product model (name, identifier)
 - **schema:category** - instrument type from controlled vocabulary
-- **schema:contributor** - agents in roles (owner, operator, custodian)
+- **schema:owner** - organization that owns the instrument
+- **schema:contributor** - agents in roles (operator, custodian, PI — use schema:owner for ownership)
 - **schema:additionalProperty** - instrument-specific properties (measured variables, detection limits, calibration, etc.)
 - **schema:validFrom** / **schema:validThrough** - commissioned/decommissioned dates
 - **schema:hasPart** - sub-components of the instrument system
@@ -138,26 +139,22 @@ each with their own manufacturer/model/properties), relatedLink
             "schema:inDefinedTermSet": "https://vocab.nerc.ac.uk/collection/L05/current/"
         }
     ],
-    "schema:contributor": [
-        {
-            "@type": "schema:Role",
-            "schema:roleName": "Owner",
-            "schema:contributor": {
-                "@id": "https://ror.org/0171mag52",
-                "@type": "schema:Organization",
-                "schema:name": "NASA Goddard Space Flight Center",
-                "schema:identifier": {
-                    "@type": "schema:PropertyValue",
-                    "schema:propertyID": "https://ror.org",
-                    "schema:value": "0171mag52",
-                    "schema:url": "https://ror.org/0171mag52"
-                },
-                "schema:contactPoint": {
-                    "@type": "schema:ContactPoint",
-                    "schema:email": "gsfc-aal@nasa.gov"
-                }
-            }
+    "schema:owner": {
+        "@id": "https://ror.org/0171mag52",
+        "@type": "schema:Organization",
+        "schema:name": "NASA Goddard Space Flight Center",
+        "schema:identifier": {
+            "@type": "schema:PropertyValue",
+            "schema:propertyID": "https://ror.org",
+            "schema:value": "0171mag52",
+            "schema:url": "https://ror.org/0171mag52"
         },
+        "schema:contactPoint": {
+            "@type": "schema:ContactPoint",
+            "schema:email": "gsfc-aal@nasa.gov"
+        }
+    },
+    "schema:contributor": [
         {
             "@type": "schema:Role",
             "schema:roleName": {
@@ -503,26 +500,22 @@ each with their own manufacturer/model/properties), relatedLink
       "schema:inDefinedTermSet": "https://vocab.nerc.ac.uk/collection/L05/current/"
     }
   ],
-  "schema:contributor": [
-    {
-      "@type": "schema:Role",
-      "schema:roleName": "Owner",
-      "schema:contributor": {
-        "@id": "https://ror.org/0171mag52",
-        "@type": "schema:Organization",
-        "schema:name": "NASA Goddard Space Flight Center",
-        "schema:identifier": {
-          "@type": "schema:PropertyValue",
-          "schema:propertyID": "https://ror.org",
-          "schema:value": "0171mag52",
-          "schema:url": "https://ror.org/0171mag52"
-        },
-        "schema:contactPoint": {
-          "@type": "schema:ContactPoint",
-          "schema:email": "gsfc-aal@nasa.gov"
-        }
-      }
+  "schema:owner": {
+    "@id": "https://ror.org/0171mag52",
+    "@type": "schema:Organization",
+    "schema:name": "NASA Goddard Space Flight Center",
+    "schema:identifier": {
+      "@type": "schema:PropertyValue",
+      "schema:propertyID": "https://ror.org",
+      "schema:value": "0171mag52",
+      "schema:url": "https://ror.org/0171mag52"
     },
+    "schema:contactPoint": {
+      "@type": "schema:ContactPoint",
+      "schema:email": "gsfc-aal@nasa.gov"
+    }
+  },
+  "schema:contributor": [
     {
       "@type": "schema:Role",
       "schema:roleName": {
@@ -893,10 +886,9 @@ ex:instrument-pygcmsms-gsfc-001 a schema1:Product,
                 "mass-to-charge ratio (m/z)",
                 "retention time" ],
         [ a schema1:PropertyValue ;
-            schema1:name "Full scan detection limit" ;
-            schema1:propertyID "detectionLimit" ;
-            schema1:unitText "ng" ;
-            schema1:value "sub-nanogram" ],
+            schema1:name "MRM target compounds" ;
+            schema1:propertyID "mrmCapability" ;
+            schema1:value 38 ],
         [ a schema1:PropertyValue ;
             schema1:name "Ionization mode" ;
             schema1:propertyID "ionizationMode" ;
@@ -906,29 +898,27 @@ ex:instrument-pygcmsms-gsfc-001 a schema1:Product,
             schema1:propertyID "scanRange" ;
             schema1:value "50-500" ],
         [ a schema1:PropertyValue ;
-            schema1:name "MRM target compounds" ;
-            schema1:propertyID "mrmCapability" ;
-            schema1:value 38 ] ;
+            schema1:name "Full scan detection limit" ;
+            schema1:propertyID "detectionLimit" ;
+            schema1:unitText "ng" ;
+            schema1:value "sub-nanogram" ] ;
     schema1:additionalType "wd:Q3099911",
         "wd:Q420427" ;
     schema1:alternateName "GSFC Astrobiology Lab Pyrolysis GC-MS System",
         "Py-GC-MS/MS" ;
     schema1:category [ a schema1:DefinedTerm ;
-            schema1:inDefinedTermSet "https://vocab.nerc.ac.uk/collection/L05/current/" ;
-            schema1:name "Pyrolysis Gas Chromatography Mass Spectrometry" ;
-            schema1:termCode "Py-GC-MS" ],
-        [ a schema1:DefinedTerm ;
             schema1:identifier [ a schema1:PropertyValue ;
                     schema1:propertyID "https://vocab.nerc.ac.uk/collection/L05/current/" ;
                     schema1:url "https://vocab.nerc.ac.uk/collection/L05/current/LAB02/" ;
                     schema1:value "LAB02" ] ;
             schema1:inDefinedTermSet "https://vocab.nerc.ac.uk/collection/L05/current/" ;
             schema1:name "Gas Chromatography Mass Spectrometry" ;
-            schema1:termCode "GCMS" ] ;
+            schema1:termCode "GCMS" ],
+        [ a schema1:DefinedTerm ;
+            schema1:inDefinedTermSet "https://vocab.nerc.ac.uk/collection/L05/current/" ;
+            schema1:name "Pyrolysis Gas Chromatography Mass Spectrometry" ;
+            schema1:termCode "Py-GC-MS" ] ;
     schema1:contributor [ a schema1:Role ;
-            schema1:contributor <https://ror.org/0171mag52> ;
-            schema1:roleName "Owner" ],
-        [ a schema1:Role ;
             schema1:contributor <https://orcid.org/0000-0001-8898-3457> ;
             schema1:roleName "Operator" ],
         [ a schema1:Role ;
@@ -962,6 +952,7 @@ ex:instrument-pygcmsms-gsfc-001 a schema1:Product,
                     schema1:value "TSQ96CI2301004" ] ;
             schema1:name "TSQ 9000 Triple Quadrupole GC-MS/MS" ] ;
     schema1:name "Pyrolysis-GC-MS/MS System (NASA GSFC Astrobiology Analytical Lab)" ;
+    schema1:owner <https://ror.org/0171mag52> ;
     schema1:relatedLink [ a schema1:LinkRole ;
             schema1:linkRelationship "calibrationRecord" ;
             schema1:target [ a schema1:EntryPoint ;
@@ -1126,9 +1117,12 @@ properties:
     type: array
     items:
       $ref: '#/$defs/DefinedTerm'
+  schema:owner:
+    description: Organization that owns this instrument.
+    $ref: '#/$defs/Organization'
   schema:contributor:
-    description: Agents associated with this instrument in specific roles (e.g. owner,
-      operator, custodian).
+    description: Agents associated with this instrument in specific roles (e.g. operator,
+      custodian, principal investigator). Use schema:owner for the owning organization.
     type: array
     items:
       $ref: '#/$defs/AgentInRole'

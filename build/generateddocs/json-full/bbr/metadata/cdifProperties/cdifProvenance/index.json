@@ -10,7 +10,7 @@
   "itemClass": "schema",
   "register": "cdif-building-block-register",
   "version": "0.1",
-  "dateOfLastChange": "2026-03-15",
+  "dateOfLastChange": "2026-03-16",
   "link": "https://github.com/usgin/metadataBuildingBlocks",
   "maturity": "draft",
   "scope": "unstable",
@@ -29,14 +29,11 @@
     "cdif.bbr.metadata.cdifProperties.cdifProvActivity": [
       "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/_sources/cdifProperties/cdifProvActivity/rules.shacl"
     ],
-    "cdif.bbr.metadata.schemaorgProperties.instrument": [
-      "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/_sources/schemaorgProperties/instrument/rules.shacl"
+    "cdif.bbr.metadata.schemaorgProperties.person": [
+      "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/_sources/schemaorgProperties/person/rules.shacl"
     ],
     "cdif.bbr.metadata.schemaorgProperties.identifier": [
       "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/_sources/schemaorgProperties/identifier/rules.shacl"
-    ],
-    "cdif.bbr.metadata.schemaorgProperties.agentInRole": [
-      "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/_sources/schemaorgProperties/agentInRole/rules.shacl"
     ],
     "cdif.bbr.metadata.schemaorgProperties.organization": [
       "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/_sources/schemaorgProperties/organization/rules.shacl"
@@ -44,20 +41,23 @@
     "cdif.bbr.metadata.schemaorgProperties.definedTerm": [
       "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/_sources/schemaorgProperties/definedTerm/rules.shacl"
     ],
-    "cdif.bbr.metadata.schemaorgProperties.person": [
-      "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/_sources/schemaorgProperties/person/rules.shacl"
+    "cdif.bbr.metadata.schemaorgProperties.spatialExtent": [
+      "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/_sources/schemaorgProperties/spatialExtent/rules.shacl"
     ],
-    "cdif.bbr.metadata.schemaorgProperties.additionalProperty": [
-      "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/_sources/schemaorgProperties/additionalProperty/rules.shacl"
+    "cdif.bbr.metadata.schemaorgProperties.agentInRole": [
+      "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/_sources/schemaorgProperties/agentInRole/rules.shacl"
+    ],
+    "cdif.bbr.metadata.provProperties.generatedBy": [
+      "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/_sources/provProperties/generatedBy/rules.shacl"
     ],
     "cdif.bbr.metadata.schemaorgProperties.labeledLink": [
       "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/_sources/schemaorgProperties/labeledLink/rules.shacl"
     ],
-    "cdif.bbr.metadata.schemaorgProperties.spatialExtent": [
-      "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/_sources/schemaorgProperties/spatialExtent/rules.shacl"
+    "cdif.bbr.metadata.schemaorgProperties.instrument": [
+      "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/_sources/schemaorgProperties/instrument/rules.shacl"
     ],
-    "cdif.bbr.metadata.provProperties.generatedBy": [
-      "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/_sources/provProperties/generatedBy/rules.shacl"
+    "cdif.bbr.metadata.schemaorgProperties.additionalProperty": [
+      "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/_sources/schemaorgProperties/additionalProperty/rules.shacl"
     ]
   },
   "dependsOn": [
@@ -74,7 +74,7 @@
   "rdfData": [],
   "validationPassed": true,
   "description": "## CDIF Provenance\n\nDefines the `prov:wasGeneratedBy` property for CDIF metadata records. This building block wraps the cdifProvActivity building block as an array of provenance activities.\n\n### Defined properties\n\n- **prov:wasGeneratedBy** - array of provenance activities describing how the described resource was generated\n\n### Dependencies\n\n- [cdifProvActivity](../cdifProvActivity/) - extended provenance activity with schema.org Action properties\n",
-  "annotatedSchema": "$schema: https://json-schema.org/draft/2020-12/schema\ntitle: CDIF Provenance\ndescription: Building block that defines the prov:wasGeneratedBy property for CDIF\n  metadata records. Wraps the cdifProvActivity building block as an array of provenance\n  activities that describe how the described resource was generated.\ntype: object\nproperties:\n  prov:wasGeneratedBy:\n    description: Provenance activities describing how the resource was generated,\n      including agents, instruments, methodology, temporal bounds, and action chaining.\n    type: array\n    items:\n      $ref: https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifProvActivity/schema.yaml\n",
+  "annotatedSchema": "$schema: https://json-schema.org/draft/2020-12/schema\ntitle: CDIF Provenance\ndescription: Building block that defines the prov:wasGeneratedBy property for CDIF\n  metadata records. Wraps the cdifProvActivity building block as an array of provenance\n  activities that describe how the described resource was generated.\ntype: object\nproperties:\n  schema:subjectOf:\n    properties:\n      dcterms:conformsTo:\n        type: array\n        items:\n          type: object\n          properties:\n            '@id':\n              type: string\n              description: uri for specifications that this metadata record conforms\n                to\n        minItems: 1\n        contains:\n          type: object\n          properties:\n            '@id':\n              const: https://w3id.org/cdif/provenance/1.0/\n  prov:wasGeneratedBy:\n    description: Provenance activities describing how the resource was generated,\n      including agents, instruments, methodology, temporal bounds, and action chaining.\n    type: array\n    items:\n      $ref: https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifProvActivity/schema.yaml\n",
   "gitRepository": "https://github.com/Cross-Domain-Interoperability-Framework/metadataBuildingBlocks",
   "gitPath": "_sources/cdifProperties/cdifProvenance"
 }

@@ -154,7 +154,38 @@
           }
         },
         "schema:subjectOf": {
-          "$ref": "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasOptional/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifMandatory/$defs/CdifCatalogRecord"
+          "allOf": [
+            {
+              "$ref": "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasOptional/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifMandatory/$defs/CdifCatalogRecord"
+            },
+            {
+              "properties": {
+                "dcterms:conformsTo": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "@id": {
+                        "type": "string",
+                        "description": "uri for specifications that this metadata record conforms to"
+                      }
+                    }
+                  },
+                  "minItems": 1,
+                  "contains": {
+                    "type": "object",
+                    "properties": {
+                      "@id": {
+                        "enum": [
+                          "https://w3id.org/cdif/core/1.0/"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
         }
       },
       "allOf": [
@@ -2254,8 +2285,16 @@
             "$ref": "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasOptional/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.instrument/$defs/DefinedTerm"
           }
         },
+        "schema:owner": {
+          "description": "Organization that owns this instrument.",
+          "allOf": [
+            {
+              "$ref": "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasOptional/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.instrument/$defs/Organization"
+            }
+          ]
+        },
         "schema:contributor": {
-          "description": "Agents associated with this instrument in specific roles (e.g. owner, operator, custodian).",
+          "description": "Agents associated with this instrument in specific roles (e.g. operator, custodian, principal investigator). Use schema:owner for the owning organization.",
           "type": "array",
           "items": {
             "$ref": "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasOptional/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.instrument/$defs/AgentInRole"
@@ -3266,7 +3305,38 @@
       "type": "object",
       "properties": {
         "schema:subjectOf": {
-          "$ref": "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasOptional/schema-oas3.0.json#/$defs/XasSubject"
+          "allOf": [
+            {
+              "$ref": "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasOptional/schema-oas3.0.json#/$defs/XasSubject"
+            },
+            {
+              "properties": {
+                "dcterms:conformsTo": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "@id": {
+                        "type": "string",
+                        "description": "uri for specifications that this metadata record conforms to"
+                      }
+                    }
+                  },
+                  "minItems": 1,
+                  "contains": {
+                    "type": "object",
+                    "properties": {
+                      "@id": {
+                        "enum": [
+                          "https://w3id.org/cdif/xasDiscovery/1.0/"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
         },
         "prov:wasGeneratedBy": {
           "type": "array",

@@ -1,5 +1,18 @@
 [
   {
+    "path": "/schema:subjectOf",
+    "sources": [
+      "bblocks://cdif.bbr.metadata.cdifProperties.cdifProvenance"
+    ]
+  },
+  {
+    "path": "/schema:subjectOf/dcterms:conformsTo",
+    "schema_type": "array",
+    "sources": [
+      "bblocks://cdif.bbr.metadata.cdifProperties.cdifProvenance"
+    ]
+  },
+  {
     "path": "/prov:wasGeneratedBy",
     "description": "Provenance activities describing how the resource was generated, including agents, instruments, methodology, temporal bounds, and action chaining.",
     "schema_type": "array",
@@ -341,8 +354,15 @@
     ]
   },
   {
+    "path": "/prov:wasGeneratedBy/prov:used/schema:instrument/schema:owner",
+    "description": "Organization that owns this instrument.",
+    "sources": [
+      "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/instrument/schema.yaml"
+    ]
+  },
+  {
     "path": "/prov:wasGeneratedBy/prov:used/schema:instrument/schema:contributor",
-    "description": "Agents associated with this instrument in specific roles (e.g. owner, operator, custodian).",
+    "description": "Agents associated with this instrument in specific roles (e.g. operator, custodian, principal investigator). Use schema:owner for the owning organization.",
     "schema_type": "array",
     "sources": [
       "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/instrument/schema.yaml"

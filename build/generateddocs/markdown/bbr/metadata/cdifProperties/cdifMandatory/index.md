@@ -51,6 +51,9 @@ Example CDIF discovery instance with mandatory properties only.
         "dcterms:conformsTo": [
             {
                 "@id": "https://w3id.org/cdif/bbr/metadata/cdifProperties/cdifMandatory"
+            },
+            {
+                "@id": "https://w3id.org/cdif/core/1.0/"
             }
         ],
         "schema:maintainer": {
@@ -124,6 +127,9 @@ Example CDIF discovery instance with mandatory properties only.
     "dcterms:conformsTo": [
       {
         "@id": "https://w3id.org/cdif/bbr/metadata/cdifProperties/cdifMandatory"
+      },
+      {
+        "@id": "https://w3id.org/cdif/core/1.0/"
       }
     ],
     "schema:maintainer": {
@@ -161,7 +167,8 @@ Example CDIF discovery instance with mandatory properties only.
 @prefix schema1: <http://schema.org/> .
 
 ex:URIforMetadata3575 a schema1:Dataset ;
-    dcterms:conformsTo <https://w3id.org/cdif/bbr/metadata/cdifProperties/cdifMandatory> ;
+    dcterms:conformsTo <https://w3id.org/cdif/bbr/metadata/cdifProperties/cdifMandatory>,
+        <https://w3id.org/cdif/core/1.0/> ;
     schema1:about ex:baseDiscovery23578 ;
     schema1:additionalType "dcat:CatalogRecord" ;
     schema1:includedInDataCatalog <https://ror.org/04sfkyrt24> ;
@@ -323,7 +330,24 @@ properties:
       - $ref: '#/$defs/DataDownload'
       - $ref: '#/$defs/WebAPI'
   schema:subjectOf:
-    $ref: '#/$defs/CdifCatalogRecord'
+    allOf:
+    - $ref: '#/$defs/CdifCatalogRecord'
+    - properties:
+        dcterms:conformsTo:
+          type: array
+          items:
+            type: object
+            properties:
+              '@id':
+                type: string
+                description: uri for specifications that this metadata record conforms
+                  to
+          minItems: 1
+          contains:
+            type: object
+            properties:
+              '@id':
+                const: https://w3id.org/cdif/core/1.0/
 allOf:
 - required:
   - '@id'

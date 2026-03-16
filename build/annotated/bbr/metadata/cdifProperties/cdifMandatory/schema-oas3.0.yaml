@@ -966,7 +966,25 @@ properties:
       - $ref: https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifMandatory/schema-oas3.0.yaml#/$defs/DataDownload
       - $ref: https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifMandatory/schema-oas3.0.yaml#/$defs/WebAPI
   schema:subjectOf:
-    $ref: https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifMandatory/schema-oas3.0.yaml#/$defs/CdifCatalogRecord
+    allOf:
+    - $ref: https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifMandatory/schema-oas3.0.yaml#/$defs/CdifCatalogRecord
+    - properties:
+        dcterms:conformsTo:
+          type: array
+          items:
+            type: object
+            properties:
+              '@id':
+                type: string
+                description: uri for specifications that this metadata record conforms
+                  to
+          minItems: 1
+          contains:
+            type: object
+            properties:
+              '@id':
+                enum:
+                - https://w3id.org/cdif/core/1.0/
 allOf:
 - required:
   - '@id'

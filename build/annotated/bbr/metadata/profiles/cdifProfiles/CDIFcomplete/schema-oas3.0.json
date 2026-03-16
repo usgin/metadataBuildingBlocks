@@ -154,7 +154,38 @@
           }
         },
         "schema:subjectOf": {
-          "$ref": "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFcomplete/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifMandatory/$defs/CdifCatalogRecord"
+          "allOf": [
+            {
+              "$ref": "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFcomplete/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifMandatory/$defs/CdifCatalogRecord"
+            },
+            {
+              "properties": {
+                "dcterms:conformsTo": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "@id": {
+                        "type": "string",
+                        "description": "uri for specifications that this metadata record conforms to"
+                      }
+                    }
+                  },
+                  "minItems": 1,
+                  "contains": {
+                    "type": "object",
+                    "properties": {
+                      "@id": {
+                        "enum": [
+                          "https://w3id.org/cdif/core/1.0/"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
         }
       },
       "allOf": [
@@ -620,6 +651,33 @@
             "$ref": "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFcomplete/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifOptional/$defs/QualityMeasure"
           }
         },
+        "schema:subjectOf": {
+          "properties": {
+            "dcterms:conformsTo": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "@id": {
+                    "type": "string",
+                    "description": "uri for specifications that this metadata record conforms to"
+                  }
+                }
+              },
+              "minItems": 1,
+              "contains": {
+                "type": "object",
+                "properties": {
+                  "@id": {
+                    "enum": [
+                      "https://w3id.org/cdif/discovery/1.0/"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
         "schema:distribution": {
           "description": "Distribution options for the dataset.",
           "type": "array",
@@ -696,6 +754,33 @@
       "description": "Additional constraints for CDIF data description level. Adds cdi:physicalDataType requirement on variableMeasured items and distribution-level cdi properties for file characterization (characterSet, fileSize, fileSizeUofM).",
       "type": "object",
       "properties": {
+        "schema:subjectOf": {
+          "properties": {
+            "dcterms:conformsTo": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "@id": {
+                    "type": "string",
+                    "description": "uri for specifications that this metadata record conforms to"
+                  }
+                }
+              },
+              "minItems": 1,
+              "contains": {
+                "type": "object",
+                "properties": {
+                  "@id": {
+                    "enum": [
+                      "https://w3id.org/cdif/data_description/1.0/"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
         "@context": {
           "type": "object",
           "description": "Additional namespace prefix for data description properties.",
@@ -772,6 +857,33 @@
       "description": "Building block that adds archive distribution as a valid distribution item type. cdifOptional already defines schema:distribution with DataDownload and WebAPI options; this building block extends that with the cdifArchive option (DataDownload with schema:hasPart component files).",
       "type": "object",
       "properties": {
+        "schema:subjectOf": {
+          "properties": {
+            "dcterms:conformsTo": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "@id": {
+                    "type": "string",
+                    "description": "uri for specifications that this metadata record conforms to"
+                  }
+                }
+              },
+              "minItems": 1,
+              "contains": {
+                "type": "object",
+                "properties": {
+                  "@id": {
+                    "enum": [
+                      "https://w3id.org/cdif/manifest/1.0/"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
         "schema:distribution": {
           "type": "array",
           "items": {
@@ -792,6 +904,33 @@
       "description": "Building block that defines the prov:wasGeneratedBy property for CDIF metadata records. Wraps the cdifProvActivity building block as an array of provenance activities that describe how the described resource was generated.",
       "type": "object",
       "properties": {
+        "schema:subjectOf": {
+          "properties": {
+            "dcterms:conformsTo": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "@id": {
+                    "type": "string",
+                    "description": "uri for specifications that this metadata record conforms to"
+                  }
+                }
+              },
+              "minItems": 1,
+              "contains": {
+                "type": "object",
+                "properties": {
+                  "@id": {
+                    "enum": [
+                      "https://w3id.org/cdif/provenance/1.0/"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
         "prov:wasGeneratedBy": {
           "description": "Provenance activities describing how the resource was generated, including agents, instruments, methodology, temporal bounds, and action chaining.",
           "type": "array",
@@ -4110,8 +4249,16 @@
             "$ref": "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFcomplete/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.instrument/$defs/DefinedTerm"
           }
         },
+        "schema:owner": {
+          "description": "Organization that owns this instrument.",
+          "allOf": [
+            {
+              "$ref": "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFcomplete/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.instrument/$defs/Organization"
+            }
+          ]
+        },
         "schema:contributor": {
-          "description": "Agents associated with this instrument in specific roles (e.g. owner, operator, custodian).",
+          "description": "Agents associated with this instrument in specific roles (e.g. operator, custodian, principal investigator). Use schema:owner for the owning organization.",
           "type": "array",
           "items": {
             "$ref": "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFcomplete/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.instrument/$defs/AgentInRole"
