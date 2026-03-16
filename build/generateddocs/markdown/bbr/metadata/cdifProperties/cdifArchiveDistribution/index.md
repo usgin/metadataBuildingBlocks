@@ -17,6 +17,225 @@ Adds archive distribution as a valid `schema:distribution` item type. The `cdifO
 
 - [cdifArchive](../cdifArchive/) - archive item schema (DataDownload with hasPart component files)
 
+## Examples
+
+### Example CDIF Archive Distribution record
+Example dataset with an archive distribution containing component files.
+#### json
+```json
+{
+    "@context": {
+        "schema": "http://schema.org/",
+        "dcterms": "http://purl.org/dc/terms/",
+        "dcat": "http://www.w3.org/ns/dcat#",
+        "spdx": "http://spdx.org/rdf/terms#",
+        "ex": "https://example.org/"
+    },
+    "@id": "ex:dataset_archive_001",
+    "@type": ["schema:Dataset"],
+    "schema:name": "Geochemical Analysis Results Package",
+    "schema:identifier": "https://doi.org/10.1234/geochem-archive-2025",
+    "schema:url": "https://example.org/datasets/geochem-archive-2025",
+    "schema:dateModified": "2025-08-01",
+    "schema:license": ["https://creativecommons.org/licenses/by/4.0/"],
+    "schema:subjectOf": {
+        "@type": ["schema:Dataset"],
+        "schema:additionalType": ["dcat:CatalogRecord"],
+        "@id": "ex:metadata_archive_001",
+        "schema:about": {
+            "@id": "ex:dataset_archive_001"
+        },
+        "dcterms:conformsTo": [
+            {
+                "@id": "https://w3id.org/cdif/manifest/1.0/"
+            }
+        ]
+    },
+    "schema:distribution": [
+        {
+            "@type": ["schema:DataDownload"],
+            "schema:name": "Geochemistry results archive",
+            "schema:contentUrl": "https://example.org/downloads/geochem-results-2025.zip",
+            "schema:encodingFormat": ["application/zip"],
+            "schema:hasPart": [
+                {
+                    "@id": "#data-csv",
+                    "@type": ["schema:MediaObject"],
+                    "schema:name": "results.csv",
+                    "schema:description": "Tabular geochemical analysis results",
+                    "schema:encodingFormat": ["text/csv"],
+                    "schema:size": {
+                        "@type": "schema:QuantitativeValue",
+                        "schema:value": 245000,
+                        "schema:unitText": "byte"
+                    },
+                    "spdx:checksum": {
+                        "@type": "spdx:Checksum",
+                        "spdx:algorithm": "sha256",
+                        "spdx:checksumValue": "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2"
+                    }
+                },
+                {
+                    "@id": "#metadata-json",
+                    "@type": ["schema:MediaObject"],
+                    "schema:name": "metadata.json",
+                    "schema:description": "Metadata sidecar for the results file",
+                    "schema:encodingFormat": ["application/json"],
+                    "schema:about": [
+                        {
+                            "@id": "#data-csv"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+
+```
+
+#### jsonld
+```jsonld
+{
+  "@context": [
+    "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifArchiveDistribution/context.jsonld",
+    {
+      "schema": "http://schema.org/",
+      "dcterms": "http://purl.org/dc/terms/",
+      "dcat": "http://www.w3.org/ns/dcat#",
+      "spdx": "http://spdx.org/rdf/terms#",
+      "ex": "https://example.org/"
+    }
+  ],
+  "@id": "ex:dataset_archive_001",
+  "@type": [
+    "schema:Dataset"
+  ],
+  "schema:name": "Geochemical Analysis Results Package",
+  "schema:identifier": "https://doi.org/10.1234/geochem-archive-2025",
+  "schema:url": "https://example.org/datasets/geochem-archive-2025",
+  "schema:dateModified": "2025-08-01",
+  "schema:license": [
+    "https://creativecommons.org/licenses/by/4.0/"
+  ],
+  "schema:subjectOf": {
+    "@type": [
+      "schema:Dataset"
+    ],
+    "schema:additionalType": [
+      "dcat:CatalogRecord"
+    ],
+    "@id": "ex:metadata_archive_001",
+    "schema:about": {
+      "@id": "ex:dataset_archive_001"
+    },
+    "dcterms:conformsTo": [
+      {
+        "@id": "https://w3id.org/cdif/manifest/1.0/"
+      }
+    ]
+  },
+  "schema:distribution": [
+    {
+      "@type": [
+        "schema:DataDownload"
+      ],
+      "schema:name": "Geochemistry results archive",
+      "schema:contentUrl": "https://example.org/downloads/geochem-results-2025.zip",
+      "schema:encodingFormat": [
+        "application/zip"
+      ],
+      "schema:hasPart": [
+        {
+          "@id": "#data-csv",
+          "@type": [
+            "schema:MediaObject"
+          ],
+          "schema:name": "results.csv",
+          "schema:description": "Tabular geochemical analysis results",
+          "schema:encodingFormat": [
+            "text/csv"
+          ],
+          "schema:size": {
+            "@type": "schema:QuantitativeValue",
+            "schema:value": 245000,
+            "schema:unitText": "byte"
+          },
+          "spdx:checksum": {
+            "@type": "spdx:Checksum",
+            "spdx:algorithm": "sha256",
+            "spdx:checksumValue": "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2"
+          }
+        },
+        {
+          "@id": "#metadata-json",
+          "@type": [
+            "schema:MediaObject"
+          ],
+          "schema:name": "metadata.json",
+          "schema:description": "Metadata sidecar for the results file",
+          "schema:encodingFormat": [
+            "application/json"
+          ],
+          "schema:about": [
+            {
+              "@id": "#data-csv"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+```
+
+#### ttl
+```ttl
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ex: <https://example.org/> .
+@prefix schema1: <http://schema.org/> .
+@prefix spdx: <http://spdx.org/rdf/terms#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<file:///github/workspace/#metadata-json> a schema1:MediaObject ;
+    schema1:about <file:///github/workspace/#data-csv> ;
+    schema1:description "Metadata sidecar for the results file" ;
+    schema1:encodingFormat "application/json" ;
+    schema1:name "metadata.json" .
+
+ex:dataset_archive_001 a schema1:Dataset ;
+    schema1:dateModified "2025-08-01" ;
+    schema1:distribution [ a schema1:DataDownload ;
+            schema1:contentUrl "https://example.org/downloads/geochem-results-2025.zip" ;
+            schema1:encodingFormat "application/zip" ;
+            schema1:hasPart <file:///github/workspace/#data-csv>,
+                <file:///github/workspace/#metadata-json> ;
+            schema1:name "Geochemistry results archive" ] ;
+    schema1:identifier "https://doi.org/10.1234/geochem-archive-2025" ;
+    schema1:license "https://creativecommons.org/licenses/by/4.0/" ;
+    schema1:name "Geochemical Analysis Results Package" ;
+    schema1:subjectOf ex:metadata_archive_001 ;
+    schema1:url "https://example.org/datasets/geochem-archive-2025" .
+
+ex:metadata_archive_001 a schema1:Dataset ;
+    dcterms:conformsTo <https://w3id.org/cdif/manifest/1.0/> ;
+    schema1:about ex:dataset_archive_001 ;
+    schema1:additionalType "dcat:CatalogRecord" .
+
+<file:///github/workspace/#data-csv> a schema1:MediaObject ;
+    schema1:description "Tabular geochemical analysis results" ;
+    schema1:encodingFormat "text/csv" ;
+    schema1:name "results.csv" ;
+    schema1:size [ a schema1:QuantitativeValue ;
+            schema1:unitText "byte" ;
+            schema1:value 245000 ] ;
+    spdx:checksum [ a spdx:Checksum ;
+            spdx:algorithm "sha256" ;
+            spdx:checksumValue "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2" ] .
+
+
+```
+
 ## Schema
 
 ```yaml

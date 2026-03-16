@@ -113,7 +113,14 @@ Example CDIF record with mandatory and optional properties.
     "schema:keywords": [
         "bathymetry",
         "ocean floor"
-    ]
+    ],
+    "schema:subjectOf": {
+        "dcterms:conformsTo": [
+            {
+                "@id": "https://w3id.org/cdif/discovery/1.0/"
+            }
+        ]
+    }
 }
 ```
 
@@ -224,13 +231,21 @@ Example CDIF record with mandatory and optional properties.
   "schema:keywords": [
     "bathymetry",
     "ocean floor"
-  ]
+  ],
+  "schema:subjectOf": {
+    "dcterms:conformsTo": [
+      {
+        "@id": "https://w3id.org/cdif/discovery/1.0/"
+      }
+    ]
+  }
 }
 ```
 
 #### ttl
 ```ttl
 @prefix ex: <https://example.org/> .
+@prefix ns1: <dcterms:> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix schema1: <http://schema.org/> .
 
@@ -262,6 +277,7 @@ ex:cdifOptional_23578 a schema1:Dataset ;
                     schema1:inDefinedTermSet "https://www.iana.org/assignments/link-relations/" ;
                     schema1:name "related dataset" ;
                     schema1:termCode "related" ] ] ;
+    schema1:subjectOf [ ns1:conformsTo <https://w3id.org/cdif/discovery/1.0/> ] ;
     schema1:url "https://example.org/landingPage254266" ;
     schema1:version "1.0" .
 

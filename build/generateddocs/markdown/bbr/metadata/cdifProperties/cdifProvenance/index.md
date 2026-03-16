@@ -21,6 +21,180 @@ Defines the `prov:wasGeneratedBy` property for CDIF metadata records. This build
 
 - [cdifProvActivity](../cdifProvActivity/) - extended provenance activity with schema.org Action properties
 
+## Examples
+
+### Example CDIF Provenance record
+Example dataset with provenance activity describing how the resource was generated.
+#### json
+```json
+{
+    "@context": {
+        "schema": "http://schema.org/",
+        "prov": "http://www.w3.org/ns/prov#",
+        "dcterms": "http://purl.org/dc/terms/",
+        "dcat": "http://www.w3.org/ns/dcat#",
+        "ex": "https://example.org/"
+    },
+    "@id": "ex:dataset_with_provenance_001",
+    "@type": ["schema:Dataset"],
+    "schema:name": "Processed Seismic Survey Data",
+    "schema:identifier": "https://doi.org/10.1234/seismic-2025",
+    "schema:url": "https://example.org/datasets/seismic-2025",
+    "schema:dateModified": "2025-06-15",
+    "schema:license": ["https://creativecommons.org/licenses/by/4.0/"],
+    "schema:subjectOf": {
+        "@type": ["schema:Dataset"],
+        "schema:additionalType": ["dcat:CatalogRecord"],
+        "@id": "ex:metadata_provenance_001",
+        "schema:about": {
+            "@id": "ex:dataset_with_provenance_001"
+        },
+        "dcterms:conformsTo": [
+            {
+                "@id": "https://w3id.org/cdif/provenance/1.0/"
+            }
+        ]
+    },
+    "prov:wasGeneratedBy": [
+        {
+            "@type": ["prov:Activity", "schema:Action"],
+            "schema:name": "Seismic data processing",
+            "schema:description": "Raw seismic traces were processed using standard reflection seismology workflow including deconvolution, stacking, and migration.",
+            "schema:agent": {
+                "@type": "schema:Person",
+                "schema:name": "Garcia, Maria",
+                "schema:identifier": "https://orcid.org/0000-0003-1234-5678"
+            },
+            "prov:used": [
+                {
+                    "schema:instrument": {
+                        "@type": ["schema:SoftwareApplication"],
+                        "schema:name": "SeisUnix",
+                        "schema:version": "44R27",
+                        "schema:url": "https://wiki.seismic-unix.org/"
+                    }
+                }
+            ],
+            "schema:startTime": "2025-01-10T00:00:00Z",
+            "schema:endTime": "2025-03-20T00:00:00Z",
+            "schema:actionStatus": "schema:CompletedActionStatus"
+        }
+    ]
+}
+
+```
+
+#### jsonld
+```jsonld
+{
+  "@context": [
+    "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifProvenance/context.jsonld",
+    {
+      "schema": "http://schema.org/",
+      "prov": "http://www.w3.org/ns/prov#",
+      "dcterms": "http://purl.org/dc/terms/",
+      "dcat": "http://www.w3.org/ns/dcat#",
+      "ex": "https://example.org/"
+    }
+  ],
+  "@id": "ex:dataset_with_provenance_001",
+  "@type": [
+    "schema:Dataset"
+  ],
+  "schema:name": "Processed Seismic Survey Data",
+  "schema:identifier": "https://doi.org/10.1234/seismic-2025",
+  "schema:url": "https://example.org/datasets/seismic-2025",
+  "schema:dateModified": "2025-06-15",
+  "schema:license": [
+    "https://creativecommons.org/licenses/by/4.0/"
+  ],
+  "schema:subjectOf": {
+    "@type": [
+      "schema:Dataset"
+    ],
+    "schema:additionalType": [
+      "dcat:CatalogRecord"
+    ],
+    "@id": "ex:metadata_provenance_001",
+    "schema:about": {
+      "@id": "ex:dataset_with_provenance_001"
+    },
+    "dcterms:conformsTo": [
+      {
+        "@id": "https://w3id.org/cdif/provenance/1.0/"
+      }
+    ]
+  },
+  "prov:wasGeneratedBy": [
+    {
+      "@type": [
+        "prov:Activity",
+        "schema:Action"
+      ],
+      "schema:name": "Seismic data processing",
+      "schema:description": "Raw seismic traces were processed using standard reflection seismology workflow including deconvolution, stacking, and migration.",
+      "schema:agent": {
+        "@type": "schema:Person",
+        "schema:name": "Garcia, Maria",
+        "schema:identifier": "https://orcid.org/0000-0003-1234-5678"
+      },
+      "prov:used": [
+        {
+          "schema:instrument": {
+            "@type": [
+              "schema:SoftwareApplication"
+            ],
+            "schema:name": "SeisUnix",
+            "schema:version": "44R27",
+            "schema:url": "https://wiki.seismic-unix.org/"
+          }
+        }
+      ],
+      "schema:startTime": "2025-01-10T00:00:00Z",
+      "schema:endTime": "2025-03-20T00:00:00Z",
+      "schema:actionStatus": "schema:CompletedActionStatus"
+    }
+  ]
+}
+```
+
+#### ttl
+```ttl
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ex: <https://example.org/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix schema1: <http://schema.org/> .
+
+ex:dataset_with_provenance_001 a schema1:Dataset ;
+    schema1:dateModified "2025-06-15" ;
+    schema1:identifier "https://doi.org/10.1234/seismic-2025" ;
+    schema1:license "https://creativecommons.org/licenses/by/4.0/" ;
+    schema1:name "Processed Seismic Survey Data" ;
+    schema1:subjectOf ex:metadata_provenance_001 ;
+    schema1:url "https://example.org/datasets/seismic-2025" ;
+    prov:wasGeneratedBy [ a schema1:Action,
+                prov:Activity ;
+            schema1:actionStatus "schema:CompletedActionStatus" ;
+            schema1:agent [ a schema1:Person ;
+                    schema1:identifier "https://orcid.org/0000-0003-1234-5678" ;
+                    schema1:name "Garcia, Maria" ] ;
+            schema1:description "Raw seismic traces were processed using standard reflection seismology workflow including deconvolution, stacking, and migration." ;
+            schema1:endTime "2025-03-20T00:00:00Z" ;
+            schema1:name "Seismic data processing" ;
+            schema1:startTime "2025-01-10T00:00:00Z" ;
+            prov:used [ schema1:instrument [ a schema1:SoftwareApplication ;
+                            schema1:name "SeisUnix" ;
+                            schema1:url "https://wiki.seismic-unix.org/" ;
+                            schema1:version "44R27" ] ] ] .
+
+ex:metadata_provenance_001 a schema1:Dataset ;
+    dcterms:conformsTo <https://w3id.org/cdif/provenance/1.0/> ;
+    schema1:about ex:dataset_with_provenance_001 ;
+    schema1:additionalType "dcat:CatalogRecord" .
+
+
+```
+
 ## Schema
 
 ```yaml

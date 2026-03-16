@@ -11,6 +11,203 @@ Additional constraints for CDIF data description level. Adds cdi:physicalDataTyp
 
 Additional constraints for CDIF data description level metadata. Adds the `cdi:physicalDataType` requirement on variableMeasured items (PropertyValue-type variables must specify their physical data type at this level). Also adds distribution-level CDI properties for file characterization: `cdi:characterSet`, `cdi:fileSize`, and `cdi:fileSizeUofM`.
 
+## Examples
+
+### Example CDIF Data Description record
+Example dataset with data description level properties including variable types and distribution file characterization.
+#### json
+```json
+{
+    "@context": {
+        "schema": "http://schema.org/",
+        "cdi": "http://ddialliance.org/Specification/DDI-CDI/1.0/RDF/",
+        "csvw": "http://www.w3.org/ns/csvw#",
+        "dcterms": "http://purl.org/dc/terms/",
+        "dcat": "http://www.w3.org/ns/dcat#",
+        "ex": "https://example.org/"
+    },
+    "@id": "ex:dataset_datadesc_001",
+    "@type": ["schema:Dataset"],
+    "schema:name": "Ocean Temperature Monitoring Data",
+    "schema:identifier": "https://doi.org/10.1234/ocean-temp-2025",
+    "schema:url": "https://example.org/datasets/ocean-temp-2025",
+    "schema:dateModified": "2025-09-01",
+    "schema:license": ["https://creativecommons.org/licenses/by/4.0/"],
+    "schema:subjectOf": {
+        "@type": ["schema:Dataset"],
+        "schema:additionalType": ["dcat:CatalogRecord"],
+        "@id": "ex:metadata_datadesc_001",
+        "schema:about": {
+            "@id": "ex:dataset_datadesc_001"
+        },
+        "dcterms:conformsTo": [
+            {
+                "@id": "https://w3id.org/cdif/data_description/1.0/"
+            }
+        ]
+    },
+    "schema:variableMeasured": [
+        {
+            "@type": ["schema:PropertyValue", "cdi:InstanceVariable"],
+            "schema:name": "sea_water_temperature",
+            "schema:description": "Temperature of sea water at measurement depth",
+            "schema:unitText": "degrees Celsius",
+            "schema:unitCode": "CEL",
+            "cdi:physicalDataType": "Numeric"
+        },
+        {
+            "@type": ["schema:PropertyValue", "cdi:InstanceVariable"],
+            "schema:name": "measurement_depth",
+            "schema:description": "Depth below sea surface at which temperature was recorded",
+            "schema:unitText": "meters",
+            "schema:unitCode": "MTR",
+            "cdi:physicalDataType": "Numeric"
+        }
+    ],
+    "schema:distribution": [
+        {
+            "@type": ["schema:DataDownload"],
+            "schema:name": "Ocean temperature CSV",
+            "schema:contentUrl": "https://example.org/downloads/ocean-temp-2025.csv",
+            "schema:encodingFormat": ["text/csv"],
+            "cdi:characterSet": "UTF-8",
+            "cdi:fileSize": 1.2,
+            "cdi:fileSizeUofM": "MB"
+        }
+    ]
+}
+
+```
+
+#### jsonld
+```jsonld
+{
+  "@context": [
+    "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifDataDescription/context.jsonld",
+    {
+      "schema": "http://schema.org/",
+      "cdi": "http://ddialliance.org/Specification/DDI-CDI/1.0/RDF/",
+      "csvw": "http://www.w3.org/ns/csvw#",
+      "dcterms": "http://purl.org/dc/terms/",
+      "dcat": "http://www.w3.org/ns/dcat#",
+      "ex": "https://example.org/"
+    }
+  ],
+  "@id": "ex:dataset_datadesc_001",
+  "@type": [
+    "schema:Dataset"
+  ],
+  "schema:name": "Ocean Temperature Monitoring Data",
+  "schema:identifier": "https://doi.org/10.1234/ocean-temp-2025",
+  "schema:url": "https://example.org/datasets/ocean-temp-2025",
+  "schema:dateModified": "2025-09-01",
+  "schema:license": [
+    "https://creativecommons.org/licenses/by/4.0/"
+  ],
+  "schema:subjectOf": {
+    "@type": [
+      "schema:Dataset"
+    ],
+    "schema:additionalType": [
+      "dcat:CatalogRecord"
+    ],
+    "@id": "ex:metadata_datadesc_001",
+    "schema:about": {
+      "@id": "ex:dataset_datadesc_001"
+    },
+    "dcterms:conformsTo": [
+      {
+        "@id": "https://w3id.org/cdif/data_description/1.0/"
+      }
+    ]
+  },
+  "schema:variableMeasured": [
+    {
+      "@type": [
+        "schema:PropertyValue",
+        "cdi:InstanceVariable"
+      ],
+      "schema:name": "sea_water_temperature",
+      "schema:description": "Temperature of sea water at measurement depth",
+      "schema:unitText": "degrees Celsius",
+      "schema:unitCode": "CEL",
+      "cdi:physicalDataType": "Numeric"
+    },
+    {
+      "@type": [
+        "schema:PropertyValue",
+        "cdi:InstanceVariable"
+      ],
+      "schema:name": "measurement_depth",
+      "schema:description": "Depth below sea surface at which temperature was recorded",
+      "schema:unitText": "meters",
+      "schema:unitCode": "MTR",
+      "cdi:physicalDataType": "Numeric"
+    }
+  ],
+  "schema:distribution": [
+    {
+      "@type": [
+        "schema:DataDownload"
+      ],
+      "schema:name": "Ocean temperature CSV",
+      "schema:contentUrl": "https://example.org/downloads/ocean-temp-2025.csv",
+      "schema:encodingFormat": [
+        "text/csv"
+      ],
+      "cdi:characterSet": "UTF-8",
+      "cdi:fileSize": 1.2,
+      "cdi:fileSizeUofM": "MB"
+    }
+  ]
+}
+```
+
+#### ttl
+```ttl
+@prefix cdi: <http://ddialliance.org/Specification/DDI-CDI/1.0/RDF/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ex: <https://example.org/> .
+@prefix schema1: <http://schema.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:dataset_datadesc_001 a schema1:Dataset ;
+    schema1:dateModified "2025-09-01" ;
+    schema1:distribution [ a schema1:DataDownload ;
+            cdi:characterSet "UTF-8" ;
+            cdi:fileSize 1.2e+00 ;
+            cdi:fileSizeUofM "MB" ;
+            schema1:contentUrl "https://example.org/downloads/ocean-temp-2025.csv" ;
+            schema1:encodingFormat "text/csv" ;
+            schema1:name "Ocean temperature CSV" ] ;
+    schema1:identifier "https://doi.org/10.1234/ocean-temp-2025" ;
+    schema1:license "https://creativecommons.org/licenses/by/4.0/" ;
+    schema1:name "Ocean Temperature Monitoring Data" ;
+    schema1:subjectOf ex:metadata_datadesc_001 ;
+    schema1:url "https://example.org/datasets/ocean-temp-2025" ;
+    schema1:variableMeasured [ a cdi:InstanceVariable,
+                schema1:PropertyValue ;
+            cdi:physicalDataType "Numeric" ;
+            schema1:description "Depth below sea surface at which temperature was recorded" ;
+            schema1:name "measurement_depth" ;
+            schema1:unitCode "MTR" ;
+            schema1:unitText "meters" ],
+        [ a cdi:InstanceVariable,
+                schema1:PropertyValue ;
+            cdi:physicalDataType "Numeric" ;
+            schema1:description "Temperature of sea water at measurement depth" ;
+            schema1:name "sea_water_temperature" ;
+            schema1:unitCode "CEL" ;
+            schema1:unitText "degrees Celsius" ] .
+
+ex:metadata_datadesc_001 a schema1:Dataset ;
+    dcterms:conformsTo <https://w3id.org/cdif/data_description/1.0/> ;
+    schema1:about ex:dataset_datadesc_001 ;
+    schema1:additionalType "dcat:CatalogRecord" .
+
+
+```
+
 ## Schema
 
 ```yaml

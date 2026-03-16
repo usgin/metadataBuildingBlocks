@@ -1,0 +1,40 @@
+@prefix cdi: <http://ddialliance.org/Specification/DDI-CDI/1.0/RDF/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ex: <https://example.org/> .
+@prefix schema1: <http://schema.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:dataset_datadesc_001 a schema1:Dataset ;
+    schema1:dateModified "2025-09-01" ;
+    schema1:distribution [ a schema1:DataDownload ;
+            cdi:characterSet "UTF-8" ;
+            cdi:fileSize 1.2e+00 ;
+            cdi:fileSizeUofM "MB" ;
+            schema1:contentUrl "https://example.org/downloads/ocean-temp-2025.csv" ;
+            schema1:encodingFormat "text/csv" ;
+            schema1:name "Ocean temperature CSV" ] ;
+    schema1:identifier "https://doi.org/10.1234/ocean-temp-2025" ;
+    schema1:license "https://creativecommons.org/licenses/by/4.0/" ;
+    schema1:name "Ocean Temperature Monitoring Data" ;
+    schema1:subjectOf ex:metadata_datadesc_001 ;
+    schema1:url "https://example.org/datasets/ocean-temp-2025" ;
+    schema1:variableMeasured [ a cdi:InstanceVariable,
+                schema1:PropertyValue ;
+            cdi:physicalDataType "Numeric" ;
+            schema1:description "Depth below sea surface at which temperature was recorded" ;
+            schema1:name "measurement_depth" ;
+            schema1:unitCode "MTR" ;
+            schema1:unitText "meters" ],
+        [ a cdi:InstanceVariable,
+                schema1:PropertyValue ;
+            cdi:physicalDataType "Numeric" ;
+            schema1:description "Temperature of sea water at measurement depth" ;
+            schema1:name "sea_water_temperature" ;
+            schema1:unitCode "CEL" ;
+            schema1:unitText "degrees Celsius" ] .
+
+ex:metadata_datadesc_001 a schema1:Dataset ;
+    dcterms:conformsTo <https://w3id.org/cdif/data_description/1.0/> ;
+    schema1:about ex:dataset_datadesc_001 ;
+    schema1:additionalType "dcat:CatalogRecord" .
+
