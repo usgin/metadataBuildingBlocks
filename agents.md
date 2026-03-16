@@ -90,6 +90,53 @@ Some building blocks define **item-level schemas** (e.g., a provenance activity 
 | `cdifProvenance` | `prov:wasGeneratedBy` (array) | `cdifProvActivity` |
 | `cdifArchiveDistribution` | `schema:distribution` (adds archive option) | `cdifArchive` |
 
+## Building Block Conformance URIs
+
+Building blocks that represent CDIF specification components declare required `dcterms:conformsTo` URIs in the metadata catalog record (`schema:subjectOf`). Each building block's `schema.yaml` adds a `contains` constraint on `schema:subjectOf` → `dcterms:conformsTo` requiring its specific URI. Corresponding SHACL shapes enforce the same constraint via `sh:hasValue`.
+
+| Building Block | Conformance URI | SHACL Shape |
+|---|---|---|
+| `cdifMandatory` | `https://w3id.org/cdif/core/1.0/` | `sh:hasValue` on existing `metadataProfileProperty` |
+| `cdifOptional` | `https://w3id.org/cdif/discovery/1.0/` | `CDIFDiscoveryConformsToShape` |
+| `cdifDataDescription` | `https://w3id.org/cdif/data_description/1.0/` | `CDIFDataDescriptionConformsToShape` |
+| `cdifArchiveDistribution` | `https://w3id.org/cdif/manifest/1.0/` | *(no rules.shacl — JSON Schema only)* |
+| `cdifProvenance` | `https://w3id.org/cdif/provenance/1.0/` | *(no rules.shacl — JSON Schema only)* |
+| `xasOptional` | `https://w3id.org/cdif/xasDiscovery/1.0/` | `XasDiscoveryConformsToShape` |
+| `xasRequired` | `https://w3id.org/cdif/xasCore/1.0/` | `XasCoreConformsToShape` |
+
+**Profile rollup:** When building blocks are composed into profiles via `allOf`, the `contains` constraints combine — the conformsTo array must include URIs for all constituent building blocks. For example:
+
+| Profile | Required conformsTo URIs |
+|---|---|
+| CDIFDiscovery | `core/1.0/` + `discovery/1.0/` |
+| CDIFDataDescription | `core/1.0/` + `discovery/1.0/` + `data_description/1.0/` |
+| CDIFcomplete | `core/1.0/` + `discovery/1.0/` + `data_description/1.0/` + `manifest/1.0/` + `provenance/1.0/` |
+| CDIFxas | `core/1.0/` + `discovery/1.0/` + `xasDiscovery/1.0/` + `xasCore/1.0/` |
+
+These conformance URIs are distinct from the OGC building block identifiers (`https://w3id.org/cdif/bbr/metadata/...`). Both may appear in a record's conformsTo array.
+
+**JSON Schema pattern** (in each building block's `schema.yaml`):
+```yaml
+'schema:subjectOf':
+  properties:
+    'dcterms:conformsTo':
+      type: array
+      items:
+        type: object
+        properties:
+          '@id':
+            type: string
+            description: uri for specifications that this metadata record conforms to
+      minItems: 1
+      contains:
+        type: object
+        properties:
+          '@id':
+            const: 'https://w3id.org/cdif/{component}/{version}/'
+```
+
+For `cdifMandatory` (which already defines `schema:subjectOf` with a `$ref` to CdifCatalogRecord), the constraint is wrapped in `allOf` to preserve the base schema.
+
 ## Building Block Structure
 
 Each building block directory contains:

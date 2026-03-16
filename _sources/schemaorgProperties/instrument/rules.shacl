@@ -64,9 +64,14 @@ cdifd:instrumentNode
       sh:message "An instrument should specify its product model (schema:model)."
     ] ;
     sh:property [
+      sh:path schema:owner ;
+      sh:severity sh:Info ;
+      sh:message "An instrument should identify its owner (schema:owner)."
+    ] ;
+    sh:property [
       sh:path schema:contributor ;
       sh:severity sh:Info ;
-      sh:message "An instrument should identify at least one contributor with a role (e.g. owner, operator)."
+      sh:message "An instrument should identify contributors with roles (e.g. operator, custodian, PI)."
     ] ;
     sh:property [
       sh:path schema:additionalType ;

@@ -16,7 +16,8 @@ Schema for describing laboratory instruments and instrument systems. Combines in
 - **schema:manufacturer** - organization that manufactured the instrument
 - **schema:model** - product model (name, identifier)
 - **schema:category** - instrument type from controlled vocabulary
-- **schema:contributor** - agents in roles (owner, operator, custodian)
+- **schema:owner** - organization that owns the instrument
+- **schema:contributor** - agents in roles (operator, custodian, PI — use schema:owner for ownership)
 - **schema:additionalProperty** - instrument-specific properties (measured variables, detection limits, calibration, etc.)
 - **schema:validFrom** / **schema:validThrough** - commissioned/decommissioned dates
 - **schema:hasPart** - sub-components of the instrument system

@@ -148,6 +148,30 @@ The repository implements a three-tier provenance architecture:
 | `xasRequired` | XAS mandatory properties — `prov:wasGeneratedBy` items use `allOf` with `cdifProvActivity` + NXsource/NXmonochromator instrument constraints via `schema:instrument` sub-key. |
 | `xasOptional` | Same provenance structure as `xasRequired` — `cdifProvActivity` activity with XAS instrument constraints. |
 
+## Building Block Conformance URIs
+
+Each building block that represents a CDIF specification component declares a required `dcterms:conformsTo` URI in the metadata catalog record (`schema:subjectOf`). This constraint ensures that metadata records explicitly identify which specification components they implement.
+
+| Building Block | Conformance URI |
+|---|---|
+| `cdifMandatory` | `https://w3id.org/cdif/core/1.0/` |
+| `cdifOptional` | `https://w3id.org/cdif/discovery/1.0/` |
+| `cdifDataDescription` | `https://w3id.org/cdif/data_description/1.0/` |
+| `cdifArchiveDistribution` | `https://w3id.org/cdif/manifest/1.0/` |
+| `cdifProvenance` | `https://w3id.org/cdif/provenance/1.0/` |
+| `xasOptional` | `https://w3id.org/cdif/xasDiscovery/1.0/` |
+| `xasRequired` | `https://w3id.org/cdif/xasCore/1.0/` |
+
+### How it works
+
+Each building block's `schema.yaml` adds a `contains` constraint on `schema:subjectOf` → `dcterms:conformsTo` requiring its specific URI. When building blocks are composed into profiles via `allOf`, these constraints roll up automatically — the conformsTo array must include URIs for **all** constituent building blocks.
+
+For example, the **CDIFDiscovery** profile (cdifMandatory + cdifOptional) requires conformsTo to contain both `w3id.org/cdif/core/1.0/` and `w3id.org/cdif/discovery/1.0/`.
+
+These conformance URIs are distinct from the OGC building block identifiers (e.g., `https://w3id.org/cdif/bbr/metadata/cdifProperties/cdifMandatory`), which identify the building block artifacts themselves. Both may appear in a record's conformsTo array.
+
+Corresponding SHACL shapes enforce the same constraints via `sh:hasValue` on `dcterms:conformsTo`.
+
 ## Building Block Identifiers and Web Resolution
 
 Each building block has a persistent HTTP URI under `https://w3id.org/cdif/bbr/metadata/`. The URI pattern is:

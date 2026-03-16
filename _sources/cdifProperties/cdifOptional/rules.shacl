@@ -130,3 +130,22 @@ cdifd:creatorListValidation a sh:NodeShape ;
 			}
 		""" ;
 	] .
+
+cdifd:CDIFDiscoveryConformsToShape a sh:NodeShape ;
+    sh:target [
+      a sh:SPARQLTarget ;
+        sh:select  """
+            PREFIX schema: <http://schema.org/>
+            SELECT ?this
+            WHERE {
+            ?this a schema:Dataset ;
+             schema:about ?parent.
+            }
+        """;
+    ] ;
+    sh:property [
+        a sh:PropertyShape ;
+        sh:path dcterms:conformsTo ;
+        sh:hasValue <https://w3id.org/cdif/discovery/1.0/> ;
+        sh:message "Metadata record must declare conformance to the CDIF discovery profile (https://w3id.org/cdif/discovery/1.0/)" ;
+    ] .
