@@ -7,7 +7,7 @@ replaces the conformsTo array with the single canonical w3id URI.
 
 For ECRR profile examples (which lack schema:subjectOf), injects a
 CatalogRecord block with conformsTo referencing both the ECRR profile's
-w3id URI and the cdifMandatory BB.
+w3id URI and the cdifCore BB.
 """
 
 import json
@@ -19,12 +19,12 @@ from pathlib import Path
 SOURCES_DIR = Path(__file__).resolve().parent.parent / "_sources"
 
 W3ID_BASE = "https://w3id.org/cdif/bbr/metadata"
-CDIF_MANDATORY_URI = f"{W3ID_BASE}/cdifProperties/cdifMandatory"
+CDIF_MANDATORY_URI = f"{W3ID_BASE}/cdifProperties/cdifCore"
 
 # BB-level directories whose example files are full metadata instances
 # (not snippets) and should get their conformsTo updated.
 BB_LEVEL_DIRS = {
-    "cdifProperties/cdifMandatory",
+    "cdifProperties/cdifCore",
     "DDEproperties/ddeRequired",
     "xasProperties/xasOptional",
     "xasProperties/xasRequired",

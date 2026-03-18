@@ -4,7 +4,7 @@ Profile assembling building blocks for the schema.org implementation of the [Cro
 
 ### Composition
 
-- **CDIFDiscovery** --mandatory and optional discovery metadata (cdifMandatory + cdifOptional), including variableMeasured descriptions
+- **CDIFDiscovery** --mandatory and optional discovery metadata (cdifCore + cdifOptional), including variableMeasured descriptions
 - **Extended provenance** (`cdifProvActivity`) --upgrades `prov:wasGeneratedBy` from simple string/@id references (cdifOptional level) to full provenance activities with instruments, agents, temporal bounds, methodology, action chaining, and domain-specific extension properties
 - **Data description extensions** --distribution items may include CDIF data description properties:
   - `cdifTabularData` --for delimited or fixed-width tabular text files (CSV, TSV), with CSVW properties and physical column mappings

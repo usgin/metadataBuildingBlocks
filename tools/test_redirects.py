@@ -32,7 +32,7 @@ W3ID_BASE = "https://w3id.org/cdif"
 # Each key is a category/family name that appears in .htaccess patterns.
 SAMPLE_CAPTURE_VALUES = {
     # Two-segment BB: bbr/metadata/{category}/{name}
-    "cdifProperties": ["cdifOptional", "cdifMandatory"],
+    "cdifProperties": ["cdifOptional", "cdifCore"],
     "xasProperties": ["xasRequired", "xasOptional"],
     "schemaorgProperties": ["definedTerm"],
     # Three-segment profiles: bbr/metadata/profiles/{family}/{name}

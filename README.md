@@ -71,10 +71,10 @@ CDIF profiles are in `_sources/profiles/cdifProfiles/`:
 
 | Profile | Description |
 |---|---|
-| `CDIFDiscovery` | CDIF Discovery profile (allOf: cdifMandatory + cdifOptional) |
-| `CDIFDataDescription` | CDIF Data Description profile (allOf: cdifMandatory + cdifOptional + cdifDataDescription) |
-| `CDIFcomplete` | CDIF Complete profile (allOf: cdifMandatory + cdifOptional + cdifDataDescription + cdifArchiveDistribution + cdifProvenance) |
-| `CDIFxas` | CDIF XAS profile (allOf: cdifMandatory + cdifOptional + xasOptional + xasRequired) |
+| `CDIFDiscovery` | CDIF Discovery profile (allOf: cdifCore + cdifOptional) |
+| `CDIFDataDescription` | CDIF Data Description profile (allOf: cdifCore + cdifOptional + cdifDataDescription) |
+| `CDIFcomplete` | CDIF Complete profile (allOf: cdifCore + cdifOptional + cdifDataDescription + cdifArchiveDistribution + cdifProvenance) |
+| `CDIFxas` | CDIF XAS profile (allOf: cdifCore + cdifOptional + xasOptional + xasRequired) |
 
 See [agents.md](agents.md) for the full building block structure, authoring rules, and composition hierarchy.
 
@@ -96,7 +96,7 @@ For example, `cdifProvActivity` defines the schema for a single provenance Activ
 | Category | Directory | Description |
 |----------|-----------|-------------|
 | schemaorgProperties | `_sources/schemaorgProperties/` | schema.org vocabulary building blocks (person, organization, identifier, definedTerm, instrument, etc.) |
-| cdifProperties | `_sources/cdifProperties/` | CDIF-specific properties (mandatory, optional, provenance, tabular data, long data, etc.) |
+| cdifProperties | `_sources/cdifProperties/` | CDIF-specific properties (core, optional, provenance, tabular data, long data, etc.) |
 | ddiProperties | `_sources/ddiProperties/` | DDI-CDI vocabulary building blocks |
 | provProperties | `_sources/provProperties/` | PROV-O provenance (generatedBy, derivedFrom, provActivity) |
 | qualityProperties | `_sources/qualityProperties/` | DQV data quality measures |
@@ -154,7 +154,7 @@ Each building block that represents a CDIF specification component declares a re
 
 | Building Block | Conformance URI |
 |---|---|
-| `cdifMandatory` | `https://w3id.org/cdif/core/1.0/` |
+| `cdifCore` | `https://w3id.org/cdif/core/1.0/` |
 | `cdifOptional` | `https://w3id.org/cdif/discovery/1.0/` |
 | `cdifDataDescription` | `https://w3id.org/cdif/data_description/1.0/` |
 | `cdifArchiveDistribution` | `https://w3id.org/cdif/manifest/1.0/` |
@@ -166,9 +166,9 @@ Each building block that represents a CDIF specification component declares a re
 
 Each building block's `schema.yaml` adds a `contains` constraint on `schema:subjectOf` → `dcterms:conformsTo` requiring its specific URI. When building blocks are composed into profiles via `allOf`, these constraints roll up automatically — the conformsTo array must include URIs for **all** constituent building blocks.
 
-For example, the **CDIFDiscovery** profile (cdifMandatory + cdifOptional) requires conformsTo to contain both `w3id.org/cdif/core/1.0/` and `w3id.org/cdif/discovery/1.0/`.
+For example, the **CDIFDiscovery** profile (cdifCore + cdifOptional) requires conformsTo to contain both `w3id.org/cdif/core/1.0/` and `w3id.org/cdif/discovery/1.0/`.
 
-These conformance URIs are distinct from the OGC building block identifiers (e.g., `https://w3id.org/cdif/bbr/metadata/cdifProperties/cdifMandatory`), which identify the building block artifacts themselves. Both may appear in a record's conformsTo array.
+These conformance URIs are distinct from the OGC building block identifiers (e.g., `https://w3id.org/cdif/bbr/metadata/cdifProperties/cdifCore`), which identify the building block artifacts themselves. Both may appear in a record's conformsTo array.
 
 Corresponding SHACL shapes enforce the same constraints via `sh:hasValue` on `dcterms:conformsTo`.
 

@@ -30,7 +30,7 @@ metadataBuildingBlocks/
 │   │   └── agentInRole/             # schema:Role wrapping Person/Org
 │   ├── cdifProperties/              # CDIF-specific property types
 │   │   ├── cdifCatalogRecord/       # dcat:CatalogRecord metadata-about-metadata
-│   │   ├── cdifMandatory/           # CDIF mandatory property group
+│   │   ├── cdifCore/           # CDIF core property group
 │   │   ├── cdifOptional/            # CDIF optional property group
 │   │   ├── cdifProvActivity/         # CDIF provenance activity (extends generatedBy)
 │   │   ├── cdifProvenance/          # CDIF provenance (prov:wasGeneratedBy wrapper)
@@ -99,7 +99,7 @@ Building blocks that represent CDIF specification components declare required `d
 
 | Building Block | Conformance URI | SHACL Shape |
 |---|---|---|
-| `cdifMandatory` | `https://w3id.org/cdif/core/1.0/` | `sh:hasValue` on existing `metadataProfileProperty` |
+| `cdifCore` | `https://w3id.org/cdif/core/1.0/` | `sh:hasValue` on existing `metadataProfileProperty` |
 | `cdifOptional` | `https://w3id.org/cdif/discovery/1.0/` | `CDIFDiscoveryConformsToShape` |
 | `cdifDataDescription` | `https://w3id.org/cdif/data_description/1.0/` | `CDIFDataDescriptionConformsToShape` |
 | `cdifArchiveDistribution` | `https://w3id.org/cdif/manifest/1.0/` | *(no rules.shacl — JSON Schema only)* |
@@ -138,7 +138,7 @@ These conformance URIs are distinct from the OGC building block identifiers (`ht
             const: 'https://w3id.org/cdif/{component}/{version}/'
 ```
 
-For `cdifMandatory` (which already defines `schema:subjectOf` with a `$ref` to CdifCatalogRecord), the constraint is wrapped in `allOf` to preserve the base schema.
+For `cdifCore` (which already defines `schema:subjectOf` with a `$ref` to CdifCatalogRecord), the constraint is wrapped in `allOf` to preserve the base schema.
 
 ## Building Block Structure
 

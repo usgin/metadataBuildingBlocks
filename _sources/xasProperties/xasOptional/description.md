@@ -1,6 +1,6 @@
 ## Optional Fields for XAS data
 
-Extends CDIF mandatory metadata with optional XAS-specific properties. Composes cdifMandatory with cdifProvActivity-based provenance (via xasGeneratedBy pattern), XAS subject descriptors, data distribution with XDI conformance, measurement technique DefinedTerms, and element/edge keywords.
+Extends CDIF mandatory metadata with optional XAS-specific properties. Composes cdifCore with cdifProvActivity-based provenance (via xasGeneratedBy pattern), XAS subject descriptors, data distribution with XDI conformance, measurement technique DefinedTerms, and element/edge keywords.
 
 ### Key properties
 
