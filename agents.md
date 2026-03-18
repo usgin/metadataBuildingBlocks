@@ -274,7 +274,8 @@ Three tools transform modular YAML source schemas into JSON Forms-compatible Dra
 
 ```
 schema.yaml → resolve_schema.py → resolvedSchema.json → convert_for_jsonforms.py → schema.json
-                                                       → augment_register.py → register.json (adds resolvedSchema URLs)
+                                → <bbName>StructuredSchema.json (--structured)
+                                → augment_register.py → register.json (adds resolvedSchema URLs)
 ```
 
 ## resolve_schema.py
@@ -287,11 +288,17 @@ Recursively resolves ALL `$ref` references from modular YAML/JSON source schemas
 3. Cross-file fragment: `$ref: ../cdifCatalogRecord/schema.yaml#/$defs/conformsTo_item`
 4. Both YAML and JSON file extensions
 
+**Structured mode (`--structured`):** Produces a compact `<bbName>StructuredSchema.json` that preserves building block structure via `$defs` and `$ref` links. For profiles, composing BBs are deep-merged into a single `properties` + `allOf`, while type schemas used >2 times appear as named `$defs`. Types used ≤2 times are inlined at usage sites. Typically 88–90% smaller than fully-resolved output.
+
 **Usage:**
 ```bash
 # Resolve a profile by name (searches _sources/profiles/cdifProfiles/{name}/)
 python tools/resolve_schema.py CDIFDiscovery
 python tools/resolve_schema.py CDIFcomplete --flatten-allof
+
+# Produce structured output with $defs preserved
+python tools/resolve_schema.py CDIFDiscovery --structured
+python tools/resolve_schema.py --all --structured
 
 # Resolve an arbitrary schema file
 python tools/resolve_schema.py --file path/to/any/schema.yaml
@@ -300,7 +307,7 @@ python tools/resolve_schema.py --file path/to/any/schema.yaml
 python tools/resolve_schema.py --all --flatten-allof
 ```
 
-**CLI options:** `profile` (positional, profile name), `--file` (arbitrary schema path), `--all` (resolve all schemas with external refs), `-o`/`--output` (output file, default: stdout; ignored with --all), `--flatten-allof` (merge allOf entries into single objects).
+**CLI options:** `profile` (positional, profile name), `--file` (arbitrary schema path), `--all` (resolve all schemas with external refs), `-o`/`--output` (output file, default: stdout; ignored with --all), `--flatten-allof` (merge allOf entries into single objects), `--structured` (produce structured output with `$defs`, writes `<bbName>StructuredSchema.json`).
 
 **Requirements:** Python 3.6+ with `pyyaml`
 
@@ -364,6 +371,31 @@ push → "Validate and process Building Blocks" (OGC postprocessor)
 **Key detail:** Both `generate-jsonforms` and `deploy-viewer` run `augment_register.py` independently. `generate-jsonforms` commits the augmented `register.json` to the repo (for future runs). `deploy-viewer` augments the checked-out copy before uploading to Pages (because it can't wait for the other workflow's commit).
 
 **bblocks-viewer fork:** `smrgeoinfo/bblocks-viewer` (forked from `ogcincubator/bblocks-viewer`). The fork's `gh-deploy.yml` workflow builds the Vue app and deploys to `smrgeoinfo.github.io/bblocks-viewer/`. The fork adds the "Resolved (JSON)" button to `JsonSchemaViewer.vue` and `resolvedSchema` to `COPY_PROPERTIES` in `bblock.service.js`.
+
+## generate_property_table.py (in CDIF/Discovery repo)
+
+Generates an Excel workbook (`<bbName>_properties.xlsx`) listing all properties from a building block or profile schema. For profiles, composing BB properties are merged into a single main worksheet; type schemas referenced via `$defs` get separate worksheets.
+
+**Columns:** Field Name, Containing Class, CDIF Content Model (from crosswalk), Data Type(s), Cardinality, Enum/Const Values, Description.
+
+**Type description logic:**
+- Objects with a single `@id` property → `object reference`
+- Objects with a single `@list` property (JSON-LD ordered list) → `list of <item types>`
+- `anyOf`/`oneOf` unions → `Type1 | Type2 | ...`
+- Arrays → `array of <item type>`
+
+**Usage:**
+```bash
+# Generate property table for a building block
+python generate_property_table.py path/to/_sources/cdifProperties/cdifCore/schema.yaml
+
+# Generate property table for a profile
+python generate_property_table.py path/to/_sources/profiles/cdifProfiles/CDIFDiscovery/schema.yaml
+```
+
+**Location:** `C:\Users\smrTu\OneDrive\Documents\GithubC\CDIF\Discovery\generate_property_table.py`
+
+**Requirements:** `openpyxl`, `pyyaml`. Optionally uses `CDIF-metadata-crosswalks-merged.xlsx` for CDIF Content Model lookups.
 
 ## Verification
 

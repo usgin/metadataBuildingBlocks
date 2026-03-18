@@ -19,19 +19,26 @@ The schema pipeline transforms modular YAML source schemas into JSON Forms-compa
 
 ```
 schema.yaml → resolve_schema.py → resolvedSchema.json → convert_for_jsonforms.py → schema.json
-                                                       → augment_register.py → register.json (adds resolvedSchema URLs)
+                                → <bbName>StructuredSchema.json (--structured)
+                                → augment_register.py → register.json (adds resolvedSchema URLs)
 ```
 
 ### Step 1: Resolve (`resolve_schema.py`)
 
 Recursively resolves all `$ref` references from modular YAML/JSON source schemas into one fully-inlined JSON Schema. Handles relative paths, fragment-only refs (`#/$defs/X`), cross-file fragments, URL refs, and both YAML/JSON extensions. Optionally flattens `allOf` entries.
 
+The `--structured` flag produces a compact alternative output (`<bbName>StructuredSchema.json`) that preserves building block structure via `$defs` and `$ref` links instead of fully inlining everything. For profiles, composing BBs are deep-merged into a single `properties` + `allOf`, while frequently-used type schemas (Person, Identifier, Organization, etc.) appear as named `$defs` with `$ref` links at usage sites. Types used ≤2 times are inlined. This typically reduces output size by 88–90% compared to fully-resolved schemas.
+
 ```bash
 # Resolve a profile by name (searches cdifProfiles/ subdirectories)
 python tools/resolve_schema.py CDIFDiscovery
 
+# Produce structured output with $defs
+python tools/resolve_schema.py CDIFDiscovery --structured
+
 # Resolve all building blocks with external $refs
 python tools/resolve_schema.py --all
+python tools/resolve_schema.py --all --structured
 
 # Resolve an arbitrary schema file
 python tools/resolve_schema.py --file path/to/any/schema.yaml
