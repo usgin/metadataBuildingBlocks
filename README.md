@@ -81,7 +81,7 @@ CDIF profiles are in `_sources/profiles/cdifProfiles/`:
 | `CDIFDiscovery` | CDIF Discovery profile (allOf: cdifCore + cdifOptional) |
 | `CDIFDataDescription` | CDIF Data Description profile (allOf: cdifCore + cdifOptional + cdifDataDescription) |
 | `CDIFcomplete` | CDIF Complete profile (allOf: cdifCore + cdifOptional + cdifDataDescription + cdifArchiveDistribution + cdifProvenance) |
-| `CDIFxas` | CDIF XAS profile (allOf: cdifCore + cdifOptional + xasOptional + xasRequired) |
+| `CDIFxas` | CDIF XAS profile (allOf: cdifCore + cdifOptional + xasOptional + xasCore) |
 
 See [agents.md](agents.md) for the full building block structure, authoring rules, and composition hierarchy.
 
@@ -152,8 +152,8 @@ The repository implements a three-tier provenance architecture:
 |----------------|-------------|
 | `xasInstrument` | XAS instrument with `schema:hasPart` for hierarchical sub-components (refs generic instrument building block). |
 | `xasGeneratedBy` | XAS analysis event — extends `cdifProvActivity` with `xas:AnalysisEvent` typing, XAS facility location, sample object, XAS-specific instrument types, and XAS additional properties (edge_energy, calibration method, etc.). |
-| `xasRequired` | XAS mandatory properties — `prov:wasGeneratedBy` items use `allOf` with `cdifProvActivity` + NXsource/NXmonochromator instrument constraints via `schema:instrument` sub-key. |
-| `xasOptional` | Same provenance structure as `xasRequired` — `cdifProvActivity` activity with XAS instrument constraints. |
+| `xasCore` | XAS mandatory properties — `prov:wasGeneratedBy` items use `allOf` with `cdifProvActivity` + NXsource/NXmonochromator instrument constraints via `schema:instrument` sub-key. |
+| `xasOptional` | Same provenance structure as `xasCore` — `cdifProvActivity` activity with XAS instrument constraints. |
 
 ## Building Block Conformance URIs
 
@@ -167,7 +167,7 @@ Each building block that represents a CDIF specification component declares a re
 | `cdifArchiveDistribution` | `https://w3id.org/cdif/manifest/1.0/` |
 | `cdifProvenance` | `https://w3id.org/cdif/provenance/1.0/` |
 | `xasOptional` | `https://w3id.org/cdif/xasDiscovery/1.0/` |
-| `xasRequired` | `https://w3id.org/cdif/xasCore/1.0/` |
+| `xasCore` | `https://w3id.org/cdif/xasCore/1.0/` |
 
 ### How it works
 

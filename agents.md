@@ -55,7 +55,7 @@ metadataBuildingBlocks/
 │   │   ├── xasGeneratedBy/          # XAS analysis event (extends cdifProvActivity)
 │   │   ├── xasHDF5DataStructure/    # HDF5 data structure for XAS
 │   │   ├── xasXdiTabularTextDataset/ # XDI tabular text dataset
-│   │   ├── xasRequired/             # XAS mandatory property group
+│   │   ├── xasCore/             # XAS mandatory property group
 │   │   └── xasOptional/             # XAS optional property group
 │   └── profiles/                    # Top-level profiles that compose BBs
 │       └── cdifProfiles/
@@ -104,7 +104,7 @@ Building blocks that represent CDIF specification components declare required `d
 | `cdifArchiveDistribution` | `https://w3id.org/cdif/manifest/1.0/` | *(no rules.shacl — JSON Schema only)* |
 | `cdifProvenance` | `https://w3id.org/cdif/provenance/1.0/` | *(no rules.shacl — JSON Schema only)* |
 | `xasOptional` | `https://w3id.org/cdif/xasDiscovery/1.0/` | `XasDiscoveryConformsToShape` |
-| `xasRequired` | `https://w3id.org/cdif/xasCore/1.0/` | `XasCoreConformsToShape` |
+| `xasCore` | `https://w3id.org/cdif/xasCore/1.0/` | `XasCoreConformsToShape` |
 
 **Profile rollup:** When building blocks are composed into profiles via `allOf`, the `contains` constraints combine — the conformsTo array must include URIs for all constituent building blocks. For example:
 
