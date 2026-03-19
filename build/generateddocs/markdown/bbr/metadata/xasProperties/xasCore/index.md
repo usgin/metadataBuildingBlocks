@@ -1,9 +1,9 @@
 
-# Required Fields for XAS data (Schema)
+# XAS Core metadata properties (Schema)
 
-`cdif.bbr.metadata.xasProperties.xasRequired` *v0.1*
+`cdif.bbr.metadata.xasProperties.xasCore` *v0.1*
 
-Required XAS metadata extending CDIF mandatory with cdifProvActivity-based provenance. Requires dual @type (Dataset + Product), XAS instrument components (NXsource, NXmonochromator), XDI-conformant distribution, measurement technique DefinedTerms, and element/edge keywords. Defines properties: @type, schema:subjectOf, prov:wasGeneratedBy, schema:distribution, schema:measurementTechnique, schema:keywords. Uses building blocks: cdifCore (cdifProperties), cdifProvActivity (cdifProperties), definedTerm (schemaorgProperties), additionalProperty (schemaorgProperties), dataDownload (schemaorgProperties), xasSample (xasProperties), cdifCatalogRecord (cdifProperties).
+Core XAS metadata extending CDIF mandatory with cdifProvActivity-based provenance. Requires dual @type (Dataset + Product), XAS instrument components (NXsource, NXmonochromator), XDI-conformant distribution, measurement technique DefinedTerms, and element/edge keywords. Defines properties: @type, schema:subjectOf, prov:wasGeneratedBy, schema:distribution, schema:measurementTechnique, schema:keywords. Uses building blocks: cdifCore (cdifProperties), cdifProvActivity (cdifProperties), definedTerm (schemaorgProperties), additionalProperty (schemaorgProperties), dataDownload (schemaorgProperties), xasSample (xasProperties), cdifCatalogRecord (cdifProperties).
 
 [*Status*](http://www.opengis.net/def/status): Under development
 
@@ -24,8 +24,8 @@ Extends CDIF mandatory metadata with required XAS-specific properties. Same stru
 
 ## Examples
 
-### Example XAS metadata conforms to required items for extension.
-bring together all required properties.
+### Example XAS core metadata with required items.
+XAS core properties: instrument components, XDI distribution, measurement techniques, keywords.
 #### json
 ```json
 {
@@ -132,7 +132,7 @@ bring together all required properties.
         "@id": "https://w3id.org/cdif/xasCore/1.0/"
       },
       {
-        "@id": "https://w3id.org/cdif/bbr/metadata/xasProperties/xasRequired"
+        "@id": "https://w3id.org/cdif/bbr/metadata/xasProperties/xasCore"
       },
       {
         "@id": "https://w3id.org/cdif/bbr/metadata/profiles/cdifProfiles/CDIFxas"
@@ -307,9 +307,13 @@ bring together all required properties.
   "@context": [
     {
       "schema": "http://schema.org/",
-      "dcterms": "http://purl.org/dc/terms/"
+      "dcterms": "http://purl.org/dc/terms/",
+      "dcat": "http://www.w3.org/ns/dcat#",
+      "prov": "http://www.w3.org/ns/prov#",
+      "nxs": "http://purl.org/nexusformat/definitions/",
+      "xas": "https://xas.org/dictionary/"
     },
-    "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasRequired/context.jsonld",
+    "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasCore/context.jsonld",
     {
       "schema": "http://schema.org/",
       "dcterms": "http://purl.org/dc/terms/",
@@ -422,7 +426,7 @@ bring together all required properties.
         "@id": "https://w3id.org/cdif/xasCore/1.0/"
       },
       {
-        "@id": "https://w3id.org/cdif/bbr/metadata/xasProperties/xasRequired"
+        "@id": "https://w3id.org/cdif/bbr/metadata/xasProperties/xasCore"
       },
       {
         "@id": "https://w3id.org/cdif/bbr/metadata/profiles/cdifProfiles/CDIFxas"
@@ -691,6 +695,23 @@ ex:xas-dataset-001 a schema1:Dataset,
                             schema1:hasPart [ a schema1:Product,
                                         schema1:Thing ;
                                     schema1:additionalProperty [ a schema1:PropertyValue ;
+                                            schema1:name "crystal type" ;
+                                            schema1:propertyID "nxs:Field/NXcrystal/type" ;
+                                            schema1:value "Si(111)" ],
+                                        [ a schema1:PropertyValue ;
+                                            schema1:name "reflection plane (hkl)" ;
+                                            schema1:propertyID "nxs:Field/NXcrystal/reflection" ;
+                                            schema1:value "1,1,1" ],
+                                        [ a schema1:PropertyValue ;
+                                            schema1:name "d-spacing" ;
+                                            schema1:propertyID "nxs:Field/NXcrystal/d_spacing" ;
+                                            schema1:unitText "Angstrom" ;
+                                            schema1:value "3.13550" ] ;
+                                    schema1:additionalType "nxs:BaseClass/NXmonochromator" ;
+                                    schema1:name "Si 111" ],
+                                [ a schema1:Product,
+                                        schema1:Thing ;
+                                    schema1:additionalProperty [ a schema1:PropertyValue ;
                                             schema1:name "Probe" ;
                                             schema1:propertyID "nxs:Field/NXsource/probe" ;
                                             schema1:value "x-ray" ],
@@ -699,29 +720,12 @@ ex:xas-dataset-001 a schema1:Dataset,
                                             schema1:propertyID "nxs:Field/NXsource/type" ;
                                             schema1:value "Synchrotron X-ray Source" ] ;
                                     schema1:additionalType "nxs:BaseClass/NXsource" ;
-                                    schema1:name "APS bending magnet source" ],
-                                [ a schema1:Product,
-                                        schema1:Thing ;
-                                    schema1:additionalProperty [ a schema1:PropertyValue ;
-                                            schema1:name "d-spacing" ;
-                                            schema1:propertyID "nxs:Field/NXcrystal/d_spacing" ;
-                                            schema1:unitText "Angstrom" ;
-                                            schema1:value "3.13550" ],
-                                        [ a schema1:PropertyValue ;
-                                            schema1:name "reflection plane (hkl)" ;
-                                            schema1:propertyID "nxs:Field/NXcrystal/reflection" ;
-                                            schema1:value "1,1,1" ],
-                                        [ a schema1:PropertyValue ;
-                                            schema1:name "crystal type" ;
-                                            schema1:propertyID "nxs:Field/NXcrystal/type" ;
-                                            schema1:value "Si(111)" ] ;
-                                    schema1:additionalType "nxs:BaseClass/NXmonochromator" ;
-                                    schema1:name "Si 111" ] ;
+                                    schema1:name "APS bending magnet source" ] ;
                             schema1:name "APS Sector 20-BM beamline instrument" ] ] ] .
 
 <urn:uuid:xas-required-catalog-record> a schema1:Dataset ;
     dcterms:conformsTo <https://w3id.org/cdif/bbr/metadata/profiles/cdifProfiles/CDIFxas>,
-        <https://w3id.org/cdif/bbr/metadata/xasProperties/xasRequired>,
+        <https://w3id.org/cdif/bbr/metadata/xasProperties/xasCore>,
         <https://w3id.org/cdif/core/1.0/>,
         <https://w3id.org/cdif/discovery/1.0/>,
         <https://w3id.org/cdif/xasCore/1.0/> ;
@@ -1046,8 +1050,8 @@ x-jsonld-prefixes:
 
 Links to the schema:
 
-* YAML version: [schema.yaml](https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasRequired/schema.json)
-* JSON version: [schema.json](https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasRequired/schema.yaml)
+* YAML version: [schema.yaml](https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasCore/schema.json)
+* JSON version: [schema.json](https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasCore/schema.yaml)
 
 
 # JSON-LD Context
@@ -1068,7 +1072,7 @@ Links to the schema:
 ```
 
 You can find the full JSON-LD context here:
-[context.jsonld](https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasRequired/context.jsonld)
+[context.jsonld](https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasCore/context.jsonld)
 
 ## Sources
 
@@ -1079,5 +1083,5 @@ You can find the full JSON-LD context here:
 The source code for this Building Block can be found in the following repository:
 
 * URL: [https://github.com/Cross-Domain-Interoperability-Framework/metadataBuildingBlocks](https://github.com/Cross-Domain-Interoperability-Framework/metadataBuildingBlocks)
-* Path: `_sources/xasProperties/xasRequired`
+* Path: `_sources/xasProperties/xasCore`
 
