@@ -672,6 +672,10 @@ ex:xas-dataset-001 a schema1:Dataset,
                             schema1:hasPart [ a schema1:Product,
                                         schema1:Thing ;
                                     schema1:additionalProperty [ a schema1:PropertyValue ;
+                                            schema1:name "reflection plane (hkl)" ;
+                                            schema1:propertyID "nxs:Field/NXcrystal/reflection" ;
+                                            schema1:value "1,1,1" ],
+                                        [ a schema1:PropertyValue ;
                                             schema1:name "crystal type" ;
                                             schema1:propertyID "nxs:Field/NXcrystal/type" ;
                                             schema1:value "Si(111)" ],
@@ -679,11 +683,7 @@ ex:xas-dataset-001 a schema1:Dataset,
                                             schema1:name "d-spacing" ;
                                             schema1:propertyID "nxs:Field/NXcrystal/d_spacing" ;
                                             schema1:unitText "Angstrom" ;
-                                            schema1:value "3.13550" ],
-                                        [ a schema1:PropertyValue ;
-                                            schema1:name "reflection plane (hkl)" ;
-                                            schema1:propertyID "nxs:Field/NXcrystal/reflection" ;
-                                            schema1:value "1,1,1" ] ;
+                                            schema1:value "3.13550" ] ;
                                     schema1:additionalType "nxs:BaseClass/NXmonochromator" ;
                                     schema1:name "Si 111" ],
                                 [ a schema1:Product,
