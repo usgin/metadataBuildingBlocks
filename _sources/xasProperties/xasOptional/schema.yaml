@@ -5,10 +5,8 @@ allOf:
 - type: object
   properties:
     schema:subjectOf:
-      allOf:
-      - $ref: '#/$defs/XasSubject'
-      - properties:
-          'dcterms:conformsTo':
+      properties:
+        'dcterms:conformsTo':
             type: array
             items:
               type: object
@@ -186,7 +184,10 @@ allOf:
             - contains:
                 const: schema:DataDownload
             - contains:
-                const: cdi:PhysicalDataset
+                enum:
+                - cdi:PhysicalDataset
+                - cdi:TabularTextDataSet
+                - cdi:StructuredDataSet
           dcterms:conformsTo:
             type: array
             contains:
@@ -290,5 +291,3 @@ $defs:
     $ref: ../../schemaorgProperties/dataDownload/schema.yaml
   XasSample:
     $ref: ../xasSample/schema.yaml
-  XasSubject:
-    $ref: ../xasSubject/schema.yaml

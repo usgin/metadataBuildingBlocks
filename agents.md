@@ -56,8 +56,7 @@ metadataBuildingBlocks/
 │   │   ├── xasHDF5DataStructure/    # HDF5 data structure for XAS
 │   │   ├── xasXdiTabularTextDataset/ # XDI tabular text dataset
 │   │   ├── xasRequired/             # XAS mandatory property group
-│   │   ├── xasOptional/             # XAS optional property group
-│   │   └── xasSubject/              # XAS subject classification
+│   │   └── xasOptional/             # XAS optional property group
 │   └── profiles/                    # Top-level profiles that compose BBs
 │       └── cdifProfiles/
 │           ├── CDIFDiscovery/       # CDIF Discovery profile
