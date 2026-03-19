@@ -1996,7 +1996,13 @@ quality measurements.
 
 <file:///github/workspace/#part-measurements-csv> a cdi:TabularTextDataSet,
         schema1:MediaObject ;
-    cdi:hasPhysicalMapping [ cdi:format "string" ;
+    cdi:hasPhysicalMapping [ cdi:format "decimal" ;
+            cdi:formats_InstanceVariable ex:var-concentration ;
+            cdi:index 1 ;
+            cdi:isRequired true ;
+            cdi:nullSequence "NA" ;
+            cdi:physicalDataType "float64" ],
+        [ cdi:format "string" ;
             cdi:formats_InstanceVariable ex:var-sampleID ;
             cdi:index 0 ;
             cdi:isRequired true ;
@@ -2005,12 +2011,6 @@ quality measurements.
             cdi:formats_InstanceVariable ex:var-uncertainty ;
             cdi:index 2 ;
             cdi:isRequired false ;
-            cdi:nullSequence "NA" ;
-            cdi:physicalDataType "float64" ],
-        [ cdi:format "decimal" ;
-            cdi:formats_InstanceVariable ex:var-concentration ;
-            cdi:index 1 ;
-            cdi:isRequired true ;
             cdi:nullSequence "NA" ;
             cdi:physicalDataType "float64" ] ;
     cdi:isDelimited true ;
@@ -2101,7 +2101,10 @@ ex:activity-geochem-analysis a schema1:Action,
             schema1:roleName "Lab Technician" ] ;
     schema1:result ex:complete-dataset-001 ;
     schema1:startTime "2025-07-15T08:00:00Z" ;
-    prov:used [ schema1:instrument [ a schema1:DefinedTerm,
+    prov:used [ a schema1:CreativeWork ;
+            schema1:name "EPA Method 6200 - XRF Analysis of Soils" ;
+            schema1:url "https://www.epa.gov/hw-sw846/sw-846-test-method-6200-field-portable-x-ray-fluorescence-spectrometry-determination" ],
+        [ schema1:instrument [ a schema1:DefinedTerm,
                         schema1:Thing ;
                     schema1:additionalProperty [ a schema1:PropertyValue ;
                             schema1:name "Typical Detection Limit" ;
@@ -2121,9 +2124,6 @@ ex:activity-geochem-analysis a schema1:Action,
                     schema1:inDefinedTermSet "https://vocab.nerc.ac.uk/collection/L05/current/" ;
                     schema1:name "Inductively Coupled Plasma Mass Spectrometry" ;
                     schema1:termCode "ICP-MS" ] ],
-        [ a schema1:CreativeWork ;
-            schema1:name "EPA Method 6200 - XRF Analysis of Soils" ;
-            schema1:url "https://www.epa.gov/hw-sw846/sw-846-test-method-6200-field-portable-x-ray-fluorescence-spectrometry-determination" ],
         "Soil core samples collected June 2025, sites GB-001 through GB-045, dried and sieved to <2 mm fraction",
         "https://vocab.nerc.ac.uk/collection/L05/current/LAB02" .
 
@@ -2178,43 +2178,7 @@ ex:complete-dataset-001 a schema1:Dataset ;
     schema1:dateModified "2026-02-15" ;
     schema1:datePublished "2026-02-01" ;
     schema1:description "Comprehensive geochemistry dataset demonstrating the CDIF complete profile with single-file downloads, archive distribution with component files, and WebAPI access. Includes tabular CSV results, NetCDF data cubes, and an OGC API Features endpoint." ;
-    schema1:distribution [ a schema1:DataDownload ;
-            dcterms:conformsTo <http://www.opengis.net/def/nil/OGC/0/missing> ;
-            schema1:contentUrl "https://example.org/data/geochem-package.zip" ;
-            schema1:description "Archive containing all data files. Component files are listed as parts and are not individually accessible." ;
-            schema1:encodingFormat "application/zip" ;
-            schema1:hasPart <file:///github/workspace/#part-measurements-csv>,
-                <file:///github/workspace/#part-metadata-yaml>,
-                <file:///github/workspace/#part-method-pdf>,
-                <file:///github/workspace/#part-results-csv>,
-                <file:///github/workspace/#part-spectra-nc> ;
-            schema1:name "Complete data package" ;
-            spdx:checksum [ a spdx:Checksum ;
-                    spdx:algorithm "SHA256" ;
-                    spdx:checksumValue "d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5" ] ],
-        [ a cdi:StructuredDataSet,
-                schema1:DataDownload ;
-            cdi:hasPhysicalMapping [ cdi:format "decimal" ;
-                    cdi:formats_InstanceVariable ex:var-intensity ;
-                    cdi:index 1 ;
-                    cdi:isRequired true ;
-                    cdi:locator "/spectra/intensity" ;
-                    cdi:physicalDataType "float32" ;
-                    cdi:scale 1000 ],
-                [ cdi:format "decimal" ;
-                    cdi:formats_InstanceVariable ex:var-wavelength ;
-                    cdi:index 0 ;
-                    cdi:isRequired true ;
-                    cdi:locator "/spectra/wavelength" ;
-                    cdi:physicalDataType "float32" ] ;
-            dcterms:conformsTo <http://www.opengis.net/def/nil/OGC/0/missing> ;
-            schema1:contentUrl "https://example.org/data/spectra-cube.nc" ;
-            schema1:encodingFormat "application/x-netcdf" ;
-            schema1:name "Spectral data cube" ;
-            spdx:checksum [ a spdx:Checksum ;
-                    spdx:algorithm "SHA256" ;
-                    spdx:checksumValue "c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4" ] ],
-        [ a cdi:TabularTextDataSet,
+    schema1:distribution [ a cdi:TabularTextDataSet,
                 schema1:DataDownload ;
             cdi:arrayBase 0 ;
             cdi:escapeCharacter "\\" ;
@@ -2228,18 +2192,18 @@ ex:complete-dataset-001 a schema1:Dataset ;
                     cdi:physicalDataType "string" ],
                 [ cdi:decimalPositions 4 ;
                     cdi:format "decimal" ;
+                    cdi:formats_InstanceVariable ex:var-concentration ;
+                    cdi:index 1 ;
+                    cdi:isRequired true ;
+                    cdi:nullSequence "NA" ;
+                    cdi:physicalDataType "float64" ],
+                [ cdi:decimalPositions 4 ;
+                    cdi:format "decimal" ;
                     cdi:formats_InstanceVariable ex:var-uncertainty ;
                     cdi:index 2 ;
                     cdi:isRequired false ;
                     cdi:length 12 ;
                     cdi:nullSequence "-9999" ;
-                    cdi:physicalDataType "float64" ],
-                [ cdi:decimalPositions 4 ;
-                    cdi:format "decimal" ;
-                    cdi:formats_InstanceVariable ex:var-concentration ;
-                    cdi:index 1 ;
-                    cdi:isRequired true ;
-                    cdi:nullSequence "NA" ;
                     cdi:physicalDataType "float64" ] ;
             cdi:headerIsCaseSensitive false ;
             cdi:isDelimited true ;
@@ -2274,6 +2238,28 @@ ex:complete-dataset-001 a schema1:Dataset ;
             spdx:checksum [ a spdx:Checksum ;
                     spdx:algorithm "SHA256" ;
                     spdx:checksumValue "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2" ] ],
+        [ a cdi:StructuredDataSet,
+                schema1:DataDownload ;
+            cdi:hasPhysicalMapping [ cdi:format "decimal" ;
+                    cdi:formats_InstanceVariable ex:var-wavelength ;
+                    cdi:index 0 ;
+                    cdi:isRequired true ;
+                    cdi:locator "/spectra/wavelength" ;
+                    cdi:physicalDataType "float32" ],
+                [ cdi:format "decimal" ;
+                    cdi:formats_InstanceVariable ex:var-intensity ;
+                    cdi:index 1 ;
+                    cdi:isRequired true ;
+                    cdi:locator "/spectra/intensity" ;
+                    cdi:physicalDataType "float32" ;
+                    cdi:scale 1000 ] ;
+            dcterms:conformsTo <http://www.opengis.net/def/nil/OGC/0/missing> ;
+            schema1:contentUrl "https://example.org/data/spectra-cube.nc" ;
+            schema1:encodingFormat "application/x-netcdf" ;
+            schema1:name "Spectral data cube" ;
+            spdx:checksum [ a spdx:Checksum ;
+                    spdx:algorithm "SHA256" ;
+                    spdx:checksumValue "c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4" ] ],
         [ a schema1:WebAPI ;
             schema1:documentation [ a schema1:CreativeWork ;
                     schema1:name "OpenAPI specification for geochemistry data service" ;
@@ -2288,12 +2274,12 @@ ex:complete-dataset-001 a schema1:Dataset ;
                             schema1:valuePattern "csv|geojson" ;
                             schema1:valueRequired false ],
                         [ a schema1:PropertyValueSpecification ;
-                            schema1:description "Maximum number of features to return" ;
-                            schema1:valueName "limit" ;
-                            schema1:valueRequired false ],
-                        [ a schema1:PropertyValueSpecification ;
                             schema1:description "Starting index for pagination" ;
                             schema1:valueName "offset" ;
+                            schema1:valueRequired false ],
+                        [ a schema1:PropertyValueSpecification ;
+                            schema1:description "Maximum number of features to return" ;
+                            schema1:valueName "limit" ;
                             schema1:valueRequired false ] ;
                     schema1:result [ a schema1:DataDownload ;
                             cdi:hasPhysicalMapping [ cdi:format "decimal" ;
@@ -2328,7 +2314,21 @@ ex:complete-dataset-001 a schema1:Dataset ;
                     schema1:inDefinedTermSet "https://www.ogc.org/standards" ;
                     schema1:name "OGC API - Features" ;
                     schema1:termCode "ogcapi-features" ] ;
-            schema1:termsOfService "Open access, no authentication required" ] ;
+            schema1:termsOfService "Open access, no authentication required" ],
+        [ a schema1:DataDownload ;
+            dcterms:conformsTo <http://www.opengis.net/def/nil/OGC/0/missing> ;
+            schema1:contentUrl "https://example.org/data/geochem-package.zip" ;
+            schema1:description "Archive containing all data files. Component files are listed as parts and are not individually accessible." ;
+            schema1:encodingFormat "application/zip" ;
+            schema1:hasPart <file:///github/workspace/#part-measurements-csv>,
+                <file:///github/workspace/#part-metadata-yaml>,
+                <file:///github/workspace/#part-method-pdf>,
+                <file:///github/workspace/#part-results-csv>,
+                <file:///github/workspace/#part-spectra-nc> ;
+            schema1:name "Complete data package" ;
+            spdx:checksum [ a spdx:Checksum ;
+                    spdx:algorithm "SHA256" ;
+                    spdx:checksumValue "d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5" ] ] ;
     schema1:funding [ a schema1:MonetaryGrant ;
             schema1:funder <https://ror.org/021nxhr62> ;
             schema1:identifier [ a schema1:PropertyValue ;

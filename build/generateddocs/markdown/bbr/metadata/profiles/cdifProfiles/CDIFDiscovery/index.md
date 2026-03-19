@@ -1073,11 +1073,11 @@ ex:YOPx123 a schema1:Dataset ;
                     spdx:algorithm "j" ;
                     spdx:checksumValue "h" ] ] ;
     schema1:funding [ a schema1:MonetaryGrant ;
-            schema1:funder <https://ror.org/3572wjht> ;
+            schema1:funder <https://ror.org/sejer4w6u8> ;
             schema1:identifier [ a schema1:PropertyValue ;
                     schema1:propertyID "grant-id" ;
-                    schema1:value "lieopgXuumP" ] ;
-            schema1:name "fhhbzh" ],
+                    schema1:value "LZpo" ] ;
+            schema1:name "ekckpBtI" ],
         [ a schema1:MonetaryGrant ;
             schema1:funder <https://ror.org/fnjrj68> ;
             schema1:identifier [ a schema1:PropertyValue ;
@@ -1085,11 +1085,11 @@ ex:YOPx123 a schema1:Dataset ;
                     schema1:value "fMuiBjneudpV" ] ;
             schema1:name "MWoPQAqRYHobey" ],
         [ a schema1:MonetaryGrant ;
-            schema1:funder <https://ror.org/sejer4w6u8> ;
+            schema1:funder <https://ror.org/3572wjht> ;
             schema1:identifier [ a schema1:PropertyValue ;
                     schema1:propertyID "grant-id" ;
-                    schema1:value "LZpo" ] ;
-            schema1:name "ekckpBtI" ] ;
+                    schema1:value "lieopgXuumP" ] ;
+            schema1:name "fhhbzh" ] ;
     schema1:identifier [ a schema1:PropertyValue ;
             schema1:propertyID "uSNzhqeEQPKhCj" ;
             schema1:url "http://identifiers.org/sandbox/uSNzhqeEQPKhCj" ] ;
@@ -1121,9 +1121,9 @@ ex:YOPx123 a schema1:Dataset ;
             schema1:name "Data retention and update policy" ;
             schema1:url "https://example.org/policies/data-retention" ] ;
     schema1:relatedLink [ a schema1:LinkRole ;
-            schema1:linkRelationship "lfCzUaoftdtTPAhMnpC" ],
+            schema1:linkRelationship "BOoRREnpDEUrdNaV" ],
         [ a schema1:LinkRole ;
-            schema1:linkRelationship "BOoRREnpDEUrdNaV" ] ;
+            schema1:linkRelationship "lfCzUaoftdtTPAhMnpC" ] ;
     schema1:sameAs "https://example.org/alt-id/YOPx123",
         "urn:idorg:test:p45689" ;
     schema1:subjectOf ex:BAaR ;
