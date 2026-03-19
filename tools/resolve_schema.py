@@ -178,15 +178,56 @@ def _deep_merge_inner(base: dict, overlay: dict, in_properties: bool) -> dict:
     for k, v in overlay.items():
         if k in result and isinstance(result[k], dict) and isinstance(v, dict):
             if in_properties and _is_complete_schema(v):
-                # Complete property definition → replace entirely
-                result[k] = copy.deepcopy(v)
+                # Complete property definition → replace entirely, BUT
+                # preserve accumulated contains constraints from prior merges
+                base_has_contains = "contains" in result[k]
+                base_has_accumulated = any(
+                    isinstance(e, dict) and "contains" in e
+                    for e in result[k].get("allOf", [])
+                ) if not base_has_contains else False
+                overlay_has_contains = "contains" in v
+
+                if overlay_has_contains and (base_has_contains or base_has_accumulated):
+                    overlay_schema = copy.deepcopy(v)
+                    overlay_contains = overlay_schema.pop("contains")
+                    # Collect existing contains entries
+                    accumulated = []
+                    if base_has_contains:
+                        accumulated.append({"contains": result[k].pop("contains")})
+                    if base_has_accumulated:
+                        for e in result[k].get("allOf", []):
+                            if isinstance(e, dict) and "contains" in e:
+                                accumulated.append(e)
+                    accumulated.append({"contains": overlay_contains})
+                    # Merge non-contains parts (overlay wins)
+                    result[k] = overlay_schema
+                    result[k]["allOf"] = accumulated
+                else:
+                    result[k] = copy.deepcopy(v)
             elif k == "properties":
                 result[k] = _deep_merge_inner(result[k], v, in_properties=True)
             elif k == "contains":
-                # contains is a complete sub-schema constraint; overlay replaces
-                result[k] = copy.deepcopy(v)
+                # Both base and overlay have contains — accumulate as allOf entries
+                # so that both constraints are enforced (e.g., multiple conformsTo URIs)
+                base_contains = result.pop("contains")
+                overlay_contains = copy.deepcopy(v)
+                residual = result.get("allOf", [])
+                residual.append({"contains": base_contains})
+                residual.append({"contains": overlay_contains})
+                result["allOf"] = residual
             else:
                 result[k] = _deep_merge_inner(result[k], v, in_properties=False)
+        elif k == "contains" and isinstance(v, dict):
+            # Base has no contains but overlay does — check if base already has
+            # accumulated contains in allOf from previous merges
+            existing_allof = result.get("allOf", [])
+            has_accumulated = any(
+                isinstance(e, dict) and "contains" in e for e in existing_allof
+            )
+            if has_accumulated:
+                existing_allof.append({"contains": copy.deepcopy(v)})
+            else:
+                result[k] = copy.deepcopy(v)
         else:
             result[k] = copy.deepcopy(v)
     return result
@@ -723,10 +764,22 @@ def merge_profile_structured(profile_path: Path, global_defs: dict,
                     merged_properties = _deep_merge_inner(merged_properties, bb_props,
                                                           in_properties=True)
 
-                    # Collect allOf constraint entries from the BB
+                    # Process allOf entries from the BB: merge properties,
+                    # collect non-property constraints
                     bb_allof = resolved_bb.get("allOf", [])
                     for constraint in bb_allof:
-                        constraint_entries.append(constraint)
+                        if isinstance(constraint, dict) and "properties" in constraint:
+                            # Merge properties from allOf sub-entries
+                            sub_props = constraint.get("properties", {})
+                            merged_properties = _deep_merge_inner(
+                                merged_properties, sub_props, in_properties=True)
+                            # Keep non-properties parts as constraints
+                            non_prop = {k: v for k, v in constraint.items()
+                                        if k != "properties"}
+                            if non_prop:
+                                constraint_entries.append(non_prop)
+                        else:
+                            constraint_entries.append(constraint)
 
                     # Collect top-level type, required, etc. that aren't properties/allOf
                     for k, v in resolved_bb.items():
