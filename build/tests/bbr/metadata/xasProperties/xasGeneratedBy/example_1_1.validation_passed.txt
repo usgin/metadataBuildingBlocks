@@ -1,29 +1,14 @@
 Validation report for cdif.bbr.metadata.xasProperties.xasGeneratedBy - X-ray absorption, PROV wasGeneratedBy Activity
-Generated 2026-03-19T19:34:56.897201+00:00
-=== General ===
-Test was expected to fail and it did.
-=== End General ===
-
+Generated 2026-03-19T19:34:57.101670+00:00
 === Files ===
-Using serviceType-fail.json from test resources
+Using exampleXasGeneratedBy.json from examples
 JSON-LD context is present - uplifting
-Output JSON-LD serviceType-fail.jsonld created
-Output Turtle serviceType-fail.ttl created
+Output JSON-LD example_1_1.jsonld created
+Output Turtle example_1_1.ttl created
 === End Files ===
 
 === JSON Schema ===
-
-** Validation error **
-ValidationError: 'schema:WebAPI' is not of type 'array'
-
-Failed validating 'type' in schema['allOf'][0]['allOf'][0]['properties']['@type']:
-    {'contains': {'const': 'prov:Activity'},
-     'items': {'type': 'string'},
-     'minItems': 1,
-     'type': 'array'}
-
-On instance['@type']:
-    'schema:WebAPI'
+Validation passed
 === End JSON Schema ===
 
 === SHACL ===
@@ -32,20 +17,11 @@ Validation result for _sources/xasProperties/xasGeneratedBy/rules.shacl:
   Conforms: True
   
 Focus nodes for _sources/xasProperties/xasGeneratedBy/rules.shacl:
- - Shape cdifd:xasGeneratedByNode: *none*
+ - Shape cdifd:xasGeneratedByNode: ex:exampleGeneratedBy_w46j6j
 
-
-** Validation error **
 Validation result for _sources/schemaorgProperties/identifier/rules.shacl:
   Validation Report
-  Conforms: False
-  Results (1):
-  Validation Result in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-  	Severity: sh:Warning
-  	Source Shape: [ sh:minCount Literal("1", datatype=xsd:integer) ; sh:or ( [ sh:nodeKind sh:IRI ] [ sh:datatype xsd:string ; sh:minLength Literal("5", datatype=xsd:integer) ] [ sh:class schema1:DefinedTerm ] ) ; sh:path schema1:propertyID ; sh:severity sh:Warning ]
-  	Focus Node: [ rdf:type schema1:PropertyValue ; schema1:url Literal("http://ogc.org/defs/g35408y") ; schema1:value Literal("g35408y") ]
-  	Result Path: schema1:propertyID
-  	Message: Less than 1 values on [ rdf:type schema1:PropertyValue ; schema1:url Literal("http://ogc.org/defs/g35408y") ; schema1:value Literal("g35408y") ]->schema1:propertyID
+  Conforms: True
   
 Focus nodes for _sources/schemaorgProperties/identifier/rules.shacl:
  - Shape _:na65b35e705fd49b8aabeb0b3de741130b23: *none*
@@ -161,7 +137,7 @@ Focus nodes for _sources/schemaorgProperties/spatialExtent/rules.shacl:
  - Shape cdifd:geoShapeNode: *none*
  - Shape cdifd:spatialExtentProperty/sh:or/rdf:rest/rdf:first: *none*
  - Shape _:ne2878a74d33d4d8ab832f05f208cfc1db17: *none*
- - Shape cdifd:CDIFDefinedTermShape: ex:definedTerm_zZc
+ - Shape cdifd:CDIFDefinedTermShape: ex:exampleGeneratedBy_w46j6j/prov:used/schema1:instrument/schema1:category
  - Shape _:ne2878a74d33d4d8ab832f05f208cfc1db37: *none*
  - Shape cdifd:CDIFDefinedTermShape/sh:or/rdf:first: *none*
  - Shape cdifd:geoCoordinatesNode/sh:property/sh:or/rdf:first: *none*
@@ -175,7 +151,7 @@ Focus nodes for _sources/schemaorgProperties/spatialExtent/rules.shacl:
  - Shape _:ne2878a74d33d4d8ab832f05f208cfc1db4: *none*
  - Shape cdifd:spatialExtentProperty/sh:or/rdf:first: *none*
  - Shape _:ne2878a74d33d4d8ab832f05f208cfc1db3: *none*
- - Shape cdifd:spatialExtentProperty: *none*
+ - Shape cdifd:spatialExtentProperty: ex:xasfacility_37yht
  - Shape _:ne2878a74d33d4d8ab832f05f208cfc1db31: *none*
  - Shape _:ne2878a74d33d4d8ab832f05f208cfc1db9: *none*
  - Shape _:ne2878a74d33d4d8ab832f05f208cfc1db32: *none*
@@ -203,7 +179,7 @@ Focus nodes for _sources/schemaorgProperties/agentInRole/rules.shacl:
  - Shape _:ndf7f69660fe04fc0a80ff4e1a8f908eab20: *none*
  - Shape _:ndf7f69660fe04fc0a80ff4e1a8f908eab14: *none*
  - Shape cdifd:CDIFDefinedTermShape/sh:or/rdf:rest/rdf:first: *none*
- - Shape cdifd:CDIFDefinedTermShape: ex:definedTerm_zZc
+ - Shape cdifd:CDIFDefinedTermShape: ex:exampleGeneratedBy_w46j6j/prov:used/schema1:instrument/schema1:category
  - Shape _:ndf7f69660fe04fc0a80ff4e1a8f908eab17: *none*
  - Shape cdifd:CDIFRoleShape: *none*
  - Shape cdifd:roleNameProperty/sh:or/rdf:rest/rdf:first: *none*
@@ -216,7 +192,7 @@ Validation result for _sources/schemaorgProperties/labeledLink/rules.shacl:
   Conforms: True
   
 Focus nodes for _sources/schemaorgProperties/labeledLink/rules.shacl:
- - Shape cdifd:CDIFLabeledLinkShape: ex:exampleWebAPI_354btrh/schema1:documentation,ex:exampleWebAPI_354btrh/schema1:termsOfService
+ - Shape cdifd:CDIFLabeledLinkShape: *none*
 
 Validation result for _sources/schemaorgProperties/instrument/rules.shacl:
   Validation Report

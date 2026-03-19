@@ -71,7 +71,12 @@ Example dataset with provenance activity describing how the resource was generat
                         "@type": ["schema:SoftwareApplication"],
                         "schema:name": "SeisUnix",
                         "schema:version": "44R27",
-                        "schema:url": "https://wiki.seismic-unix.org/"
+                        "schema:url": "https://wiki.seismic-unix.org/",
+                        "schema:category": [{
+                            "@type": "schema:DefinedTerm",
+                            "schema:name": "Seismic processing software",
+                            "schema:termCode": "seismic-processing"
+                        }]
                     }
                 }
             ],
@@ -146,7 +151,14 @@ Example dataset with provenance activity describing how the resource was generat
             ],
             "schema:name": "SeisUnix",
             "schema:version": "44R27",
-            "schema:url": "https://wiki.seismic-unix.org/"
+            "schema:url": "https://wiki.seismic-unix.org/",
+            "schema:category": [
+              {
+                "@type": "schema:DefinedTerm",
+                "schema:name": "Seismic processing software",
+                "schema:termCode": "seismic-processing"
+              }
+            ]
           }
         }
       ],
@@ -183,6 +195,9 @@ ex:dataset_with_provenance_001 a schema1:Dataset ;
             schema1:name "Seismic data processing" ;
             schema1:startTime "2025-01-10T00:00:00Z" ;
             prov:used [ schema1:instrument [ a schema1:SoftwareApplication ;
+                            schema1:category [ a schema1:DefinedTerm ;
+                                    schema1:name "Seismic processing software" ;
+                                    schema1:termCode "seismic-processing" ] ;
                             schema1:name "SeisUnix" ;
                             schema1:url "https://wiki.seismic-unix.org/" ;
                             schema1:version "44R27" ] ] ] .
