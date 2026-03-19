@@ -271,12 +271,12 @@ ex:cdifOptional_23578 a schema1:Dataset ;
     schema1:name "Bathymetry Bay of Biscay" ;
     schema1:publishingPrinciples "https://example.org/principles/3478" ;
     schema1:relatedLink [ a schema1:LinkRole ;
+            schema1:linkRelationship "related data" ],
+        [ a schema1:LinkRole ;
             schema1:linkRelationship [ a schema1:DefinedTerm ;
                     schema1:inDefinedTermSet "https://www.iana.org/assignments/link-relations/" ;
                     schema1:name "related dataset" ;
-                    schema1:termCode "related" ] ],
-        [ a schema1:LinkRole ;
-            schema1:linkRelationship "related data" ] ;
+                    schema1:termCode "related" ] ] ;
     schema1:subjectOf [ ns1:conformsTo <https://w3id.org/cdif/discovery/1.0/> ] ;
     schema1:url "https://example.org/landingPage254266" ;
     schema1:version "1.0" .
@@ -589,7 +589,7 @@ $defs:
   Funder:
     $ref: https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/funder/schema.yaml
   VariableMeasured:
-    $ref: https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifVariableMeasured/schema.yaml
+    $ref: https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/variableMeasured/schema.yaml
   StatisticalVariable:
     $ref: https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/statisticalVariable/schema.yaml
   SpatialExtent:
@@ -623,13 +623,8 @@ Links to the schema:
 {
   "@context": {
     "schema": "http://schema.org/",
-    "spdx": "http://spdx.org/rdf/terms#",
-    "cdi": "http://ddialliance.org/Specification/DDI-CDI/1.0/RDF/",
-    "skos": "http://www.w3.org/2004/02/skos/core#",
-    "xas": "https://xas.org/dictionary/",
-    "nxs": "http://purl.org/nexusformat/definitions/",
-    "prov": "http://www.w3.org/ns/prov#",
     "time": "http://www.w3.org/2006/time#",
+    "prov": "http://www.w3.org/ns/prov#",
     "@version": 1.1
   }
 }
