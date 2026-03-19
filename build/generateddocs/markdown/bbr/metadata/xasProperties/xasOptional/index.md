@@ -3,7 +3,7 @@
 
 `cdif.bbr.metadata.xasProperties.xasOptional` *v0.1*
 
-Optional XAS metadata extending CDIF mandatory with cdifProvActivity-based provenance. Includes XAS subject descriptors, instrument wrappers, XDI-conformant distribution, measurement technique DefinedTerms, and element/edge keywords. Defines properties: schema:subjectOf, prov:wasGeneratedBy, schema:distribution, schema:measurementTechnique, schema:keywords. Uses building blocks: cdifCore (cdifProperties), cdifProvActivity (cdifProperties), definedTerm (schemaorgProperties), additionalProperty (schemaorgProperties), dataDownload (schemaorgProperties), xasSample (xasProperties), xasSubject (xasProperties).
+Optional XAS metadata extending CDIF mandatory with cdifProvActivity-based provenance. Includes XAS subject descriptors, instrument wrappers, XDI-conformant distribution, measurement technique DefinedTerms, and element/edge keywords. Defines properties: schema:subjectOf, prov:wasGeneratedBy, schema:distribution, schema:measurementTechnique, schema:keywords. Uses building blocks: cdifCore (cdifProperties), cdifProvActivity (cdifProperties), definedTerm (schemaorgProperties), additionalProperty (schemaorgProperties), dataDownload (schemaorgProperties), xasSample (xasProperties), cdifCatalogRecord (cdifProperties).
 
 [*Status*](http://www.opengis.net/def/status): Under development
 
@@ -47,7 +47,7 @@ XAS dataset with NXsource and NXmonochromator instrument components, XAS measure
   "schema:name": "XAS measurement of Fe K-edge in magnetite sample",
   "schema:identifier": {
     "@type": "schema:PropertyValue",
-    "schema:propertyID": "DOI",
+    "schema:propertyID": "https://doi.org",
     "schema:value": "10.12345/xas-optional-test",
     "schema:url": "https://doi.org/10.12345/xas-optional-test"
   },
@@ -106,7 +106,11 @@ XAS dataset with NXsource and NXmonochromator instrument components, XAS measure
     "schema:maintainer": {
       "@id": "ex:person_jdoe",
       "@type": "schema:Person",
-      "schema:name": "Doe, Jane"
+      "schema:name": "Doe, Jane",
+      "schema:contactPoint": {
+        "@type": "schema:ContactPoint",
+        "schema:email": "jane.doe@example.org"
+      }
     },
     "schema:sdDatePublished": "2026-01-20T10:00:00Z"
   },
@@ -117,6 +121,11 @@ XAS dataset with NXsource and NXmonochromator instrument components, XAS measure
           "schema:instrument": {
             "@type": ["schema:Thing", "schema:Product"],
             "schema:name": "APS Sector 20-BM beamline instrument",
+            "schema:category": [{
+                "@type": "schema:DefinedTerm",
+                "schema:name": "X-ray absorption spectroscopy beamline",
+                "schema:termCode": "XAS-beamline"
+            }],
             "schema:hasPart": [
               {
                 "@type": [
@@ -284,7 +293,7 @@ XAS dataset with NXsource and NXmonochromator instrument components, XAS measure
   "schema:name": "XAS measurement of Fe K-edge in magnetite sample",
   "schema:identifier": {
     "@type": "schema:PropertyValue",
-    "schema:propertyID": "DOI",
+    "schema:propertyID": "https://doi.org",
     "schema:value": "10.12345/xas-optional-test",
     "schema:url": "https://doi.org/10.12345/xas-optional-test"
   },
@@ -347,7 +356,11 @@ XAS dataset with NXsource and NXmonochromator instrument components, XAS measure
     "schema:maintainer": {
       "@id": "ex:person_jdoe",
       "@type": "schema:Person",
-      "schema:name": "Doe, Jane"
+      "schema:name": "Doe, Jane",
+      "schema:contactPoint": {
+        "@type": "schema:ContactPoint",
+        "schema:email": "jane.doe@example.org"
+      }
     },
     "schema:sdDatePublished": "2026-01-20T10:00:00Z"
   },
@@ -361,6 +374,13 @@ XAS dataset with NXsource and NXmonochromator instrument components, XAS measure
               "schema:Product"
             ],
             "schema:name": "APS Sector 20-BM beamline instrument",
+            "schema:category": [
+              {
+                "@type": "schema:DefinedTerm",
+                "schema:name": "X-ray absorption spectroscopy beamline",
+                "schema:termCode": "XAS-beamline"
+              }
+            ],
             "schema:hasPart": [
               {
                 "@type": [
@@ -525,6 +545,8 @@ ex:meta_xasOpt_001 a schema1:Dataset ;
     schema1:sdDatePublished "2026-01-20T10:00:00Z" .
 
 ex:person_jdoe a schema1:Person ;
+    schema1:contactPoint [ a schema1:ContactPoint ;
+            schema1:email "jane.doe@example.org" ] ;
     schema1:name "Doe, Jane" .
 
 ex:xasOptionalExample_001 a schema1:Dataset,
@@ -532,19 +554,19 @@ ex:xasOptionalExample_001 a schema1:Dataset,
     schema1:dateModified "2026-01-15" ;
     schema1:distribution ex:dist_xdi_001 ;
     schema1:identifier [ a schema1:PropertyValue ;
-            schema1:propertyID "DOI" ;
+            schema1:propertyID "https://doi.org" ;
             schema1:url "https://doi.org/10.12345/xas-optional-test" ;
             schema1:value "10.12345/xas-optional-test" ] ;
     schema1:keywords [ a schema1:DefinedTerm ;
-            schema1:identifier "xas:K-edge" ;
-            schema1:inDefinedTermSet "https://github.com/XraySpectroscopy/XAS-Data-Interchange/blob/master/specification/dictionary.md" ;
-            schema1:name "K-edge" ;
-            schema1:termCode "K" ],
-        [ a schema1:DefinedTerm ;
             schema1:identifier "http://sweetontology.net/matrElement/Iron" ;
             schema1:inDefinedTermSet "http://sweetontology.net/matrElement" ;
             schema1:name "Iron" ;
-            schema1:termCode "Fe" ] ;
+            schema1:termCode "Fe" ],
+        [ a schema1:DefinedTerm ;
+            schema1:identifier "xas:K-edge" ;
+            schema1:inDefinedTermSet "https://github.com/XraySpectroscopy/XAS-Data-Interchange/blob/master/specification/dictionary.md" ;
+            schema1:name "K-edge" ;
+            schema1:termCode "K" ] ;
     schema1:license "https://creativecommons.org/licenses/by/4.0/" ;
     schema1:measurementTechnique [ a schema1:DefinedTerm ;
             schema1:identifier "http://purl.org/pan-science/PaNET/PaNET01196" ;
@@ -574,16 +596,19 @@ ex:xasOptionalExample_001 a schema1:Dataset,
                     schema1:name "Magnetite powder" ] ;
             prov:used [ schema1:instrument [ a schema1:Product,
                                 schema1:Thing ;
+                            schema1:category [ a schema1:DefinedTerm ;
+                                    schema1:name "X-ray absorption spectroscopy beamline" ;
+                                    schema1:termCode "XAS-beamline" ] ;
                             schema1:hasPart [ a schema1:Product,
                                         schema1:Thing ;
                                     schema1:additionalProperty [ a schema1:PropertyValue ;
-                                            schema1:name "x-ray source type" ;
-                                            schema1:propertyID "nxs:Field/NXsource/type" ;
-                                            schema1:value "Synchrotron X-ray Source" ],
-                                        [ a schema1:PropertyValue ;
                                             schema1:name "Probe" ;
                                             schema1:propertyID "nxs:Field/NXsource/probe" ;
-                                            schema1:value "x-ray" ] ;
+                                            schema1:value "x-ray" ],
+                                        [ a schema1:PropertyValue ;
+                                            schema1:name "x-ray source type" ;
+                                            schema1:propertyID "nxs:Field/NXsource/type" ;
+                                            schema1:value "Synchrotron X-ray Source" ] ;
                                     schema1:additionalType "nxs:BaseClass/NXsource" ;
                                     schema1:name "APS Undulator A" ],
                                 [ a schema1:Product,
@@ -617,24 +642,22 @@ allOf:
 - type: object
   properties:
     schema:subjectOf:
-      allOf:
-      - $ref: '#/$defs/XasSubject'
-      - properties:
-          dcterms:conformsTo:
-            type: array
-            items:
-              type: object
-              properties:
-                '@id':
-                  type: string
-                  description: uri for specifications that this metadata record conforms
-                    to
-            minItems: 1
-            contains:
-              type: object
-              properties:
-                '@id':
-                  const: https://w3id.org/cdif/xasDiscovery/1.0/
+      properties:
+        dcterms:conformsTo:
+          type: array
+          items:
+            type: object
+            properties:
+              '@id':
+                type: string
+                description: uri for specifications that this metadata record conforms
+                  to
+          minItems: 1
+          contains:
+            type: object
+            properties:
+              '@id':
+                const: https://w3id.org/cdif/xasDiscovery/1.0/
     prov:wasGeneratedBy:
       type: array
       items:
@@ -800,7 +823,10 @@ allOf:
             - contains:
                 const: schema:DataDownload
             - contains:
-                const: cdi:PhysicalDataset
+                enum:
+                - cdi:PhysicalDataset
+                - cdi:TabularTextDataSet
+                - cdi:StructuredDataSet
           dcterms:conformsTo:
             type: array
             contains:
@@ -905,8 +931,6 @@ $defs:
     $ref: https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/dataDownload/schema.yaml
   XasSample:
     $ref: https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasSample/schema.yaml
-  XasSubject:
-    $ref: https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasSubject/schema.yaml
 x-jsonld-prefixes:
   schema: http://schema.org/
 

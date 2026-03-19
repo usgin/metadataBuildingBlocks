@@ -27,6 +27,8 @@ ex:meta_xasOpt_001 a schema1:Dataset ;
     schema1:sdDatePublished "2026-01-20T10:00:00Z" .
 
 ex:person_jdoe a schema1:Person ;
+    schema1:contactPoint [ a schema1:ContactPoint ;
+            schema1:email "jane.doe@example.org" ] ;
     schema1:name "Doe, Jane" .
 
 ex:xasOptionalExample_001 a schema1:Dataset,
@@ -34,19 +36,19 @@ ex:xasOptionalExample_001 a schema1:Dataset,
     schema1:dateModified "2026-01-15" ;
     schema1:distribution ex:dist_xdi_001 ;
     schema1:identifier [ a schema1:PropertyValue ;
-            schema1:propertyID "DOI" ;
+            schema1:propertyID "https://doi.org" ;
             schema1:url "https://doi.org/10.12345/xas-optional-test" ;
             schema1:value "10.12345/xas-optional-test" ] ;
     schema1:keywords [ a schema1:DefinedTerm ;
-            schema1:identifier "xas:K-edge" ;
-            schema1:inDefinedTermSet "https://github.com/XraySpectroscopy/XAS-Data-Interchange/blob/master/specification/dictionary.md" ;
-            schema1:name "K-edge" ;
-            schema1:termCode "K" ],
-        [ a schema1:DefinedTerm ;
             schema1:identifier "http://sweetontology.net/matrElement/Iron" ;
             schema1:inDefinedTermSet "http://sweetontology.net/matrElement" ;
             schema1:name "Iron" ;
-            schema1:termCode "Fe" ] ;
+            schema1:termCode "Fe" ],
+        [ a schema1:DefinedTerm ;
+            schema1:identifier "xas:K-edge" ;
+            schema1:inDefinedTermSet "https://github.com/XraySpectroscopy/XAS-Data-Interchange/blob/master/specification/dictionary.md" ;
+            schema1:name "K-edge" ;
+            schema1:termCode "K" ] ;
     schema1:license "https://creativecommons.org/licenses/by/4.0/" ;
     schema1:measurementTechnique [ a schema1:DefinedTerm ;
             schema1:identifier "http://purl.org/pan-science/PaNET/PaNET01196" ;
@@ -76,16 +78,19 @@ ex:xasOptionalExample_001 a schema1:Dataset,
                     schema1:name "Magnetite powder" ] ;
             prov:used [ schema1:instrument [ a schema1:Product,
                                 schema1:Thing ;
+                            schema1:category [ a schema1:DefinedTerm ;
+                                    schema1:name "X-ray absorption spectroscopy beamline" ;
+                                    schema1:termCode "XAS-beamline" ] ;
                             schema1:hasPart [ a schema1:Product,
                                         schema1:Thing ;
                                     schema1:additionalProperty [ a schema1:PropertyValue ;
-                                            schema1:name "x-ray source type" ;
-                                            schema1:propertyID "nxs:Field/NXsource/type" ;
-                                            schema1:value "Synchrotron X-ray Source" ],
-                                        [ a schema1:PropertyValue ;
                                             schema1:name "Probe" ;
                                             schema1:propertyID "nxs:Field/NXsource/probe" ;
-                                            schema1:value "x-ray" ] ;
+                                            schema1:value "x-ray" ],
+                                        [ a schema1:PropertyValue ;
+                                            schema1:name "x-ray source type" ;
+                                            schema1:propertyID "nxs:Field/NXsource/type" ;
+                                            schema1:value "Synchrotron X-ray Source" ] ;
                                     schema1:additionalType "nxs:BaseClass/NXsource" ;
                                     schema1:name "APS Undulator A" ],
                                 [ a schema1:Product,

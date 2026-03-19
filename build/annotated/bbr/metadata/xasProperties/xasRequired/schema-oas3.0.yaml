@@ -139,26 +139,18 @@ x-defs:
             required:
             - schema:contentUrl
       schema:subjectOf:
-        allOf:
-        - $ref: https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasRequired/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.cdifProperties.cdifCore/$defs/CdifCatalogRecord
-        - properties:
+        $ref: https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasRequired/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.cdifProperties.cdifCore/$defs/CdifCatalogRecord
+    allOf:
+    - properties:
+        schema:subjectOf:
+          properties:
             dcterms:conformsTo:
-              type: array
-              items:
-                type: object
-                properties:
-                  '@id':
-                    type: string
-                    description: uri for specifications that this metadata record
-                      conforms to
-              minItems: 1
               contains:
                 type: object
                 properties:
                   '@id':
                     enum:
                     - https://w3id.org/cdif/core/1.0/
-    allOf:
     - required:
       - '@id'
       - '@type'
@@ -739,34 +731,6 @@ x-defs:
     x-jsonld-prefixes:
       schema: http://schema.org/
     x-schema-source: https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasSample/schema.yaml
-    x-schema-version: https://json-schema.org/draft/2020-12/schema
-  cdif.bbr.metadata.xasProperties.xasSubject:
-    type: object
-    allOf:
-    - $ref: https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasRequired/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.cdifProperties.cdifCatalogRecord
-    - properties:
-        dcterms:conformsTo:
-          type: array
-          items:
-            type: object
-            properties:
-              '@id':
-                type: string
-                description: uri for specifications that this metadata record conforms
-                  to
-          minItems: 2
-          contains:
-            type: object
-            properties:
-              '@id':
-                enum:
-                - https://w3id.org/cdif/bbr/metadata/profiles/cdifProfiles/CDIFxas
-            required:
-            - '@id'
-          minContains: 1
-    x-jsonld-prefixes:
-      schema: http://schema.org/
-    x-schema-source: https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasSubject/schema.yaml
     x-schema-version: https://json-schema.org/draft/2020-12/schema
   cdif.bbr.metadata.schemaorgProperties.labeledLink:
     description: schema for a labeled link, a profile of schema.org/CreativeWork
@@ -1987,25 +1951,23 @@ allOf:
         - schema:Dataset
         - schema:Product
     schema:subjectOf:
-      allOf:
-      - $ref: https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasRequired/schema-oas3.0.yaml#/$defs/XasSubject
-      - properties:
-          dcterms:conformsTo:
-            type: array
-            items:
-              type: object
-              properties:
-                '@id':
-                  type: string
-                  description: uri for specifications that this metadata record conforms
-                    to
-            minItems: 1
-            contains:
-              type: object
-              properties:
-                '@id':
-                  enum:
-                  - https://w3id.org/cdif/xasCore/1.0/
+      properties:
+        dcterms:conformsTo:
+          type: array
+          items:
+            type: object
+            properties:
+              '@id':
+                type: string
+                description: uri for specifications that this metadata record conforms
+                  to
+          minItems: 1
+          contains:
+            type: object
+            properties:
+              '@id':
+                enum:
+                - https://w3id.org/cdif/xasCore/1.0/
     prov:wasGeneratedBy:
       type: array
       items:
@@ -2186,6 +2148,8 @@ allOf:
             - contains:
                 enum:
                 - cdi:PhysicalDataset
+                - cdi:TabularTextDataSet
+                - cdi:StructuredDataSet
           dcterms:conformsTo:
             type: array
             contains:
@@ -2300,8 +2264,6 @@ $defs:
     $ref: https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasRequired/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.schemaorgProperties.dataDownload
   XasSample:
     $ref: https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasRequired/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.xasProperties.xasSample
-  XasSubject:
-    $ref: https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasRequired/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.xasProperties.xasSubject
 x-jsonld-prefixes:
   schema: http://schema.org/
 x-schema-version: https://json-schema.org/draft/2020-12/schema

@@ -18,7 +18,7 @@
   "schema:name": "XAS measurement of Fe K-edge in magnetite sample",
   "schema:identifier": {
     "@type": "schema:PropertyValue",
-    "schema:propertyID": "DOI",
+    "schema:propertyID": "https://doi.org",
     "schema:value": "10.12345/xas-optional-test",
     "schema:url": "https://doi.org/10.12345/xas-optional-test"
   },
@@ -81,7 +81,11 @@
     "schema:maintainer": {
       "@id": "ex:person_jdoe",
       "@type": "schema:Person",
-      "schema:name": "Doe, Jane"
+      "schema:name": "Doe, Jane",
+      "schema:contactPoint": {
+        "@type": "schema:ContactPoint",
+        "schema:email": "jane.doe@example.org"
+      }
     },
     "schema:sdDatePublished": "2026-01-20T10:00:00Z"
   },
@@ -95,6 +99,13 @@
               "schema:Product"
             ],
             "schema:name": "APS Sector 20-BM beamline instrument",
+            "schema:category": [
+              {
+                "@type": "schema:DefinedTerm",
+                "schema:name": "X-ray absorption spectroscopy beamline",
+                "schema:termCode": "XAS-beamline"
+              }
+            ],
             "schema:hasPart": [
               {
                 "@type": [

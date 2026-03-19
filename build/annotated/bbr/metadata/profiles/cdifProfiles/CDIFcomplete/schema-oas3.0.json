@@ -163,24 +163,15 @@
           }
         },
         "schema:subjectOf": {
-          "allOf": [
-            {
-              "$ref": "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFcomplete/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifCore/$defs/CdifCatalogRecord"
-            },
-            {
+          "$ref": "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFcomplete/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.cdifProperties.cdifCore/$defs/CdifCatalogRecord"
+        }
+      },
+      "allOf": [
+        {
+          "properties": {
+            "schema:subjectOf": {
               "properties": {
                 "dcterms:conformsTo": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "@id": {
-                        "type": "string",
-                        "description": "uri for specifications that this metadata record conforms to"
-                      }
-                    }
-                  },
-                  "minItems": 1,
                   "contains": {
                     "type": "object",
                     "properties": {
@@ -194,10 +185,8 @@
                 }
               }
             }
-          ]
-        }
-      },
-      "allOf": [
+          }
+        },
         {
           "required": [
             "@id",

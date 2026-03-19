@@ -8,36 +8,29 @@
       "type": "object",
       "properties": {
         "schema:subjectOf": {
-          "allOf": [
-            {
-              "$ref": "#/$defs/XasSubject"
-            },
-            {
-              "properties": {
-                "dcterms:conformsTo": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "@id": {
-                        "type": "string",
-                        "description": "uri for specifications that this metadata record conforms to"
-                      }
-                    }
-                  },
-                  "minItems": 1,
-                  "contains": {
-                    "type": "object",
-                    "properties": {
-                      "@id": {
-                        "const": "https://w3id.org/cdif/xasDiscovery/1.0/"
-                      }
-                    }
+          "properties": {
+            "dcterms:conformsTo": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "@id": {
+                    "type": "string",
+                    "description": "uri for specifications that this metadata record conforms to"
+                  }
+                }
+              },
+              "minItems": 1,
+              "contains": {
+                "type": "object",
+                "properties": {
+                  "@id": {
+                    "const": "https://w3id.org/cdif/xasDiscovery/1.0/"
                   }
                 }
               }
             }
-          ]
+          }
         },
         "prov:wasGeneratedBy": {
           "type": "array",
@@ -301,7 +294,11 @@
                   },
                   {
                     "contains": {
-                      "const": "cdi:PhysicalDataset"
+                      "enum": [
+                        "cdi:PhysicalDataset",
+                        "cdi:TabularTextDataSet",
+                        "cdi:StructuredDataSet"
+                      ]
                     }
                   }
                 ]
@@ -471,9 +468,6 @@
     },
     "XasSample": {
       "$ref": "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasSample/schema.json"
-    },
-    "XasSubject": {
-      "$ref": "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasSubject/schema.json"
     }
   },
   "x-jsonld-prefixes": {

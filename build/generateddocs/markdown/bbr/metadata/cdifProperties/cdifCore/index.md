@@ -336,25 +336,17 @@ properties:
         required:
         - schema:contentUrl
   schema:subjectOf:
-    allOf:
-    - $ref: '#/$defs/CdifCatalogRecord'
-    - properties:
+    $ref: '#/$defs/CdifCatalogRecord'
+allOf:
+- properties:
+    schema:subjectOf:
+      properties:
         dcterms:conformsTo:
-          type: array
-          items:
-            type: object
-            properties:
-              '@id':
-                type: string
-                description: uri for specifications that this metadata record conforms
-                  to
-          minItems: 1
           contains:
             type: object
             properties:
               '@id':
                 const: https://w3id.org/cdif/core/1.0/
-allOf:
 - required:
   - '@id'
   - '@type'

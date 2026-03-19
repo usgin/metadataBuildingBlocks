@@ -11,24 +11,22 @@ allOf:
         - schema:Dataset
         - schema:Product
     schema:subjectOf:
-      allOf:
-      - $ref: '#/$defs/XasSubject'
-      - properties:
-          dcterms:conformsTo:
-            type: array
-            items:
-              type: object
-              properties:
-                '@id':
-                  type: string
-                  description: uri for specifications that this metadata record conforms
-                    to
-            minItems: 1
-            contains:
-              type: object
-              properties:
-                '@id':
-                  const: https://w3id.org/cdif/xasCore/1.0/
+      properties:
+        dcterms:conformsTo:
+          type: array
+          items:
+            type: object
+            properties:
+              '@id':
+                type: string
+                description: uri for specifications that this metadata record conforms
+                  to
+          minItems: 1
+          contains:
+            type: object
+            properties:
+              '@id':
+                const: https://w3id.org/cdif/xasCore/1.0/
     prov:wasGeneratedBy:
       type: array
       items:
@@ -194,7 +192,10 @@ allOf:
             - contains:
                 const: schema:DataDownload
             - contains:
-                const: cdi:PhysicalDataset
+                enum:
+                - cdi:PhysicalDataset
+                - cdi:TabularTextDataSet
+                - cdi:StructuredDataSet
           dcterms:conformsTo:
             type: array
             contains:
@@ -299,7 +300,5 @@ $defs:
     $ref: https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/dataDownload/schema.yaml
   XasSample:
     $ref: https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasSample/schema.yaml
-  XasSubject:
-    $ref: https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/xasProperties/xasSubject/schema.yaml
 x-jsonld-prefixes:
   schema: http://schema.org/
