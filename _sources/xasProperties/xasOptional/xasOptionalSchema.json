@@ -8,36 +8,29 @@
             "type": "object",
             "properties": {
                 "schema:subjectOf": {
-                    "allOf": [
-                        {
-                            "$ref": "#/$defs/CdifCatalogRecord"
-                        },
-                        {
-                            "properties": {
-                                "dcterms:conformsTo": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object",
-                                        "properties": {
-                                            "@id": {
-                                                "type": "string",
-                                                "description": "uri for specifications that this metadata record conforms to"
-                                            }
-                                        }
-                                    },
-                                    "minItems": 1,
-                                    "contains": {
-                                        "type": "object",
-                                        "properties": {
-                                            "@id": {
-                                                "const": "https://w3id.org/cdif/xasDiscovery/1.0/"
-                                            }
-                                        }
+                    "properties": {
+                        "dcterms:conformsTo": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "@id": {
+                                        "type": "string",
+                                        "description": "uri for specifications that this metadata record conforms to"
+                                    }
+                                }
+                            },
+                            "minItems": 1,
+                            "contains": {
+                                "type": "object",
+                                "properties": {
+                                    "@id": {
+                                        "const": "https://w3id.org/cdif/xasDiscovery/1.0/"
                                     }
                                 }
                             }
                         }
-                    ]
+                    }
                 },
                 "prov:wasGeneratedBy": {
                     "type": "array",
@@ -301,7 +294,11 @@
                                     },
                                     {
                                         "contains": {
-                                            "const": "cdi:PhysicalDataset"
+                                            "enum": [
+                                                "cdi:PhysicalDataset",
+                                                "cdi:TabularTextDataSet",
+                                                "cdi:StructuredDataSet"
+                                            ]
                                         }
                                     }
                                 ]
@@ -387,21 +384,14 @@
                         "type": "object",
                         "properties": {
                             "@type": {
-                                "anyOf": [
-                                    {
-                                        "type": "string",
-                                        "const": "schema:DefinedTerm"
-                                    },
-                                    {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "string"
-                                        },
-                                        "contains": {
-                                            "const": "schema:DefinedTerm"
-                                        }
-                                    }
-                                ]
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                },
+                                "contains": {
+                                    "const": "schema:DefinedTerm"
+                                },
+                                "minItems": 1
                             },
                             "schema:name": {
                                 "type": "string"
@@ -471,9 +461,6 @@
         },
         "XasSample": {
             "$ref": "../xasSample/xasSampleSchema.json"
-        },
-        "CdifCatalogRecord": {
-            "$ref": "../../cdifProperties/cdifCatalogRecord/schema.yaml"
         }
     }
 }

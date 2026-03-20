@@ -38,21 +38,14 @@
           "properties": {
             "@type": {
               "default": "schema:CreativeWork",
-              "anyOf": [
-                {
-                  "type": "string",
-                  "const": "schema:CreativeWork"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "contains": {
-                    "const": "schema:CreativeWork"
-                  }
-                }
-              ]
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "contains": {
+                "const": "schema:CreativeWork"
+              },
+              "minItems": 1
             },
             "schema:name": {
               "type": "string"
@@ -84,21 +77,14 @@
           "properties": {
             "@type": {
               "default": "schema:CreativeWork",
-              "anyOf": [
-                {
-                  "type": "string",
-                  "const": "schema:CreativeWork"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "contains": {
-                    "const": "schema:CreativeWork"
-                  }
-                }
-              ]
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "contains": {
+                "const": "schema:CreativeWork"
+              },
+              "minItems": 1
             },
             "schema:name": {
               "type": "string"
@@ -129,49 +115,28 @@
           "@type": {
             "description": "The type of action. Must be schema:Action or one of its subtypes.",
             "default": "schema:Action",
-            "anyOf": [
-              {
-                "type": "string",
-                "enum": [
-                  "schema:Action",
-                  "schema:AssessAction",
-                  "schema:ConsumeAction",
-                  "schema:ControlAction",
-                  "schema:CreateAction",
-                  "schema:DeleteAction",
-                  "schema:FindAction",
-                  "schema:InteractAction",
-                  "schema:MoveAction",
-                  "schema:PlayAction",
-                  "schema:SearchAction",
-                  "schema:TransferAction",
-                  "schema:UpdateAction"
-                ]
-              },
-              {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                },
-                "contains": {
-                  "enum": [
-                    "schema:Action",
-                    "schema:AssessAction",
-                    "schema:ConsumeAction",
-                    "schema:ControlAction",
-                    "schema:CreateAction",
-                    "schema:DeleteAction",
-                    "schema:FindAction",
-                    "schema:InteractAction",
-                    "schema:MoveAction",
-                    "schema:PlayAction",
-                    "schema:SearchAction",
-                    "schema:TransferAction",
-                    "schema:UpdateAction"
-                  ]
-                }
-              }
-            ]
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "contains": {
+              "enum": [
+                "schema:Action",
+                "schema:AssessAction",
+                "schema:ConsumeAction",
+                "schema:ControlAction",
+                "schema:CreateAction",
+                "schema:DeleteAction",
+                "schema:FindAction",
+                "schema:InteractAction",
+                "schema:MoveAction",
+                "schema:PlayAction",
+                "schema:SearchAction",
+                "schema:TransferAction",
+                "schema:UpdateAction"
+              ]
+            },
+            "minItems": 1
           },
           "schema:name": {
             "type": "string",
@@ -183,21 +148,14 @@
             "properties": {
               "@type": {
                 "default": "schema:EntryPoint",
-                "anyOf": [
-                  {
-                    "type": "string",
-                    "const": "schema:EntryPoint"
-                  },
-                  {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    },
-                    "contains": {
-                      "const": "schema:EntryPoint"
-                    }
-                  }
-                ]
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "contains": {
+                  "const": "schema:EntryPoint"
+                },
+                "minItems": 1
               },
               "schema:description": {
                 "type": "string"
@@ -270,21 +228,14 @@
             "properties": {
               "@type": {
                 "default": "schema:DataFeed",
-                "anyOf": [
-                  {
-                    "type": "string",
-                    "const": "schema:DataFeed"
-                  },
-                  {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    },
-                    "contains": {
-                      "const": "schema:DataFeed"
-                    }
-                  }
-                ]
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "contains": {
+                  "const": "schema:DataFeed"
+                },
+                "minItems": 1
               },
               "schema:description": {
                 "type": "string"
@@ -429,21 +380,14 @@
                 },
                 "@type": {
                   "default": "schema:PropertyValueSpecification",
-                  "anyOf": [
-                    {
-                      "type": "string",
-                      "const": "schema:PropertyValueSpecification"
-                    },
-                    {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      },
-                      "contains": {
-                        "const": "schema:PropertyValueSpecification"
-                      }
-                    }
-                  ]
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "contains": {
+                    "const": "schema:PropertyValueSpecification"
+                  },
+                  "minItems": 1
                 },
                 "schema:valueName": {
                   "type": "string"
@@ -484,21 +428,14 @@
       "type": "object",
       "properties": {
         "@type": {
-          "anyOf": [
-            {
-              "type": "string",
-              "const": "schema:DefinedTerm"
-            },
-            {
-              "type": "array",
-              "items": {
-                "type": "string"
-              },
-              "contains": {
-                "const": "schema:DefinedTerm"
-              }
-            }
-          ]
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "contains": {
+            "const": "schema:DefinedTerm"
+          },
+          "minItems": 1
         },
         "schema:name": {
           "type": "string",
@@ -514,21 +451,14 @@
               "type": "object",
               "properties": {
                 "@type": {
-                  "anyOf": [
-                    {
-                      "type": "string",
-                      "const": "schema:PropertyValue"
-                    },
-                    {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      },
-                      "contains": {
-                        "const": "schema:PropertyValue"
-                      }
-                    }
-                  ]
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "contains": {
+                    "const": "schema:PropertyValue"
+                  },
+                  "minItems": 1
                 },
                 "schema:propertyID": {
                   "type": "string",

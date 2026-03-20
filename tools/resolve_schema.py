@@ -593,13 +593,17 @@ def collect_global_defs(schema_path: Path) -> tuple[dict, dict]:
 
 
 def _resolve_node_structured(node: Any, base_dir: Path, local_defs: dict,
-                             file_to_def: dict, seen: set) -> Any:
+                             file_to_def: dict, seen: set,
+                             resolving_defs: frozenset = frozenset()) -> Any:
     """Phase 2 node walker: resolve $refs but emit #/$defs/X for known types.
 
     - External file $refs whose target is in file_to_def -> {"$ref": "#/$defs/Name"}
     - Fragment-only $refs (#/$defs/X) where X maps to a known file -> {"$ref": "#/$defs/GlobalName"}
     - Internal $defs (not in file_to_def) -> resolved inline normally
     - Everything else -> recursed into
+
+    resolving_defs tracks local def names currently being resolved to prevent
+    infinite recursion on self-referential defs (e.g. CdifCodelistConcept).
     """
     if isinstance(node, dict):
         if "$ref" in node:
@@ -607,11 +611,13 @@ def _resolve_node_structured(node: Any, base_dir: Path, local_defs: dict,
             siblings = {k: v for k, v in node.items() if k != "$ref"}
 
             resolved_ref = _resolve_ref_structured(ref, base_dir, local_defs,
-                                                    file_to_def, seen)
+                                                    file_to_def, seen,
+                                                    resolving_defs)
 
             if siblings:
                 siblings = _resolve_node_structured(siblings, base_dir, local_defs,
-                                                     file_to_def, seen)
+                                                     file_to_def, seen,
+                                                     resolving_defs)
                 if isinstance(resolved_ref, dict) and "$ref" not in resolved_ref:
                     resolved_ref = deep_merge(resolved_ref, siblings)
                 elif isinstance(resolved_ref, dict) and "$ref" in resolved_ref:
@@ -624,17 +630,20 @@ def _resolve_node_structured(node: Any, base_dir: Path, local_defs: dict,
             if k == "$defs":
                 continue  # Strip $defs; they're promoted to global
             result[k] = _resolve_node_structured(v, base_dir, local_defs,
-                                                  file_to_def, seen)
+                                                  file_to_def, seen,
+                                                  resolving_defs)
         return result
 
     elif isinstance(node, list):
         return [_resolve_node_structured(item, base_dir, local_defs,
-                                          file_to_def, seen) for item in node]
+                                          file_to_def, seen,
+                                          resolving_defs) for item in node]
     return node
 
 
 def _resolve_ref_structured(ref: str, base_dir: Path, local_defs: dict,
-                             file_to_def: dict, seen: set) -> Any:
+                             file_to_def: dict, seen: set,
+                             resolving_defs: frozenset = frozenset()) -> Any:
     """Resolve a $ref, returning #/$defs/X for known types or inline content."""
     if ref == "#":
         return {"$comment": "circular-ref"}
@@ -644,7 +653,11 @@ def _resolve_ref_structured(ref: str, base_dir: Path, local_defs: dict,
         pointer = ref[1:]
         parts = pointer.lstrip("/").split("/")
         if len(parts) == 2 and parts[0] == "$defs" and parts[1] in local_defs:
-            local_def = local_defs[parts[1]]
+            def_name = parts[1]
+            # Self-referential def — emit $comment to break recursion
+            if def_name in resolving_defs:
+                return {"$comment": f"self-referential: {def_name}"}
+            local_def = local_defs[def_name]
             # Check if this local def points to an external file in file_to_def
             if isinstance(local_def, dict) and "$ref" in local_def:
                 inner_ref = local_def["$ref"]
@@ -654,17 +667,18 @@ def _resolve_ref_structured(ref: str, base_dir: Path, local_defs: dict,
                         return {"$ref": f"#/$defs/{file_to_def[ref_path]}"}
             # Check if the def name itself matches a known global def name
             # (defs may already be resolved)
-            if parts[1] in local_defs:
-                raw = local_defs[parts[1]]
+            if def_name in local_defs:
+                raw = local_defs[def_name]
                 if isinstance(raw, dict) and "$ref" in raw:
                     inner_ref = raw["$ref"]
                     if isinstance(inner_ref, str) and not inner_ref.startswith("#"):
                         ref_path = (base_dir / inner_ref.split("#")[0]).resolve()
                         if ref_path in file_to_def:
                             return {"$ref": f"#/$defs/{file_to_def[ref_path]}"}
-                # Inline def (not external) — resolve normally
+                # Inline def (not external) — resolve with self-ref tracking
                 return _resolve_node_structured(copy.deepcopy(raw), base_dir,
-                                                local_defs, file_to_def, seen)
+                                                local_defs, file_to_def, seen,
+                                                resolving_defs | {def_name})
         return {"$comment": f"unresolved fragment ref: {ref}"}
 
     # File ref, possibly with fragment

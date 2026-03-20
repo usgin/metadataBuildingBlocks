@@ -76,21 +76,14 @@
           "description": "reference to a skos concept for the property"
         },
         "@type": {
-          "anyOf": [
-            {
-              "type": "string",
-              "const": "schema:Property"
-            },
-            {
-              "type": "array",
-              "items": {
-                "type": "string"
-              },
-              "contains": {
-                "const": "schema:Property"
-              }
-            }
-          ]
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "contains": {
+            "const": "schema:Property"
+          },
+          "minItems": 1
         },
         "schema:name": {
           "anyOf": [
@@ -124,21 +117,14 @@
       "type": "object",
       "properties": {
         "@type": {
-          "anyOf": [
-            {
-              "type": "string",
-              "const": "schema:DefinedTerm"
-            },
-            {
-              "type": "array",
-              "items": {
-                "type": "string"
-              },
-              "contains": {
-                "const": "schema:DefinedTerm"
-              }
-            }
-          ]
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "contains": {
+            "const": "schema:DefinedTerm"
+          },
+          "minItems": 1
         },
         "schema:name": {
           "type": "string",
@@ -154,21 +140,14 @@
               "type": "object",
               "properties": {
                 "@type": {
-                  "anyOf": [
-                    {
-                      "type": "string",
-                      "const": "schema:PropertyValue"
-                    },
-                    {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      },
-                      "contains": {
-                        "const": "schema:PropertyValue"
-                      }
-                    }
-                  ]
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "contains": {
+                    "const": "schema:PropertyValue"
+                  },
+                  "minItems": 1
                 },
                 "schema:propertyID": {
                   "type": "string",
