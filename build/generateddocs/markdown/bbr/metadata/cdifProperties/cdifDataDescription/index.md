@@ -109,6 +109,7 @@ Example dataset with data description level properties including variable types 
             "@type": ["schema:PropertyValue", "cdi:InstanceVariable"],
             "schema:name": "station_id",
             "schema:description": "Identifier for the monitoring station",
+            "schema:propertyID": "station_id",
             "cdi:physicalDataType": ["String"],
             "cdi:intendedDataType": "https://www.w3.org/TR/xmlschema-2/#string",
             "cdi:role": "DescriptorComponent",
@@ -302,6 +303,7 @@ Example dataset with data description level properties including variable types 
       ],
       "schema:name": "station_id",
       "schema:description": "Identifier for the monitoring station",
+      "schema:propertyID": "station_id",
       "cdi:physicalDataType": [
         "String"
       ],
@@ -492,7 +494,8 @@ ex:var_station_id a cdi:InstanceVariable,
     cdi:physicalDataType "String" ;
     cdi:role "DescriptorComponent" ;
     schema1:description "Identifier for the monitoring station" ;
-    schema1:name "station_id" .
+    schema1:name "station_id" ;
+    schema1:propertyID "station_id" .
 
 
 ```
