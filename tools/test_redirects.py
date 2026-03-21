@@ -36,7 +36,7 @@ SAMPLE_CAPTURE_VALUES = {
     "xasProperties": ["xasRequired", "xasOptional"],
     "schemaorgProperties": ["definedTerm"],
     # Three-segment profiles: bbr/metadata/profiles/{family}/{name}
-    "cdifProfiles": ["CDIFDiscovery", "CDIFcomplete"],
+    "cdifProfiles": ["CDIFDiscoveryProfile", "CDIFcompleteProfile"],
     # Domain-specific (matched by dedicated rules, not generic patterns)
     "adaProfiles": ["adaICPMS"],
     "DDEProfiles": ["DDEDiscovery"],

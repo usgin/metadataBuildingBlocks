@@ -53,7 +53,7 @@ KNOWN_PROFILES = [
     "adaNanoIR", "adaNanoSIMS", "adaPSFD", "adaQRIS", "adaRAMAN",
     "adaRITOFNGMS", "adaSEM", "adaSIMS", "adaSLS", "adaSVRUEC",
     "adaTEM", "adaToFSIMS", "adaUVFM", "adaVLM", "adaXANES", "adaXCT",
-    "CDIFDiscovery", "CDIFxas",
+    "CDIFDiscoveryProfile", "CDIFxasProfile",
 ]
 
 # Namespace prefix → expanded base URI
@@ -68,7 +68,7 @@ for _name in KNOWN_PROFILES:
         PROFILE_URI_MAP[f"{ADA_PROFILE_PREFIX}{_name}"] = _name
         PROFILE_URI_MAP[f"{ADA_PROFILE_EXPANDED_PREFIX}{_name}"] = _name
 # CDIF discovery URI
-PROFILE_URI_MAP["https://w3id.org/cdif/profiles/discovery"] = "CDIFDiscovery"
+PROFILE_URI_MAP["https://w3id.org/cdif/profiles/discovery"] = "CDIFDiscoveryProfile"
 
 # termCode → profile mapping (for --termcode-fallback)
 TERMCODE_TO_PROFILE = {
@@ -166,7 +166,7 @@ def extract_profile_from_conformsto(data: dict) -> Optional[str]:
     for entry in conforms_to:
         uri = entry.get("@id", "") if isinstance(entry, dict) else str(entry)
         profile = PROFILE_URI_MAP.get(uri)
-        if profile and profile != "CDIFDiscovery":
+        if profile and profile != "CDIFDiscoveryProfile":
             # Prefer technique-specific over CDIFDiscovery (which is a base)
             found_profiles.append(profile)
 

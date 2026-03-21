@@ -9,12 +9,8 @@ properties:
       Additional types may be included.
     items:
       type: string
-    minItems: 2
-    allOf:
-    - contains:
-        const: schema:PropertyValue
-    - contains:
-        const: cdi:InstanceVariable
+    contains:
+      const: cdi:InstanceVariable
   'cdi:identifier':
     type: string
   'cdi:physicalDataType':
@@ -81,4 +77,6 @@ $defs:
 allOf:
 - required:
   - '@type'
-- $ref: ../../schemaorgProperties/variableMeasured/schema.yaml
+- anyOf:
+  - $ref: ../../schemaorgProperties/variableMeasured/schema.yaml
+  - $ref: ../../schemaorgProperties/statisticalVariable/schema.yaml

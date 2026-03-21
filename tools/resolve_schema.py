@@ -17,12 +17,12 @@ $ref patterns handled:
 Usage:
     python tools/resolve_schema.py adaEMPA
     python tools/resolve_schema.py adaProduct
-    python tools/resolve_schema.py CDIFDiscovery
+    python tools/resolve_schema.py CDIFDiscoveryProfile
     python tools/resolve_schema.py --file path/to/any/schema.yaml
     python tools/resolve_schema.py adaEMPA -o resolved.json
     python tools/resolve_schema.py adaEMPA --flatten-allof
     python tools/resolve_schema.py --all
-    python tools/resolve_schema.py CDIFDiscovery --structured
+    python tools/resolve_schema.py CDIFDiscoveryProfile --structured
     python tools/resolve_schema.py --all --structured
 """
 
@@ -970,7 +970,7 @@ def resolve_structured(schema_path: Path) -> dict:
 def _structured_output_name(schema_path: Path) -> str:
     """Derive the structured output filename from the schema's parent directory.
 
-    E.g., .../CDIFDiscovery/schema.yaml -> CDIFDiscoveryStructuredSchema.json
+    E.g., .../CDIFDiscoveryProfile/schema.yaml -> CDIFDiscoveryProfileStructuredSchema.json
           .../cdifCore/schema.yaml       -> cdifCoreStructuredSchema.json
     """
     bb_name = schema_path.resolve().parent.name
@@ -1021,7 +1021,7 @@ def find_profile_schema(name: str) -> Path:
     if yaml_path.exists():
         return yaml_path
 
-    # Fall back to any .json file in the profile directory (e.g., CDIFDiscoverySchema.json)
+    # Fall back to any .json file in the profile directory (e.g., CDIFDiscoveryProfileSchema.json)
     json_files = sorted(profile_dir.glob("*Schema.json"))
     if json_files:
         return json_files[0]
@@ -1083,7 +1083,7 @@ def main():
     parser.add_argument(
         "profile",
         nargs="?",
-        help="Profile name (e.g., adaEMPA, adaProduct, CDIFDiscovery)",
+        help="Profile name (e.g., adaEMPA, adaProduct, CDIFDiscoveryProfile)",
     )
     parser.add_argument(
         "--file",

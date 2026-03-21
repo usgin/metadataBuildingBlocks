@@ -31,7 +31,7 @@ metadataBuildingBlocks/
 │   ├── cdifProperties/              # CDIF-specific property types
 │   │   ├── cdifCatalogRecord/       # dcat:CatalogRecord metadata-about-metadata
 │   │   ├── cdifCore/           # CDIF core property group
-│   │   ├── cdifOptional/            # CDIF optional property group
+│   │   ├── cdifDataDescription/      # CDIF data description constraints
 │   │   ├── cdifProvActivity/         # CDIF provenance activity (extends generatedBy)
 │   │   ├── cdifProvenance/          # CDIF provenance (prov:wasGeneratedBy wrapper)
 │   │   ├── cdifTabularData/         # CDIF tabular data description
@@ -61,10 +61,10 @@ metadataBuildingBlocks/
 │   │   └── xasOptional/             # XAS optional property group
 │   └── profiles/                    # Top-level profiles that compose BBs
 │       └── cdifProfiles/
-│           ├── CDIFDiscovery/       # CDIF Discovery profile
-│           ├── CDIFcomplete/        # CDIF Complete profile (discovery + data description + provenance + archive)
-│           ├── CDIFDataDescription/ # CDIF Data Description profile
-│           └── CDIFxas/             # CDIF XAS profile
+│           ├── CDIFDiscoveryProfile/       # CDIF Discovery profile
+│           ├── CDIFcompleteProfile/        # CDIF Complete profile (discovery + data description + provenance + archive)
+│           ├── CDIFDataDescriptionProfile/ # CDIF Data Description profile
+│           └── CDIFxasProfile/             # CDIF XAS profile
 ├── tools/
 │   ├── resolve_schema.py            # Schema resolver (see below)
 │   ├── convert_for_jsonforms.py     # JSON Forms converter (see below)
@@ -102,8 +102,8 @@ Building blocks that represent CDIF specification components declare required `d
 | Building Block | Conformance URI | SHACL Shape |
 |---|---|---|
 | `cdifCore` | `https://w3id.org/cdif/core/1.0/` | `sh:hasValue` on existing `metadataProfileProperty` |
-| `cdifOptional` | `https://w3id.org/cdif/discovery/1.0/` | `CDIFDiscoveryConformsToShape` |
-| `cdifDataDescription` | `https://w3id.org/cdif/data_description/1.0/` | `CDIFDataDescriptionConformsToShape` |
+| `CDIFDiscoveryProfile` | `https://w3id.org/cdif/discovery/1.0/` | `CDIFDiscoveryProfileConformsToShape` |
+| `cdifDataDescription` | `https://w3id.org/cdif/dataDescription/1.0/` | `CDIFDataDescriptionProfileConformsToShape` |
 | `cdifArchiveDistribution` | `https://w3id.org/cdif/manifest/1.0/` | *(no rules.shacl — JSON Schema only)* |
 | `cdifProvenance` | `https://w3id.org/cdif/provenance/1.0/` | *(no rules.shacl — JSON Schema only)* |
 | `xasOptional` | `https://w3id.org/cdif/xasDiscovery/1.0/` | `XasDiscoveryConformsToShape` |
@@ -113,10 +113,10 @@ Building blocks that represent CDIF specification components declare required `d
 
 | Profile | Required conformsTo URIs |
 |---|---|
-| CDIFDiscovery | `core/1.0/` + `discovery/1.0/` |
-| CDIFDataDescription | `core/1.0/` + `discovery/1.0/` + `data_description/1.0/` |
-| CDIFcomplete | `core/1.0/` + `discovery/1.0/` + `data_description/1.0/` + `manifest/1.0/` + `provenance/1.0/` |
-| CDIFxas | `core/1.0/` + `discovery/1.0/` + `xasDiscovery/1.0/` + `xasCore/1.0/` |
+| CDIFDiscoveryProfile | `core/1.0/` + `discovery/1.0/` |
+| CDIFDataDescriptionProfile | `core/1.0/` + `discovery/1.0/` + `data_description/1.0/` |
+| CDIFcompleteProfile | `core/1.0/` + `discovery/1.0/` + `data_description/1.0/` + `manifest/1.0/` + `provenance/1.0/` |
+| CDIFxasProfile | `core/1.0/` + `discovery/1.0/` + `xasDiscovery/1.0/` + `xasCore/1.0/` |
 
 These conformance URIs are distinct from the OGC building block identifiers (`https://w3id.org/cdif/bbr/metadata/...`). Both may appear in a record's conformsTo array.
 
@@ -317,11 +317,11 @@ Recursively resolves ALL `$ref` references from modular YAML/JSON source schemas
 **Usage:**
 ```bash
 # Resolve a profile by name (searches _sources/profiles/cdifProfiles/{name}/)
-python tools/resolve_schema.py CDIFDiscovery
-python tools/resolve_schema.py CDIFcomplete --flatten-allof
+python tools/resolve_schema.py CDIFDiscoveryProfile
+python tools/resolve_schema.py CDIFcompleteProfile --flatten-allof
 
 # Produce structured output with $defs preserved
-python tools/resolve_schema.py CDIFDiscovery --structured
+python tools/resolve_schema.py CDIFDiscoveryProfile --structured
 python tools/resolve_schema.py --all --structured
 
 # Resolve an arbitrary schema file
@@ -354,7 +354,7 @@ Reads `resolvedSchema.json` (from `_sources/profiles/cdifProfiles/{name}/`) and 
 
 **Usage:**
 ```bash
-python tools/convert_for_jsonforms.py CDIFDiscovery -v
+python tools/convert_for_jsonforms.py CDIFDiscoveryProfile -v
 python tools/convert_for_jsonforms.py --all -v
 ```
 
@@ -414,7 +414,7 @@ Generates an Excel workbook (`<bbName>_properties.xlsx`) listing all properties 
 python generate_property_table.py path/to/_sources/cdifProperties/cdifCore/schema.yaml
 
 # Generate property table for a profile
-python generate_property_table.py path/to/_sources/profiles/cdifProfiles/CDIFDiscovery/schema.yaml
+python generate_property_table.py path/to/_sources/profiles/cdifProfiles/CDIFDiscoveryProfile/schema.yaml
 ```
 
 **Location:** `C:\Users\smrTu\OneDrive\Documents\GithubC\CDIF\Discovery\generate_property_table.py`
