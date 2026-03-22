@@ -20,7 +20,7 @@ metadataBuildingBlocks/
 │   │   ├── definedTerm/             # schema:DefinedTerm
 │   │   ├── additionalProperty/      # schema:PropertyValue for soft-typed properties
 │   │   ├── variableMeasured/        # schema:variableMeasured (PropertyValue)
-│   │   ├── spatialExtent/           # schema:Place (bounding box)
+│   │   ├── spatialExtent/           # schema:Place (bounding box, facility/lab base)
 │   │   ├── temporalExtent/          # schema:temporalCoverage
 │   │   ├── dataDownload/            # schema:DataDownload
 │   │   ├── labeledLink/             # schema:LinkRole
@@ -75,6 +75,8 @@ metadataBuildingBlocks/
 │   ├── regenerate_schema_json.py    # Regenerates schema.json files from resolvedSchema.json
 │   ├── test_redirects.py            # Tests w3id.org redirect rules for building block URIs
 │   ├── update_conformsto_uris.py    # Updates conformsTo URIs in building block schemas
+│   ├── audit_building_blocks.py     # Comprehensive BB repo audit (pluggable to any repo)
+│   ├── add_property_tree.py         # Adds propertyTree worksheets to Excel workbooks
 │   └── cors_server.py               # CORS dev server for local testing
 └── .github/workflows/               # Validation + JSON Forms generation + custom Pages deploy
 
@@ -114,8 +116,8 @@ Building blocks that represent CDIF specification components declare required `d
 | Profile | Required conformsTo URIs |
 |---|---|
 | CDIFDiscoveryProfile | `core/1.0/` + `discovery/1.0/` |
-| CDIFDataDescriptionProfile | `core/1.0/` + `discovery/1.0/` + `data_description/1.0/` |
-| CDIFcompleteProfile | `core/1.0/` + `discovery/1.0/` + `data_description/1.0/` + `manifest/1.0/` + `provenance/1.0/` |
+| CDIFDataDescriptionProfile | `core/1.0/` + `discovery/1.0/` + `dataDescription/1.0/` |
+| CDIFcompleteProfile | `core/1.0/` + `discovery/1.0/` + `dataDescription/1.0/` + `manifest/1.0/` + `provenance/1.0/` |
 | CDIFxasProfile | `core/1.0/` + `discovery/1.0/` + `xasDiscovery/1.0/` + `xasCore/1.0/` |
 
 These conformance URIs are distinct from the OGC building block identifiers (`https://w3id.org/cdif/bbr/metadata/...`). Both may appear in a record's conformsTo array.
@@ -441,6 +443,34 @@ python tools/validate_examples.py --filter spatialExtent
 
 **Requirements:** `pyyaml`, `jsonschema`
 
+## audit_building_blocks.py
+
+Comprehensive audit tool for any OGC Building Block repository. Scans a `_sources/` directory and runs 6 checks on each building block:
+
+1. **File completeness** — required files (schema.yaml, bblock.json), optional files (description.md, context.jsonld, rules.shacl), examples, generated files
+2. **schema.yaml vs *Schema.json** — structural consistency (ignoring expected $ref extension diffs)
+3. **resolvedSchema.json freshness** — re-resolves and compares property keys
+4. **Example validation** — validates example*.json against resolved schema (prefers existing resolvedSchema.json)
+5. **SHACL completeness** — checks for NodeShape/PropertyShape definitions, property coverage
+6. **Example coverage** — identifies schema properties not exercised by any example
+
+**Usage:**
+```bash
+# Audit current repo
+python tools/audit_building_blocks.py
+
+# Audit another repo
+python tools/audit_building_blocks.py /path/to/geochemBuildingBlocks/_sources
+
+# Filter and verbose
+python tools/audit_building_blocks.py --filter cdifCore -v
+
+# JSON report
+python tools/audit_building_blocks.py --json -o report.json
+```
+
+**Requirements:** `pyyaml`, `jsonschema`. Imports `resolve_schema.py` for re-resolution checks.
+
 ## Verification
 
 ```bash
@@ -449,6 +479,9 @@ python tools/resolve_schema.py --all --flatten-allof
 
 # Verify all examples validate against their schemas
 python tools/validate_examples.py --verbose
+
+# Full audit
+python tools/audit_building_blocks.py -v
 ```
 
 ## License

@@ -63,6 +63,23 @@ python tools/validate_examples.py --filter person
 
 **Requirements:** Python 3.6+ with `pyyaml`, `jsonschema` (`pip install pyyaml jsonschema`)
 
+### Audit Building Blocks (`audit_building_blocks.py`)
+
+Comprehensive audit tool for any OGC Building Block repository. Checks file completeness, schema consistency, example validation, SHACL completeness, and property coverage.
+
+```bash
+# Audit current repo
+python tools/audit_building_blocks.py -v
+
+# Audit another repo (e.g. geochemBuildingBlocks)
+python tools/audit_building_blocks.py /path/to/_sources -v
+
+# JSON report
+python tools/audit_building_blocks.py --json -o report.json
+```
+
+**Requirements:** Python 3.6+ with `pyyaml`, `jsonschema`
+
 ### Step 2: Convert for JSON Forms (`convert_for_jsonforms.py`)
 
 Reads `resolvedSchema.json` and converts to JSON Forms-compatible Draft 7:
