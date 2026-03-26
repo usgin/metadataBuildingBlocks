@@ -39,7 +39,7 @@ metadataBuildingBlocks/
 │   │   ├── cdifLongData/            # CDIF long data description
 │   │   ├── cdifArchive/              # CDIF archive item (DataDownload with hasPart)
 │   │   ├── cdifArchiveDistribution/ # CDIF archive distribution (schema:distribution wrapper)
-│   │   └── cdifVariableMeasured/    # CDIF variable measured extension
+│   │   └── cdifVariableMeasured/    # CDIF variable measured extension (cdi:InstanceVariable with cdi:qualifies)
 │   ├── provProperties/              # W3C PROV provenance types
 │   │   ├── generatedBy/             # prov:wasGeneratedBy (Activity)
 │   │   ├── provActivity/            # PROV-O native activity (extends generatedBy)
@@ -77,6 +77,7 @@ metadataBuildingBlocks/
 │   ├── update_conformsto_uris.py    # Updates conformsTo URIs in building block schemas
 │   ├── audit_building_blocks.py     # Comprehensive BB repo audit (pluggable to any repo)
 │   ├── add_property_tree.py         # Adds propertyTree worksheets to Excel workbooks
+│   ├── generate_property_tree2.py   # Generates propertyTree_2 worksheets from resolved schemas
 │   └── cors_server.py               # CORS dev server for local testing
 └── .github/workflows/               # Validation + JSON Forms generation + custom Pages deploy
 
@@ -470,6 +471,41 @@ python tools/audit_building_blocks.py --json -o report.json
 ```
 
 **Requirements:** `pyyaml`, `jsonschema`. Imports `resolve_schema.py` for re-resolution checks.
+
+## generate_property_tree2.py
+
+Generates `propertyTree_2` worksheets from resolved JSON Schemas. Walks the fully-resolved schema tree and produces a spreadsheet showing the complete property hierarchy following the CDIF property-tree convention.
+
+**Worksheet layout:** Columns alternate between property and options. Column A holds the root object type (e.g., `schema:Dataset`, `skos:ConceptScheme`). Subsequent columns alternate property (odd) and options (even).
+
+**Suffix conventions:**
+| Suffix | Meaning |
+|--------|---------|
+| `-- string` | Literal string value |
+| `-- string(uri)` | String with URI format |
+| `-- string(date)` | String with date format |
+| `-- boolean` / `-- number` | Literal boolean or number |
+| `-- object reference` | JSON-LD `{@id: ...}` reference |
+| `-- object` | Nested object (options column shows `@type` contains constraint) |
+| `-- CHOICE` | `anyOf` with mixed types |
+| `[brackets]` | Array cardinality (0..* or 1..*) |
+
+**Recursion handling:** Types are expanded once per branch; revisiting a `@type` value in the same lineage stops expansion. Maximum nesting depth is 6 levels.
+
+**Usage:**
+```bash
+# Generate for all profiles (Codelist, Discovery, DataDescription)
+python tools/generate_property_tree2.py --profile all
+
+# Generate for a single profile
+python tools/generate_property_tree2.py --profile discovery
+python tools/generate_property_tree2.py --profile codelist
+python tools/generate_property_tree2.py --profile datadescription
+```
+
+For existing workbooks, adds `propertyTree_2` as a new sheet (preserving all existing sheets). For new workbooks (e.g., CDIFCodelistProfile), creates a new `.xlsx` file.
+
+**Requirements:** `openpyxl`, `pyyaml`
 
 ## Verification
 

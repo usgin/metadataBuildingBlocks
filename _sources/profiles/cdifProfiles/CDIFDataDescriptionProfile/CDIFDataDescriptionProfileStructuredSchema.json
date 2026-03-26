@@ -94,9 +94,6 @@
                 "description": "IRI for an equivalent resource or alternate identifier"
               }
             }
-          },
-          {
-            "$ref": "#/$defs/Identifier"
           }
         ]
       }
@@ -1183,6 +1180,15 @@
               "cdi:displayLabel": {
                 "type": "string",
                 "description": "DDI-CDI Concept.displayLabel. A human-readable label for display purposes."
+              },
+              "cdi:qualifies": {
+                "type": "object",
+                "properties": {
+                  "@id": {
+                    "type": "string"
+                  }
+                },
+                "description": "reference to an instance variable defined for this dataset"
               }
             },
             "allOf": [
@@ -2175,9 +2181,6 @@
                     "type": "string"
                   }
                 }
-              },
-              {
-                "$ref": "#/$defs/Identifier"
               }
             ]
           }
@@ -2286,9 +2289,6 @@
                     "type": "string"
                   }
                 }
-              },
-              {
-                "$ref": "#/$defs/Identifier"
               }
             ]
           }

@@ -80,6 +80,20 @@ python tools/audit_building_blocks.py --json -o report.json
 
 **Requirements:** Python 3.6+ with `pyyaml`, `jsonschema`
 
+### Generate Property Tree (`generate_property_tree2.py`)
+
+Generates `propertyTree_2` worksheets from resolved JSON Schemas. Walks the fully-resolved schema tree and produces an Excel worksheet showing the complete property hierarchy — root object type, then alternating property/options columns with type suffixes (`-- string`, `-- object`, `-- CHOICE`, `[brackets]` for arrays, etc.). Handles recursion by expanding each `@type` once per branch.
+
+```bash
+# Generate for all profiles (Codelist, Discovery, DataDescription)
+python tools/generate_property_tree2.py --profile all
+
+# Generate for a single profile
+python tools/generate_property_tree2.py --profile discovery
+```
+
+**Requirements:** Python 3.6+ with `openpyxl`, `pyyaml`
+
 ### Step 2: Convert for JSON Forms (`convert_for_jsonforms.py`)
 
 Reads `resolvedSchema.json` and converts to JSON Forms-compatible Draft 7:
