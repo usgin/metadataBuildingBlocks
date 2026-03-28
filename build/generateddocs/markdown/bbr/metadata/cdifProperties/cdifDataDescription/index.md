@@ -397,20 +397,7 @@ ex:dataset_datadesc_001 a schema1:Dataset ;
             cdi:characterSet "UTF-8" ;
             cdi:fileSize 1.2e+00 ;
             cdi:fileSizeUofM "MB" ;
-            cdi:hasPhysicalMapping [ cdi:decimalPositions 1 ;
-                    cdi:format "0.0" ;
-                    cdi:formats_InstanceVariable ex:var_measurement_depth ;
-                    cdi:index 1 ;
-                    cdi:isRequired true ;
-                    cdi:nullSequence "-999.9" ;
-                    cdi:physicalDataType "Numeric" ;
-                    cdi:scale 1 ],
-                [ cdi:formats_InstanceVariable ex:var_station_id ;
-                    cdi:index 0 ;
-                    cdi:isRequired true ;
-                    cdi:length 20 ;
-                    cdi:physicalDataType "String" ],
-                [ cdi:decimalPositions 2 ;
+            cdi:hasPhysicalMapping [ cdi:decimalPositions 2 ;
                     cdi:defaultValue "NaN" ;
                     cdi:format "0.00" ;
                     cdi:formats_InstanceVariable ex:var_sea_water_temp ;
@@ -420,7 +407,20 @@ ex:dataset_datadesc_001 a schema1:Dataset ;
                     cdi:minimumLength 1 ;
                     cdi:nullSequence "-999.99" ;
                     cdi:physicalDataType "Numeric" ;
-                    cdi:scale 2 ] ;
+                    cdi:scale 2 ],
+                [ cdi:formats_InstanceVariable ex:var_station_id ;
+                    cdi:index 0 ;
+                    cdi:isRequired true ;
+                    cdi:length 20 ;
+                    cdi:physicalDataType "String" ],
+                [ cdi:decimalPositions 1 ;
+                    cdi:format "0.0" ;
+                    cdi:formats_InstanceVariable ex:var_measurement_depth ;
+                    cdi:index 1 ;
+                    cdi:isRequired true ;
+                    cdi:nullSequence "-999.9" ;
+                    cdi:physicalDataType "Numeric" ;
+                    cdi:scale 1 ] ;
             cdi:isDelimited true ;
             schema1:contentUrl "https://example.org/downloads/ocean-temp-2025.csv" ;
             schema1:encodingFormat "text/csv" ;
@@ -551,25 +551,17 @@ properties:
         - '@id'
       - $ref: '#/$defs/cdifVariableMeasured'
   schema:distribution:
-    type: array
     items:
-      allOf:
-      - type: object
-        properties:
-          cdi:characterSet:
-            type: string
-            description: The character set used in the distribution (e.g., UTF-8,
-              ASCII).
-          cdi:fileSize:
-            type: number
-            description: The size of the distribution file.
-          cdi:fileSizeUofM:
-            type: string
-            description: Unit of measure for the file size (e.g., bytes, KB, MB, GB).
-      - anyOf:
-        - $ref: https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifDataCube/schema.yaml
-        - $ref: https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifTabularData/schema.yaml
-        - {}
+      properties:
+        cdi:characterSet:
+          type: string
+          description: The character set used in the distribution (e.g., UTF-8, ASCII).
+        cdi:fileSize:
+          type: number
+          description: The size of the distribution file.
+        cdi:fileSizeUofM:
+          type: string
+          description: Unit of measure for the file size (e.g., bytes, KB, MB, GB).
 $defs:
   cdifVariableMeasured:
     $ref: https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/cdifProperties/cdifVariableMeasured/schema.yaml
@@ -594,7 +586,6 @@ Links to the schema:
     "xas": "https://xas.org/dictionary/",
     "nxs": "http://purl.org/nexusformat/definitions/",
     "prov": "http://www.w3.org/ns/prov#",
-    "ada": "https://ada.astromat.org/metadata/",
     "@version": 1.1
   }
 }
