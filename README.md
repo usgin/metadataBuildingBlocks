@@ -173,11 +173,13 @@ For example, `cdifProvActivity` defines the schema for a single provenance Activ
 
 ### ddiProperties
 
-DDI-CDI vocabulary building blocks for communities using the DDI Cross-Domain Integration standard natively.
+DDI-CDI vocabulary building blocks for communities using the DDI Cross-Domain Integration standard natively. Generated from the DDI-CDI 1.0 Enterprise Architect UML model with all structured data types resolved to base types.
 
 | Building Block | Description |
 |----------------|-------------|
-| `ddicdiProv` | DDI-CDI native provenance activity -- expresses workflows using `cdi:Activity`, `cdi:Step`, `cdi:ProcessingAgent`, and `cdi:Parameter`. Alternative to the schema.org/PROV-based `cdifProvActivity` building block. Includes JSON Schema with `anyOf [inline-type, id-reference]` pattern for graph node links, SHACL validation shapes, and a soil chemistry analysis example as a multi-node `@graph` document. |
+| `ddicdiActivity` | DDI-CDI Activity class (DDICDILibrary/Classes/Process) -- describes tasks using `cdi:Activity`, `cdi:Step`, and `cdi:Parameter`. Includes `cdi:definition` (InternationalString), `cdi:start`/`cdi:end` (timestamps), `cdi:hasInternal` (ControlLogic), `cdi:entityUsed`/`cdi:entityProduced` (References), and `cdi:has_Step` with `cdi:script` (CommandCode). SHACL shapes for Activity and Step. |
+| `ddicdiAgent` | DDI-CDI Agent class hierarchy (DDICDILibrary/Classes/Agent) -- covers `cdi:Individual` (person with IndividualName, ContactInformation), `cdi:Machine` (software/hardware with AccessLocation), `cdi:Organization` (with OrganizationName), and `cdi:ProcessingAgent` (performs Activities, operatesOn ProductionEnvironments). Root schema dispatches via `anyOf` to the 4 concrete subtypes. |
+| `ddicdiValueDomain` | DDI-CDI ValueDomain (DDICDILibrary/Classes/Representations) -- unified building block covering both `cdi:SubstantiveValueDomain` (subject-matter values) and `cdi:SentinelValueDomain` (processing/missing-value codes like SAS `.R`, SPSS `999`). Includes `cdi:isDescribedBy` (ValueAndConceptDescription with min/max bounds, regex, classification level), `cdi:takesValuesFrom` (EnumerationDomain), and `cdi:platformType` (sentinel only). |
 
 ### schemaorgProperties
 

@@ -8,12 +8,12 @@
 
 
 # ------------------------------------------------------------
-# Activity shape --targets cdi:Activity nodes
+# Activity shape -- targets cdi:Activity nodes
 # Uses SPARQL target because cdi:Activity may appear in
 # @graph documents without explicit rdf:type triples
 # ------------------------------------------------------------
 
-cdifd:ddicdiProvActivityShape
+cdifd:ddicdiActivityShape
 	a sh:NodeShape ;
 	sh:target [
 	  a sh:SPARQLTarget ;
@@ -76,14 +76,34 @@ cdifd:ddicdiProvActivityShape
 		sh:severity sh:Info ;
 		sh:message "cdi:hasSubActivity should reference Activity nodes (IRI or blank node)" ;
 	] ;
+
+	sh:property [
+		sh:path cdi:start ;
+		sh:datatype xsd:dateTime ;
+		sh:severity sh:Info ;
+		sh:message "A DDI-CDI Activity may specify cdi:start (xsd:dateTime) for the activity start time" ;
+	] ;
+
+	sh:property [
+		sh:path cdi:end ;
+		sh:datatype xsd:dateTime ;
+		sh:severity sh:Info ;
+		sh:message "A DDI-CDI Activity may specify cdi:end (xsd:dateTime) for the activity end time" ;
+	] ;
+
+	sh:property [
+		sh:path cdi:definition ;
+		sh:severity sh:Info ;
+		sh:message "A DDI-CDI Activity may include a cdi:definition (InternationalString)" ;
+	] ;
 	.
 
 
 # ------------------------------------------------------------
-# Step shape --validates DDI-CDI Step nodes
+# Step shape -- validates DDI-CDI Step nodes
 # ------------------------------------------------------------
 
-cdifd:ddicdiProvStepShape
+cdifd:ddicdiActivityStepShape
 	a sh:NodeShape ;
 	sh:targetClass cdi:Step ;
 
@@ -118,32 +138,5 @@ cdifd:ddicdiProvStepShape
 		) ;
 		sh:severity sh:Info ;
 		sh:message "cdi:produces should reference Parameter nodes" ;
-	] ;
-	.
-
-
-# ------------------------------------------------------------
-# ProcessingAgent shape --validates DDI-CDI agent nodes
-# ------------------------------------------------------------
-
-cdifd:ddicdiProvAgentShape
-	a sh:NodeShape ;
-	sh:targetClass cdi:ProcessingAgent ;
-
-	sh:property [
-		sh:path cdi:performs ;
-		sh:minCount 1 ;
-		sh:or (
-			[sh:nodeKind sh:IRI ;]
-			[sh:nodeKind sh:BlankNode ;]
-		) ;
-		sh:severity sh:Warning ;
-		sh:message "A DDI-CDI ProcessingAgent should specify at least one activity it performs" ;
-	] ;
-
-	sh:property [
-		sh:path cdi:identifier ;
-		sh:severity sh:Info ;
-		sh:message "A DDI-CDI ProcessingAgent may include a cdi:identifier" ;
 	] ;
 	.

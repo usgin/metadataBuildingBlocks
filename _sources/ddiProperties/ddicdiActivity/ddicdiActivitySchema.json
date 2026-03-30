@@ -1,7 +1,7 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "title": "DDI-CDI Provenance Activity",
-    "description": "DDI-CDI native provenance activity. Describes workflows using cdi:Activity, cdi:Step, cdi:ProcessingAgent, and cdi:Parameter vocabulary from the DDI Cross-Domain Integration specification.",
+    "title": "DDI-CDI Activity",
+    "description": "DDI-CDI Activity class (DDICDILibrary/Classes/Process/Activity). Describes tasks at a conceptual level using cdi:Activity, cdi:Step, and cdi:Parameter vocabulary from the DDI Cross-Domain Integration specification. Includes definition, start/end timestamps, hasInternal (ControlLogic), and full Step/Parameter support.",
     "type": "object",
     "properties": {
         "@type": {
@@ -37,6 +37,20 @@
             "type": "string",
             "description": "Plain text description of the activity"
         },
+        "cdi:definition": {
+            "description": "Formal multilingual definition (InternationalString)",
+            "anyOf": [
+                {
+                    "$ref": "#/$defs/InternationalString"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/$defs/InternationalString"
+                    }
+                }
+            ]
+        },
         "cdi:displayLabel": {
             "description": "Multilingual display label",
             "anyOf": [
@@ -69,6 +83,30 @@
                 "$ref": "#/$defs/Reference"
             }
         },
+        "cdi:standardModelMapping": {
+            "description": "Reference to a standard process model (e.g. GSBPM)",
+            "anyOf": [
+                {
+                    "$ref": "#/$defs/Reference"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/$defs/Reference"
+                    }
+                }
+            ]
+        },
+        "cdi:start": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Start date-time of the activity (xsd:dateTime)"
+        },
+        "cdi:end": {
+            "type": "string",
+            "format": "date-time",
+            "description": "End date-time of the activity (xsd:dateTime)"
+        },
         "cdi:hasSubActivity": {
             "description": "Nested sub-activities within this activity (cdi:Activity). Use @id references to Activity nodes defined elsewhere in the graph.",
             "type": "array",
@@ -90,19 +128,12 @@
                 ]
             }
         },
-        "cdi:standardModelMapping": {
-            "description": "Reference to a standard process model (e.g. GSBPM)",
-            "anyOf": [
-                {
-                    "$ref": "#/$defs/Reference"
-                },
-                {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/$defs/Reference"
-                    }
-                }
-            ]
+        "cdi:hasInternal": {
+            "description": "Internal control logic elements (cdi:ControlLogic). Use @id references to ControlLogic nodes defined elsewhere in the graph.",
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/id-reference"
+            }
         }
     },
     "required": [
@@ -204,6 +235,36 @@
             "required": [
                 "cdi:content"
             ]
+        },
+        "InternationalString": {
+            "type": "object",
+            "description": "DDI-CDI multilingual string (dt-InternationalString)",
+            "properties": {
+                "@type": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "contains": {
+                        "const": "cdi:InternationalString"
+                    },
+                    "minItems": 1
+                },
+                "cdi:languageSpecificString": {
+                    "description": "Language-tagged content strings",
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/LanguageString"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/$defs/LanguageString"
+                            }
+                        }
+                    ]
+                }
+            }
         },
         "Identifier": {
             "type": "object",
@@ -370,8 +431,32 @@
                     "type": "string",
                     "description": "Plain text description of the step"
                 },
+                "cdi:definition": {
+                    "description": "Formal multilingual definition (InternationalString)",
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/InternationalString"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/$defs/InternationalString"
+                            }
+                        }
+                    ]
+                },
                 "cdi:identifier": {
                     "$ref": "#/$defs/Identifier"
+                },
+                "cdi:start": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Start date-time of the step (xsd:dateTime)"
+                },
+                "cdi:end": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "End date-time of the step (xsd:dateTime)"
                 },
                 "cdi:script": {
                     "description": "Executable script or code for this step",
@@ -613,116 +698,6 @@
                             "type": "array",
                             "items": {
                                 "$ref": "#/$defs/Reference"
-                            }
-                        }
-                    ]
-                }
-            },
-            "required": [
-                "@type",
-                "cdi:name"
-            ]
-        },
-        "ProcessingAgent": {
-            "type": "object",
-            "description": "DDI-CDI agent that performs activities (cls-ProcessingAgent)",
-            "properties": {
-                "@type": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    },
-                    "contains": {
-                        "const": "cdi:ProcessingAgent"
-                    },
-                    "minItems": 1
-                },
-                "@id": {
-                    "type": "string",
-                    "description": "Identifier for this agent node"
-                },
-                "cdi:identifier": {
-                    "$ref": "#/$defs/Identifier"
-                },
-                "cdi:purpose": {
-                    "type": "string",
-                    "description": "Purpose or role description of this agent"
-                },
-                "cdi:performs": {
-                    "description": "Activities this agent performs (cdi:Activity). Use @id references to Activity nodes defined elsewhere in the graph.",
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/$defs/id-reference"
-                    }
-                },
-                "cdi:operatesOn": {
-                    "description": "Production environments this agent operates on (cdi:ProductionEnvironment)",
-                    "type": "array",
-                    "items": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/$defs/ProductionEnvironment"
-                            },
-                            {
-                                "$ref": "#/$defs/id-reference"
-                            }
-                        ]
-                    }
-                }
-            },
-            "required": [
-                "@type"
-            ]
-        },
-        "ProductionEnvironment": {
-            "type": "object",
-            "description": "DDI-CDI production environment (cls-ProductionEnvironment)",
-            "properties": {
-                "@type": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    },
-                    "contains": {
-                        "const": "cdi:ProductionEnvironment"
-                    },
-                    "minItems": 1
-                },
-                "@id": {
-                    "type": "string",
-                    "description": "Identifier for this environment node"
-                },
-                "cdi:name": {
-                    "description": "Structured name for the environment",
-                    "anyOf": [
-                        {
-                            "$ref": "#/$defs/ObjectName"
-                        },
-                        {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/$defs/ObjectName"
-                            }
-                        }
-                    ]
-                },
-                "cdi:description": {
-                    "type": "string",
-                    "description": "Description of the environment"
-                },
-                "cdi:identifier": {
-                    "$ref": "#/$defs/Identifier"
-                },
-                "cdi:displayLabel": {
-                    "description": "Multilingual display label",
-                    "anyOf": [
-                        {
-                            "$ref": "#/$defs/LabelForDisplay"
-                        },
-                        {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/$defs/LabelForDisplay"
                             }
                         }
                     ]

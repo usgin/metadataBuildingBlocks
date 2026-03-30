@@ -45,7 +45,9 @@ metadataBuildingBlocks/
 │   │   ├── provActivity/            # PROV-O native activity (extends generatedBy)
 │   │   └── derivedFrom/             # prov:wasDerivedFrom
 │   ├── ddiProperties/               # DDI-CDI data description types
-│   │   └── ddicdiProv/              # DDI-CDI native provenance activity
+│   │   ├── ddicdiActivity/          # DDI-CDI Activity (Process package)
+│   │   ├── ddicdiAgent/             # DDI-CDI Agent hierarchy (Individual, Machine, Organization, ProcessingAgent)
+│   │   └── ddicdiValueDomain/       # DDI-CDI Value Domain (SubstantiveValueDomain + SentinelValueDomain)
 │   ├── qualityProperties/           # Data quality types
 │   │   └── qualityMeasure/          # Quality measure definitions
 │   ├── bioschemasProperties/         # Bioschemas vocabulary types
