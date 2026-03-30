@@ -400,6 +400,7 @@ CDIF core instance exercising every property allowed by the cdifCore schema.
         "schema:DefinedTerm"
       ],
       "schema:name": "Observational Data",
+      "schema:identifier": "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/sciencekeywords/EARTH_SCIENCE/OCEANS/OCEAN_TEMPERATURE",
       "schema:inDefinedTermSet": "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/sciencekeywords",
       "schema:termCode": "EARTH SCIENCE > OCEANS > OCEAN TEMPERATURE"
     }
@@ -475,6 +476,11 @@ CDIF core instance exercising every property allowed by the cdifCore schema.
       "schema:contentUrl": "https://example.org/data/ocean-temp-profiles.csv",
       "schema:encodingFormat": [
         "text/csv"
+      ],
+      "dcterms:conformsTo": [
+        {
+          "@id": "https://www.ietf.org/rfc/rfc4180"
+        }
       ]
     }
   ],
@@ -510,6 +516,7 @@ CDIF core instance exercising every property allowed by the cdifCore schema.
         "schema:DefinedTerm"
       ],
       "schema:name": "Argo",
+      "schema:identifier": "https://vocab.nerc.ac.uk/collection/L06/current/46/",
       "schema:inDefinedTermSet": "https://vocab.nerc.ac.uk/collection/L06/current/",
       "schema:termCode": "L06:46"
     },
@@ -518,6 +525,7 @@ CDIF core instance exercising every property allowed by the cdifCore schema.
         "schema:DefinedTerm"
       ],
       "schema:name": "Sea water temperature",
+      "schema:identifier": "https://vocab.nerc.ac.uk/collection/P01/current/TEMPPR01/",
       "schema:inDefinedTermSet": "https://vocab.nerc.ac.uk/collection/P01/current/",
       "schema:termCode": "TEMPPR01"
     }
@@ -581,6 +589,7 @@ CDIF core instance exercising every property allowed by the cdifCore schema.
               "schema:DefinedTerm"
             ],
             "schema:name": "Research Infrastructure",
+            "schema:identifier": "https://example.org/org-types/RI",
             "schema:inDefinedTermSet": "https://example.org/org-types",
             "schema:termCode": "RI"
           }
@@ -618,6 +627,12 @@ CDIF core instance exercising every property allowed by the cdifCore schema.
           "schema:propertyID": "https://registry.identifiers.org/registry/orcid",
           "schema:value": "0000-0002-9876-5432",
           "schema:url": "https://orcid.org/0000-0002-9876-5432"
+        },
+        "schema:contactPoint": {
+          "@type": [
+            "schema:ContactPoint"
+          ],
+          "schema:email": "wei.li@ocean-research.org"
         }
       }
     }
@@ -783,6 +798,7 @@ CDIF core instance exercising every property allowed by the cdifCore schema.
         "schema:DefinedTerm"
       ],
       "schema:name": "Observational Data",
+      "schema:identifier": "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/sciencekeywords/EARTH_SCIENCE/OCEANS/OCEAN_TEMPERATURE",
       "schema:inDefinedTermSet": "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/sciencekeywords",
       "schema:termCode": "EARTH SCIENCE > OCEANS > OCEAN TEMPERATURE"
     }
@@ -858,6 +874,11 @@ CDIF core instance exercising every property allowed by the cdifCore schema.
       "schema:contentUrl": "https://example.org/data/ocean-temp-profiles.csv",
       "schema:encodingFormat": [
         "text/csv"
+      ],
+      "dcterms:conformsTo": [
+        {
+          "@id": "https://www.ietf.org/rfc/rfc4180"
+        }
       ]
     }
   ],
@@ -893,6 +914,7 @@ CDIF core instance exercising every property allowed by the cdifCore schema.
         "schema:DefinedTerm"
       ],
       "schema:name": "Argo",
+      "schema:identifier": "https://vocab.nerc.ac.uk/collection/L06/current/46/",
       "schema:inDefinedTermSet": "https://vocab.nerc.ac.uk/collection/L06/current/",
       "schema:termCode": "L06:46"
     },
@@ -901,6 +923,7 @@ CDIF core instance exercising every property allowed by the cdifCore schema.
         "schema:DefinedTerm"
       ],
       "schema:name": "Sea water temperature",
+      "schema:identifier": "https://vocab.nerc.ac.uk/collection/P01/current/TEMPPR01/",
       "schema:inDefinedTermSet": "https://vocab.nerc.ac.uk/collection/P01/current/",
       "schema:termCode": "TEMPPR01"
     }
@@ -964,6 +987,7 @@ CDIF core instance exercising every property allowed by the cdifCore schema.
               "schema:DefinedTerm"
             ],
             "schema:name": "Research Infrastructure",
+            "schema:identifier": "https://example.org/org-types/RI",
             "schema:inDefinedTermSet": "https://example.org/org-types",
             "schema:termCode": "RI"
           }
@@ -1001,6 +1025,12 @@ CDIF core instance exercising every property allowed by the cdifCore schema.
           "schema:propertyID": "https://registry.identifiers.org/registry/orcid",
           "schema:value": "0000-0002-9876-5432",
           "schema:url": "https://orcid.org/0000-0002-9876-5432"
+        },
+        "schema:contactPoint": {
+          "@type": [
+            "schema:ContactPoint"
+          ],
+          "schema:email": "wei.li@ocean-research.org"
         }
       }
     }
@@ -1143,6 +1173,7 @@ ex:argoRawProfiles a schema1:Dataset ;
 
 ex:completeCoreDataset99001 a schema1:Dataset ;
     schema1:additionalType [ a schema1:DefinedTerm ;
+            schema1:identifier "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/sciencekeywords/EARTH_SCIENCE/OCEANS/OCEAN_TEMPERATURE" ;
             schema1:inDefinedTermSet "https://gcmd.earthdata.nasa.gov/kms/concepts/concept_scheme/sciencekeywords" ;
             schema1:name "Observational Data" ;
             schema1:termCode "EARTH SCIENCE > OCEANS > OCEAN TEMPERATURE" ] ;
@@ -1158,6 +1189,11 @@ ex:completeCoreDataset99001 a schema1:Dataset ;
     schema1:datePublished "2024-01-10" ;
     schema1:description "Quality-controlled temperature profiles from Argo floats deployed worldwide. Profiles extend from the surface to 2000m depth with 2dbar vertical resolution." ;
     schema1:distribution [ a schema1:DataDownload ;
+            dcterms:conformsTo <https://www.ietf.org/rfc/rfc4180> ;
+            schema1:contentUrl "https://example.org/data/ocean-temp-profiles.csv" ;
+            schema1:encodingFormat "text/csv" ;
+            schema1:name "CSV download" ],
+        [ a schema1:DataDownload ;
             dcterms:conformsTo <https://www.unidata.ucar.edu/software/netcdf/> ;
             schema1:contentUrl "https://example.org/data/ocean-temp-profiles.nc" ;
             schema1:description "Complete dataset in CF-compliant NetCDF4 format" ;
@@ -1166,11 +1202,7 @@ ex:completeCoreDataset99001 a schema1:Dataset ;
             schema1:provider <https://ror.org/04t3en479> ;
             spdx:checksum [ a spdx:Checksum ;
                     spdx:algorithm "checksumAlgorithm_sha256" ;
-                    spdx:checksumValue "a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2" ] ],
-        [ a schema1:DataDownload ;
-            schema1:contentUrl "https://example.org/data/ocean-temp-profiles.csv" ;
-            schema1:encodingFormat "text/csv" ;
-            schema1:name "CSV download" ] ;
+                    spdx:checksumValue "a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2" ] ] ;
     schema1:funding [ a schema1:MonetaryGrant ;
             schema1:funder [ a schema1:Organization ;
                     schema1:identifier ex:ercRor ;
@@ -1180,10 +1212,12 @@ ex:completeCoreDataset99001 a schema1:Dataset ;
     schema1:identifier ex:datasetIdentifier001 ;
     schema1:inLanguage "en" ;
     schema1:keywords [ a schema1:DefinedTerm ;
+            schema1:identifier "https://vocab.nerc.ac.uk/collection/P01/current/TEMPPR01/" ;
             schema1:inDefinedTermSet "https://vocab.nerc.ac.uk/collection/P01/current/" ;
             schema1:name "Sea water temperature" ;
             schema1:termCode "TEMPPR01" ],
         [ a schema1:DefinedTerm ;
+            schema1:identifier "https://vocab.nerc.ac.uk/collection/L06/current/46/" ;
             schema1:inDefinedTermSet "https://vocab.nerc.ac.uk/collection/L06/current/" ;
             schema1:name "Argo" ;
             schema1:termCode "L06:46" ],
@@ -1267,6 +1301,8 @@ ex:odrRor a schema1:PropertyValue ;
     schema1:sameAs "https://orcid.org/0000-0001-2345-6789" .
 
 <https://orcid.org/0000-0002-9876-5432> a schema1:Person ;
+    schema1:contactPoint [ a schema1:ContactPoint ;
+            schema1:email "wei.li@ocean-research.org" ] ;
     schema1:identifier ex:liOrcid ;
     schema1:name "Li, Wei" .
 
@@ -1277,6 +1313,7 @@ ex:odrRor a schema1:PropertyValue ;
 
 <https://ror.org/04t3en479> a schema1:Organization ;
     schema1:additionalType [ a schema1:DefinedTerm ;
+            schema1:identifier "https://example.org/org-types/RI" ;
             schema1:inDefinedTermSet "https://example.org/org-types" ;
             schema1:name "Research Infrastructure" ;
             schema1:termCode "RI" ] ;
