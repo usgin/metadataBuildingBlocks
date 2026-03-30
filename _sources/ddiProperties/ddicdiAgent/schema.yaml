@@ -6,13 +6,20 @@ description: >-
   and ProcessingAgent (orchestrates production activities) using
   DDI Cross-Domain Integration vocabulary.
 
-type: object
-
 anyOf:
-  - $ref: "#/$defs/Individual"
-  - $ref: "#/$defs/Machine"
-  - $ref: "#/$defs/Organization"
-  - $ref: "#/$defs/ProcessingAgent"
+  - type: object
+    anyOf:
+      - $ref: "#/$defs/Individual"
+      - $ref: "#/$defs/Machine"
+      - $ref: "#/$defs/Organization"
+      - $ref: "#/$defs/ProcessingAgent"
+  - type: array
+    items:
+      anyOf:
+        - $ref: "#/$defs/Individual"
+        - $ref: "#/$defs/Machine"
+        - $ref: "#/$defs/Organization"
+        - $ref: "#/$defs/ProcessingAgent"
 
 $defs:
 

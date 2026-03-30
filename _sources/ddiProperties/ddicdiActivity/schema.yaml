@@ -7,12 +7,18 @@ description: >-
   specification. Includes definition, start/end timestamps,
   hasInternal (ControlLogic), and full Step/Parameter support.
 
-type: object
-
 anyOf:
-  - $ref: "#/$defs/Activity"
-  - $ref: "#/$defs/Step"
-  - $ref: "#/$defs/Parameter"
+  - type: object
+    anyOf:
+      - $ref: "#/$defs/Activity"
+      - $ref: "#/$defs/Step"
+      - $ref: "#/$defs/Parameter"
+  - type: array
+    items:
+      anyOf:
+        - $ref: "#/$defs/Activity"
+        - $ref: "#/$defs/Step"
+        - $ref: "#/$defs/Parameter"
 
 $defs:
   Activity:
