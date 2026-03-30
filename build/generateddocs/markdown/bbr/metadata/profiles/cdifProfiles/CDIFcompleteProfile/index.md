@@ -2321,7 +2321,13 @@ quality measurements.
 
 <file:///github/workspace/#part-measurements-csv> a cdi:TabularTextDataSet,
         schema1:MediaObject ;
-    cdi:hasPhysicalMapping [ cdi:format "string" ;
+    cdi:hasPhysicalMapping [ cdi:format "decimal" ;
+            cdi:formats_InstanceVariable ex:var-concentration ;
+            cdi:index 1 ;
+            cdi:isRequired true ;
+            cdi:nullSequence "NA" ;
+            cdi:physicalDataType "float64" ],
+        [ cdi:format "string" ;
             cdi:formats_InstanceVariable ex:var-sampleID ;
             cdi:index 0 ;
             cdi:isRequired true ;
@@ -2330,12 +2336,6 @@ quality measurements.
             cdi:formats_InstanceVariable ex:var-uncertainty ;
             cdi:index 2 ;
             cdi:isRequired false ;
-            cdi:nullSequence "NA" ;
-            cdi:physicalDataType "float64" ],
-        [ cdi:format "decimal" ;
-            cdi:formats_InstanceVariable ex:var-concentration ;
-            cdi:index 1 ;
-            cdi:isRequired true ;
             cdi:nullSequence "NA" ;
             cdi:physicalDataType "float64" ] ;
     cdi:isDelimited true ;
@@ -2369,16 +2369,16 @@ quality measurements.
 <file:///github/workspace/#part-spectra-nc> a cdi:StructuredDataSet,
         schema1:MediaObject ;
     cdi:hasPhysicalMapping [ cdi:format "decimal" ;
-            cdi:formats_InstanceVariable ex:var-wavelength ;
-            cdi:index 0 ;
-            cdi:isRequired true ;
-            cdi:locator "/spectra/wavelength" ;
-            cdi:physicalDataType "float32" ],
-        [ cdi:format "decimal" ;
             cdi:formats_InstanceVariable ex:var-intensity ;
             cdi:index 1 ;
             cdi:isRequired true ;
             cdi:locator "/spectra/intensity" ;
+            cdi:physicalDataType "float32" ],
+        [ cdi:format "decimal" ;
+            cdi:formats_InstanceVariable ex:var-wavelength ;
+            cdi:index 0 ;
+            cdi:isRequired true ;
+            cdi:locator "/spectra/wavelength" ;
             cdi:physicalDataType "float32" ] ;
     schema1:description "Spectral data cube with wavelength and intensity dimensions." ;
     schema1:encodingFormat "application/x-netcdf" ;
@@ -2393,15 +2393,15 @@ ex:activity-geochem-analysis a schema1:Action,
             schema1:description "Combined XRF screening and ICP-MS confirmatory analysis for major and trace elements in soils." ;
             schema1:name "EPA 6200 / ICP-MS Soil Geochemistry Protocol" ;
             schema1:step [ a schema1:HowToStep ;
-                    schema1:description "Homogenize dried samples, split 0.5 g aliquots, digest with HNO3-HCl-HF mixture at 190 C for 20 min in a microwave system." ;
-                    schema1:name "Sample preparation and acid digestion" ;
-                    schema1:position 1 ;
-                    schema1:url "https://example.org/protocols/digestion-procedure" ],
-                [ a schema1:HowToStep ;
                     schema1:description "Analyze digested solutions by ICP-MS using external calibration with NIST SRM 2711a (Montana II Soil)." ;
                     schema1:name "ICP-MS measurement and calibration" ;
                     schema1:position 2 ;
-                    schema1:url "https://example.org/protocols/icpms-measurement" ] ] ;
+                    schema1:url "https://example.org/protocols/icpms-measurement" ],
+                [ a schema1:HowToStep ;
+                    schema1:description "Homogenize dried samples, split 0.5 g aliquots, digest with HNO3-HCl-HF mixture at 190 C for 20 min in a microwave system." ;
+                    schema1:name "Sample preparation and acid digestion" ;
+                    schema1:position 1 ;
+                    schema1:url "https://example.org/protocols/digestion-procedure" ] ] ;
     schema1:actionStatus "schema:CompletedActionStatus" ;
     schema1:additionalProperty [ a schema1:PropertyValue ;
             schema1:name "Analysis Batch Identifier" ;
@@ -2426,10 +2426,7 @@ ex:activity-geochem-analysis a schema1:Action,
             schema1:roleName "Lab Technician" ] ;
     schema1:result ex:complete-dataset-001 ;
     schema1:startTime "2025-07-15T08:00:00Z" ;
-    prov:used [ a schema1:CreativeWork ;
-            schema1:name "EPA Method 6200 - XRF Analysis of Soils" ;
-            schema1:url "https://www.epa.gov/hw-sw846/sw-846-test-method-6200-field-portable-x-ray-fluorescence-spectrometry-determination" ],
-        [ schema1:instrument [ a schema1:DefinedTerm,
+    prov:used [ schema1:instrument [ a schema1:DefinedTerm,
                         schema1:Thing ;
                     schema1:additionalProperty [ a schema1:PropertyValue ;
                             schema1:name "Typical Detection Limit" ;
@@ -2441,14 +2438,17 @@ ex:activity-geochem-analysis a schema1:Action,
                             schema1:name "Inductively coupled plasma mass spectrometer" ;
                             schema1:termCode "LAB21" ] ;
                     schema1:hasPart [ a schema1:Thing ;
-                            schema1:alternateName "CETAC ASX-560" ;
-                            schema1:name "Autosampler" ],
-                        [ a schema1:Thing ;
                             schema1:alternateName "Peltier-cooled cyclonic" ;
-                            schema1:name "Spray chamber" ] ;
+                            schema1:name "Spray chamber" ],
+                        [ a schema1:Thing ;
+                            schema1:alternateName "CETAC ASX-560" ;
+                            schema1:name "Autosampler" ] ;
                     schema1:inDefinedTermSet "https://vocab.nerc.ac.uk/collection/L05/current/" ;
                     schema1:name "Inductively Coupled Plasma Mass Spectrometry" ;
                     schema1:termCode "ICP-MS" ] ],
+        [ a schema1:CreativeWork ;
+            schema1:name "EPA Method 6200 - XRF Analysis of Soils" ;
+            schema1:url "https://www.epa.gov/hw-sw846/sw-846-test-method-6200-field-portable-x-ray-fluorescence-spectrometry-determination" ],
         "Soil core samples collected June 2025, sites GB-001 through GB-045, dried and sieved to <2 mm fraction",
         "https://vocab.nerc.ac.uk/collection/L05/current/LAB02" .
 
@@ -2557,17 +2557,17 @@ ex:complete-dataset-001 a schema1:Dataset ;
                     schema1:object [ a schema1:DataFeed ;
                             schema1:description "Geochemistry observations collection" ] ;
                     schema1:query-input [ a schema1:PropertyValueSpecification ;
-                            schema1:description "Response format: csv or geojson" ;
-                            schema1:valueName "format" ;
-                            schema1:valuePattern "csv|geojson" ;
-                            schema1:valueRequired false ],
-                        [ a schema1:PropertyValueSpecification ;
                             schema1:description "Starting index for pagination" ;
                             schema1:valueName "offset" ;
                             schema1:valueRequired false ],
                         [ a schema1:PropertyValueSpecification ;
                             schema1:description "Maximum number of features to return" ;
                             schema1:valueName "limit" ;
+                            schema1:valueRequired false ],
+                        [ a schema1:PropertyValueSpecification ;
+                            schema1:description "Response format: csv or geojson" ;
+                            schema1:valueName "format" ;
+                            schema1:valuePattern "csv|geojson" ;
                             schema1:valueRequired false ] ;
                     schema1:result [ a schema1:DataDownload ;
                             cdi:hasPhysicalMapping [ cdi:format "decimal" ;
@@ -2736,17 +2736,17 @@ ex:complete-dataset-001 a schema1:Dataset ;
         ex:var-wavelength ;
     schema1:version "1.0" ;
     dqv:hasQualityMeasurement [ a dqv:QualityMeasurement ;
-            dqv:isMeasurementOf [ a schema1:DefinedTerm ;
-                    schema1:inDefinedTermSet "https://www.w3.org/TR/vocab-dqv/" ;
-                    schema1:name "Completeness" ;
-                    schema1:termCode "completeness" ] ;
-            dqv:value "98.5% of planned sample sites successfully analyzed" ],
-        [ a dqv:QualityMeasurement ;
             dqv:isMeasurementOf "Analytical precision (2-sigma RSD on NIST SRM 2711a replicates)" ;
             dqv:value [ a schema1:DefinedTerm ;
                     schema1:inDefinedTermSet "https://example.org/quality-levels/" ;
                     schema1:name "High-" ;
-                    schema1:termCode "HIGH" ] ] ;
+                    schema1:termCode "HIGH" ] ],
+        [ a dqv:QualityMeasurement ;
+            dqv:isMeasurementOf [ a schema1:DefinedTerm ;
+                    schema1:inDefinedTermSet "https://www.w3.org/TR/vocab-dqv/" ;
+                    schema1:name "Completeness" ;
+                    schema1:termCode "completeness" ] ;
+            dqv:value "98.5% of planned sample sites successfully analyzed" ] ;
     prov:wasDerivedFrom [ a schema1:CreativeWork ;
             schema1:description "Prior regional geochemical survey used for site selection and comparative analysis" ;
             schema1:name "USGS Great Basin Geochemical Survey (2020)" ;
