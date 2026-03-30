@@ -1,41 +1,15 @@
 Validation report for cdif.bbr.metadata.cdifProperties.cdifVariableMeasured - VariableMeasured with DDI-CDI extensions
-Generated 2026-03-30T22:31:09.582230+00:00
-=== General ===
-Test was expected to fail and it did.
-=== End General ===
-
+Generated 2026-03-30T22:31:09.663859+00:00
 === Files ===
-Using shortName-fail.json from test resources
+Using exampleCdiVariableMeasured.json from examples
+"@graph" found, unwrapping
 JSON-LD context is present - uplifting
-Output JSON-LD shortName-fail.jsonld created
-Output Turtle shortName-fail.ttl created
+Output JSON-LD example_1_1.jsonld created
+Output Turtle example_1_1.ttl created
 === End Files ===
 
 === JSON Schema ===
-
-** Validation error **
-ValidationError: {'@context': {'schema': 'http://schema.org/', 'ex': 'https://example.org/'}, '@id': 'ex:PersonExample_zZc', '@type': 'schema:Person', 'schema:name': ' ', 'schema:alternateName': 'Test, Joe', 'schema:description': 'Metadata specialist, based in Portland, Maine', 'schema:sameAs': ['https://ark.org/46737', 'uri:test:43737']} is not valid under any of the given schemas
-
-Failed validating 'anyOf' in schema[0]:
-    {'anyOf': [{'$ref': '#/$defs/CdifVariableMeasuredNode'},
-               {'description': 'Dataset node referencing variableMeasured '
-                               'items',
-                'properties': {'@type': {'contains': {'const': 'schema:Dataset'},
-                                         'items': {'type': 'string'},
-                                         'type': 'array'}},
-                'type': 'object'}],
-     'description': 'Single node (InstanceVariable or Dataset)',
-     'type': 'object'}
-
-On instance:
-    {'@context': {'ex': 'https://example.org/',
-                  'schema': 'http://schema.org/'},
-     '@id': 'ex:PersonExample_zZc',
-     '@type': 'schema:Person',
-     'schema:alternateName': 'Test, Joe',
-     'schema:description': 'Metadata specialist, based in Portland, Maine',
-     'schema:name': ' ',
-     'schema:sameAs': ['https://ark.org/46737', 'uri:test:43737']}
+Validation passed
 === End JSON Schema ===
 
 === SHACL ===
@@ -48,7 +22,7 @@ Focus nodes for _sources/cdifProperties/cdifVariableMeasured/rules.shacl:
  - Shape _:n1a4f3f8dbf0f4312b796743a7683660cb14: *none*
  - Shape cdifd:QualifiesNotAllowedWithoutAttributeComponentShape: *none*
  - Shape cdifd:CDIFVariableMeasuredShape: *none*
- - Shape cdifd:CDIFxasVariableMeasuredShape: *none*
+ - Shape cdifd:CDIFxasVariableMeasuredShape: ex:temperatureVariable,xas:monochromatorEnergy
  - Shape _:n1a4f3f8dbf0f4312b796743a7683660cb51: *none*
  - Shape _:n1a4f3f8dbf0f4312b796743a7683660cb57: *none*
  - Shape _:n1a4f3f8dbf0f4312b796743a7683660cb11: *none*
