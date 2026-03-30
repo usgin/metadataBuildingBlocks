@@ -625,17 +625,17 @@ ex:activity-statistical-compilation a cdi:Activity ;
             cdi:description "Harmonized regional employment dataset 2025" ;
             cdi:uri "https://doi.org/10.5281/zenodo.example-regional-employment-2025" ] ;
     cdi:entityUsed [ a cdi:Reference ;
-            cdi:description "French Labour Force Survey 2024 microdata" ;
-            cdi:uri "https://example.org/datasets/national-lfs-2024-FR" ],
-        [ a cdi:Reference ;
-            cdi:description "German Labour Force Survey 2024 microdata" ;
-            cdi:uri "https://example.org/datasets/national-lfs-2024-DE" ],
+            cdi:description "Austrian Labour Force Survey 2024 microdata" ;
+            cdi:uri "https://example.org/datasets/national-lfs-2024-AT" ],
         [ a cdi:Reference ;
             cdi:description "Swiss Labour Force Survey 2024 microdata" ;
             cdi:uri "https://example.org/datasets/national-lfs-2024-CH" ],
         [ a cdi:Reference ;
-            cdi:description "Austrian Labour Force Survey 2024 microdata" ;
-            cdi:uri "https://example.org/datasets/national-lfs-2024-AT" ] ;
+            cdi:description "French Labour Force Survey 2024 microdata" ;
+            cdi:uri "https://example.org/datasets/national-lfs-2024-FR" ],
+        [ a cdi:Reference ;
+            cdi:description "German Labour Force Survey 2024 microdata" ;
+            cdi:uri "https://example.org/datasets/national-lfs-2024-DE" ] ;
     cdi:has_Step ex:step-data-integration,
         ex:step-variable-harmonization ;
     cdi:identifier [ a cdi:Identifier ;
@@ -723,30 +723,44 @@ description: DDI-CDI Activity class (DDICDILibrary/Classes/Process/Activity). De
   from the DDI Cross-Domain Integration specification. Includes definition, start/end
   timestamps, hasInternal (ControlLogic), and full Step/Parameter support.
 anyOf:
-- description: Single graph node (Activity, Step, or Parameter)
-  type: object
-  anyOf:
-  - $ref: '#/$defs/Activity'
-  - $ref: '#/$defs/Step'
-  - $ref: '#/$defs/Parameter'
-- description: Unwrapped @graph array of nodes
+- description: Single Activity node
+  $ref: '#/$defs/Activity'
+- description: Unwrapped @graph array of nodes (OGC pipeline)
   type: array
+  contains:
+    $ref: '#/$defs/Activity'
   items:
-    anyOf:
-    - $ref: '#/$defs/Activity'
-    - $ref: '#/$defs/Step'
-    - $ref: '#/$defs/Parameter'
+    if:
+      type: object
+      properties:
+        '@type':
+          type: array
+          contains:
+            const: cdi:Activity
+      required:
+      - '@type'
+    then:
+      $ref: '#/$defs/Activity'
 - description: JSON-LD document with @context and @graph
   type: object
   properties:
     '@context': {}
     '@graph':
       type: array
+      contains:
+        $ref: '#/$defs/Activity'
       items:
-        anyOf:
-        - $ref: '#/$defs/Activity'
-        - $ref: '#/$defs/Step'
-        - $ref: '#/$defs/Parameter'
+        if:
+          type: object
+          properties:
+            '@type':
+              type: array
+              contains:
+                const: cdi:Activity
+          required:
+          - '@type'
+        then:
+          $ref: '#/$defs/Activity'
   required:
   - '@graph'
 $defs:
