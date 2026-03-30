@@ -73,7 +73,14 @@ Implementation of Schema.org PropertyValue as value for variableMeasured propert
   "schema:unitText": "deg C",
   "schema:unitCode": "C",
   "schema:minValue": 0,
-  "schema:maxValue": 200
+  "schema:maxValue": 200,
+  "schema:url": {
+    "@type": [
+      "schema:CreativeWork"
+    ],
+    "schema:name": "WMO Guide to Meteorological Instruments – Temperature",
+    "schema:url": "https://library.wmo.int/idurl/4/68695"
+  }
 }
 
 ```
@@ -121,7 +128,14 @@ Implementation of Schema.org PropertyValue as value for variableMeasured propert
   "schema:unitText": "deg C",
   "schema:unitCode": "C",
   "schema:minValue": 0,
-  "schema:maxValue": 200
+  "schema:maxValue": 200,
+  "schema:url": {
+    "@type": [
+      "schema:CreativeWork"
+    ],
+    "schema:name": "WMO Guide to Meteorological Instruments \u2013 Temperature",
+    "schema:url": "https://library.wmo.int/idurl/4/68695"
+  }
 }
 ```
 
@@ -139,7 +153,10 @@ ex:variableMeasured_346 a schema1:PropertyValue ;
     schema1:name "example variable measured" ;
     schema1:propertyID ex:definedTerm_zZc ;
     schema1:unitCode "C" ;
-    schema1:unitText "deg C" .
+    schema1:unitText "deg C" ;
+    schema1:url [ a schema1:CreativeWork ;
+            schema1:name "WMO Guide to Meteorological Instruments – Temperature" ;
+            schema1:url "https://library.wmo.int/idurl/4/68695" ] .
 
 ex:definedTerm_zZc a schema1:DefinedTerm ;
     schema1:identifier ex:tempTerm_246u ;
@@ -222,15 +239,19 @@ properties:
     type: number
     description: maximum numeric value in the dataset
   schema:url:
-    type: string
-    format: uri
-    description: link to a web page useful for interpreting the variable
+    anyOf:
+    - type: string
+      format: uri
+      description: link to a web page useful for interpreting the variable
+    - $ref: '#/$defs/LabeledLink'
 required:
 - '@type'
 - schema:name
 $defs:
   DefinedTerm:
     $ref: https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/definedTerm/schema.yaml
+  LabeledLink:
+    $ref: https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/labeledLink/schema.yaml
 x-jsonld-prefixes:
   schema: http://schema.org/
 

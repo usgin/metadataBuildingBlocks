@@ -3382,9 +3382,16 @@
           "description": "maximum numeric value in the dataset"
         },
         "schema:url": {
-          "type": "string",
-          "format": "uri",
-          "description": "link to a web page useful for interpreting the variable"
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "uri",
+              "description": "link to a web page useful for interpreting the variable"
+            },
+            {
+              "$ref": "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFcompleteProfile/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.variableMeasured/$defs/LabeledLink"
+            }
+          ]
         }
       },
       "required": [
@@ -3394,6 +3401,9 @@
       "$defs": {
         "DefinedTerm": {
           "$ref": "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFcompleteProfile/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.definedTerm_1"
+        },
+        "LabeledLink": {
+          "$ref": "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFcompleteProfile/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.labeledLink"
         }
       },
       "x-jsonld-prefixes": {

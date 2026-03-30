@@ -519,9 +519,16 @@
           "description": "maximum numeric value in the dataset"
         },
         "schema:url": {
-          "type": "string",
-          "format": "uri",
-          "description": "link to a web page useful for interpreting the variable"
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "uri",
+              "description": "link to a web page useful for interpreting the variable"
+            },
+            {
+              "$ref": "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/webAPI/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.variableMeasured/$defs/LabeledLink"
+            }
+          ]
         }
       },
       "required": [
@@ -531,6 +538,9 @@
       "$defs": {
         "DefinedTerm": {
           "$ref": "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/webAPI/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.definedTerm_1"
+        },
+        "LabeledLink": {
+          "$ref": "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/webAPI/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.schemaorgProperties.labeledLink_1"
         }
       },
       "x-jsonld-prefixes": {
@@ -608,6 +618,44 @@
         "schema": "http://schema.org/"
       },
       "x-schema-source": "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/definedTerm/schema.yaml",
+      "x-schema-version": "https://json-schema.org/draft/2020-12/schema"
+    },
+    "cdif.bbr.metadata.schemaorgProperties.labeledLink_1": {
+      "description": "schema for a labeled link, a profile of schema.org/CreativeWork",
+      "type": "object",
+      "properties": {
+        "@type": {
+          "default": "schema:CreativeWork",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "contains": {
+            "enum": [
+              "schema:CreativeWork"
+            ]
+          },
+          "minItems": 1
+        },
+        "schema:name": {
+          "type": "string"
+        },
+        "schema:description": {
+          "type": "string"
+        },
+        "schema:url": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "required": [
+        "@type",
+        "schema:url"
+      ],
+      "x-jsonld-prefixes": {
+        "schema": "http://schema.org/"
+      },
+      "x-schema-source": "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/labeledLink/schema.yaml",
       "x-schema-version": "https://json-schema.org/draft/2020-12/schema"
     }
   },

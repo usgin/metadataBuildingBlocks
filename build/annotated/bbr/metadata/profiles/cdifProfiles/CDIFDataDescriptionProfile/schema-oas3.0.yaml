@@ -1841,15 +1841,19 @@ x-defs:
         type: number
         description: maximum numeric value in the dataset
       schema:url:
-        type: string
-        format: uri
-        description: link to a web page useful for interpreting the variable
+        anyOf:
+        - type: string
+          format: uri
+          description: link to a web page useful for interpreting the variable
+        - $ref: https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescriptionProfile/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.schemaorgProperties.variableMeasured/$defs/LabeledLink
     required:
     - '@type'
     - schema:name
     $defs:
       DefinedTerm:
         $ref: https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescriptionProfile/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.schemaorgProperties.definedTerm
+      LabeledLink:
+        $ref: https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/profiles/cdifProfiles/CDIFDataDescriptionProfile/schema-oas3.0.yaml#/x-defs/cdif.bbr.metadata.schemaorgProperties.labeledLink
     x-jsonld-prefixes:
       schema: http://schema.org/
     x-schema-source: https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/variableMeasured/schema.yaml
