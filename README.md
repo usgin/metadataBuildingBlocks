@@ -120,6 +120,20 @@ python tools/augment_register.py
 
 The `generate-jsonforms` workflow runs this automatically after schema conversion.
 
+### Custom Validation Report (`generate_custom_report.py`)
+
+Replaces the OGC bblocks-postprocess `report.html` with a version that shows granular validation labels instead of binary PASS/FAIL. Parses SHACL severity levels (Violation, Warning, Info) from the report data and displays them as separate badges.
+
+- **JSON Schema Fail** (red) if JSON Schema validation fails
+- **SHACL: N Violation, N Warning, N Info** with color-coded severity
+- SHACL Warnings and Info do not cause a building block to be marked as failed
+
+```bash
+python tools/generate_custom_report.py
+```
+
+The `deploy-viewer` workflow runs this automatically after `augment_register.py`.
+
 ## Examples
 
 Each building block and profile includes example JSON-LD instances:
