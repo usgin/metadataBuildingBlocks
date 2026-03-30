@@ -46,27 +46,58 @@ Implementation of Schema.org PropertyValue as value for variableMeasured propert
         "skos": "http://www.w3.org/2004/02/skos/core#",
         "xas": "https://xas.org/dictionary/"
     },
-    "@id": "xas:monochromatorEnergy",
-    "@type": [
-        "cdi:InstanceVariable",
-        "schema:PropertyValue"
-    ],
-    "schema:name": "energy",
-    "schema:alternateName": ["Monochromator energy"],
-    "schema:description": "missing, definition of what this variable is about (maybe even an iAdopt description",
-    "schema:propertyID": ["xas:monochromatorEnergyConcept"],
-    "schema:unitText": "eV",
-    "cdi:identifier": "should be URI from nexusFormat organization",
-    "cdi:physicalDataType": ["https://www.w3.org/TR/xmlschema-2/#decimal"],
-    "cdi:simpleUnitOfMeasure": "eV",
-    "cdi:uses": ["xas:monochromatorEnergyConcept"],
-    "cdi:name": "energy",
-    "cdi:displayLabel": "monochromator energy",
-    "cdi:role": "AttributeComponent",
-    "cdi:qualifies": {
-        "@id": "ex:temperatureVariable"
-    }
+    "@graph": [
+        {
+            "@type": ["schema:Dataset"],
+            "@id": "ex:xas-dataset-example",
+            "schema:name": "XAS measurement dataset",
+            "schema:variableMeasured": [
+                {"@id": "xas:monochromatorEnergy"},
+                {"@id": "ex:temperatureVariable"}
+            ]
+        },
+        {
+            "@id": "xas:monochromatorEnergy",
+            "@type": [
+                "cdi:InstanceVariable",
+                "schema:PropertyValue"
+            ],
+            "schema:name": "energy",
+            "schema:alternateName": ["Monochromator energy"],
+            "schema:description": "missing, definition of what this variable is about (maybe even an iAdopt description",
+            "schema:propertyID": ["xas:monochromatorEnergyConcept"],
+            "schema:unitText": "eV",
+            "cdi:identifier": "should be URI from nexusFormat organization",
+            "cdi:physicalDataType": ["https://www.w3.org/TR/xmlschema-2/#decimal"],
+            "cdi:simpleUnitOfMeasure": "eV",
+            "cdi:uses": ["xas:monochromatorEnergyConcept"],
+            "cdi:name": "energy",
+            "cdi:displayLabel": "monochromator energy",
+            "cdi:role": "AttributeComponent",
+            "cdi:qualifies": {
+                "@id": "ex:temperatureVariable"
+            }
+        },
+        {
+            "@id": "ex:temperatureVariable",
+            "@type": [
+                "cdi:InstanceVariable",
+                "schema:PropertyValue"
+            ],
+            "schema:name": "temperature",
+            "schema:alternateName": ["Sample temperature"],
+            "schema:description": "Temperature of the sample during XAS measurement",
+            "schema:propertyID": ["ex:temperatureConcept"],
+            "schema:unitText": "K",
+            "cdi:physicalDataType": ["https://www.w3.org/TR/xmlschema-2/#decimal"],
+            "cdi:simpleUnitOfMeasure": "K",
+            "cdi:name": "temperature",
+            "cdi:displayLabel": "sample temperature",
+            "cdi:role": "MeasureComponent"
+        }
+    ]
 }
+
 ```
 
 #### jsonld
@@ -88,34 +119,76 @@ Implementation of Schema.org PropertyValue as value for variableMeasured propert
       "xas": "https://xas.org/dictionary/"
     }
   ],
-  "@id": "xas:monochromatorEnergy",
-  "@type": [
-    "cdi:InstanceVariable",
-    "schema:PropertyValue"
-  ],
-  "schema:name": "energy",
-  "schema:alternateName": [
-    "Monochromator energy"
-  ],
-  "schema:description": "missing, definition of what this variable is about (maybe even an iAdopt description",
-  "schema:propertyID": [
-    "xas:monochromatorEnergyConcept"
-  ],
-  "schema:unitText": "eV",
-  "cdi:identifier": "should be URI from nexusFormat organization",
-  "cdi:physicalDataType": [
-    "https://www.w3.org/TR/xmlschema-2/#decimal"
-  ],
-  "cdi:simpleUnitOfMeasure": "eV",
-  "cdi:uses": [
-    "xas:monochromatorEnergyConcept"
-  ],
-  "cdi:name": "energy",
-  "cdi:displayLabel": "monochromator energy",
-  "cdi:role": "AttributeComponent",
-  "cdi:qualifies": {
-    "@id": "ex:temperatureVariable"
-  }
+  "@graph": [
+    {
+      "@type": [
+        "schema:Dataset"
+      ],
+      "@id": "ex:xas-dataset-example",
+      "schema:name": "XAS measurement dataset",
+      "schema:variableMeasured": [
+        {
+          "@id": "xas:monochromatorEnergy"
+        },
+        {
+          "@id": "ex:temperatureVariable"
+        }
+      ]
+    },
+    {
+      "@id": "xas:monochromatorEnergy",
+      "@type": [
+        "cdi:InstanceVariable",
+        "schema:PropertyValue"
+      ],
+      "schema:name": "energy",
+      "schema:alternateName": [
+        "Monochromator energy"
+      ],
+      "schema:description": "missing, definition of what this variable is about (maybe even an iAdopt description",
+      "schema:propertyID": [
+        "xas:monochromatorEnergyConcept"
+      ],
+      "schema:unitText": "eV",
+      "cdi:identifier": "should be URI from nexusFormat organization",
+      "cdi:physicalDataType": [
+        "https://www.w3.org/TR/xmlschema-2/#decimal"
+      ],
+      "cdi:simpleUnitOfMeasure": "eV",
+      "cdi:uses": [
+        "xas:monochromatorEnergyConcept"
+      ],
+      "cdi:name": "energy",
+      "cdi:displayLabel": "monochromator energy",
+      "cdi:role": "AttributeComponent",
+      "cdi:qualifies": {
+        "@id": "ex:temperatureVariable"
+      }
+    },
+    {
+      "@id": "ex:temperatureVariable",
+      "@type": [
+        "cdi:InstanceVariable",
+        "schema:PropertyValue"
+      ],
+      "schema:name": "temperature",
+      "schema:alternateName": [
+        "Sample temperature"
+      ],
+      "schema:description": "Temperature of the sample during XAS measurement",
+      "schema:propertyID": [
+        "ex:temperatureConcept"
+      ],
+      "schema:unitText": "K",
+      "cdi:physicalDataType": [
+        "https://www.w3.org/TR/xmlschema-2/#decimal"
+      ],
+      "cdi:simpleUnitOfMeasure": "K",
+      "cdi:name": "temperature",
+      "cdi:displayLabel": "sample temperature",
+      "cdi:role": "MeasureComponent"
+    }
+  ]
 }
 ```
 
@@ -125,6 +198,11 @@ Implementation of Schema.org PropertyValue as value for variableMeasured propert
 @prefix ex: <https://example.org/> .
 @prefix schema1: <http://schema.org/> .
 @prefix xas: <https://xas.org/dictionary/> .
+
+ex:xas-dataset-example a schema1:Dataset ;
+    schema1:name "XAS measurement dataset" ;
+    schema1:variableMeasured ex:temperatureVariable,
+        xas:monochromatorEnergy .
 
 xas:monochromatorEnergy a cdi:InstanceVariable,
         schema1:PropertyValue ;
@@ -141,6 +219,19 @@ xas:monochromatorEnergy a cdi:InstanceVariable,
     schema1:name "energy" ;
     schema1:propertyID "xas:monochromatorEnergyConcept" ;
     schema1:unitText "eV" .
+
+ex:temperatureVariable a cdi:InstanceVariable,
+        schema1:PropertyValue ;
+    cdi:displayLabel "sample temperature" ;
+    cdi:name "temperature" ;
+    cdi:physicalDataType "https://www.w3.org/TR/xmlschema-2/#decimal" ;
+    cdi:role "MeasureComponent" ;
+    cdi:simpleUnitOfMeasure "K" ;
+    schema1:alternateName "Sample temperature" ;
+    schema1:description "Temperature of the sample during XAS measurement" ;
+    schema1:name "temperature" ;
+    schema1:propertyID "ex:temperatureConcept" ;
+    schema1:unitText "K" .
 
 
 ```

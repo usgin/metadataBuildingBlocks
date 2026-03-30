@@ -1,141 +1,287 @@
 Validation report for cdif.bbr.metadata.cdifProperties.cdifVariableMeasured - VariableMeasured with DDI-CDI extensions
-Generated 2026-03-30T15:59:11.917935+00:00
+Generated 2026-03-30T16:02:40.819170+00:00
 === Files ===
 Using exampleCdiVariableMeasured.json from examples
+"@graph" found, unwrapping
 JSON-LD context is present - uplifting
 Output JSON-LD example_1_1.jsonld created
 Output Turtle example_1_1.ttl created
 === End Files ===
 
 === JSON Schema ===
-Validation passed
+
+** Validation error **
+ValidationError: [{'@type': ['schema:Dataset'], '@id': 'ex:xas-dataset-example', 'schema:name': 'XAS measurement dataset', 'schema:variableMeasured': [{'@id': 'xas:monochromatorEnergy'}, {'@id': 'ex:temperatureVariable'}]}, {'@id': 'xas:monochromatorEnergy', '@type': ['cdi:InstanceVariable', 'schema:PropertyValue'], 'schema:name': 'energy', 'schema:alternateName': ['Monochromator energy'], 'schema:description': 'missing, definition of what this variable is about (maybe even an iAdopt description', 'schema:propertyID': ['xas:monochromatorEnergyConcept'], 'schema:unitText': 'eV', 'cdi:identifier': 'should be URI from nexusFormat organization', 'cdi:physicalDataType': ['https://www.w3.org/TR/xmlschema-2/#decimal'], 'cdi:simpleUnitOfMeasure': 'eV', 'cdi:uses': ['xas:monochromatorEnergyConcept'], 'cdi:name': 'energy', 'cdi:displayLabel': 'monochromator energy', 'cdi:role': 'AttributeComponent', 'cdi:qualifies': {'@id': 'ex:temperatureVariable'}}, {'@id': 'ex:temperatureVariable', '@type': ['cdi:InstanceVariable', 'schema:PropertyValue'], 'schema:name': 'temperature', 'schema:alternateName': ['Sample temperature'], 'schema:description': 'Temperature of the sample during XAS measurement', 'schema:propertyID': ['ex:temperatureConcept'], 'schema:unitText': 'K', 'cdi:physicalDataType': ['https://www.w3.org/TR/xmlschema-2/#decimal'], 'cdi:simpleUnitOfMeasure': 'K', 'cdi:name': 'temperature', 'cdi:displayLabel': 'sample temperature', 'cdi:role': 'MeasureComponent'}] is not of type 'object'
+
+Failed validating 'type' in schema:
+    {'$defs': {'DefinedTerm': {'$ref': 'https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/definedTerm/schema.yaml'}},
+     '$schema': 'https://json-schema.org/draft/2020-12/schema',
+     'allOf': [{'required': ['@type']},
+               {'anyOf': [{'$ref': 'https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/variableMeasured/schema.yaml'},
+                          {'$ref': 'https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/schemaorgProperties/statisticalVariable/schema.yaml'}]}],
+     'description': 'Extends cdif variableMeasured with properties for '
+                    'DDI-CDI InstanceVariable',
+     'properties': {'@type': {'contains': {'const': 'cdi:InstanceVariable'},
+                              'description': 'Must include both '
+                                             'schema:PropertyValue and '
+                                             'cdi:InstanceVariable. '
+                                             'Additional types may be '
+                                             'included.',
+                              'items': {'type': 'string'},
+                              'type': 'array'},
+                    'cdi:describedUnitOfMeasure': {'$ref': '#/$defs/DefinedTerm',
+                                                   'description': 'A '
+                                                                  'structured '
+                                                                  'unit of '
+                                                                  'measure '
+                                                                  'from a '
+                                                                  'controlled '
+                                                                  'vocabulary, '
+                                                                  'from '
+                                                                  'DDI-CDI '
+                                                                  'RepresentedVariable.describedUnitOfMeasure.'},
+                    'cdi:displayLabel': {'description': 'DDI-CDI '
+                                                        'Concept.displayLabel. '
+                                                        'A human-readable '
+                                                        'label for display '
+                                                        'purposes.',
+                                         'type': 'string'},
+                    'cdi:identifier': {'type': 'string'},
+                    'cdi:intendedDataType': {'description': 'The intended '
+                                                            'data type for '
+                                                            'values of '
+                                                            'this '
+                                                            'variable, '
+                                                            'from DDI-CDI '
+                                                            'RepresentedVariable.hasIntendedDataType. '
+                                                            'Recommended '
+                                                            'values are '
+                                                            'XML Schema '
+                                                            'datatypes '
+                                                            '(e.g. '
+                                                            'https://www.w3.org/TR/xmlschema-2/#decimal).',
+                                             'type': 'string'},
+                    'cdi:name': {'description': 'DDI-CDI Concept.name. The '
+                                                'name of this variable in '
+                                                'the DDI-CDI model.',
+                                 'type': 'string'},
+                    'cdi:physicalDataType': {'description': 'identifier or '
+                                                            'name for the '
+                                                            'data type '
+                                                            'concept.',
+                                             'items': {'anyOf': [{'type': 'string'},
+                                                                 {'properties': {'@id': {'description': 'reference '
+                                                                                                        'to '
+                                                                                                        'a '
+                                                                                                        'skos '
+                                                                                                        'concept '
+                                                                                                        'for '
+                                                                                                        'the '
+                                                                                                        'data '
+                                                                                                        'type',
+                                                                                         'type': 'string'}},
+                                                                  'type': 'object'},
+                                                                 {'$ref': '#/$defs/DefinedTerm'}]},
+                                             'type': 'array'},
+                    'cdi:qualifies': {'description': 'reference to an '
+                                                     'instance variable '
+                                                     'defined for this '
+                                                     'dataset',
+                                      'properties': {'@id': {'type': 'string'}},
+                                      'type': 'object'},
+                    'cdi:role': {'description': 'Specifies the relation of '
+                                                'the variable to the data '
+                                                'structure, corresponding '
+                                                'to DDI-CDI '
+                                                'DataStructureComponent '
+                                                'subtypes.',
+                                 'enum': ['MeasureComponent',
+                                          'AttributeComponent',
+                                          'DimensionComponent',
+                                          'DescriptorComponent',
+                                          'ReferenceValueComponent'],
+                                 'type': 'string'},
+                    'cdi:simpleUnitOfMeasure': {'anyOf': [{'type': 'string'},
+                                                          {'properties': {'@id': {'description': 'reference '
+                                                                                                 'to '
+                                                                                                 'a '
+                                                                                                 'skos '
+                                                                                                 'concept '
+                                                                                                 'for '
+                                                                                                 'the '
+                                                                                                 'data '
+                                                                                                 'type',
+                                                                                  'type': 'string'}},
+                                                           'type': 'object'},
+                                                          {'$ref': '#/$defs/DefinedTerm'}]},
+                    'cdi:uses': {'description': 'Essentially the same as '
+                                                'schema:propertyID. '
+                                                'References to concepts '
+                                                'that this variable '
+                                                'measures or represents.',
+                                 'items': {'anyOf': [{'type': 'string'},
+                                                     {'properties': {'@id': {'description': 'reference '
+                                                                                            'to '
+                                                                                            'a '
+                                                                                            'skos '
+                                                                                            'concept '
+                                                                                            'for '
+                                                                                            'the '
+                                                                                            'property',
+                                                                             'type': 'string'}},
+                                                      'type': 'object'},
+                                                     {'$ref': '#/$defs/DefinedTerm'}]},
+                                 'type': 'array'}},
+     'type': 'object',
+     'x-jsonld-prefixes': {'cdi': 'http://ddialliance.org/Specification/DDI-CDI/1.0/RDF/',
+                           'nxs': 'http://purl.org/nexusformat/definitions/',
+                           'prov': 'http://www.w3.org/ns/prov#',
+                           'schema': 'http://schema.org/',
+                           'skos': 'http://www.w3.org/2004/02/skos/core#',
+                           'spdx': 'http://spdx.org/rdf/terms#',
+                           'xas': 'https://xas.org/dictionary/'}}
+
+On instance:
+    [{'@id': 'ex:xas-dataset-example',
+      '@type': ['schema:Dataset'],
+      'schema:name': 'XAS measurement dataset',
+      'schema:variableMeasured': [{'@id': 'xas:monochromatorEnergy'},
+                                  {'@id': 'ex:temperatureVariable'}]},
+     {'@id': 'xas:monochromatorEnergy',
+      '@type': ['cdi:InstanceVariable', 'schema:PropertyValue'],
+      'cdi:displayLabel': 'monochromator energy',
+      'cdi:identifier': 'should be URI from nexusFormat organization',
+      'cdi:name': 'energy',
+      'cdi:physicalDataType': ['https://www.w3.org/TR/xmlschema-2/#decimal'],
+      'cdi:qualifies': {'@id': 'ex:temperatureVariable'},
+      'cdi:role': 'AttributeComponent',
+      'cdi:simpleUnitOfMeasure': 'eV',
+      'cdi:uses': ['xas:monochromatorEnergyConcept'],
+      'schema:alternateName': ['Monochromator energy'],
+      'schema:description': 'missing, definition of what this variable is '
+                            'about (maybe even an iAdopt description',
+      'schema:name': 'energy',
+      'schema:propertyID': ['xas:monochromatorEnergyConcept'],
+      'schema:unitText': 'eV'},
+     {'@id': 'ex:temperatureVariable',
+      '@type': ['cdi:InstanceVariable', 'schema:PropertyValue'],
+      'cdi:displayLabel': 'sample temperature',
+      'cdi:name': 'temperature',
+      'cdi:physicalDataType': ['https://www.w3.org/TR/xmlschema-2/#decimal'],
+      'cdi:role': 'MeasureComponent',
+      'cdi:simpleUnitOfMeasure': 'K',
+      'schema:alternateName': ['Sample temperature'],
+      'schema:description': 'Temperature of the sample during XAS '
+                            'measurement',
+      'schema:name': 'temperature',
+      'schema:propertyID': ['ex:temperatureConcept'],
+      'schema:unitText': 'K'}]
 === End JSON Schema ===
 
 === SHACL ===
-
-** Validation error **
 Validation result for _sources/cdifProperties/cdifVariableMeasured/rules.shacl:
   Validation Report
-  Conforms: False
-  Results (1):
-  Constraint Violation in SPARQLConstraintComponent (http://www.w3.org/ns/shacl#SPARQLConstraintComponent):
-  	Severity: sh:Violation
-  	Source Shape: cdifd:QualifiesRequiredForAttributeComponentShape
-  	Focus Node: xas:monochromatorEnergy
-  	Value Node: ex:temperatureVariable
-  	Result Path: cdi:qualifies
-  	Source Constraint: [ rdf:type sh:SPARQLConstraint ; sh:message Literal("cdi:qualifies @id should reference the @id of another variableMeasured instance variable defined for the same dataset.") ; sh:prefixes ( [ sh:namespace Literal("http://ddialliance.org/Specification/DDI-CDI/1.0/RDF/") ; sh:prefix Literal("cdi") ] [ sh:namespace Literal("http://schema.org/") ; sh:prefix Literal("schema") ] ) ; sh:select Literal("
-              PREFIX cdi: <http://ddialliance.org/Specification/DDI-CDI/1.0/RDF/>
-              PREFIX schema: <http://schema.org/>
-              SELECT $this (cdi:qualifies AS ?path) (?target AS ?value)
-              WHERE {
-                  $this cdi:qualifies ?target .
-                  FILTER NOT EXISTS {
-                      ?dataset schema:variableMeasured ?target .
-                      ?dataset schema:variableMeasured $this .
-                  }
-              }") ; sh:severity sh:Warning ]
-  	Message: cdi:qualifies @id should reference the @id of another variableMeasured instance variable defined for the same dataset.
+  Conforms: True
   
 Focus nodes for _sources/cdifProperties/cdifVariableMeasured/rules.shacl:
- - Shape _:n8f85209c6f294a5281aacea8e6ca6115b13: *none*
- - Shape _:n8f85209c6f294a5281aacea8e6ca6115b58: *none*
- - Shape cdifd:CDIFxasVariableMeasuredShape/sh:property/sh:or/rdf:first: *none*
- - Shape _:n8f85209c6f294a5281aacea8e6ca6115b15: *none*
- - Shape _:n8f85209c6f294a5281aacea8e6ca6115b8: *none*
- - Shape _:n8f85209c6f294a5281aacea8e6ca6115b52: *none*
- - Shape _:n8f85209c6f294a5281aacea8e6ca6115b16: *none*
- - Shape _:n8f85209c6f294a5281aacea8e6ca6115b55: *none*
- - Shape _:n8f85209c6f294a5281aacea8e6ca6115b14: *none*
- - Shape _:n8f85209c6f294a5281aacea8e6ca6115b60: *none*
- - Shape _:n8f85209c6f294a5281aacea8e6ca6115b57: *none*
- - Shape cdifd:CDIFxasVariableMeasuredShape: xas:monochromatorEnergy
- - Shape _:n8f85209c6f294a5281aacea8e6ca6115b11: *none*
- - Shape _:n8f85209c6f294a5281aacea8e6ca6115b12: *none*
+ - Shape _:n5dd183a5ec074662ad5cab75a4be1c34b56: *none*
+ - Shape _:n5dd183a5ec074662ad5cab75a4be1c34b60: *none*
  - Shape cdifd:CDIFVariableMeasuredShape: *none*
- - Shape _:n8f85209c6f294a5281aacea8e6ca6115b54: *none*
- - Shape _:n8f85209c6f294a5281aacea8e6ca6115b9: *none*
- - Shape cdifd:CDIFVariableMeasuredShape/sh:property/sh:or/rdf:first: *none*
  - Shape cdifd:QualifiesNotAllowedWithoutAttributeComponentShape: *none*
- - Shape _:n8f85209c6f294a5281aacea8e6ca6115b18: *none*
- - Shape _:n8f85209c6f294a5281aacea8e6ca6115b56: *none*
- - Shape _:n8f85209c6f294a5281aacea8e6ca6115b51: *none*
+ - Shape _:n5dd183a5ec074662ad5cab75a4be1c34b51: *none*
+ - Shape _:n5dd183a5ec074662ad5cab75a4be1c34b11: *none*
+ - Shape _:n5dd183a5ec074662ad5cab75a4be1c34b54: *none*
+ - Shape _:n5dd183a5ec074662ad5cab75a4be1c34b9: *none*
+ - Shape _:n5dd183a5ec074662ad5cab75a4be1c34b8: *none*
+ - Shape cdifd:CDIFVariableMeasuredShape/sh:property/sh:or/rdf:first: *none*
+ - Shape _:n5dd183a5ec074662ad5cab75a4be1c34b15: *none*
+ - Shape _:n5dd183a5ec074662ad5cab75a4be1c34b58: *none*
+ - Shape _:n5dd183a5ec074662ad5cab75a4be1c34b18: *none*
+ - Shape _:n5dd183a5ec074662ad5cab75a4be1c34b14: *none*
+ - Shape _:n5dd183a5ec074662ad5cab75a4be1c34b52: *none*
+ - Shape cdifd:CDIFxasVariableMeasuredShape: ex:temperatureVariable,xas:monochromatorEnergy
+ - Shape cdifd:CDIFxasVariableMeasuredShape/sh:property/sh:or/rdf:first: *none*
+ - Shape _:n5dd183a5ec074662ad5cab75a4be1c34b12: *none*
  - Shape cdifd:QualifiesRequiredForAttributeComponentShape: *none*
-
-Validation result for _sources/schemaorgProperties/definedTerm/rules.shacl:
-  Validation Report
-  Conforms: True
-  
-Focus nodes for _sources/schemaorgProperties/definedTerm/rules.shacl:
- - Shape cdifd:CDIFDefinedTermShape/sh:or/rdf:rest/rdf:first: *none*
- - Shape _:n6581c75419e842efa7c869d9d40bd928b10: *none*
- - Shape _:n6581c75419e842efa7c869d9d40bd928b19: *none*
- - Shape _:n6581c75419e842efa7c869d9d40bd928b4: *none*
- - Shape _:n6581c75419e842efa7c869d9d40bd928b8: *none*
- - Shape _:n6581c75419e842efa7c869d9d40bd928b26: *none*
- - Shape _:n6581c75419e842efa7c869d9d40bd928b7: *none*
- - Shape cdifd:CDIFDefinedTermShape/sh:property/sh:or/rdf:first: *none*
- - Shape cdifd:CDIFDefinedTermShape/sh:or/rdf:first: *none*
- - Shape _:n6581c75419e842efa7c869d9d40bd928b5: *none*
- - Shape cdifd:CDIFDefinedTermShape: *none*
- - Shape _:n6581c75419e842efa7c869d9d40bd928b6: *none*
-
-Validation result for _sources/schemaorgProperties/identifier/rules.shacl:
-  Validation Report
-  Conforms: True
-  
-Focus nodes for _sources/schemaorgProperties/identifier/rules.shacl:
- - Shape _:nc0e2dacbb0264b32b06fd84cafbfa8f6b25: *none*
- - Shape _:nc0e2dacbb0264b32b06fd84cafbfa8f6b22: *none*
- - Shape cdifd:CDIFIdentifierTypeTermShape: *none*
- - Shape _:nc0e2dacbb0264b32b06fd84cafbfa8f6b23: *none*
- - Shape cdifd:CDIFIdentifierShape: *none*
- - Shape cdifd:CDIFIdentifierShape/sh:or/rdf:first: *none*
- - Shape cdifd:CDIFIdentifierShape/sh:or/rdf:rest/rdf:first: *none*
- - Shape cdifd:CDIFIdentifierShape/sh:property/sh:or/rdf:first: *none*
- - Shape _:nc0e2dacbb0264b32b06fd84cafbfa8f6b21: *none*
- - Shape _:nc0e2dacbb0264b32b06fd84cafbfa8f6b10: *none*
- - Shape cdifd:CDIFIdentifierTypeTermShape/sh:property/sh:or/rdf:first: *none*
- - Shape _:nc0e2dacbb0264b32b06fd84cafbfa8f6b11: *none*
- - Shape _:nc0e2dacbb0264b32b06fd84cafbfa8f6b20: *none*
+ - Shape _:n5dd183a5ec074662ad5cab75a4be1c34b16: *none*
+ - Shape _:n5dd183a5ec074662ad5cab75a4be1c34b13: *none*
+ - Shape _:n5dd183a5ec074662ad5cab75a4be1c34b57: *none*
+ - Shape _:n5dd183a5ec074662ad5cab75a4be1c34b55: *none*
 
 Validation result for _sources/schemaorgProperties/variableMeasured/rules.shacl:
   Validation Report
   Conforms: True
   
 Focus nodes for _sources/schemaorgProperties/variableMeasured/rules.shacl:
- - Shape _:nee03f50ac69a4abf91d9805f44d64ea0b5: *none*
- - Shape _:nee03f50ac69a4abf91d9805f44d64ea0b4: *none*
+ - Shape _:n8e6e9d4248ac49d48485469929b77aefb52: *none*
+ - Shape _:n8e6e9d4248ac49d48485469929b77aefb4: *none*
+ - Shape _:n8e6e9d4248ac49d48485469929b77aefb9: *none*
+ - Shape _:n8e6e9d4248ac49d48485469929b77aefb11: *none*
+ - Shape _:n8e6e9d4248ac49d48485469929b77aefb45: *none*
  - Shape cdifd:CDIFVariableMeasuredShape/sh:property/sh:or/rdf:first: *none*
- - Shape _:nee03f50ac69a4abf91d9805f44d64ea0b8: *none*
- - Shape cdifd:CDIFVariableMeasuredShape/sh:property/sh:or/rdf:first: *none*
- - Shape _:nee03f50ac69a4abf91d9805f44d64ea0b52: *none*
- - Shape _:nee03f50ac69a4abf91d9805f44d64ea0b14: *none*
- - Shape _:nee03f50ac69a4abf91d9805f44d64ea0b37: *none*
- - Shape cdifd:CDIFVariableMeasuredShape/sh:property/sh:or/rdf:first: *none*
- - Shape _:nee03f50ac69a4abf91d9805f44d64ea0b7: *none*
- - Shape _:nee03f50ac69a4abf91d9805f44d64ea0b10: *none*
- - Shape _:nee03f50ac69a4abf91d9805f44d64ea0b45: *none*
- - Shape _:nee03f50ac69a4abf91d9805f44d64ea0b12: *none*
- - Shape _:nee03f50ac69a4abf91d9805f44d64ea0b9: *none*
- - Shape cdifd:CDIFVariableMeasuredShape/sh:property/sh:or/rdf:first: *none*
- - Shape _:nee03f50ac69a4abf91d9805f44d64ea0b51: *none*
  - Shape cdifd:CDIFVariableMeasuredShape: *none*
- - Shape _:nee03f50ac69a4abf91d9805f44d64ea0b29: *none*
- - Shape _:nee03f50ac69a4abf91d9805f44d64ea0b38: *none*
+ - Shape _:n8e6e9d4248ac49d48485469929b77aefb10: *none*
+ - Shape _:n8e6e9d4248ac49d48485469929b77aefb38: *none*
+ - Shape _:n8e6e9d4248ac49d48485469929b77aefb51: *none*
+ - Shape _:n8e6e9d4248ac49d48485469929b77aefb30: *none*
+ - Shape _:n8e6e9d4248ac49d48485469929b77aefb14: *none*
+ - Shape _:n8e6e9d4248ac49d48485469929b77aefb7: *none*
  - Shape cdifd:CDIFVariableMeasuredShape/sh:property/sh:or/rdf:first: *none*
- - Shape _:nee03f50ac69a4abf91d9805f44d64ea0b30: *none*
- - Shape _:nee03f50ac69a4abf91d9805f44d64ea0b11: *none*
- - Shape _:nee03f50ac69a4abf91d9805f44d64ea0b44: *none*
+ - Shape _:n8e6e9d4248ac49d48485469929b77aefb5: *none*
+ - Shape cdifd:CDIFVariableMeasuredShape/sh:property/sh:or/rdf:first: *none*
+ - Shape _:n8e6e9d4248ac49d48485469929b77aefb12: *none*
+ - Shape cdifd:CDIFVariableMeasuredShape/sh:property/sh:or/rdf:first: *none*
+ - Shape _:n8e6e9d4248ac49d48485469929b77aefb29: *none*
+ - Shape _:n8e6e9d4248ac49d48485469929b77aefb8: *none*
+ - Shape _:n8e6e9d4248ac49d48485469929b77aefb37: *none*
+ - Shape cdifd:CDIFVariableMeasuredShape/sh:property/sh:or/rdf:first: *none*
+ - Shape _:n8e6e9d4248ac49d48485469929b77aefb44: *none*
+
+Validation result for _sources/schemaorgProperties/definedTerm/rules.shacl:
+  Validation Report
+  Conforms: True
+  
+Focus nodes for _sources/schemaorgProperties/definedTerm/rules.shacl:
+ - Shape cdifd:CDIFDefinedTermShape/sh:or/rdf:first: *none*
+ - Shape _:n5ad09492a1a349e0aab0f3c62eaa8053b10: *none*
+ - Shape _:n5ad09492a1a349e0aab0f3c62eaa8053b6: *none*
+ - Shape cdifd:CDIFDefinedTermShape: *none*
+ - Shape _:n5ad09492a1a349e0aab0f3c62eaa8053b7: *none*
+ - Shape _:n5ad09492a1a349e0aab0f3c62eaa8053b5: *none*
+ - Shape _:n5ad09492a1a349e0aab0f3c62eaa8053b19: *none*
+ - Shape _:n5ad09492a1a349e0aab0f3c62eaa8053b4: *none*
+ - Shape _:n5ad09492a1a349e0aab0f3c62eaa8053b8: *none*
+ - Shape _:n5ad09492a1a349e0aab0f3c62eaa8053b26: *none*
+ - Shape cdifd:CDIFDefinedTermShape/sh:property/sh:or/rdf:first: *none*
+ - Shape cdifd:CDIFDefinedTermShape/sh:or/rdf:rest/rdf:first: *none*
+
+Validation result for _sources/schemaorgProperties/identifier/rules.shacl:
+  Validation Report
+  Conforms: True
+  
+Focus nodes for _sources/schemaorgProperties/identifier/rules.shacl:
+ - Shape _:n6e9c05df502242098c5ede54d97239f0b22: *none*
+ - Shape cdifd:CDIFIdentifierShape: *none*
+ - Shape _:n6e9c05df502242098c5ede54d97239f0b11: *none*
+ - Shape _:n6e9c05df502242098c5ede54d97239f0b25: *none*
+ - Shape cdifd:CDIFIdentifierShape/sh:or/rdf:rest/rdf:first: *none*
+ - Shape _:n6e9c05df502242098c5ede54d97239f0b10: *none*
+ - Shape cdifd:CDIFIdentifierShape/sh:or/rdf:first: *none*
+ - Shape _:n6e9c05df502242098c5ede54d97239f0b23: *none*
+ - Shape cdifd:CDIFIdentifierShape/sh:property/sh:or/rdf:first: *none*
+ - Shape _:n6e9c05df502242098c5ede54d97239f0b21: *none*
+ - Shape _:n6e9c05df502242098c5ede54d97239f0b20: *none*
+ - Shape cdifd:CDIFIdentifierTypeTermShape/sh:property/sh:or/rdf:first: *none*
+ - Shape cdifd:CDIFIdentifierTypeTermShape: *none*
 
 Validation result for _sources/schemaorgProperties/statisticalVariable/rules.shacl:
   Validation Report
   Conforms: True
   
 Focus nodes for _sources/schemaorgProperties/statisticalVariable/rules.shacl:
- - Shape _:nb521787fd0764119a12c7b65dbc383a2b5: *none*
- - Shape _:nb521787fd0764119a12c7b65dbc383a2b6: *none*
  - Shape cdifd:statisticalVariableNode/sh:property/sh:or/rdf:first: *none*
+ - Shape _:n15fb08d84b3d4c23816d60b702ab5191b5: *none*
+ - Shape _:n15fb08d84b3d4c23816d60b702ab5191b6: *none*
  - Shape cdifd:statisticalVariableNode: *none*
 
 === End SHACL ===

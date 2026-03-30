@@ -3,6 +3,11 @@
 @prefix schema1: <http://schema.org/> .
 @prefix xas: <https://xas.org/dictionary/> .
 
+ex:xas-dataset-example a schema1:Dataset ;
+    schema1:name "XAS measurement dataset" ;
+    schema1:variableMeasured ex:temperatureVariable,
+        xas:monochromatorEnergy .
+
 xas:monochromatorEnergy a cdi:InstanceVariable,
         schema1:PropertyValue ;
     cdi:displayLabel "monochromator energy" ;
@@ -18,4 +23,17 @@ xas:monochromatorEnergy a cdi:InstanceVariable,
     schema1:name "energy" ;
     schema1:propertyID "xas:monochromatorEnergyConcept" ;
     schema1:unitText "eV" .
+
+ex:temperatureVariable a cdi:InstanceVariable,
+        schema1:PropertyValue ;
+    cdi:displayLabel "sample temperature" ;
+    cdi:name "temperature" ;
+    cdi:physicalDataType "https://www.w3.org/TR/xmlschema-2/#decimal" ;
+    cdi:role "MeasureComponent" ;
+    cdi:simpleUnitOfMeasure "K" ;
+    schema1:alternateName "Sample temperature" ;
+    schema1:description "Temperature of the sample during XAS measurement" ;
+    schema1:name "temperature" ;
+    schema1:propertyID "ex:temperatureConcept" ;
+    schema1:unitText "K" .
 
