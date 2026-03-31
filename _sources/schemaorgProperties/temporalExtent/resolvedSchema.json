@@ -7,9 +7,15 @@
       "description": "a w3c time proper interval with bounds that are named time ordinal eras with identifier, e.g. geologic age. This is a SOSO schema.org extension",
       "properties": {
         "@type": {
-          "type": "string",
           "default": "time:ProperInterval",
-          "const": "time:ProperInterval"
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "contains": {
+            "const": "time:ProperInterval"
+          },
+          "minItems": 1
         },
         "schema:description": {
           "type": "string",
@@ -18,12 +24,12 @@
         "time:intervalStartedBy": {
           "type": "string",
           "format": "uri",
-          "description": "identifier for a named time ordinal era that is older bound of time interval, e.g. isc:LowerDevonian"
+          "description": "identifier for a named time ordinal era that is older bound of time interval, e.g. 'isc:LowerDevonian' "
         },
         "time:intervalFinishedBy": {
           "type": "string",
           "format": "uri",
-          "description": "identifier for a named time ordinal era that is younger bound of time interval, e.g. isc:LowerDevonian"
+          "description": "identifier for a named time ordinal era that is younger bound of time interval, e.g. 'isc:LowerDevonian' "
         }
       }
     },
@@ -51,9 +57,15 @@
           "description": "Must exactly match the specified @context object."
         },
         "@type": {
-          "type": "string",
           "default": "time:ProperInterval",
-          "const": "time:ProperInterval"
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "contains": {
+            "const": "time:ProperInterval"
+          },
+          "minItems": 1
         },
         "schema:description": {
           "type": "string",
@@ -63,11 +75,38 @@
           "type": "object",
           "properties": {
             "@type": {
-              "type": "string",
-              "const": "time:Instant"
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "contains": {
+                "const": "time:Instant"
+              },
+              "minItems": 1
             },
             "time:inTimePosition": {
-              "$ref": "#/$defs/timePosition_type"
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "default": "time:TimePosition",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "contains": {
+                    "const": "time:TimePosition"
+                  },
+                  "minItems": 1
+                },
+                "time:hasTRS": {
+                  "type": "string",
+                  "description": "identifier for a temporal reference system; default is million years before prsent as a decimal number",
+                  "default": "http://www.opengis.net/def/crs/OGC/0/ChronometricGeologicTime"
+                },
+                "time:numericPosition": {
+                  "type": "number"
+                }
+              }
             }
           }
         },
@@ -75,11 +114,38 @@
           "type": "object",
           "properties": {
             "@type": {
-              "type": "string",
-              "const": "time:Instant"
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "contains": {
+                "const": "time:Instant"
+              },
+              "minItems": 1
             },
             "time:inTimePosition": {
-              "$ref": "#/$defs/timePosition_type"
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "default": "time:TimePosition",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "contains": {
+                    "const": "time:TimePosition"
+                  },
+                  "minItems": 1
+                },
+                "time:hasTRS": {
+                  "type": "string",
+                  "description": "identifier for a temporal reference system; default is million years before prsent as a decimal number",
+                  "default": "http://www.opengis.net/def/crs/OGC/0/ChronometricGeologicTime"
+                },
+                "time:numericPosition": {
+                  "type": "number"
+                }
+              }
             }
           }
         }
@@ -89,25 +155,5 @@
       "type": "string",
       "description": "Simple ISO8601 encoding of calendar date, dateTime, or time interval with calendar date bounds"
     }
-  ],
-  "$defs": {
-    "timePosition_type": {
-      "type": "object",
-      "properties": {
-        "@type": {
-          "type": "string",
-          "const": "time:TimePosition",
-          "default": "time:TimePosition"
-        },
-        "time:hasTRS": {
-          "type": "string",
-          "description": "identifier for a temporal reference system; default is million years before prsent as a decimal number",
-          "default": "http://www.opengis.net/def/crs/OGC/0/ChronometricGeologicTime"
-        },
-        "time:numericPosition": {
-          "type": "number"
-        }
-      }
-    }
-  }
+  ]
 }
