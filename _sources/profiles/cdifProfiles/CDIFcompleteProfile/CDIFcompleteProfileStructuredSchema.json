@@ -3813,6 +3813,59 @@
         }
       ]
     },
+    "Contributor": {
+      "description": "For more granularity on how a person contributed to a Dataset, use schema:Role. The schema.org documentation does not state that the Role type is an expected data type of author, creator and contributor, but that is addressed in this blog post (http://blog.schema.org/2014/06/introducing-role.html). see https://github.com/ESIPFed/science-on-schema.org/blob/develop/guides/Dataset.md#roles-of-people",
+      "type": "object",
+      "properties": {
+        "@type": {
+          "default": "schema:Role",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "contains": {
+            "const": "schema:Role"
+          },
+          "minItems": 1
+        },
+        "schema:roleName": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "$ref": "#/$defs/DefinedTerm"
+            }
+          ]
+        },
+        "schema:contributor": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "@id": {
+                  "type": "string",
+                  "description": "IRI reference to a Person or Organization defined elsewhere"
+                }
+              },
+              "required": [
+                "@id"
+              ]
+            },
+            {
+              "$ref": "#/$defs/Person"
+            },
+            {
+              "$ref": "#/$defs/Organization"
+            }
+          ]
+        }
+      },
+      "required": [
+        "schema:roleName",
+        "schema:contributor"
+      ]
+    },
     "VariableMeasured": {
       "description": "Schema.org PropertyValue-based variableMeasured. Defines properties for a measured variable in a dataset, typed as schema:PropertyValue.",
       "type": "object",
@@ -3934,59 +3987,6 @@
       "required": [
         "@type",
         "schema:name"
-      ]
-    },
-    "Contributor": {
-      "description": "For more granularity on how a person contributed to a Dataset, use schema:Role. The schema.org documentation does not state that the Role type is an expected data type of author, creator and contributor, but that is addressed in this blog post (http://blog.schema.org/2014/06/introducing-role.html). see https://github.com/ESIPFed/science-on-schema.org/blob/develop/guides/Dataset.md#roles-of-people",
-      "type": "object",
-      "properties": {
-        "@type": {
-          "default": "schema:Role",
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "contains": {
-            "const": "schema:Role"
-          },
-          "minItems": 1
-        },
-        "schema:roleName": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "$ref": "#/$defs/DefinedTerm"
-            }
-          ]
-        },
-        "schema:contributor": {
-          "anyOf": [
-            {
-              "type": "object",
-              "properties": {
-                "@id": {
-                  "type": "string",
-                  "description": "IRI reference to a Person or Organization defined elsewhere"
-                }
-              },
-              "required": [
-                "@id"
-              ]
-            },
-            {
-              "$ref": "#/$defs/Person"
-            },
-            {
-              "$ref": "#/$defs/Organization"
-            }
-          ]
-        }
-      },
-      "required": [
-        "schema:roleName",
-        "schema:contributor"
       ]
     },
     "StatisticalVariable": {

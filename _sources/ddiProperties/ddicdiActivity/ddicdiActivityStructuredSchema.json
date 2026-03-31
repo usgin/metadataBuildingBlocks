@@ -1,0 +1,2746 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DDI-CDI Activity",
+  "description": "DDI-CDI Activity class (DDICDILibrary/Classes/Process/Activity). Describes tasks at a conceptual level using cdi:Activity, cdi:Step, and cdi:Parameter vocabulary from the DDI Cross-Domain Integration specification. Includes definition, start/end timestamps, hasInternal (ControlLogic), and full Step/Parameter support.",
+  "anyOf": [
+    {
+      "type": "object",
+      "description": "Single Activity node",
+      "properties": {
+        "@type": {
+          "description": "Must be or include cdi:Activity",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "contains": {
+            "const": "cdi:Activity"
+          },
+          "minItems": 1
+        },
+        "@id": {
+          "type": "string",
+          "description": "Identifier for this activity node"
+        },
+        "cdi:name": {
+          "description": "Structured name for the activity (ObjectName)",
+          "anyOf": [
+            {
+              "title": "DDI-CDI Data Types",
+              "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+            },
+            {
+              "type": "array",
+              "items": {
+                "title": "DDI-CDI Data Types",
+                "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+              }
+            }
+          ]
+        },
+        "cdi:description": {
+          "type": "string",
+          "description": "Plain text description of the activity"
+        },
+        "cdi:definition": {
+          "description": "Formal multilingual definition (InternationalString)",
+          "anyOf": [
+            {
+              "title": "DDI-CDI Data Types",
+              "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+            },
+            {
+              "type": "array",
+              "items": {
+                "title": "DDI-CDI Data Types",
+                "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+              }
+            }
+          ]
+        },
+        "cdi:displayLabel": {
+          "description": "Multilingual display label",
+          "anyOf": [
+            {
+              "title": "DDI-CDI Data Types",
+              "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+            },
+            {
+              "type": "array",
+              "items": {
+                "title": "DDI-CDI Data Types",
+                "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+              }
+            }
+          ]
+        },
+        "cdi:identifier": {
+          "title": "DDI-CDI Data Types",
+          "description": "Formal identifier for this activity"
+        },
+        "cdi:entityUsed": {
+          "description": "Entities used as inputs by this activity",
+          "type": "array",
+          "items": {
+            "title": "DDI-CDI Data Types",
+            "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+          }
+        },
+        "cdi:entityProduced": {
+          "description": "Entities produced as outputs by this activity",
+          "type": "array",
+          "items": {
+            "title": "DDI-CDI Data Types",
+            "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+          }
+        },
+        "cdi:standardModelMapping": {
+          "description": "Reference to a standard process model (e.g. GSBPM)",
+          "anyOf": [
+            {
+              "title": "DDI-CDI Data Types",
+              "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+            },
+            {
+              "type": "array",
+              "items": {
+                "title": "DDI-CDI Data Types",
+                "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+              }
+            }
+          ]
+        },
+        "cdi:start": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Start date-time of the activity (xsd:dateTime)"
+        },
+        "cdi:end": {
+          "type": "string",
+          "format": "date-time",
+          "description": "End date-time of the activity (xsd:dateTime)"
+        },
+        "cdi:hasSubActivity": {
+          "description": "Nested sub-activities (cdi:Activity). @id references.",
+          "type": "array",
+          "items": {
+            "title": "DDI-CDI Data Types",
+            "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+          }
+        },
+        "cdi:has_Step": {
+          "description": "Ordered steps within this activity (cdi:Step)",
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "object",
+                "description": "DDI-CDI Step within an Activity (cls-Step, extends Activity)",
+                "properties": {
+                  "@type": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "contains": {
+                      "const": "cdi:Step"
+                    },
+                    "minItems": 1
+                  },
+                  "@id": {
+                    "type": "string",
+                    "description": "Identifier for this step node"
+                  },
+                  "cdi:name": {
+                    "description": "Structured name for the step",
+                    "anyOf": [
+                      {
+                        "title": "DDI-CDI Data Types",
+                        "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                      },
+                      {
+                        "type": "array",
+                        "items": {
+                          "title": "DDI-CDI Data Types",
+                          "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                        }
+                      }
+                    ]
+                  },
+                  "cdi:description": {
+                    "type": "string",
+                    "description": "Plain text description of the step"
+                  },
+                  "cdi:definition": {
+                    "description": "Formal multilingual definition (InternationalString)",
+                    "anyOf": [
+                      {
+                        "title": "DDI-CDI Data Types",
+                        "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                      },
+                      {
+                        "type": "array",
+                        "items": {
+                          "title": "DDI-CDI Data Types",
+                          "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                        }
+                      }
+                    ]
+                  },
+                  "cdi:identifier": {
+                    "title": "DDI-CDI Data Types",
+                    "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                  },
+                  "cdi:start": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Start date-time of the step (xsd:dateTime)"
+                  },
+                  "cdi:end": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "End date-time of the step (xsd:dateTime)"
+                  },
+                  "cdi:script": {
+                    "type": "object",
+                    "description": "Executable script or code for this step",
+                    "properties": {
+                      "@type": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "contains": {
+                          "const": "cdi:CommandCode"
+                        },
+                        "minItems": 1
+                      },
+                      "cdi:description": {
+                        "type": "string",
+                        "description": "Description of the code"
+                      },
+                      "cdi:commandFile": {
+                        "description": "External script file reference",
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "description": "DDI-CDI external script file (dt-CommandFile)",
+                            "properties": {
+                              "@type": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "contains": {
+                                  "const": "cdi:CommandFile"
+                                },
+                                "minItems": 1
+                              },
+                              "cdi:uri": {
+                                "type": "string",
+                                "format": "uri",
+                                "description": "URI of the script file"
+                              },
+                              "cdi:location": {
+                                "type": "string",
+                                "description": "Human-readable file location"
+                              }
+                            }
+                          },
+                          {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "description": "DDI-CDI external script file (dt-CommandFile)",
+                              "properties": {
+                                "@type": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  },
+                                  "contains": {
+                                    "const": "cdi:CommandFile"
+                                  },
+                                  "minItems": 1
+                                },
+                                "cdi:uri": {
+                                  "type": "string",
+                                  "format": "uri",
+                                  "description": "URI of the script file"
+                                },
+                                "cdi:location": {
+                                  "type": "string",
+                                  "description": "Human-readable file location"
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      "cdi:command": {
+                        "description": "Inline command content",
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "description": "DDI-CDI individual command statement (dt-Command)",
+                            "properties": {
+                              "@type": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "contains": {
+                                  "const": "cdi:Command"
+                                },
+                                "minItems": 1
+                              },
+                              "cdi:commandContent": {
+                                "type": "string",
+                                "description": "The command or code text"
+                              },
+                              "cdi:programLanguage": {
+                                "title": "DDI-CDI Data Types",
+                                "description": "Language of this command"
+                              }
+                            }
+                          },
+                          {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "description": "DDI-CDI individual command statement (dt-Command)",
+                              "properties": {
+                                "@type": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  },
+                                  "contains": {
+                                    "const": "cdi:Command"
+                                  },
+                                  "minItems": 1
+                                },
+                                "cdi:commandContent": {
+                                  "type": "string",
+                                  "description": "The command or code text"
+                                },
+                                "cdi:programLanguage": {
+                                  "title": "DDI-CDI Data Types",
+                                  "description": "Language of this command"
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "cdi:scriptingLanguage": {
+                    "title": "DDI-CDI Data Types",
+                    "description": "Programming or scripting language used"
+                  },
+                  "cdi:receives": {
+                    "description": "Input parameters received by this step (cdi:Parameter)",
+                    "type": "array",
+                    "items": {
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "description": "DDI-CDI parameter for step data flow (cls-Parameter)",
+                          "properties": {
+                            "@type": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              },
+                              "contains": {
+                                "const": "cdi:Parameter"
+                              },
+                              "minItems": 1
+                            },
+                            "@id": {
+                              "type": "string",
+                              "description": "Identifier for this parameter node"
+                            },
+                            "cdi:name": {
+                              "description": "Structured name for the parameter",
+                              "anyOf": [
+                                {
+                                  "title": "DDI-CDI Data Types",
+                                  "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                },
+                                {
+                                  "type": "array",
+                                  "items": {
+                                    "title": "DDI-CDI Data Types",
+                                    "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                  }
+                                }
+                              ]
+                            },
+                            "cdi:identifier": {
+                              "title": "DDI-CDI Data Types",
+                              "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                            },
+                            "cdi:entityBound": {
+                              "description": "Reference to the entity this parameter is bound to",
+                              "anyOf": [
+                                {
+                                  "title": "DDI-CDI Data Types",
+                                  "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                },
+                                {
+                                  "type": "array",
+                                  "items": {
+                                    "title": "DDI-CDI Data Types",
+                                    "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "required": [
+                            "@type",
+                            "cdi:name"
+                          ]
+                        },
+                        {
+                          "title": "DDI-CDI Data Types",
+                          "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                        }
+                      ]
+                    }
+                  },
+                  "cdi:produces": {
+                    "description": "Output parameters produced by this step (cdi:Parameter)",
+                    "type": "array",
+                    "items": {
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "description": "DDI-CDI parameter for step data flow (cls-Parameter)",
+                          "properties": {
+                            "@type": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              },
+                              "contains": {
+                                "const": "cdi:Parameter"
+                              },
+                              "minItems": 1
+                            },
+                            "@id": {
+                              "type": "string",
+                              "description": "Identifier for this parameter node"
+                            },
+                            "cdi:name": {
+                              "description": "Structured name for the parameter",
+                              "anyOf": [
+                                {
+                                  "title": "DDI-CDI Data Types",
+                                  "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                },
+                                {
+                                  "type": "array",
+                                  "items": {
+                                    "title": "DDI-CDI Data Types",
+                                    "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                  }
+                                }
+                              ]
+                            },
+                            "cdi:identifier": {
+                              "title": "DDI-CDI Data Types",
+                              "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                            },
+                            "cdi:entityBound": {
+                              "description": "Reference to the entity this parameter is bound to",
+                              "anyOf": [
+                                {
+                                  "title": "DDI-CDI Data Types",
+                                  "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                },
+                                {
+                                  "type": "array",
+                                  "items": {
+                                    "title": "DDI-CDI Data Types",
+                                    "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "required": [
+                            "@type",
+                            "cdi:name"
+                          ]
+                        },
+                        {
+                          "title": "DDI-CDI Data Types",
+                          "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                        }
+                      ]
+                    }
+                  },
+                  "cdi:entityUsed": {
+                    "description": "Entities used as inputs by this step",
+                    "type": "array",
+                    "items": {
+                      "title": "DDI-CDI Data Types",
+                      "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                    }
+                  },
+                  "cdi:entityProduced": {
+                    "description": "Entities produced as outputs by this step",
+                    "type": "array",
+                    "items": {
+                      "title": "DDI-CDI Data Types",
+                      "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                    }
+                  },
+                  "cdi:hasSubStep": {
+                    "description": "Nested sub-steps (cdi:Step)",
+                    "type": "array",
+                    "items": {
+                      "anyOf": [
+                        {
+                          "$comment": "self-referential: Step"
+                        },
+                        {
+                          "title": "DDI-CDI Data Types",
+                          "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                        }
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "@type",
+                  "cdi:name"
+                ]
+              },
+              {
+                "title": "DDI-CDI Data Types",
+                "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+              }
+            ]
+          }
+        },
+        "cdi:hasInternal": {
+          "description": "Internal control logic elements (cdi:ControlLogic). @id references.",
+          "type": "array",
+          "items": {
+            "title": "DDI-CDI Data Types",
+            "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+          }
+        }
+      },
+      "required": [
+        "@type",
+        "cdi:name"
+      ]
+    },
+    {
+      "description": "Unwrapped @graph array of nodes (OGC pipeline)",
+      "type": "array",
+      "contains": {
+        "type": "object",
+        "description": "DDI-CDI Activity (cls-Activity) — task described at a conceptual level",
+        "properties": {
+          "@type": {
+            "description": "Must be or include cdi:Activity",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "contains": {
+              "const": "cdi:Activity"
+            },
+            "minItems": 1
+          },
+          "@id": {
+            "type": "string",
+            "description": "Identifier for this activity node"
+          },
+          "cdi:name": {
+            "description": "Structured name for the activity (ObjectName)",
+            "anyOf": [
+              {
+                "title": "DDI-CDI Data Types",
+                "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+              },
+              {
+                "type": "array",
+                "items": {
+                  "title": "DDI-CDI Data Types",
+                  "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                }
+              }
+            ]
+          },
+          "cdi:description": {
+            "type": "string",
+            "description": "Plain text description of the activity"
+          },
+          "cdi:definition": {
+            "description": "Formal multilingual definition (InternationalString)",
+            "anyOf": [
+              {
+                "title": "DDI-CDI Data Types",
+                "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+              },
+              {
+                "type": "array",
+                "items": {
+                  "title": "DDI-CDI Data Types",
+                  "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                }
+              }
+            ]
+          },
+          "cdi:displayLabel": {
+            "description": "Multilingual display label",
+            "anyOf": [
+              {
+                "title": "DDI-CDI Data Types",
+                "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+              },
+              {
+                "type": "array",
+                "items": {
+                  "title": "DDI-CDI Data Types",
+                  "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                }
+              }
+            ]
+          },
+          "cdi:identifier": {
+            "title": "DDI-CDI Data Types",
+            "description": "Formal identifier for this activity"
+          },
+          "cdi:entityUsed": {
+            "description": "Entities used as inputs by this activity",
+            "type": "array",
+            "items": {
+              "title": "DDI-CDI Data Types",
+              "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+            }
+          },
+          "cdi:entityProduced": {
+            "description": "Entities produced as outputs by this activity",
+            "type": "array",
+            "items": {
+              "title": "DDI-CDI Data Types",
+              "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+            }
+          },
+          "cdi:standardModelMapping": {
+            "description": "Reference to a standard process model (e.g. GSBPM)",
+            "anyOf": [
+              {
+                "title": "DDI-CDI Data Types",
+                "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+              },
+              {
+                "type": "array",
+                "items": {
+                  "title": "DDI-CDI Data Types",
+                  "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                }
+              }
+            ]
+          },
+          "cdi:start": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Start date-time of the activity (xsd:dateTime)"
+          },
+          "cdi:end": {
+            "type": "string",
+            "format": "date-time",
+            "description": "End date-time of the activity (xsd:dateTime)"
+          },
+          "cdi:hasSubActivity": {
+            "description": "Nested sub-activities (cdi:Activity). @id references.",
+            "type": "array",
+            "items": {
+              "title": "DDI-CDI Data Types",
+              "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+            }
+          },
+          "cdi:has_Step": {
+            "description": "Ordered steps within this activity (cdi:Step)",
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "description": "DDI-CDI Step within an Activity (cls-Step, extends Activity)",
+                  "properties": {
+                    "@type": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "contains": {
+                        "const": "cdi:Step"
+                      },
+                      "minItems": 1
+                    },
+                    "@id": {
+                      "type": "string",
+                      "description": "Identifier for this step node"
+                    },
+                    "cdi:name": {
+                      "description": "Structured name for the step",
+                      "anyOf": [
+                        {
+                          "title": "DDI-CDI Data Types",
+                          "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                        },
+                        {
+                          "type": "array",
+                          "items": {
+                            "title": "DDI-CDI Data Types",
+                            "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                          }
+                        }
+                      ]
+                    },
+                    "cdi:description": {
+                      "type": "string",
+                      "description": "Plain text description of the step"
+                    },
+                    "cdi:definition": {
+                      "description": "Formal multilingual definition (InternationalString)",
+                      "anyOf": [
+                        {
+                          "title": "DDI-CDI Data Types",
+                          "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                        },
+                        {
+                          "type": "array",
+                          "items": {
+                            "title": "DDI-CDI Data Types",
+                            "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                          }
+                        }
+                      ]
+                    },
+                    "cdi:identifier": {
+                      "title": "DDI-CDI Data Types",
+                      "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                    },
+                    "cdi:start": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Start date-time of the step (xsd:dateTime)"
+                    },
+                    "cdi:end": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "End date-time of the step (xsd:dateTime)"
+                    },
+                    "cdi:script": {
+                      "type": "object",
+                      "description": "Executable script or code for this step",
+                      "properties": {
+                        "@type": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "contains": {
+                            "const": "cdi:CommandCode"
+                          },
+                          "minItems": 1
+                        },
+                        "cdi:description": {
+                          "type": "string",
+                          "description": "Description of the code"
+                        },
+                        "cdi:commandFile": {
+                          "description": "External script file reference",
+                          "anyOf": [
+                            {
+                              "type": "object",
+                              "description": "DDI-CDI external script file (dt-CommandFile)",
+                              "properties": {
+                                "@type": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  },
+                                  "contains": {
+                                    "const": "cdi:CommandFile"
+                                  },
+                                  "minItems": 1
+                                },
+                                "cdi:uri": {
+                                  "type": "string",
+                                  "format": "uri",
+                                  "description": "URI of the script file"
+                                },
+                                "cdi:location": {
+                                  "type": "string",
+                                  "description": "Human-readable file location"
+                                }
+                              }
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "description": "DDI-CDI external script file (dt-CommandFile)",
+                                "properties": {
+                                  "@type": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    },
+                                    "contains": {
+                                      "const": "cdi:CommandFile"
+                                    },
+                                    "minItems": 1
+                                  },
+                                  "cdi:uri": {
+                                    "type": "string",
+                                    "format": "uri",
+                                    "description": "URI of the script file"
+                                  },
+                                  "cdi:location": {
+                                    "type": "string",
+                                    "description": "Human-readable file location"
+                                  }
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        "cdi:command": {
+                          "description": "Inline command content",
+                          "anyOf": [
+                            {
+                              "type": "object",
+                              "description": "DDI-CDI individual command statement (dt-Command)",
+                              "properties": {
+                                "@type": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  },
+                                  "contains": {
+                                    "const": "cdi:Command"
+                                  },
+                                  "minItems": 1
+                                },
+                                "cdi:commandContent": {
+                                  "type": "string",
+                                  "description": "The command or code text"
+                                },
+                                "cdi:programLanguage": {
+                                  "title": "DDI-CDI Data Types",
+                                  "description": "Language of this command"
+                                }
+                              }
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "description": "DDI-CDI individual command statement (dt-Command)",
+                                "properties": {
+                                  "@type": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    },
+                                    "contains": {
+                                      "const": "cdi:Command"
+                                    },
+                                    "minItems": 1
+                                  },
+                                  "cdi:commandContent": {
+                                    "type": "string",
+                                    "description": "The command or code text"
+                                  },
+                                  "cdi:programLanguage": {
+                                    "title": "DDI-CDI Data Types",
+                                    "description": "Language of this command"
+                                  }
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "cdi:scriptingLanguage": {
+                      "title": "DDI-CDI Data Types",
+                      "description": "Programming or scripting language used"
+                    },
+                    "cdi:receives": {
+                      "description": "Input parameters received by this step (cdi:Parameter)",
+                      "type": "array",
+                      "items": {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "description": "DDI-CDI parameter for step data flow (cls-Parameter)",
+                            "properties": {
+                              "@type": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "contains": {
+                                  "const": "cdi:Parameter"
+                                },
+                                "minItems": 1
+                              },
+                              "@id": {
+                                "type": "string",
+                                "description": "Identifier for this parameter node"
+                              },
+                              "cdi:name": {
+                                "description": "Structured name for the parameter",
+                                "anyOf": [
+                                  {
+                                    "title": "DDI-CDI Data Types",
+                                    "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                  },
+                                  {
+                                    "type": "array",
+                                    "items": {
+                                      "title": "DDI-CDI Data Types",
+                                      "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                    }
+                                  }
+                                ]
+                              },
+                              "cdi:identifier": {
+                                "title": "DDI-CDI Data Types",
+                                "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                              },
+                              "cdi:entityBound": {
+                                "description": "Reference to the entity this parameter is bound to",
+                                "anyOf": [
+                                  {
+                                    "title": "DDI-CDI Data Types",
+                                    "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                  },
+                                  {
+                                    "type": "array",
+                                    "items": {
+                                      "title": "DDI-CDI Data Types",
+                                      "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            "required": [
+                              "@type",
+                              "cdi:name"
+                            ]
+                          },
+                          {
+                            "title": "DDI-CDI Data Types",
+                            "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                          }
+                        ]
+                      }
+                    },
+                    "cdi:produces": {
+                      "description": "Output parameters produced by this step (cdi:Parameter)",
+                      "type": "array",
+                      "items": {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "description": "DDI-CDI parameter for step data flow (cls-Parameter)",
+                            "properties": {
+                              "@type": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "contains": {
+                                  "const": "cdi:Parameter"
+                                },
+                                "minItems": 1
+                              },
+                              "@id": {
+                                "type": "string",
+                                "description": "Identifier for this parameter node"
+                              },
+                              "cdi:name": {
+                                "description": "Structured name for the parameter",
+                                "anyOf": [
+                                  {
+                                    "title": "DDI-CDI Data Types",
+                                    "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                  },
+                                  {
+                                    "type": "array",
+                                    "items": {
+                                      "title": "DDI-CDI Data Types",
+                                      "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                    }
+                                  }
+                                ]
+                              },
+                              "cdi:identifier": {
+                                "title": "DDI-CDI Data Types",
+                                "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                              },
+                              "cdi:entityBound": {
+                                "description": "Reference to the entity this parameter is bound to",
+                                "anyOf": [
+                                  {
+                                    "title": "DDI-CDI Data Types",
+                                    "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                  },
+                                  {
+                                    "type": "array",
+                                    "items": {
+                                      "title": "DDI-CDI Data Types",
+                                      "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            "required": [
+                              "@type",
+                              "cdi:name"
+                            ]
+                          },
+                          {
+                            "title": "DDI-CDI Data Types",
+                            "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                          }
+                        ]
+                      }
+                    },
+                    "cdi:entityUsed": {
+                      "description": "Entities used as inputs by this step",
+                      "type": "array",
+                      "items": {
+                        "title": "DDI-CDI Data Types",
+                        "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                      }
+                    },
+                    "cdi:entityProduced": {
+                      "description": "Entities produced as outputs by this step",
+                      "type": "array",
+                      "items": {
+                        "title": "DDI-CDI Data Types",
+                        "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                      }
+                    },
+                    "cdi:hasSubStep": {
+                      "description": "Nested sub-steps (cdi:Step)",
+                      "type": "array",
+                      "items": {
+                        "anyOf": [
+                          {
+                            "$comment": "self-referential: Step"
+                          },
+                          {
+                            "title": "DDI-CDI Data Types",
+                            "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "@type",
+                    "cdi:name"
+                  ]
+                },
+                {
+                  "title": "DDI-CDI Data Types",
+                  "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                }
+              ]
+            }
+          },
+          "cdi:hasInternal": {
+            "description": "Internal control logic elements (cdi:ControlLogic). @id references.",
+            "type": "array",
+            "items": {
+              "title": "DDI-CDI Data Types",
+              "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+            }
+          }
+        },
+        "required": [
+          "@type",
+          "cdi:name"
+        ]
+      },
+      "items": {
+        "if": {
+          "type": "object",
+          "properties": {
+            "@type": {
+              "type": "array",
+              "contains": {
+                "const": "cdi:Activity"
+              }
+            }
+          },
+          "required": [
+            "@type"
+          ]
+        },
+        "then": {
+          "type": "object",
+          "description": "DDI-CDI Activity (cls-Activity) — task described at a conceptual level",
+          "properties": {
+            "@type": {
+              "description": "Must be or include cdi:Activity",
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "contains": {
+                "const": "cdi:Activity"
+              },
+              "minItems": 1
+            },
+            "@id": {
+              "type": "string",
+              "description": "Identifier for this activity node"
+            },
+            "cdi:name": {
+              "description": "Structured name for the activity (ObjectName)",
+              "anyOf": [
+                {
+                  "title": "DDI-CDI Data Types",
+                  "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "title": "DDI-CDI Data Types",
+                    "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                  }
+                }
+              ]
+            },
+            "cdi:description": {
+              "type": "string",
+              "description": "Plain text description of the activity"
+            },
+            "cdi:definition": {
+              "description": "Formal multilingual definition (InternationalString)",
+              "anyOf": [
+                {
+                  "title": "DDI-CDI Data Types",
+                  "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "title": "DDI-CDI Data Types",
+                    "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                  }
+                }
+              ]
+            },
+            "cdi:displayLabel": {
+              "description": "Multilingual display label",
+              "anyOf": [
+                {
+                  "title": "DDI-CDI Data Types",
+                  "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "title": "DDI-CDI Data Types",
+                    "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                  }
+                }
+              ]
+            },
+            "cdi:identifier": {
+              "title": "DDI-CDI Data Types",
+              "description": "Formal identifier for this activity"
+            },
+            "cdi:entityUsed": {
+              "description": "Entities used as inputs by this activity",
+              "type": "array",
+              "items": {
+                "title": "DDI-CDI Data Types",
+                "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+              }
+            },
+            "cdi:entityProduced": {
+              "description": "Entities produced as outputs by this activity",
+              "type": "array",
+              "items": {
+                "title": "DDI-CDI Data Types",
+                "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+              }
+            },
+            "cdi:standardModelMapping": {
+              "description": "Reference to a standard process model (e.g. GSBPM)",
+              "anyOf": [
+                {
+                  "title": "DDI-CDI Data Types",
+                  "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "title": "DDI-CDI Data Types",
+                    "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                  }
+                }
+              ]
+            },
+            "cdi:start": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Start date-time of the activity (xsd:dateTime)"
+            },
+            "cdi:end": {
+              "type": "string",
+              "format": "date-time",
+              "description": "End date-time of the activity (xsd:dateTime)"
+            },
+            "cdi:hasSubActivity": {
+              "description": "Nested sub-activities (cdi:Activity). @id references.",
+              "type": "array",
+              "items": {
+                "title": "DDI-CDI Data Types",
+                "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+              }
+            },
+            "cdi:has_Step": {
+              "description": "Ordered steps within this activity (cdi:Step)",
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "description": "DDI-CDI Step within an Activity (cls-Step, extends Activity)",
+                    "properties": {
+                      "@type": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "contains": {
+                          "const": "cdi:Step"
+                        },
+                        "minItems": 1
+                      },
+                      "@id": {
+                        "type": "string",
+                        "description": "Identifier for this step node"
+                      },
+                      "cdi:name": {
+                        "description": "Structured name for the step",
+                        "anyOf": [
+                          {
+                            "title": "DDI-CDI Data Types",
+                            "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                          },
+                          {
+                            "type": "array",
+                            "items": {
+                              "title": "DDI-CDI Data Types",
+                              "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                            }
+                          }
+                        ]
+                      },
+                      "cdi:description": {
+                        "type": "string",
+                        "description": "Plain text description of the step"
+                      },
+                      "cdi:definition": {
+                        "description": "Formal multilingual definition (InternationalString)",
+                        "anyOf": [
+                          {
+                            "title": "DDI-CDI Data Types",
+                            "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                          },
+                          {
+                            "type": "array",
+                            "items": {
+                              "title": "DDI-CDI Data Types",
+                              "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                            }
+                          }
+                        ]
+                      },
+                      "cdi:identifier": {
+                        "title": "DDI-CDI Data Types",
+                        "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                      },
+                      "cdi:start": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Start date-time of the step (xsd:dateTime)"
+                      },
+                      "cdi:end": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "End date-time of the step (xsd:dateTime)"
+                      },
+                      "cdi:script": {
+                        "type": "object",
+                        "description": "Executable script or code for this step",
+                        "properties": {
+                          "@type": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "contains": {
+                              "const": "cdi:CommandCode"
+                            },
+                            "minItems": 1
+                          },
+                          "cdi:description": {
+                            "type": "string",
+                            "description": "Description of the code"
+                          },
+                          "cdi:commandFile": {
+                            "description": "External script file reference",
+                            "anyOf": [
+                              {
+                                "type": "object",
+                                "description": "DDI-CDI external script file (dt-CommandFile)",
+                                "properties": {
+                                  "@type": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    },
+                                    "contains": {
+                                      "const": "cdi:CommandFile"
+                                    },
+                                    "minItems": 1
+                                  },
+                                  "cdi:uri": {
+                                    "type": "string",
+                                    "format": "uri",
+                                    "description": "URI of the script file"
+                                  },
+                                  "cdi:location": {
+                                    "type": "string",
+                                    "description": "Human-readable file location"
+                                  }
+                                }
+                              },
+                              {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "description": "DDI-CDI external script file (dt-CommandFile)",
+                                  "properties": {
+                                    "@type": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      },
+                                      "contains": {
+                                        "const": "cdi:CommandFile"
+                                      },
+                                      "minItems": 1
+                                    },
+                                    "cdi:uri": {
+                                      "type": "string",
+                                      "format": "uri",
+                                      "description": "URI of the script file"
+                                    },
+                                    "cdi:location": {
+                                      "type": "string",
+                                      "description": "Human-readable file location"
+                                    }
+                                  }
+                                }
+                              }
+                            ]
+                          },
+                          "cdi:command": {
+                            "description": "Inline command content",
+                            "anyOf": [
+                              {
+                                "type": "object",
+                                "description": "DDI-CDI individual command statement (dt-Command)",
+                                "properties": {
+                                  "@type": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    },
+                                    "contains": {
+                                      "const": "cdi:Command"
+                                    },
+                                    "minItems": 1
+                                  },
+                                  "cdi:commandContent": {
+                                    "type": "string",
+                                    "description": "The command or code text"
+                                  },
+                                  "cdi:programLanguage": {
+                                    "title": "DDI-CDI Data Types",
+                                    "description": "Language of this command"
+                                  }
+                                }
+                              },
+                              {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "description": "DDI-CDI individual command statement (dt-Command)",
+                                  "properties": {
+                                    "@type": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      },
+                                      "contains": {
+                                        "const": "cdi:Command"
+                                      },
+                                      "minItems": 1
+                                    },
+                                    "cdi:commandContent": {
+                                      "type": "string",
+                                      "description": "The command or code text"
+                                    },
+                                    "cdi:programLanguage": {
+                                      "title": "DDI-CDI Data Types",
+                                      "description": "Language of this command"
+                                    }
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "cdi:scriptingLanguage": {
+                        "title": "DDI-CDI Data Types",
+                        "description": "Programming or scripting language used"
+                      },
+                      "cdi:receives": {
+                        "description": "Input parameters received by this step (cdi:Parameter)",
+                        "type": "array",
+                        "items": {
+                          "anyOf": [
+                            {
+                              "type": "object",
+                              "description": "DDI-CDI parameter for step data flow (cls-Parameter)",
+                              "properties": {
+                                "@type": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  },
+                                  "contains": {
+                                    "const": "cdi:Parameter"
+                                  },
+                                  "minItems": 1
+                                },
+                                "@id": {
+                                  "type": "string",
+                                  "description": "Identifier for this parameter node"
+                                },
+                                "cdi:name": {
+                                  "description": "Structured name for the parameter",
+                                  "anyOf": [
+                                    {
+                                      "title": "DDI-CDI Data Types",
+                                      "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                    },
+                                    {
+                                      "type": "array",
+                                      "items": {
+                                        "title": "DDI-CDI Data Types",
+                                        "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                      }
+                                    }
+                                  ]
+                                },
+                                "cdi:identifier": {
+                                  "title": "DDI-CDI Data Types",
+                                  "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                },
+                                "cdi:entityBound": {
+                                  "description": "Reference to the entity this parameter is bound to",
+                                  "anyOf": [
+                                    {
+                                      "title": "DDI-CDI Data Types",
+                                      "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                    },
+                                    {
+                                      "type": "array",
+                                      "items": {
+                                        "title": "DDI-CDI Data Types",
+                                        "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                      }
+                                    }
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "@type",
+                                "cdi:name"
+                              ]
+                            },
+                            {
+                              "title": "DDI-CDI Data Types",
+                              "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                            }
+                          ]
+                        }
+                      },
+                      "cdi:produces": {
+                        "description": "Output parameters produced by this step (cdi:Parameter)",
+                        "type": "array",
+                        "items": {
+                          "anyOf": [
+                            {
+                              "type": "object",
+                              "description": "DDI-CDI parameter for step data flow (cls-Parameter)",
+                              "properties": {
+                                "@type": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  },
+                                  "contains": {
+                                    "const": "cdi:Parameter"
+                                  },
+                                  "minItems": 1
+                                },
+                                "@id": {
+                                  "type": "string",
+                                  "description": "Identifier for this parameter node"
+                                },
+                                "cdi:name": {
+                                  "description": "Structured name for the parameter",
+                                  "anyOf": [
+                                    {
+                                      "title": "DDI-CDI Data Types",
+                                      "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                    },
+                                    {
+                                      "type": "array",
+                                      "items": {
+                                        "title": "DDI-CDI Data Types",
+                                        "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                      }
+                                    }
+                                  ]
+                                },
+                                "cdi:identifier": {
+                                  "title": "DDI-CDI Data Types",
+                                  "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                },
+                                "cdi:entityBound": {
+                                  "description": "Reference to the entity this parameter is bound to",
+                                  "anyOf": [
+                                    {
+                                      "title": "DDI-CDI Data Types",
+                                      "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                    },
+                                    {
+                                      "type": "array",
+                                      "items": {
+                                        "title": "DDI-CDI Data Types",
+                                        "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                      }
+                                    }
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "@type",
+                                "cdi:name"
+                              ]
+                            },
+                            {
+                              "title": "DDI-CDI Data Types",
+                              "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                            }
+                          ]
+                        }
+                      },
+                      "cdi:entityUsed": {
+                        "description": "Entities used as inputs by this step",
+                        "type": "array",
+                        "items": {
+                          "title": "DDI-CDI Data Types",
+                          "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                        }
+                      },
+                      "cdi:entityProduced": {
+                        "description": "Entities produced as outputs by this step",
+                        "type": "array",
+                        "items": {
+                          "title": "DDI-CDI Data Types",
+                          "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                        }
+                      },
+                      "cdi:hasSubStep": {
+                        "description": "Nested sub-steps (cdi:Step)",
+                        "type": "array",
+                        "items": {
+                          "anyOf": [
+                            {
+                              "$comment": "self-referential: Step"
+                            },
+                            {
+                              "title": "DDI-CDI Data Types",
+                              "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "required": [
+                      "@type",
+                      "cdi:name"
+                    ]
+                  },
+                  {
+                    "title": "DDI-CDI Data Types",
+                    "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                  }
+                ]
+              }
+            },
+            "cdi:hasInternal": {
+              "description": "Internal control logic elements (cdi:ControlLogic). @id references.",
+              "type": "array",
+              "items": {
+                "title": "DDI-CDI Data Types",
+                "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+              }
+            }
+          },
+          "required": [
+            "@type",
+            "cdi:name"
+          ]
+        }
+      }
+    },
+    {
+      "description": "JSON-LD document with @context and @graph",
+      "type": "object",
+      "properties": {
+        "@context": {},
+        "@graph": {
+          "type": "array",
+          "contains": {
+            "type": "object",
+            "description": "DDI-CDI Activity (cls-Activity) — task described at a conceptual level",
+            "properties": {
+              "@type": {
+                "description": "Must be or include cdi:Activity",
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "contains": {
+                  "const": "cdi:Activity"
+                },
+                "minItems": 1
+              },
+              "@id": {
+                "type": "string",
+                "description": "Identifier for this activity node"
+              },
+              "cdi:name": {
+                "description": "Structured name for the activity (ObjectName)",
+                "anyOf": [
+                  {
+                    "title": "DDI-CDI Data Types",
+                    "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                  },
+                  {
+                    "type": "array",
+                    "items": {
+                      "title": "DDI-CDI Data Types",
+                      "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                    }
+                  }
+                ]
+              },
+              "cdi:description": {
+                "type": "string",
+                "description": "Plain text description of the activity"
+              },
+              "cdi:definition": {
+                "description": "Formal multilingual definition (InternationalString)",
+                "anyOf": [
+                  {
+                    "title": "DDI-CDI Data Types",
+                    "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                  },
+                  {
+                    "type": "array",
+                    "items": {
+                      "title": "DDI-CDI Data Types",
+                      "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                    }
+                  }
+                ]
+              },
+              "cdi:displayLabel": {
+                "description": "Multilingual display label",
+                "anyOf": [
+                  {
+                    "title": "DDI-CDI Data Types",
+                    "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                  },
+                  {
+                    "type": "array",
+                    "items": {
+                      "title": "DDI-CDI Data Types",
+                      "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                    }
+                  }
+                ]
+              },
+              "cdi:identifier": {
+                "title": "DDI-CDI Data Types",
+                "description": "Formal identifier for this activity"
+              },
+              "cdi:entityUsed": {
+                "description": "Entities used as inputs by this activity",
+                "type": "array",
+                "items": {
+                  "title": "DDI-CDI Data Types",
+                  "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                }
+              },
+              "cdi:entityProduced": {
+                "description": "Entities produced as outputs by this activity",
+                "type": "array",
+                "items": {
+                  "title": "DDI-CDI Data Types",
+                  "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                }
+              },
+              "cdi:standardModelMapping": {
+                "description": "Reference to a standard process model (e.g. GSBPM)",
+                "anyOf": [
+                  {
+                    "title": "DDI-CDI Data Types",
+                    "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                  },
+                  {
+                    "type": "array",
+                    "items": {
+                      "title": "DDI-CDI Data Types",
+                      "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                    }
+                  }
+                ]
+              },
+              "cdi:start": {
+                "type": "string",
+                "format": "date-time",
+                "description": "Start date-time of the activity (xsd:dateTime)"
+              },
+              "cdi:end": {
+                "type": "string",
+                "format": "date-time",
+                "description": "End date-time of the activity (xsd:dateTime)"
+              },
+              "cdi:hasSubActivity": {
+                "description": "Nested sub-activities (cdi:Activity). @id references.",
+                "type": "array",
+                "items": {
+                  "title": "DDI-CDI Data Types",
+                  "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                }
+              },
+              "cdi:has_Step": {
+                "description": "Ordered steps within this activity (cdi:Step)",
+                "type": "array",
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "description": "DDI-CDI Step within an Activity (cls-Step, extends Activity)",
+                      "properties": {
+                        "@type": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "contains": {
+                            "const": "cdi:Step"
+                          },
+                          "minItems": 1
+                        },
+                        "@id": {
+                          "type": "string",
+                          "description": "Identifier for this step node"
+                        },
+                        "cdi:name": {
+                          "description": "Structured name for the step",
+                          "anyOf": [
+                            {
+                              "title": "DDI-CDI Data Types",
+                              "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "title": "DDI-CDI Data Types",
+                                "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                              }
+                            }
+                          ]
+                        },
+                        "cdi:description": {
+                          "type": "string",
+                          "description": "Plain text description of the step"
+                        },
+                        "cdi:definition": {
+                          "description": "Formal multilingual definition (InternationalString)",
+                          "anyOf": [
+                            {
+                              "title": "DDI-CDI Data Types",
+                              "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "title": "DDI-CDI Data Types",
+                                "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                              }
+                            }
+                          ]
+                        },
+                        "cdi:identifier": {
+                          "title": "DDI-CDI Data Types",
+                          "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                        },
+                        "cdi:start": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "Start date-time of the step (xsd:dateTime)"
+                        },
+                        "cdi:end": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "End date-time of the step (xsd:dateTime)"
+                        },
+                        "cdi:script": {
+                          "type": "object",
+                          "description": "Executable script or code for this step",
+                          "properties": {
+                            "@type": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              },
+                              "contains": {
+                                "const": "cdi:CommandCode"
+                              },
+                              "minItems": 1
+                            },
+                            "cdi:description": {
+                              "type": "string",
+                              "description": "Description of the code"
+                            },
+                            "cdi:commandFile": {
+                              "description": "External script file reference",
+                              "anyOf": [
+                                {
+                                  "type": "object",
+                                  "description": "DDI-CDI external script file (dt-CommandFile)",
+                                  "properties": {
+                                    "@type": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      },
+                                      "contains": {
+                                        "const": "cdi:CommandFile"
+                                      },
+                                      "minItems": 1
+                                    },
+                                    "cdi:uri": {
+                                      "type": "string",
+                                      "format": "uri",
+                                      "description": "URI of the script file"
+                                    },
+                                    "cdi:location": {
+                                      "type": "string",
+                                      "description": "Human-readable file location"
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "description": "DDI-CDI external script file (dt-CommandFile)",
+                                    "properties": {
+                                      "@type": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        },
+                                        "contains": {
+                                          "const": "cdi:CommandFile"
+                                        },
+                                        "minItems": 1
+                                      },
+                                      "cdi:uri": {
+                                        "type": "string",
+                                        "format": "uri",
+                                        "description": "URI of the script file"
+                                      },
+                                      "cdi:location": {
+                                        "type": "string",
+                                        "description": "Human-readable file location"
+                                      }
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "cdi:command": {
+                              "description": "Inline command content",
+                              "anyOf": [
+                                {
+                                  "type": "object",
+                                  "description": "DDI-CDI individual command statement (dt-Command)",
+                                  "properties": {
+                                    "@type": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      },
+                                      "contains": {
+                                        "const": "cdi:Command"
+                                      },
+                                      "minItems": 1
+                                    },
+                                    "cdi:commandContent": {
+                                      "type": "string",
+                                      "description": "The command or code text"
+                                    },
+                                    "cdi:programLanguage": {
+                                      "title": "DDI-CDI Data Types",
+                                      "description": "Language of this command"
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "description": "DDI-CDI individual command statement (dt-Command)",
+                                    "properties": {
+                                      "@type": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        },
+                                        "contains": {
+                                          "const": "cdi:Command"
+                                        },
+                                        "minItems": 1
+                                      },
+                                      "cdi:commandContent": {
+                                        "type": "string",
+                                        "description": "The command or code text"
+                                      },
+                                      "cdi:programLanguage": {
+                                        "title": "DDI-CDI Data Types",
+                                        "description": "Language of this command"
+                                      }
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        },
+                        "cdi:scriptingLanguage": {
+                          "title": "DDI-CDI Data Types",
+                          "description": "Programming or scripting language used"
+                        },
+                        "cdi:receives": {
+                          "description": "Input parameters received by this step (cdi:Parameter)",
+                          "type": "array",
+                          "items": {
+                            "anyOf": [
+                              {
+                                "type": "object",
+                                "description": "DDI-CDI parameter for step data flow (cls-Parameter)",
+                                "properties": {
+                                  "@type": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    },
+                                    "contains": {
+                                      "const": "cdi:Parameter"
+                                    },
+                                    "minItems": 1
+                                  },
+                                  "@id": {
+                                    "type": "string",
+                                    "description": "Identifier for this parameter node"
+                                  },
+                                  "cdi:name": {
+                                    "description": "Structured name for the parameter",
+                                    "anyOf": [
+                                      {
+                                        "title": "DDI-CDI Data Types",
+                                        "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                      },
+                                      {
+                                        "type": "array",
+                                        "items": {
+                                          "title": "DDI-CDI Data Types",
+                                          "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  "cdi:identifier": {
+                                    "title": "DDI-CDI Data Types",
+                                    "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                  },
+                                  "cdi:entityBound": {
+                                    "description": "Reference to the entity this parameter is bound to",
+                                    "anyOf": [
+                                      {
+                                        "title": "DDI-CDI Data Types",
+                                        "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                      },
+                                      {
+                                        "type": "array",
+                                        "items": {
+                                          "title": "DDI-CDI Data Types",
+                                          "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                        }
+                                      }
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "@type",
+                                  "cdi:name"
+                                ]
+                              },
+                              {
+                                "title": "DDI-CDI Data Types",
+                                "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                              }
+                            ]
+                          }
+                        },
+                        "cdi:produces": {
+                          "description": "Output parameters produced by this step (cdi:Parameter)",
+                          "type": "array",
+                          "items": {
+                            "anyOf": [
+                              {
+                                "type": "object",
+                                "description": "DDI-CDI parameter for step data flow (cls-Parameter)",
+                                "properties": {
+                                  "@type": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    },
+                                    "contains": {
+                                      "const": "cdi:Parameter"
+                                    },
+                                    "minItems": 1
+                                  },
+                                  "@id": {
+                                    "type": "string",
+                                    "description": "Identifier for this parameter node"
+                                  },
+                                  "cdi:name": {
+                                    "description": "Structured name for the parameter",
+                                    "anyOf": [
+                                      {
+                                        "title": "DDI-CDI Data Types",
+                                        "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                      },
+                                      {
+                                        "type": "array",
+                                        "items": {
+                                          "title": "DDI-CDI Data Types",
+                                          "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  "cdi:identifier": {
+                                    "title": "DDI-CDI Data Types",
+                                    "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                  },
+                                  "cdi:entityBound": {
+                                    "description": "Reference to the entity this parameter is bound to",
+                                    "anyOf": [
+                                      {
+                                        "title": "DDI-CDI Data Types",
+                                        "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                      },
+                                      {
+                                        "type": "array",
+                                        "items": {
+                                          "title": "DDI-CDI Data Types",
+                                          "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                        }
+                                      }
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "@type",
+                                  "cdi:name"
+                                ]
+                              },
+                              {
+                                "title": "DDI-CDI Data Types",
+                                "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                              }
+                            ]
+                          }
+                        },
+                        "cdi:entityUsed": {
+                          "description": "Entities used as inputs by this step",
+                          "type": "array",
+                          "items": {
+                            "title": "DDI-CDI Data Types",
+                            "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                          }
+                        },
+                        "cdi:entityProduced": {
+                          "description": "Entities produced as outputs by this step",
+                          "type": "array",
+                          "items": {
+                            "title": "DDI-CDI Data Types",
+                            "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                          }
+                        },
+                        "cdi:hasSubStep": {
+                          "description": "Nested sub-steps (cdi:Step)",
+                          "type": "array",
+                          "items": {
+                            "anyOf": [
+                              {
+                                "$comment": "self-referential: Step"
+                              },
+                              {
+                                "title": "DDI-CDI Data Types",
+                                "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "@type",
+                        "cdi:name"
+                      ]
+                    },
+                    {
+                      "title": "DDI-CDI Data Types",
+                      "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                    }
+                  ]
+                }
+              },
+              "cdi:hasInternal": {
+                "description": "Internal control logic elements (cdi:ControlLogic). @id references.",
+                "type": "array",
+                "items": {
+                  "title": "DDI-CDI Data Types",
+                  "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                }
+              }
+            },
+            "required": [
+              "@type",
+              "cdi:name"
+            ]
+          },
+          "items": {
+            "if": {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "type": "array",
+                  "contains": {
+                    "const": "cdi:Activity"
+                  }
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            },
+            "then": {
+              "type": "object",
+              "description": "DDI-CDI Activity (cls-Activity) — task described at a conceptual level",
+              "properties": {
+                "@type": {
+                  "description": "Must be or include cdi:Activity",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "contains": {
+                    "const": "cdi:Activity"
+                  },
+                  "minItems": 1
+                },
+                "@id": {
+                  "type": "string",
+                  "description": "Identifier for this activity node"
+                },
+                "cdi:name": {
+                  "description": "Structured name for the activity (ObjectName)",
+                  "anyOf": [
+                    {
+                      "title": "DDI-CDI Data Types",
+                      "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "title": "DDI-CDI Data Types",
+                        "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                      }
+                    }
+                  ]
+                },
+                "cdi:description": {
+                  "type": "string",
+                  "description": "Plain text description of the activity"
+                },
+                "cdi:definition": {
+                  "description": "Formal multilingual definition (InternationalString)",
+                  "anyOf": [
+                    {
+                      "title": "DDI-CDI Data Types",
+                      "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "title": "DDI-CDI Data Types",
+                        "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                      }
+                    }
+                  ]
+                },
+                "cdi:displayLabel": {
+                  "description": "Multilingual display label",
+                  "anyOf": [
+                    {
+                      "title": "DDI-CDI Data Types",
+                      "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "title": "DDI-CDI Data Types",
+                        "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                      }
+                    }
+                  ]
+                },
+                "cdi:identifier": {
+                  "title": "DDI-CDI Data Types",
+                  "description": "Formal identifier for this activity"
+                },
+                "cdi:entityUsed": {
+                  "description": "Entities used as inputs by this activity",
+                  "type": "array",
+                  "items": {
+                    "title": "DDI-CDI Data Types",
+                    "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                  }
+                },
+                "cdi:entityProduced": {
+                  "description": "Entities produced as outputs by this activity",
+                  "type": "array",
+                  "items": {
+                    "title": "DDI-CDI Data Types",
+                    "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                  }
+                },
+                "cdi:standardModelMapping": {
+                  "description": "Reference to a standard process model (e.g. GSBPM)",
+                  "anyOf": [
+                    {
+                      "title": "DDI-CDI Data Types",
+                      "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "title": "DDI-CDI Data Types",
+                        "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                      }
+                    }
+                  ]
+                },
+                "cdi:start": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "Start date-time of the activity (xsd:dateTime)"
+                },
+                "cdi:end": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "End date-time of the activity (xsd:dateTime)"
+                },
+                "cdi:hasSubActivity": {
+                  "description": "Nested sub-activities (cdi:Activity). @id references.",
+                  "type": "array",
+                  "items": {
+                    "title": "DDI-CDI Data Types",
+                    "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                  }
+                },
+                "cdi:has_Step": {
+                  "description": "Ordered steps within this activity (cdi:Step)",
+                  "type": "array",
+                  "items": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "description": "DDI-CDI Step within an Activity (cls-Step, extends Activity)",
+                        "properties": {
+                          "@type": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "contains": {
+                              "const": "cdi:Step"
+                            },
+                            "minItems": 1
+                          },
+                          "@id": {
+                            "type": "string",
+                            "description": "Identifier for this step node"
+                          },
+                          "cdi:name": {
+                            "description": "Structured name for the step",
+                            "anyOf": [
+                              {
+                                "title": "DDI-CDI Data Types",
+                                "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                              },
+                              {
+                                "type": "array",
+                                "items": {
+                                  "title": "DDI-CDI Data Types",
+                                  "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                }
+                              }
+                            ]
+                          },
+                          "cdi:description": {
+                            "type": "string",
+                            "description": "Plain text description of the step"
+                          },
+                          "cdi:definition": {
+                            "description": "Formal multilingual definition (InternationalString)",
+                            "anyOf": [
+                              {
+                                "title": "DDI-CDI Data Types",
+                                "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                              },
+                              {
+                                "type": "array",
+                                "items": {
+                                  "title": "DDI-CDI Data Types",
+                                  "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                }
+                              }
+                            ]
+                          },
+                          "cdi:identifier": {
+                            "title": "DDI-CDI Data Types",
+                            "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                          },
+                          "cdi:start": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "Start date-time of the step (xsd:dateTime)"
+                          },
+                          "cdi:end": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "End date-time of the step (xsd:dateTime)"
+                          },
+                          "cdi:script": {
+                            "type": "object",
+                            "description": "Executable script or code for this step",
+                            "properties": {
+                              "@type": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "contains": {
+                                  "const": "cdi:CommandCode"
+                                },
+                                "minItems": 1
+                              },
+                              "cdi:description": {
+                                "type": "string",
+                                "description": "Description of the code"
+                              },
+                              "cdi:commandFile": {
+                                "description": "External script file reference",
+                                "anyOf": [
+                                  {
+                                    "type": "object",
+                                    "description": "DDI-CDI external script file (dt-CommandFile)",
+                                    "properties": {
+                                      "@type": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        },
+                                        "contains": {
+                                          "const": "cdi:CommandFile"
+                                        },
+                                        "minItems": 1
+                                      },
+                                      "cdi:uri": {
+                                        "type": "string",
+                                        "format": "uri",
+                                        "description": "URI of the script file"
+                                      },
+                                      "cdi:location": {
+                                        "type": "string",
+                                        "description": "Human-readable file location"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "description": "DDI-CDI external script file (dt-CommandFile)",
+                                      "properties": {
+                                        "@type": {
+                                          "type": "array",
+                                          "items": {
+                                            "type": "string"
+                                          },
+                                          "contains": {
+                                            "const": "cdi:CommandFile"
+                                          },
+                                          "minItems": 1
+                                        },
+                                        "cdi:uri": {
+                                          "type": "string",
+                                          "format": "uri",
+                                          "description": "URI of the script file"
+                                        },
+                                        "cdi:location": {
+                                          "type": "string",
+                                          "description": "Human-readable file location"
+                                        }
+                                      }
+                                    }
+                                  }
+                                ]
+                              },
+                              "cdi:command": {
+                                "description": "Inline command content",
+                                "anyOf": [
+                                  {
+                                    "type": "object",
+                                    "description": "DDI-CDI individual command statement (dt-Command)",
+                                    "properties": {
+                                      "@type": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        },
+                                        "contains": {
+                                          "const": "cdi:Command"
+                                        },
+                                        "minItems": 1
+                                      },
+                                      "cdi:commandContent": {
+                                        "type": "string",
+                                        "description": "The command or code text"
+                                      },
+                                      "cdi:programLanguage": {
+                                        "title": "DDI-CDI Data Types",
+                                        "description": "Language of this command"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "description": "DDI-CDI individual command statement (dt-Command)",
+                                      "properties": {
+                                        "@type": {
+                                          "type": "array",
+                                          "items": {
+                                            "type": "string"
+                                          },
+                                          "contains": {
+                                            "const": "cdi:Command"
+                                          },
+                                          "minItems": 1
+                                        },
+                                        "cdi:commandContent": {
+                                          "type": "string",
+                                          "description": "The command or code text"
+                                        },
+                                        "cdi:programLanguage": {
+                                          "title": "DDI-CDI Data Types",
+                                          "description": "Language of this command"
+                                        }
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          "cdi:scriptingLanguage": {
+                            "title": "DDI-CDI Data Types",
+                            "description": "Programming or scripting language used"
+                          },
+                          "cdi:receives": {
+                            "description": "Input parameters received by this step (cdi:Parameter)",
+                            "type": "array",
+                            "items": {
+                              "anyOf": [
+                                {
+                                  "type": "object",
+                                  "description": "DDI-CDI parameter for step data flow (cls-Parameter)",
+                                  "properties": {
+                                    "@type": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      },
+                                      "contains": {
+                                        "const": "cdi:Parameter"
+                                      },
+                                      "minItems": 1
+                                    },
+                                    "@id": {
+                                      "type": "string",
+                                      "description": "Identifier for this parameter node"
+                                    },
+                                    "cdi:name": {
+                                      "description": "Structured name for the parameter",
+                                      "anyOf": [
+                                        {
+                                          "title": "DDI-CDI Data Types",
+                                          "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                        },
+                                        {
+                                          "type": "array",
+                                          "items": {
+                                            "title": "DDI-CDI Data Types",
+                                            "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                          }
+                                        }
+                                      ]
+                                    },
+                                    "cdi:identifier": {
+                                      "title": "DDI-CDI Data Types",
+                                      "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                    },
+                                    "cdi:entityBound": {
+                                      "description": "Reference to the entity this parameter is bound to",
+                                      "anyOf": [
+                                        {
+                                          "title": "DDI-CDI Data Types",
+                                          "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                        },
+                                        {
+                                          "type": "array",
+                                          "items": {
+                                            "title": "DDI-CDI Data Types",
+                                            "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "required": [
+                                    "@type",
+                                    "cdi:name"
+                                  ]
+                                },
+                                {
+                                  "title": "DDI-CDI Data Types",
+                                  "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                }
+                              ]
+                            }
+                          },
+                          "cdi:produces": {
+                            "description": "Output parameters produced by this step (cdi:Parameter)",
+                            "type": "array",
+                            "items": {
+                              "anyOf": [
+                                {
+                                  "type": "object",
+                                  "description": "DDI-CDI parameter for step data flow (cls-Parameter)",
+                                  "properties": {
+                                    "@type": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      },
+                                      "contains": {
+                                        "const": "cdi:Parameter"
+                                      },
+                                      "minItems": 1
+                                    },
+                                    "@id": {
+                                      "type": "string",
+                                      "description": "Identifier for this parameter node"
+                                    },
+                                    "cdi:name": {
+                                      "description": "Structured name for the parameter",
+                                      "anyOf": [
+                                        {
+                                          "title": "DDI-CDI Data Types",
+                                          "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                        },
+                                        {
+                                          "type": "array",
+                                          "items": {
+                                            "title": "DDI-CDI Data Types",
+                                            "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                          }
+                                        }
+                                      ]
+                                    },
+                                    "cdi:identifier": {
+                                      "title": "DDI-CDI Data Types",
+                                      "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                    },
+                                    "cdi:entityBound": {
+                                      "description": "Reference to the entity this parameter is bound to",
+                                      "anyOf": [
+                                        {
+                                          "title": "DDI-CDI Data Types",
+                                          "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                        },
+                                        {
+                                          "type": "array",
+                                          "items": {
+                                            "title": "DDI-CDI Data Types",
+                                            "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "required": [
+                                    "@type",
+                                    "cdi:name"
+                                  ]
+                                },
+                                {
+                                  "title": "DDI-CDI Data Types",
+                                  "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                }
+                              ]
+                            }
+                          },
+                          "cdi:entityUsed": {
+                            "description": "Entities used as inputs by this step",
+                            "type": "array",
+                            "items": {
+                              "title": "DDI-CDI Data Types",
+                              "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                            }
+                          },
+                          "cdi:entityProduced": {
+                            "description": "Entities produced as outputs by this step",
+                            "type": "array",
+                            "items": {
+                              "title": "DDI-CDI Data Types",
+                              "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                            }
+                          },
+                          "cdi:hasSubStep": {
+                            "description": "Nested sub-steps (cdi:Step)",
+                            "type": "array",
+                            "items": {
+                              "anyOf": [
+                                {
+                                  "$comment": "self-referential: Step"
+                                },
+                                {
+                                  "title": "DDI-CDI Data Types",
+                                  "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                                }
+                              ]
+                            }
+                          }
+                        },
+                        "required": [
+                          "@type",
+                          "cdi:name"
+                        ]
+                      },
+                      {
+                        "title": "DDI-CDI Data Types",
+                        "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                      }
+                    ]
+                  }
+                },
+                "cdi:hasInternal": {
+                  "description": "Internal control logic elements (cdi:ControlLogic). @id references.",
+                  "type": "array",
+                  "items": {
+                    "title": "DDI-CDI Data Types",
+                    "description": "Shared DDI-CDI structured data types from DDICDILibrary/DataTypes. Provides reusable $defs for identifiers, names, contact information, references, and other common DDI-CDI structured data types."
+                  }
+                }
+              },
+              "required": [
+                "@type",
+                "cdi:name"
+              ]
+            }
+          }
+        }
+      },
+      "required": [
+        "@graph"
+      ]
+    }
+  ]
+}
