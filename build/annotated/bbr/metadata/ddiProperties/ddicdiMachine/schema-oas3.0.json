@@ -208,6 +208,44 @@
             }
           }
         },
+        "LabelForDisplay": {
+          "type": "object",
+          "description": "DDI-CDI multilingual display label (dt-LabelForDisplay)",
+          "properties": {
+            "@type": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "contains": {
+                "enum": [
+                  "cdi:LabelForDisplay"
+                ]
+              },
+              "minItems": 1
+            },
+            "cdi:locationVariant": {
+              "description": "Geographic or locale variant",
+              "allOf": [
+                {
+                  "$ref": "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/ddiProperties/ddicdiMachine/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.ddiProperties.ddicdiDataTypes/$defs/ControlledVocabularyEntry"
+                }
+              ]
+            },
+            "cdi:maxLength": {
+              "type": "integer",
+              "description": "Maximum display length"
+            },
+            "cdi:languageSpecificString": {
+              "description": "The label text with language tag",
+              "allOf": [
+                {
+                  "$ref": "https://cross-domain-interoperability-framework.github.io/metadataBuildingBlocks/build/annotated/bbr/metadata/ddiProperties/ddicdiMachine/schema-oas3.0.json#/x-defs/cdif.bbr.metadata.ddiProperties.ddicdiDataTypes/$defs/LanguageString"
+                }
+              ]
+            }
+          }
+        },
         "SexSpecification": {
           "type": "object",
           "description": "DDI-CDI sex specification (dt-SexSpecification)",
